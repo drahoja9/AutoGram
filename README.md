@@ -1,4 +1,4 @@
-# SP1
+# Automaton
 
 This application was created with `create-react-app`.
 
