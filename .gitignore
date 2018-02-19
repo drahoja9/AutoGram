@@ -1,3 +1,7 @@
+### Code ###
+# Visual Studio Code - https://code.visualstudio.com/
+.settings/
+.vscode/
 
 # Created by https://www.gitignore.io/api/node,linux,macos,windows
 

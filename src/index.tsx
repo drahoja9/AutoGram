@@ -1,19 +1,21 @@
+import 'bootstrap/dist/css/bootstrap.css';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import { injectGlobal } from 'styled-components';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
-injectGlobal`
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-  }
-`;
+import configureStore from './redux/configureStore';
+import registerServiceWorker from './registerServiceWorker';
+
+import App from 'app';
 
 ReactDOM.render(
-  <App />,
+  <Provider store={configureStore()}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
