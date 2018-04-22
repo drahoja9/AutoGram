@@ -1,4 +1,4 @@
-# Automaton
+# Autogram frontned
 
 This application was created with `create-react-app`.
 
