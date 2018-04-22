@@ -6,9 +6,9 @@ const { asyncComponent } = require('react-async-component');
 //#endregion
 
 /**
- * Top level routing.
+ * Top level routing for `/*` paths.
  *
- * Redirects all users from `/` to `/vis`
+ * Redirects all users from `/` to `/vis`.
  */
 export const routes: RouteProps[] = [
   {
@@ -35,6 +35,12 @@ export const routes: RouteProps[] = [
     exact: true,
     component: asyncComponent({
       resolve: () => System.import('./Transformation')
+    })
+  },
+  {
+    path: '/algo',
+    component: asyncComponent({
+      resolve: () => System.import('./Algorithms')
     })
   },
 ];

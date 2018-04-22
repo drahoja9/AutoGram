@@ -16,6 +16,10 @@ const { Content, Header } = Layout;
  * Defined basic layout as well as routing for the app.
  */
 export default class App extends React.Component {
+  public componentDidMount() {
+    console.log('App component did mount');
+  }
+
   public render() {
     return (
       <Layout style={{ height: '100%' }}>
