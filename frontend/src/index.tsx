@@ -1,4 +1,5 @@
 import 'antd/dist/antd.less';
+import './theme.less'
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';

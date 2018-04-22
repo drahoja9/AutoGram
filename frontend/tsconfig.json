@@ -15,7 +15,27 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "baseUrl": "./src",
+    "paths": {
+      "actions/*": ["./src/actions/*"],
+      "actions": ["./src/actions"],
+
+      "components/*": ["./src/components/*"],
+      "components": ["./src/components"],
+
+      "epics/*": ["./src/epics/*"],
+      "epics": ["./src/epics"],
+
+      "lib/*": ["./src/lib/*"],
+      "lib": ["./src/lib"],
+
+      "reducers/*": ["./src/reducers/*"],
+      "reducers": ["./src/reducers"],
+
+      "views/*": ["./src/views/*"],
+      "views": ["./src/views"],
+    }
   },
   "exclude": [
     "node_modules",
