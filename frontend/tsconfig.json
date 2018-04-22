@@ -34,7 +34,7 @@
       "reducers": ["./src/reducers"],
 
       "views/*": ["./src/views/*"],
-      "views": ["./src/views"],
+      "views": ["./src/views"]
     }
   },
   "exclude": [

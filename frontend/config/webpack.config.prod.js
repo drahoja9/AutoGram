@@ -168,6 +168,11 @@ module.exports = {
               },
             ],
           },
+          // Load svgs
+          {
+            test: /\.svg$/,
+            loader: 'svg-react-loader'
+          },
           // "less-loader" custom loader for the LESS files.
           {
             test: /\.less$/,
