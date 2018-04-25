@@ -8,7 +8,7 @@ import {
 import { routes } from './routes';
 //#endregion
 
-const { Content, Header } = Layout;
+const { Content } = Layout;
 
 
 /**
@@ -25,7 +25,6 @@ export default class App extends React.Component {
       <Layout style={{ height: '100%' }}>
         <Navigation />
         <Layout>
-          <Header>Header</Header>
           <Content>
             <RouteHandler routes={routes} />
           </Content>
