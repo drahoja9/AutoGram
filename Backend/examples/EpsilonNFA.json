@@ -1,0 +1,20 @@
+{
+	"type": "EpsilonNFA",
+	"states" : ["one", "two", "three", "four", "five", "six", "zero"],
+	"input_alphabet" : ["a", "b"],
+	"initial_states" : ["zero"],
+	"final_states" : ["one", "six"],
+	"transitions" : [
+		{"from" : "four", "input" : "a", "to" : "four"},
+		{"from" : "four", "input" : "b", "to" : "one"},
+		{"from" : "one", "input" : "b", "to" : "two"},
+		{"from" : "one", "input" : "a", "to" : "one"},
+		{"from" : "three", "input" : "b", "to" : "four"},
+		{"from" : "three", "input" : "a", "to" : "three"},
+		{"from" : "two", "input" : "b", "to" : "three"},
+		{"from" : "two", "input" : "a", "to" : "two"},
+		{"from" : "five", "input" : null, "to" : "six"},
+		{"from" : "zero", "input" : null, "to" : "five"},
+		{"from" : "zero", "input" : null, "to" : "one"}
+	]
+}

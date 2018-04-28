@@ -1,0 +1,11 @@
+{
+	"type" : "CFG",
+	"nonterminal_alphabet" : ["8"],
+	"terminal_alphabet" : ["1", "6", "3"],
+	"initial_symbol" : "8",
+	"rules" : [
+		{"lhs" : "8", "rhs" : [["6"], ["1", "8", "3"]]}
+	],
+	"generates_epsilon" : null
+}
+

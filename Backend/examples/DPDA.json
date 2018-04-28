@@ -1,0 +1,16 @@
+{
+	"type" : "DPDA",
+	"states" : ["a", "b", "c"],
+	"input_alphabet" : ["3", "5"],
+	"pushdown_store_alphabet" : ["8"],
+	"initial_states" : ["a"],
+	"initial_pushdown_store_symbol" : "8",
+	"final_states" : [],
+	"transitions" : [
+		{"from" : "a", "input" : "3", "pop" : null, "to" : "b", "push" : null},
+		{"from" : "b", "input" : "3", "pop" : null, "to" : "b", "push" : "8"},
+		{"from" : "b", "input" : "5", "pop" : "8", "to" : "c", "push" : null},
+		{"from" : "c", "input" : "5", "pop" : "8", "to" : "c", "push" : null}
+	]
+}
+

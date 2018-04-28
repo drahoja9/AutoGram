@@ -1,0 +1,44 @@
+<RightRG>
+   <nonterminalAlphabet>
+      <String>3</String>
+      <String>5</String>
+   </nonterminalAlphabet>
+   <terminalAlphabet>
+      <Character>55</Character>
+      <Character>56</Character>
+   </terminalAlphabet>
+   <initialSymbol>
+      <String>3</String>
+   </initialSymbol>
+   <rules>
+      <rule>
+         <lhs>
+            <String>3</String>
+         </lhs>
+         <rhs>
+            <Character>55</Character>
+         </rhs>
+      </rule>
+      <rule>
+         <lhs>
+            <String>3</String>
+         </lhs>
+         <rhs>
+            <Character>56</Character>
+            <String>5</String>
+         </rhs>
+      </rule>
+      <rule>
+         <lhs>
+            <String>5</String>
+         </lhs>
+         <rhs>
+            <Character>55</Character>
+            <String>5</String>
+         </rhs>
+      </rule>
+   </rules>
+   <generatesEpsilon>
+      <true />
+   </generatesEpsilon>
+</RightRG>

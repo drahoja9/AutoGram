@@ -1,0 +1,15 @@
+{
+	"type" : "CNF",
+	"nonterminal_alphabet" : ["<S2>", "S", "B", "C", "D"],
+	"terminal_alphabet" : ["1", "2", "3"],
+	"initial_symbol" : "S",
+	"rules" : [
+		{"lhs" : "<S2>", "rhs" : [["S", "C"]]},
+		{"lhs" : "S", "rhs" : [["B", "<S2>"], ["3"]]},
+		{"lhs" : "B", "rhs" : [["1"]]},
+		{"lhs" : "C", "rhs" : [["2"]]},
+		{"lhs" : "D", "rhs" : [["3"]]}
+	],
+	"generates_epsilon" : false
+}
+
