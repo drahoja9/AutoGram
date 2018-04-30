@@ -398,8 +398,8 @@ class XtJConverter:
             raise TypeError
 
         if 'ref' in child.attrib:
-            while text in referenced_values.values():
-                text += '\''
+            # while text in referenced_values.values():
+            #     text += '\''
             referenced_values[child.attrib['ref']] = text
 
         return text
@@ -817,6 +817,60 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
         raise XMLDecodeError("Unexpected exception occurred")
 
 
+
+def jtx_file_tester(infile: str, param: str = None):
+    # tester function, takes parameter with name of the json file, converts it to xml and saves the result to a file
+    with open("../examples/" + infile + ".json") as f1:
+        json_text = f1.read()
+        result = json_to_xml(json_text, param)
+        print(result)
+        # with open("../examples/" + infile + "_res.xml", "w") as f2:
+        #     f2.write(result)
+
+
+def xtj_file_tester(infile: str, param: str = None, steps=None):
+    # tester function, takes parameter with name of the xml file, converts it to json and saves the result to a file
+    with open("../examples2/" + infile + ".xml") as f1:
+        xml_text = f1.read()
+        result = xml_to_json(xml_text, param, steps)
+        with open("../examples2/" + infile + "_res.json", "w") as f2:
+            f2.write(result)
+
+
+# xtj_file_tester("AutomatonAfterDeterminization")
+# xtj_file_tester("AutomatonAfterEpsilonRemoval")
+# xtj_file_tester("AutomatonAfterMinimization")
+# xtj_file_tester("AutomatonFromTransformationE")
+# xtj_file_tester("AutomatonFromTransformationG")
+# xtj_file_tester("GrammarAfterCNFConversion")
+# xtj_file_tester("GrammarAfterEpsilonRemoval")
+# xtj_file_tester("GrammarAfterLeftRecRemoval")
+# xtj_file_tester("GrammarAfterSimpleRulesRemoval")
+# xtj_file_tester("GrammarAfterTrim")
+# xtj_file_tester("GrammarFromTransformationE")
+# xtj_file_tester("GrammarFromTransformationE2")
+# xtj_file_tester("RegexpFromTransformation")
+# xtj_file_tester("RegexpFromTransformationG")
+# xtj_file_tester("RightRGFromTransformation")
+# xtj_file_tester("AutomatonFromTransformationE2")
+# xtj_file_tester("AutomatonFromTransformationE4")
+
+# xtj_file_tester("UnboundedRegExp")
+# xtj_file_tester("EEUnboundedRegExp")
+# xtj_file_tester("RE")
+
+# xtj_file_tester("DPDA")
+# xtj_file_tester("EpsilonPDA")
+
+# xtj_file_tester("RightRG")
+# xtj_file_tester("CFG")
+# xtj_file_tester("EpsilonCFG")
+# xtj_file_tester("CNF")
+
+# xtj_file_tester("DFA")
+# xtj_file_tester("NFA")
+# xtj_file_tester("EpsilonNFA")
+# xtj_file_tester("MultiInitialStateNFA")
 
 
 
