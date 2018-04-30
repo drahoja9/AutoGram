@@ -4,11 +4,22 @@ import xml.etree.ElementTree as ET
 
 class JSONDecodeError(Exception):
     """
-    Base exception class, raised when an error occurs while decoding JSON
+    Base exception class, raised when an error occurs while processing JSON
     :param msg: message describing the error
     """
     def __init__(self, msg: str = ''):
         self.msg = msg
+
+
+class XMLDecodeError(Exception):
+    """
+    Base exception class, raised when an error occurs while processing XML
+    :param msg: message describing the error
+    """
+    def __init__(self, msg: str = ''):
+        self.msg = msg
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 class JtXConverter:
@@ -336,6 +347,412 @@ class JtXConverter:
         res = JtXConverter.simple_json_to_xml(json_dict['regexp'])
         return json_dict['derivation_string'], res
 
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+class XtJConverter:
+
+    @staticmethod
+    def _flatten_child_text(child: ET.Element, referenced_values: dict) -> str:
+        """
+        Takes child element, that has some sub elements and returns aggregated text value of the whole group
+        :param child: element to be flattened to a string value
+        :param referenced_values: list of already found references
+        :return: text representation of the element
+        """
+        result = ""
+        for subelement in child:
+            text = XtJConverter._get_child_text(subelement, referenced_values)
+            result += text
+
+        return result
+
+    @staticmethod
+    def _get_child_text(child: ET.Element, referenced_values: dict) -> str:
+        """
+        Return text attribute of given element formatted according to the element given.
+        Is able to fill in correct referenced values, create new values from pairs and sets
+        and add new values to reference list.
+        :param child: element we want to get text attribute from, must have tags Ref, String, Character, Integer or Pair
+        :param referenced_values: list of already found references
+        :return: text representation od the element
+        """
+        if child.tag == "Ref":
+            child_id = child.attrib['id']
+            text = referenced_values[child_id]
+        elif child.tag == "String":
+            text = child.text
+        elif child.tag == "Character":
+            text = chr(int(child.text))
+        elif child.tag == "Integer":
+            text = "_" + str(child.text)
+        elif child.tag == "epsilon":
+            text = None
+        elif child.tag == "Set" or child.tag == "Pair":
+            text = XtJConverter._flatten_child_text(child, referenced_values)
+        elif child.tag == "FinalStateLabel":
+            text = "Fin"
+        elif child.tag == "InitialSymbol":
+            text = "Start"
+        else:
+            raise TypeError
+
+        if 'ref' in child.attrib:
+            while text in referenced_values.values():
+                text += '\''
+            referenced_values[child.attrib['ref']] = text
+
+        return text
+
+    @staticmethod
+    def _create_string_from_subelement(root_element: ET.Element, parent_tag: str, referenced_values: dict ) -> str:
+        """
+        Creates one single string value from the first child of element with given parent tag.
+        Accesses given root element, finds the first element with given parent tag, finds its first child element
+        and returns its string representation. If the parent element has no children, returns None.
+        :param root_element: parent element of the element, whose child's text is wanted
+        :param parent_tag: tag of the element, whose child's text is wanted
+        :param referenced_values: list of already found references
+        :return: string representation of the child attribute, None if no child is present
+        """
+        parent_element = root_element.findall(parent_tag)[0]
+        if len(parent_element) == 0:
+            return None
+        child = parent_element[0]
+        return XtJConverter._get_child_text(child, referenced_values)
+
+    @staticmethod
+    def _create_list_from_subelements(root_element: ET.Element, parent_tag: str, referenced_values: dict) -> list:
+        """
+        Creates list of string values from all children of element with given parent tag.
+        Accesses given root element, finds the first element with given parent tag, finds all its child elements
+        and returns their string representations in a list.
+        :param root_element: parent element of the element, whose children's text is wanted
+        :param parent_tag: tag of the element, whose children's text is wanted
+        :param referenced_values: list of already found references
+        :return: list of string representations of the child attributes
+        """
+        parent_element = root_element.findall(parent_tag)[0]
+        result = []
+        change = False
+        for child in parent_element:
+            text = XtJConverter._get_child_text(child, referenced_values)
+
+            if change and 'ref' in child.attrib:
+                referenced_values[child.attrib['ref']] = text
+
+            result.append(text)
+
+        return result
+
+    @staticmethod
+    def _create_list_fa_transitions(root_element: ET.Element, referenced_values: dict) -> list:
+        """
+        Creates list of dictionaries, that represents finite automaton transitions.
+        Format: [{'from':, 'input':, 'to':}]
+        :param root_element: element, which has child with the tag 'transitions'
+        :param referenced_values: list of already found references
+        :return: list of dictionaries, that represents finite automaton transitions
+        """
+        parent_element = root_element.findall('transitions')[0]
+        result = []
+        for child in parent_element.findall('transition'):
+            t = {}
+            t_from = XtJConverter._create_string_from_subelement(child, 'from', referenced_values)
+            t['from'] = t_from
+            t_input = XtJConverter._create_string_from_subelement(child, 'input', referenced_values)
+            t['input'] = t_input
+            t_to = XtJConverter._create_string_from_subelement(child, 'to', referenced_values)
+            t['to'] = t_to
+            result.append(t)
+        return result
+
+    @staticmethod
+    def _create_list_pda_transitions(root_element: ET.Element, referenced_values: dict) -> list:
+        """
+        Creates list of dictionaries, that represents pushdown automaton transitions.
+        Format: [{'from':, 'input':, 'pop':, 'to':, 'push':}]
+        :param root_element: element, which has child with the tag 'transitions'
+        :param referenced_values: list of already found references
+        :return: list of dictionaries, that represents finite automaton transitions
+        """
+        parent_element = root_element.findall('transitions')[0]
+        result = []
+
+        for child in parent_element.findall('transition'):
+            t = {}
+            t_from = XtJConverter._create_string_from_subelement(child, 'from', referenced_values)
+            t['from'] = t_from
+            t_input = XtJConverter._create_string_from_subelement(child, 'input', referenced_values)
+            t['input'] = t_input
+            t_pop = XtJConverter._create_string_from_subelement(child, 'pop', referenced_values)
+            t['pop'] = t_pop
+            t_to = XtJConverter._create_string_from_subelement(child, 'to', referenced_values)
+            t['to'] = t_to
+            t_push = XtJConverter._create_string_from_subelement(child, 'push', referenced_values)
+            t['push'] = t_push
+            result.append(t)
+        return result
+
+    @staticmethod
+    def _create_list_rules(root_element: ET.Element, referenced_values: dict) -> list:
+        """
+        Creates list of dictionaries, that represents grammar rules.
+        Format: [{'from':, 'to':}]
+        :param root_element: element, which has child with the tag 'rules'
+        :param referenced_values: list of already found references
+        :return: list of dictionaries, that represents grammar rules
+        """
+        parent_element = root_element.findall('rules')[0]
+        result = []
+        for child in parent_element.findall('rule'):
+            r = {}
+            r_lhs = XtJConverter._create_string_from_subelement(child, 'lhs', referenced_values)
+            r['from'] = r_lhs
+            r_rhs = XtJConverter._create_list_from_subelements(child, 'rhs', referenced_values)
+            r['to'] = r_rhs
+            result.append(r)
+        return result
+
+    @staticmethod
+    def _create_regexp_value(element: ET.Element, referenced_values: dict) -> dict:
+        """
+        Creates list-dictionary structure, that represents regular expression value.
+        Method is supposed to be called recursively.
+        :param element: element, which represents a valid regular expression
+        :param referenced_values: list of already found references
+        :return: list-dictionary structure, that represents regular expression value.
+        """
+        res = {}
+        e_tag = element.tag
+        if e_tag == 'epsilon':
+            res['type'] = 'epsilon'
+        elif e_tag == 'empty':
+            res['type'] = 'empty_symbol'
+        elif e_tag == 'iteration':
+            res['type'] = 'iteration'
+            value = XtJConverter._create_regexp_value(element[0], referenced_values)
+            res['value'] = value
+        elif e_tag == 'concatenation' or e_tag == 'alternation':
+            res['type'] = e_tag
+            value = []
+            for child in element:
+                c = XtJConverter._create_regexp_value(child, referenced_values)
+                value.append(c)
+            res['value'] = value
+        else:
+            res['type'] = 'term'
+            res['value'] = XtJConverter._get_child_text(element, referenced_values)
+        return res
+
+    @staticmethod
+    def _xml_to_json_fa(root: ET.Element) -> dict:
+        """
+        Converts given ElementTree structure to a dictionary, that can be turned into JSON file.
+        ElementTree and dictionary both represent the same finite automaton.
+        :param root: root element of ElementTree to be converted
+        :return: dictionary representation of finite automaton
+        """
+        result_dict = {}
+        referenced_values = {}
+
+        type = root.tag
+        if type == "MultiInitialStateNFA":
+            result_dict['type'] = "NFA"
+        else:
+            result_dict['type'] = type
+
+        states = XtJConverter._create_list_from_subelements(root, 'states', referenced_values)
+        result_dict['states'] = states
+
+        input_alphabet = XtJConverter._create_list_from_subelements(root, 'inputAlphabet', referenced_values)
+        result_dict['input_alphabet'] = input_alphabet
+
+        if type == 'MultiInitialStateNFA':
+            parent_tag = "initialStates"
+        else:
+            parent_tag = "initialState"
+        initial_states = XtJConverter._create_list_from_subelements(root, parent_tag, referenced_values)
+        result_dict['initial_states'] = initial_states
+
+        final_states = XtJConverter._create_list_from_subelements(root, 'finalStates', referenced_values)
+        result_dict['final_states'] = final_states
+
+        transitions = XtJConverter._create_list_fa_transitions(root, referenced_values)
+        result_dict['transitions'] = transitions
+
+        return result_dict
+
+    @staticmethod
+    def _xml_to_json_pda(root: ET.Element) -> dict:
+        """
+        Converts given ElementTree structure to a dictionary, that can be turned into JSON file.
+        ElementTree and dictionary both represent the same push-down automaton.
+        :param root: root element of ElementTree to be converted
+        :return: dictionary representation of push-down automaton
+        """
+        result_dict = {}
+        referenced_values = {}
+
+        type = root.tag
+        result_dict['type'] = type
+
+        states = XtJConverter._create_list_from_subelements(root, 'states', referenced_values)
+        result_dict['states'] = states
+
+        input_alphabet = XtJConverter._create_list_from_subelements(root, 'inputAlphabet', referenced_values)
+        result_dict['input_alphabet'] = input_alphabet
+
+        pd_store_alphabet = XtJConverter._create_list_from_subelements(root, 'pushdownStoreAlphabet', referenced_values)
+        result_dict['pushdown_store_alphabet'] = pd_store_alphabet
+
+        initial_states = XtJConverter._create_list_from_subelements(root, 'initialState', referenced_values)
+        result_dict['initial_states'] = initial_states
+
+        init_pd_symbol = XtJConverter._create_string_from_subelement(root, 'initialPushdownStoreSymbol', referenced_values)
+        result_dict['initial_pushdown_store_symbol'] = init_pd_symbol
+
+        final_states = XtJConverter._create_list_from_subelements(root, 'finalStates', referenced_values)
+        result_dict['final_states'] = final_states
+
+        transitions = XtJConverter._create_list_pda_transitions(root, referenced_values)
+        result_dict['transitions'] = transitions
+
+        return result_dict
+
+    @staticmethod
+    def _xml_to_json_regexp(root: ET.Element) -> dict:
+        """
+        Converts given ElementTree structure to a dictionary, that can be turned into JSON file.
+        ElementTree and dictionary both represent the same regular expression.
+        :param root: root element of ElementTree to be converted
+        :return: dictionary representation of regular expression
+        """
+        result_dict = {}
+        referenced_values = {}
+
+        type = root.tag
+        result_dict['type'] = type
+
+        alphabet = XtJConverter._create_list_from_subelements(root, 'alphabet', referenced_values)
+        result_dict['alphabet'] = alphabet
+
+        value = XtJConverter._create_regexp_value(root[1], referenced_values)
+        result_dict['value'] = value
+
+        return result_dict
+
+    @staticmethod
+    def _xml_to_json_grammar(root: ET.Element) -> dict:
+        """
+        Converts given ElementTree structure to a dictionary, that can be turned into JSON file.
+        ElementTree and dictionary both represent the same grammar.
+        :param root: root element of ElementTree to be converted
+        :return: dictionary representation of grammar
+        """
+        result_dict = {}
+        referenced_values = {}
+        type = root.tag
+        if type == "EpsilonFreeCFG":
+            result_dict['type'] = "CFG"
+        else:
+            result_dict['type'] = type
+
+        nonterminal_alphabet = XtJConverter._create_list_from_subelements(root, 'nonterminalAlphabet', referenced_values)
+        result_dict['nonterminal_alphabet'] = nonterminal_alphabet
+
+        terminal_alphabet = XtJConverter._create_list_from_subelements(root, 'terminalAlphabet', referenced_values)
+        result_dict['terminal_alphabet'] = terminal_alphabet
+
+        initial_symbol = XtJConverter._create_string_from_subelement(root, 'initialSymbol', referenced_values)
+        result_dict['initial_symbol'] = initial_symbol
+
+        rules = XtJConverter._create_list_rules(root, referenced_values)
+        result_dict['rules'] = rules
+
+        if type == "RightRG" or type == "CNF":
+            generates_epsilon = root.findall('generatesEpsilon')[0][0].tag
+            result_dict['generates_epsilon'] = generates_epsilon
+        if type == "EpsilonFreeCFG":
+            generates_epsilon = root.findall('generatesEpsilon')[0][0].tag
+            if generates_epsilon == 'true':
+                result_dict['rules'].append({'from': result_dict['initial_symbol'], 'to': [None]})
+
+        return result_dict
+
+    @staticmethod
+    def simple_xml_to_json(xml_file: str) -> dict:
+        """
+        Converts given XML file to a dictionary, that can be turned into JSON file.
+        Converts XML file to ElementTree structue, according to the parent tag of the structure
+        chooses correct conversion method.
+        :param xml_file: string representation of an xml file
+        :return: dictionary that represents converted object
+        """
+        root = ET.fromstring(xml_file)
+        type = root.tag
+        if type == "DFA" or type == "NFA" or type == "EpsilonNFA" or type == "MultiInitialStateNFA":
+            result = XtJConverter._xml_to_json_fa(root)
+        elif type == "RightRG" or type == "CFG" or type == "CNF" or type == "EpsilonFreeCFG":
+            result = XtJConverter._xml_to_json_grammar(root)
+        elif type == "DPDA" or type == "NPDA":
+            result = XtJConverter._xml_to_json_pda(root)
+        elif type == "UnboundedRegExp":
+            result = XtJConverter._xml_to_json_regexp(root)
+        else:
+            raise TypeError
+
+        return result
+
+    @staticmethod
+    def comparision_xml_to_json(result: bool) -> dict:
+        """
+        Converts given result of a comparision to a dictionary, that can be converted to JSON
+        :param result: result of a comparision, bool value
+        :return: dictionary with the result, that can be converted to JSON
+        """
+        return {'result': result}
+
+    @staticmethod
+    def derivation_xml_to_json(result: str, steps: list) -> dict:
+        """
+        Converts given result of a derivation and its steps to a dictionary, that can be converted to JSON
+        :param result: resulting RegExp of a derivation
+        :param steps: list of RegExps that represents the steps of the derivation
+        :return: dictionary representation of the result and the steps, can be converted to JSON
+        """
+        ret = {}
+        ret['result'] = XtJConverter.simple_xml_to_json(result)
+        r_steps = []
+        for step in steps:
+            r_steps.append(XtJConverter.simple_xml_to_json(step))
+        ret['steps'] = r_steps
+        return ret
+
+    @staticmethod
+    def cnf_leftrec_xml_to_json(result: str, steps: list) -> dict:
+        """
+        Converts given result of a conversion to CNF or left recursion removal and its steps to a dictionary,
+        that can be converted to JSON
+        :param result: resulting grammar of the algorithm
+        :param steps: list of grammars that represents the steps of the algorithm
+        :return: dictionary representation of the result and the steps, can be converted to JSON
+        """
+        ret = {}
+        ret['result'] = XtJConverter.simple_xml_to_json(result)
+        ret['after_reduction'] = XtJConverter.simple_xml_to_json(steps[0])
+        ret['after_epsilon'] = XtJConverter.simple_xml_to_json(steps[1])
+        ret['after_unit_rules'] = XtJConverter.simple_xml_to_json(steps[2])
+        return ret
+
+    @staticmethod
+    def minimization_xml_to_json(result: str, steps: list) -> dict:
+        raise NotImplementedError
+
+    @staticmethod
+    def cyk_xml_to_json(result: bool, steps: str) -> dict:
+        raise NotImplementedError
+
 
 def json_to_xml(json_file: str, param: str = None):
     """
@@ -364,33 +781,42 @@ def json_to_xml(json_file: str, param: str = None):
         raise JSONDecodeError("Unexpected exception occurred")
 
 
-def jtx_file_tester(infile: str, param: str = None):
-    # tester function, takes parameter with name of the json file, converts it to xml and saves the result to a file
-    with open("../examples/" + infile + ".json") as f1:
-        json_text = f1.read()
-        result = json_to_xml(json_text, param)
-        print(result)
-        # with open("../examples/" + infile + "_res.xml", "w") as f2:
-        #     f2.write(result)
+def xml_to_json(result, param: str = None, steps=None) -> str:
+    """
+    Converts given algorithm result to corresponding JSON string representation
+    :param result: algorithm result, can be string representing XML file or a bool value, according to param attribute
+    :param param: optional parameter describing result structure. If it's one of the special cases - derivation,
+    comparision, minimization, cnf conversion, left recursion removal or cyk algorithm -  it must be present.
+    If it's not a special case, it can be omitted.
+    :param steps: optional parameter describing steps of the algorithm. Either a string or a list of strings,
+    according to the param specified. May be present with derivation, minimization or cyk. Must be present with
+    cnf conversion and left recursion removal.
+    :return: string representation of a JSON file
+    """
+    try:
+        if param == 'comparision':
+            ret = XtJConverter.comparision_xml_to_json(result)
+        elif param == 'minimization':
+            ret = XtJConverter.minimization_xml_to_json(result, steps)
+        elif param == 'derivation':
+            ret = XtJConverter.derivation_xml_to_json(result, steps)
+        elif param == 'cnf':
+            ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
+        elif param == "left_rec":
+            ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
+        elif param == 'cyk':
+            ret = XtJConverter.cyk_xml_to_json(result, steps)
+        else:
+            ret = XtJConverter.simple_xml_to_json(result)
+        return json.dumps(ret)
+    except ET.ParseError:
+        raise XMLDecodeError("XML parse exception")
+    except (IndexError, KeyError, TypeError):
+        raise XMLDecodeError("Invalid XML structure")
+    except:
+        raise XMLDecodeError("Unexpected exception occurred")
 
-# jtx_file_tester("comparision", "comparision")
-# jtx_file_tester("transformation", "transformation")
-# jtx_file_tester("derivation", "derivation")
 
-# jtx_file_tester("EpsilonPDA")
-# jtx_file_tester("DPDA")
 
-# jtx_file_tester("UnboundedRegExp")
-# jtx_file_tester("EEUnboundedRegExp")
-
-# jtx_file_tester("RightRG")
-# jtx_file_tester("CFG")
-# jtx_file_tester("EpsilonCFG")
-# jtx_file_tester("CNF")
-
-# jtx_file_tester("DFA")
-# jtx_file_tester("NFA")
-# jtx_file_tester("EpsilonNFA")
-# jtx_file_tester("MultiInitialStateNFA")
 
 
