@@ -11,19 +11,37 @@
 
 #include <factory/XmlDataFactory.hpp>
 
+struct ResultStruct {
+	ResultStruct() : t_ResCode(-1), t_Result(nullptr) {}
+	~ResultStruct() { delete [] this->t_Result; }
 
-class ALT_Interface {
-public:	
-	int prepareAndRun(std::string algorithm, std::string input, const char * optionalParam);
-	char * getResult() { return this->m_ReturnPtr; }
-	
-private:
-	char * m_ReturnPtr = nullptr;
-	
+	int t_ResCode;
+	char * t_Result;
 };
 
-int ALT_Interface::prepareAndRun ( std::string algorithm, std::string input, const char * optionalParam ) {
+class ALT_Interface {
+public:
+	ALT_Interface() : m_ResultStruct(nullptr) {}
+	~ALT_Interface() { delete this->m_ResultStruct; }
+	void prepareAndRun(std::string algorithm, std::string input, const char * optionalParam);
+
+	ResultStruct * m_ResultStruct;
+	
+private:
+	void setResultStruct(int resCode, std::string result) {
+		this->m_ResultStruct->t_ResCode = resCode;
+		this->m_ResultStruct->t_Result = new char [result.length()];
+		strncpy(this->m_ResultStruct->t_Result, result.c_str(), result.size());
+		this->m_ResultStruct->t_Result[result.size()] = '\0';
+	}
+};
+
+void ALT_Interface::prepareAndRun ( std::string algorithm, std::string input, const char * optionalParam ) {
 	try {
+		if (this->m_ResultStruct)
+			delete this->m_ResultStruct;
+		this->m_ResultStruct = new ResultStruct();
+	
 		if (!optionalParam) {
 			if (algorithm == "automaton_determinization")
 				algorithm = "automaton::determinize::Determinize";
@@ -42,8 +60,8 @@ int ALT_Interface::prepareAndRun ( std::string algorithm, std::string input, con
 			else if (algorithm == "grammar_left_recursion")
 				algorithm = "grammar::simplify::LeftRecursionRemover";
 			else {
-				printf("Unknow algorithm passed as parameter!");
-				return 1;
+				this->setResultStruct(1, "Unknow algorithm passed as parameter!");
+				return;
 			}
 			
 		}
@@ -53,8 +71,8 @@ int ALT_Interface::prepareAndRun ( std::string algorithm, std::string input, con
 			else if (algorithm == "grammar_cyk")
 				algorithm = "grammar::generate::CockeYoungerKasami";
 			else {
-				printf("Unknow algorithm passed as parameter!");
-				return 1;
+				this->setResultStruct(1, "Unknow algorithm passed as parameter!");
+				return;
 			}
 		}
 
@@ -72,38 +90,35 @@ int ALT_Interface::prepareAndRun ( std::string algorithm, std::string input, con
 		parser.parse ( )->run ( environment );
 		
 		std::string res = environment.getVariable< std::string >("output");
-		std::cout << res.length() << std::endl;
-		this->m_ReturnPtr = new char [res.length()];
-		strncpy(m_ReturnPtr, res.c_str(), res.length());
+		this->setResultStruct(0, res);
 		
-		return 0;
 	} catch ( const exception::CommonException & exception ) {
-		factory::XmlDataFactory::toStdout ( exception );
-		return 1;
+		this->setResultStruct(1, exception.what());
+		return;
 	} catch ( const TCLAP::ArgException & exception ) {
-		common::Streams::err << exception.error ( ) << std::endl;
-		return 2;
+		this->setResultStruct(2, exception.error());
+		return;
 	} catch ( const std::exception & exception ) {
-		common::Streams::err << "Exception caught: " << exception.what ( ) << std::endl;
-		return 3;
+		this->setResultStruct(3, exception.what());
+		return;
 	} catch ( ... ) {
-		common::Streams::err << "Unknown exception caught." << std::endl;
-		return 127;
+		this->setResultStruct(127, "Unknown exception caught.");
+		return;
 	}
 }
 
 
 extern "C" {
-	ALT_Interface* createInterface() { return new ALT_Interface; }
-
-	const char * runAlgorithm(ALT_Interface* interface, const char * algorithm, const char * inputFile, const char * optionalParam) {
-		int resCode = interface->prepareAndRun(algorithm, inputFile, optionalParam);
-		std::cout << resCode << std::endl;
-		return interface->getResult();
+	// Class ALT_Interface wrapper
+	void * createInterface() { return new(std::nothrow) ALT_Interface; }
+	void deleteInterface(ALT_Interface * interface) { delete interface; }
+	
+	ResultStruct * runAlgorithm(ALT_Interface* interface, const char * algorithm, const char * inputFile, const char * optionalParam) {
+		interface->prepareAndRun(algorithm, inputFile, optionalParam);
+		return interface->m_ResultStruct;
 	}
 	
-	void cleanUp(char * memoryToFree) {
-		std::cout << &memoryToFree << std::endl;
-		//free(memoryToFree);
-	}
+	// Struct ResultStruct wrapper
+	int getResultCode(ResultStruct * rs) { return rs->t_ResCode; }
+	const char * getResult(ResultStruct * rs) { return rs->t_Result; }
 }
