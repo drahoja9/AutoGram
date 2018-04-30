@@ -1,22 +1,4 @@
 import os
-#from ctypes import *
-
-#par_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-#lib = cdll.LoadLibrary(par_dir + '/build/test.so')
-#lib.runAlgorithm.restype = c_char_p
-
-
-#inputFile = '/home/jakub/alt/automata-library/examples2/regexp/regexp.xml'
-#inputFile = '/home/jakub/test/a.xml'
-#algorithm = 'regexp_derivation'
-
-#with open(inputFile, "r") as f:
-#	xml_input = f.read()
-
-#res = lib.runAlgorithm(algorithm, inputFile, None)
-#print(res)
-#lib.cleanUp(lib.runAlgorithm(algorithm, xml_input, ''))
-
 import ctypes
 
 par_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -36,7 +18,6 @@ class Runner:
 		
 
 inputFile = '/home/jakub/alt/automata-library/examples2/regexp/regexp.xml'
-#inputFile = '/home/jakub/test/a.xml'
 algorithm = 'regexp_derivation'
 
 with open(inputFile, "r") as f:
