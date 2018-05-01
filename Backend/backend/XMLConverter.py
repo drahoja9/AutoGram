@@ -347,6 +347,17 @@ class JtXConverter:
         res = JtXConverter.simple_json_to_xml(json_dict['regexp'])
         return json_dict['derivation_string'], res
 
+    @staticmethod
+    def cyk_json_to_xml(json_dict: dict) -> (str, str):
+        """
+        Takes dictionary representation of an JSON file describing CYK input
+        and returns generated string and the grammar to be checked as XML string
+        :param json_dict: dictionary representation of an JSON file
+        :return: tuple of generated string and string XML representation of the grammar
+        """
+        res = JtXConverter.simple_json_to_xml(json_dict['grammar'])
+        return json_dict['generated_string'], res
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -769,8 +780,10 @@ def json_to_xml(json_file: str, param: str = None):
             return JtXConverter.comparision_json_to_xml(json_dict)
         elif param == 'transformation':
             return JtXConverter.transformation_json_to_xml(json_dict)
-        elif param == 'derivation':
+        elif param == 'regexp_derivation':
             return JtXConverter.derivation_json_to_xml(json_dict)
+        elif param == 'grammar_cyk':
+            return JtXConverter.cyk_json_to_xml(json_dict)
         else:
             return JtXConverter.simple_json_to_xml(json_dict)
     except json.JSONDecodeError:
@@ -796,15 +809,15 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
     try:
         if param == 'comparision':
             ret = XtJConverter.comparision_xml_to_json(result)
-        elif param == 'minimization':
+        elif param == 'automaton_minimization':
             ret = XtJConverter.minimization_xml_to_json(result, steps)
-        elif param == 'derivation':
+        elif param == 'regexp_derivation':
             ret = XtJConverter.derivation_xml_to_json(result, steps)
-        elif param == 'cnf':
+        elif param == 'grammar_cnf':
             ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
-        elif param == "left_rec":
+        elif param == "grammar_left_recursion":
             ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
-        elif param == 'cyk':
+        elif param == 'grammar_cyk':
             ret = XtJConverter.cyk_xml_to_json(result, steps)
         else:
             ret = XtJConverter.simple_xml_to_json(result)
