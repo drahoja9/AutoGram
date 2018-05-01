@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<EpsilonFreeCFG>
+  <nonterminalAlphabet>
+    <String>M</String>
+    <String>V</String>
+  </nonterminalAlphabet>
+  <terminalAlphabet>
+    <String>i</String>
+  </terminalAlphabet>
+  <initialSymbol>
+    <String>V</String>
+  </initialSymbol>
+  <rules>
+    <rule>
+      <lhs>
+        <String>M</String>
+      </lhs>
+      <rhs>
+        <String>V</String>
+        <String>M</String>
+        <String>V</String>
+        <String>V</String>
+      </rhs>
+    </rule>
+  </rules>
+  <generatesEpsilon>
+    <false/>
+  </generatesEpsilon>
+</EpsilonFreeCFG>

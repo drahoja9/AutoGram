@@ -1,0 +1,318 @@
+<?xml version="1.0"?>
+<MultiInitialStateNFA>
+  <states>
+    <Integer ref="0">0</Integer>
+    <Integer ref="1">1</Integer>
+    <Integer ref="2">2</Integer>
+    <Integer ref="3">3</Integer>
+    <Integer ref="4">4</Integer>
+    <Integer ref="5">5</Integer>
+    <Integer ref="6">6</Integer>
+    <Integer ref="7">7</Integer>
+    <Integer ref="8">8</Integer>
+    <Integer ref="9">9</Integer>
+    <Integer ref="10">10</Integer>
+    <Integer ref="11">11</Integer>
+    <Integer ref="12">12</Integer>
+    <Integer ref="13">13</Integer>
+    <Integer ref="14">14</Integer>
+    <Integer ref="15">15</Integer>
+    <Integer ref="16">16</Integer>
+    <Integer ref="17">17</Integer>
+  </states>
+  <inputAlphabet>
+    <String ref="18">a</String>
+    <String ref="19">b</String>
+    <String ref="20">c</String>
+    <String ref="21">d</String>
+  </inputAlphabet>
+  <initialStates>
+    <Ref id="3"/>
+    <Ref id="5"/>
+  </initialStates>
+  <finalStates>
+    <Ref id="4"/>
+    <Ref id="5"/>
+    <Ref id="6"/>
+    <Ref id="7"/>
+    <Ref id="16"/>
+    <Ref id="17"/>
+  </finalStates>
+  <transitions>
+    <transition>
+      <from>
+        <Integer ref="22">0</Integer>
+      </from>
+      <input>
+        <Ref id="18"/>
+      </input>
+      <to>
+        <Integer ref="23">1</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="1"/>
+      </from>
+      <input>
+        <Ref id="18"/>
+      </input>
+      <to>
+        <Integer ref="24">14</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="2"/>
+      </from>
+      <input>
+        <Ref id="18"/>
+      </input>
+      <to>
+        <Ref id="15"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="3"/>
+      </from>
+      <input>
+        <Ref id="18"/>
+      </input>
+      <to>
+        <Integer ref="25">10</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="3"/>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Integer ref="26">9</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="3"/>
+      </from>
+      <input>
+        <Ref id="20"/>
+      </input>
+      <to>
+        <Integer ref="27">0</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="3"/>
+      </from>
+      <input>
+        <Ref id="21"/>
+      </input>
+      <to>
+        <Integer ref="28">12</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="4"/>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Ref id="11"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="5"/>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Integer ref="29">6</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="5"/>
+      </from>
+      <input>
+        <Ref id="20"/>
+      </input>
+      <to>
+        <Ref id="5"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="6"/>
+      </from>
+      <input>
+        <Ref id="20"/>
+      </input>
+      <to>
+        <Ref id="5"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="7"/>
+      </from>
+      <input>
+        <Ref id="21"/>
+      </input>
+      <to>
+        <Integer ref="30">12</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="8"/>
+      </from>
+      <input>
+        <Ref id="18"/>
+      </input>
+      <to>
+        <Ref id="10"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="8"/>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Ref id="17"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="8"/>
+      </from>
+      <input>
+        <Ref id="20"/>
+      </input>
+      <to>
+        <Ref id="0"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="8"/>
+      </from>
+      <input>
+        <Ref id="21"/>
+      </input>
+      <to>
+        <Ref id="12"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="9"/>
+      </from>
+      <input>
+        <Ref id="18"/>
+      </input>
+      <to>
+        <Ref id="4"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Integer ref="31">10</Integer>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Integer ref="32">2</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Integer ref="33">11</Integer>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Integer ref="34">8</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Integer ref="35">12</Integer>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Integer ref="36">7</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Integer ref="37">13</Integer>
+      </from>
+      <input>
+        <Ref id="19"/>
+      </input>
+      <to>
+        <Integer ref="38">16</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="14"/>
+      </from>
+      <input>
+        <Ref id="20"/>
+      </input>
+      <to>
+        <Integer ref="39">5</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="14"/>
+      </from>
+      <input>
+        <Ref id="21"/>
+      </input>
+      <to>
+        <Integer ref="40">12</Integer>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Integer ref="41">15</Integer>
+      </from>
+      <input>
+        <Ref id="21"/>
+      </input>
+      <to>
+        <Ref id="13"/>
+      </to>
+    </transition>
+    <transition>
+      <from>
+        <Ref id="17"/>
+      </from>
+      <input>
+        <Ref id="18"/>
+      </input>
+      <to>
+        <Integer ref="42">4</Integer>
+      </to>
+    </transition>
+  </transitions>
+</MultiInitialStateNFA>

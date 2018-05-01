@@ -1,0 +1,19 @@
+<UnboundedRegExp>
+	<alphabet>
+		<Integer>0</Integer>
+		<Integer>1</Integer>
+	</alphabet>
+	<alternation>
+		<concatenation>
+			<Integer>1</Integer>
+			<Integer>0</Integer>
+		</concatenation>
+		<concatenation>
+			<iteration>
+				<Integer>0</Integer>
+			</iteration>
+			<Integer>1</Integer>
+		</concatenation>
+		<epsilon></epsilon>
+	</alternation>
+</UnboundedRegExp>

@@ -1,0 +1,23 @@
+<UnboundedRegExp>
+	<alphabet>
+		<Integer>0</Integer>
+		<Integer>1</Integer>
+	</alphabet>
+	<iteration>
+		<alternation>
+			<concatenation>
+				<Integer>0</Integer>
+				<iteration>
+					<Integer>1</Integer>
+				</iteration>
+				<Integer>0</Integer>
+			</concatenation>
+			<concatenation>
+				<Integer>1</Integer>
+				<iteration>
+					<Integer>0</Integer>
+				</iteration>
+			</concatenation>
+		</alternation>
+	</iteration>
+</UnboundedRegExp>

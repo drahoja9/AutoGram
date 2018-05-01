@@ -1,0 +1,9 @@
+CFG (
+{A, B, C, D},
+{a, b},
+{C -> D a B | b,
+B -> A D |,
+D -> B C,
+A -> a | C D
+},
+A)
