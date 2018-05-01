@@ -51,7 +51,7 @@ def regexp_derivation(json_file: str) -> str:
     # for c in derivation_string:
     #   algorithm_steps.append(Algorithm.algorithm(source, 'regexp_derivation', c)
     # algorithm_result = alhorithm_steps[-1]
-    result = Converter.xml_to_json(algorithm_result, 'automaton_derivation', algorithm_steps)
+    result = Converter.xml_to_json(algorithm_result, 'regexp_derivation', algorithm_steps)
     return result
 
 
