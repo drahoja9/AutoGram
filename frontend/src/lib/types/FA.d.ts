@@ -7,7 +7,7 @@ declare enum FAType {
   /** Non-deterministic FA */
   NFA = 'NFA',
   /** Non-deterministic FA with possible epsilon transitions */
-  ENFA = 'ENFA'
+  ENFA = 'EpsilonNFA'
 }
 
 /**

@@ -28,7 +28,7 @@ export interface RRG extends GRBase {
   type: GRType.RRG;
   rules: {
     from: string;
-    to: string[]
+    to: string[];
   }[];
   generates_epsilon: boolean;
 }
@@ -40,7 +40,7 @@ export interface CFG extends GRBase {
   type: GRType.CFG;
   rules: {
     from: string;
-    to: string[]
+    to: string[];
   }[];
 }
 
@@ -51,7 +51,7 @@ export interface EFCFG extends GRBase {
   type: GRType.EFCFG;
   rules: {
     from: string;
-    to: string[]
+    to: string[];
   }[];
 }
 
@@ -62,7 +62,7 @@ export interface CNF extends GRBase {
   type: GRType.CNF;
   rules: {
     from: string;
-    to: string[]
+    to: string[];
   }[];
   generates_epsilon: boolean;
 }

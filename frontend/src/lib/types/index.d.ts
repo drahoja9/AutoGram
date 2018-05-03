@@ -19,16 +19,9 @@ export interface TransformRequest {
   source: NFA | RRG | RE;
 }
 
-/**
- * @todo finish, when API done
- */
-export interface TransformResponse { }
+export type TransformResponse = NFA | RRG | RE;
 
-
-/**
- * @todo finish, when API done
- */
-export interface MinimizationRequest { }
+export type MinimizationRequest = DFA;
 export interface MinimizationResponse {
   result: DFA;
   steps: any[];
@@ -44,10 +37,7 @@ export interface DerivationResponse {
   steps: RE[];
 }
 
-/**
- * @todo finish, when API done
- */
-export interface CNFRequest { }
+export type CNFRequest = CFG;
 export interface CNFResponse {
   after_reduction: CFG;
   after_epsilon: CFG;
@@ -55,10 +45,7 @@ export interface CNFResponse {
   result: CNF;
 }
 
-/**
- * @todo finish, when API done
- */
-export interface LeftRecRemovalRequest { }
+export type LeftRecRemovalRequest = CFG;
 export interface LeftRecRemovalResponse {
   after_reduction: CFG;
   after_epsilon: CFG;
@@ -66,10 +53,7 @@ export interface LeftRecRemovalResponse {
   result: CFG;
 }
 
-/**
- * @todo finish, when API done
- */
-export interface CYKRequest { }
+export type CYKRequest = CNF;
 export interface CYKResponse {
   result: boolean;
   step_table: any;
