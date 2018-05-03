@@ -1,12 +1,12 @@
 /**
  * Possible regular expression types.
  */
-declare enum REType {
+export declare enum REType {
   /** Unbounded regular expression */
   Unbounded = "UnboundedRegExp"
 }
 
-declare enum NodeType {
+export declare enum NodeType {
   Concat = 'concatenation',
   Iter = 'iteration',
   Alter = 'alternation',
@@ -16,41 +16,41 @@ declare enum NodeType {
 }
 
 /** Concatenation of two or more nodes. */
-interface Concat {
+export interface Concat {
   type: NodeType.Concat;
   value: RENode[];
 }
 
 /** Iteration of a node. */
-interface Iter {
+export interface Iter {
   type: NodeType.Iter;
   value: RENode;
 }
 
 /** Alternation of two or more nodes. */
-interface Alter {
+export interface Alter {
   type: NodeType.Iter;
   value: RENode[];
 }
 
 /** Terminal node. */
-interface Term {
+export interface Term {
   type: NodeType.Term;
   value: string;
 }
 
 /** Epsilon node representation. */
-interface Epsilon {
+export interface Epsilon {
   type: NodeType.Epsilon;
 }
 
 /** Empty string representation. */
-interface EmptySymbol {
+export interface EmptySymbol {
   type: NodeType.EmptySymbol;
 }
 
 /**  */
-type RENode = Concat | Iter | Alter | Term | Epsilon | EmptySymbol;
+export type RENode = Concat | Iter | Alter | Term | Epsilon | EmptySymbol;
 
 export interface RE {
   type: REType;

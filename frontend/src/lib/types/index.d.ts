@@ -63,4 +63,4 @@ export interface CYKResponse {
 export { FA, FAType, DFA, NFA, ENFA } from './FA';
 export { PDA, PDAType, DPDA, NPDA } from './PDA';
 export { GR, GRType, RRG, CFG, EFCFG, CNF } from './GR';
-export { RE, REType } from './RE';
+export { RE, RENode, REType, NodeType } from './RE';
