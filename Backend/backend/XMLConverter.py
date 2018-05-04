@@ -1,11 +1,11 @@
 import json
 import xml.etree.ElementTree as ET
 
-from __init__ import ObjectTypes as ObjectTypes
-from __init__ import AlgorithmTypes as AlgorithmTypes
-
+from __init__ import ObjectTypes
+from __init__ import AlgorithmTypes
 
 XML_VERSION = '<?xml version="1.0"?>'
+
 
 class JSONDecodeError(Exception):
     """
@@ -332,7 +332,7 @@ class JtXConverter:
             res = JtXConverter._json_to_xml_pda(json_dict)
         else:
             raise TypeError
-        return res
+        return XML_VERSION + res
 
     @staticmethod
     def comparison_json_to_xml(json_dict: dict) -> (str, str):
@@ -393,7 +393,7 @@ class XtJConverter:
     to a string representation of an JSON structure.
     """
     @staticmethod
-    def _flatten_child_text(child: ET.Element, referenced_values: dict) -> str:
+    def _flatten_child_text(child: ET.Element, referenced_values: dict, allow_name_change: bool) -> str:
         """
         Takes child element, that has some sub elements and returns aggregated text value of the whole group
         :param child: element to be flattened to a string value
@@ -402,13 +402,15 @@ class XtJConverter:
         """
         result = ""
         for subelement in child:
-            text = XtJConverter._get_child_text(subelement, referenced_values)
+            text = XtJConverter._get_child_text(subelement, referenced_values,
+                                                allow_name_change, integer_in_string=True)
             result += text
 
         return result
 
     @staticmethod
-    def _get_child_text(child: ET.Element, referenced_values: dict) -> str:
+    def _get_child_text(child: ET.Element, referenced_values: dict,
+                        allow_name_change: bool, integer_in_string: bool = False) -> str:
         """
         Return text attribute of given element formatted according to the element given.
         Is able to fill in correct referenced values, create new values from pairs and sets
@@ -427,11 +429,17 @@ class XtJConverter:
         elif child.tag == "Character":
             text = chr(int(child.text))
         elif child.tag == "Integer":
-            text = "_" + str(child.text)
+            if allow_name_change:
+                if integer_in_string:
+                    text = "_" + child.text
+                else:
+                    text = child.text + "\'"
+            else:
+                text = child.text
         elif child.tag == "epsilon":
             text = None
         elif child.tag == "Set" or child.tag == "Pair":
-            text = XtJConverter._flatten_child_text(child, referenced_values)
+            text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
         elif child.tag == "InitialSymbol":
@@ -440,14 +448,16 @@ class XtJConverter:
             raise TypeError
 
         if 'ref' in child.attrib:
-            # while text in referenced_values.values():
-            #     text += '\''
+            if allow_name_change:
+                while text in referenced_values.values():
+                    text += '\''
             referenced_values[child.attrib['ref']] = text
 
         return text
 
     @staticmethod
-    def _create_string_from_subelement(root_element: ET.Element, parent_tag: str, referenced_values: dict ) -> str:
+    def _create_string_from_subelement(root_element: ET.Element, parent_tag: str, referenced_values: dict,
+                                       allow_name_change: bool = False) -> str:
         """
         Creates one single string value from the first child of element with given parent tag.
         Accesses given root element, finds the first element with given parent tag, finds its first child element
@@ -462,10 +472,11 @@ class XtJConverter:
         if len(parent_element) == 0:
             return None
         child = parent_element[0]
-        return XtJConverter._get_child_text(child, referenced_values)
+        return XtJConverter._get_child_text(child, referenced_values, allow_name_change)
 
     @staticmethod
-    def _create_list_from_subelements(root_element: ET.Element, parent_tag: str, referenced_values: dict) -> list:
+    def _create_list_from_subelements(root_element: ET.Element, parent_tag: str, referenced_values: dict,
+                                      allow_name_change: bool = False) -> list:
         """
         Creates list of string values from all children of element with given parent tag.
         Accesses given root element, finds the first element with given parent tag, finds all its child elements
@@ -479,7 +490,7 @@ class XtJConverter:
         parent_element = root_element.findall(parent_tag)[0]
         result = []
         for child in parent_element:
-            text = XtJConverter._get_child_text(child, referenced_values)
+            text = XtJConverter._get_child_text(child, referenced_values, allow_name_change)
             result.append(text)
 
         return result
@@ -585,7 +596,7 @@ class XtJConverter:
             res['value'] = value
         else:
             res['type'] = 'term'
-            res['value'] = XtJConverter._get_child_text(element, referenced_values)
+            res['value'] = XtJConverter._get_child_text(element, referenced_values, allow_name_change=False)
         return res
 
     @staticmethod
@@ -605,7 +616,7 @@ class XtJConverter:
         else:
             result_dict['type'] = type
 
-        states = XtJConverter._create_list_from_subelements(root, 'states', referenced_values)
+        states = XtJConverter._create_list_from_subelements(root, 'states', referenced_values, allow_name_change=True)
         result_dict['states'] = states
 
         input_alphabet = XtJConverter._create_list_from_subelements(root, 'inputAlphabet', referenced_values)
@@ -640,7 +651,7 @@ class XtJConverter:
         type = root.tag
         result_dict['type'] = type
 
-        states = XtJConverter._create_list_from_subelements(root, 'states', referenced_values)
+        states = XtJConverter._create_list_from_subelements(root, 'states', referenced_values, allow_name_change=True)
         result_dict['states'] = states
 
         input_alphabet = XtJConverter._create_list_from_subelements(root, 'inputAlphabet', referenced_values)
@@ -704,7 +715,8 @@ class XtJConverter:
         else:
             result_dict['type'] = type
 
-        nonterminal_alphabet = XtJConverter._create_list_from_subelements(root, 'nonterminalAlphabet', referenced_values)
+        nonterminal_alphabet = XtJConverter._create_list_from_subelements(root, 'nonterminalAlphabet',
+                                                                          referenced_values, allow_name_change=True)
         result_dict['nonterminal_alphabet'] = nonterminal_alphabet
 
         terminal_alphabet = XtJConverter._create_list_from_subelements(root, 'terminalAlphabet', referenced_values)
@@ -823,7 +835,7 @@ def json_to_xml(json_file: str, param: str = None):
             res = JtXConverter.cyk_json_to_xml(json_dict)
         else:
             res = JtXConverter.simple_json_to_xml(json_dict)
-        return XML_VERSION + res
+        return res
     except json.JSONDecodeError:
         raise JSONDecodeError("JSON decode exception")
     except (KeyError, TypeError):
@@ -867,30 +879,3 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
         raise XMLDecodeError("Invalid XML structure")
     except:
         raise XMLDecodeError("Unexpected exception occurred")
-
-
-def jtx_file_tester(infile: str, param: str = None):
-    # tester function, takes parameter with name of the json file, converts it to xml and saves the result to a file
-    with open("../my_files/examples/" + infile + ".json") as f1:
-        json_text = f1.read()
-        result = json_to_xml(json_text, param)
-        # print(result)
-        with open("../my_files/examples/" + infile + "_res.xml", "w") as f2:
-            f2.write(result)
-
-
-def xtj_file_tester(infile: str, param: str = None, steps=None):
-    # tester function, takes parameter with name of the xml file, converts it to json and saves the result to a file
-    with open("../my_files/examples2/" + infile + ".xml") as f1:
-        xml_text = f1.read()
-        result = xml_to_json(xml_text, param, steps)
-        with open("../my_files/examples2/" + infile + "_res.json", "w") as f2:
-            f2.write(result)
-
-# jtx_file_tester("DPDA")
-# jtx_file_tester("EpsilonPDA")
-# jtx_file_tester("MultiPopNPDA")
-
-# xtj_file_tester("DPDA_in")
-# xtj_file_tester("EpsilonPDA_in")
-# xtj_file_tester("MultiPopNPDA_in")
