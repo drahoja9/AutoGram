@@ -1,6 +1,6 @@
 import XMLConverter as Converter
 
-from __init__ import AlgorithmTypes
+from . import AlgorithmTypes
 
 # add import for ALT library wrapper
 
