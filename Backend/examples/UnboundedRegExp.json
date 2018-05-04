@@ -1,9 +1,0 @@
-{
-	"type": "UnboundedRegExp",
-	"alphabet" : ["0", "1", "2", "3"],
-	"concatenation" : [
-		"0", 
-		{"iteration": ["1"]}, 
-		{"alternation" : ["3", "2"]}
-	]
-}
