@@ -1,8 +1,8 @@
 import json
 import xml.etree.ElementTree as ET
 
-from __init__ import ObjectTypes
-from __init__ import AlgorithmTypes
+from . import ObjectTypes
+from . import AlgorithmTypes
 
 XML_VERSION = '<?xml version="1.0"?>'
 
@@ -314,7 +314,7 @@ class JtXConverter:
     @staticmethod
     def simple_json_to_xml(json_dict: dict) -> str:
         """
-        Base mathod the the class, takes dictionary representation of an JSON file,
+        Base mathod of the class, takes dictionary representation of an JSON file,
         and converts it to an XML string
         :param json_dict: dictionary representation of an JSON file
         :return: string representation of an XML file that was converted from given JSON
