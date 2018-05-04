@@ -1,7 +1,7 @@
 /**
  * Possible push-down automata types.
  */
-declare enum PDAType {
+export enum PDAType {
   DPDA = 'DPDA',
   NPDA = 'NPDA'
 }

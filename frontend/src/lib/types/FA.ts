@@ -1,7 +1,7 @@
 /**
  * Possible finite automata types.
  */
-declare enum FAType {
+export enum FAType {
   /** Deterministic FA */
   DFA = 'DFA',
   /** Non-deterministic FA */

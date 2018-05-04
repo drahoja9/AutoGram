@@ -1,7 +1,7 @@
 /**
  * Possible grammar types
  */
-declare enum GRType {
+export enum GRType {
   /** Right regular grammar */
   RRG = 'RightRG',
   /** Context-free grammar */

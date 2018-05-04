@@ -1,7 +1,6 @@
 //#region imports
-import { FA, FAType, DFA, NFA, ENFA } from './FA';
-import { PDA, PDAType, DPDA, NPDA } from './PDA';
-import { GR, GRType, RRG, CFG, EFCFG, CNF } from './GR';
+import {  FAType, DFA, NFA } from './FA';
+import { GRType, RRG, CFG, CNF } from './GR';
 import { RE, REType } from './RE';
 //#endregion imports
 
@@ -60,7 +59,7 @@ export interface CYKResponse {
 }
 
 // Reexport all types.
-export { FA, FAType, DFA, NFA, ENFA } from './FA';
-export { PDA, PDAType, DPDA, NPDA } from './PDA';
-export { GR, GRType, RRG, CFG, EFCFG, CNF } from './GR';
-export { RE, RENode, REType, NodeType } from './RE';
+export * from './FA';
+export * from './PDA';
+export * from './GR';
+export * from './RE';
