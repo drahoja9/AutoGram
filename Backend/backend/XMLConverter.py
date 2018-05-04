@@ -1,6 +1,11 @@
 import json
 import xml.etree.ElementTree as ET
 
+from __init__ import ObjectTypes as ObjectTypes
+from __init__ import AlgorithmTypes as AlgorithmTypes
+
+
+XML_VERSION = '<?xml version="1.0"?>'
 
 class JSONDecodeError(Exception):
     """
@@ -36,7 +41,6 @@ class JtXConverter:
         :param parent_element: the element created sub elements should be attached to
         :param children_list: list of string values to be used as text attributes of the new sub elements
         :param tag: string value that should be used as a name of the xml tag
-        :return: nothing
         """
         for child in children_list:
             n = ET.SubElement(parent_element, tag)
@@ -50,7 +54,6 @@ class JtXConverter:
         :param parent_element: the element created sub elements should be attached to
         :param child: string value to be used as text attribute of the new sub elements
         :param tag: string value that should be used as a name of the xml tag
-        :return: nothing
         """
         n = ET.SubElement(parent_element, tag)
         n.text = child
@@ -61,7 +64,8 @@ class JtXConverter:
         Creates and attaches list of transitions to a given parent element
         :param parent_element: the element created sub elements should be attached to
         :param children_list: list of transitions in format {'from': '', 'input': '', 'to': ''}
-        :return: nothing
+        :raises KeyError: when JSON dict has wrong structure of transitions
+        :raises TypeError: when there are wrong types of values in JSON dict (input is not Character)
         """
         for transition in children_list:
             t = ET.SubElement(parent_element, 'transition')
@@ -86,8 +90,10 @@ class JtXConverter:
         """
         Creates and attaches list of pushdown store transitions to a given parent element
         :param parent_element: the element created sub elements should be attached to
-        :param children_list: list of transitions in format {'from': '', 'input': '', pop: '', 'to': '', push:''}
-        :return: nothing
+        :param children_list: list of transitions in format {'from': '', 'input': '', pop: [''], 'to': '', push:['']}
+        :raises KeyError: when JSON dict has wrong structure of transitions
+        :raises TypeError: when there are wrong types of values in JSON dict (input, pop and push must be Characters),
+        or when JSON dict has wrong structure of transitions
         """
         for transition in children_list:
             t = ET.SubElement(parent_element, 'transition')
@@ -104,18 +110,16 @@ class JtXConverter:
                 t_input_in.text = str(ord(transition['input']))
 
             t_pop = ET.SubElement(t, 'pop')
-            if transition['pop']:
-                t_pop_in = ET.SubElement(t_pop, 'Character')
-                t_pop_in.text = str(ord(transition['pop']))
+            children_list = [str(ord(i)) for i in transition['pop']]
+            JtXConverter._create_list_subelements(t_pop, children_list, 'Character')
 
             t_to = ET.SubElement(t, 'to')
             t_to_in = ET.SubElement(t_to, 'String')
             t_to_in.text = transition['to']
 
             t_push = ET.SubElement(t, 'push')
-            if transition['push']:
-                t_push_in = ET.SubElement(t_push, 'Character')
-                t_push_in.text = str(ord(transition['push']))
+            children_list = [str(ord(i)) for i in transition['push']]
+            JtXConverter._create_list_subelements(t_push, children_list, 'Character')
 
     @staticmethod
     def _create_grammar_rules(parent_element: ET.Element, children_list: list, nonterminal_alphabet: list):
@@ -124,7 +128,9 @@ class JtXConverter:
         :param parent_element: the element created sub elements should be attached to
         :param children_list: list of rules in format like {'from': '', 'to': ['', '']}
         :param nonterminal_alphabet: list of symbols to be tagged as "Strings", other will be tagged as "Character"
-        :return: nothing
+        :raises KeyError: when JSON dict has wrong structure of grammar rules
+        :raises TypeError: when there are wrong types of values in JSON dict (terminal symbols must be Characters),
+        or when JSON dict has wrong structure of grammar rules
         """
         for rule in children_list:
             r = ET.SubElement(parent_element, 'rule')
@@ -150,7 +156,9 @@ class JtXConverter:
         is supposed to be called recursively
         :param parent_element: element the value should be attached to
         :param value_dict: dictionary describing the value in format like {type: '', value: ''}
-        :return: nothing
+        :raises KeyError: when JSON dict has wrong structure of regexp value
+        :raises TypeError: when there are wrong types of values in JSON dict (alphabet symbols must be Characters),
+        or when JSON dict has wrong structure of regexp value or when there is unknown type value
         """
         type = value_dict['type']
         if type == 'term':
@@ -176,13 +184,16 @@ class JtXConverter:
         Responsible for converting dictionaries representing finite automata (DFA, NFA) to XML files
         :param json_dict: dictionary representation of a JSON structure describing finite automaton
         :return: string representation of an XML file describing given finite automaton
+        :raises KeyError: when JSON dict has wrong structure
+        :raises TypeError: when there are wrong types of values in JSON dict (input symbols must be Characters),
+        or when JSON dict has wrong structure or when there is bad combination of automaton type and properties
         """
         multi = False
         type = json_dict['type']
-        if len(json_dict['initial_states']) > 1 and type == 'NFA':
-            etree_root = ET.Element('MultiInitialStateNFA')
+        if len(json_dict['initial_states']) > 1 and type == ObjectTypes.NFA:
+            etree_root = ET.Element(ObjectTypes.MultiNFA)
             multi = True
-        elif len(json_dict['initial_states']) > 1 and not type == 'NFA':
+        elif len(json_dict['initial_states']) > 1 and not type == ObjectTypes.NFA:
             raise TypeError
         else:
             etree_root = ET.Element(type)
@@ -214,6 +225,9 @@ class JtXConverter:
         Responsible for converting dictionaries representing push-down automata (DPDA, NPDA) to XML files
         param json_dict: dictionary representation of a JSON structure describing push-down automaton
         :return: string representation of an XML file describing given push-down automaton
+        :raises KeyError: when JSON dict has wrong structure
+        :raises TypeError: when there are wrong types of values in JSON dict (input, push and pop symbols must be Characters),
+        or when JSON dict has wrong structure
         """
         etree_root = ET.Element(json_dict['type'])
 
@@ -249,6 +263,9 @@ class JtXConverter:
         Responsible for converting dictionaries representing grammars (RightRG, CFG, CNF) to XML files
         param json_dict: dictionary representation of a JSON structure describing grammar
         :return: string representation of an XML file describing given grammar
+        :raises KeyError: when JSON dict has wrong structure
+        :raises TypeError: when there are wrong types of values in JSON dict (terminal symbols must be Characters),
+        or when JSON dict has wrong structure
         """
         type = json_dict['type']
         etree_root = ET.Element(type)
@@ -266,7 +283,7 @@ class JtXConverter:
         rules = ET.SubElement(etree_root, 'rules')
         JtXConverter._create_grammar_rules(rules, json_dict['rules'], json_dict["nonterminal_alphabet"])
 
-        if type == "RightRG" or type == "CNF":
+        if type == ObjectTypes.RG or type == ObjectTypes.CNF:
             generates_epsilon = ET.SubElement(etree_root, 'generatesEpsilon')
             if json_dict['generates_epsilon']:
                 ET.SubElement(generates_epsilon, "true")
@@ -281,6 +298,9 @@ class JtXConverter:
         Responsible for converting dictionaries representing regular expressions (UnboundedRegExp) to XML files
         param json_dict: dictionary representation of a JSON structure describing regular expression
         :return: string representation of an XML file describing given regular expression
+        :raises KeyError: when JSON dict has wrong structure
+        :raises TypeError: when there are wrong types of values in JSON dict (alphabet symbols must be Characters),
+        or when JSON dict has wrong structure
         """
         etree_root = ET.Element(json_dict['type'])
 
@@ -298,27 +318,30 @@ class JtXConverter:
         and converts it to an XML string
         :param json_dict: dictionary representation of an JSON file
         :return: string representation of an XML file that was converted from given JSON
+        :raises KeyError: when JSON dict has wrong structure - the 'type' property is not present
+        :raises TypeError: when there is unknown object type
         """
         type = json_dict['type']
-        if type == "NFA" or type == "DFA" or type == "EpsilonNFA":
+        if type == ObjectTypes.DFA or type == ObjectTypes.NFA or type == ObjectTypes.EpsilonNFA:
             res = JtXConverter._json_to_xml_fa(json_dict)
-        elif type == "RightRG" or type == "CFG" or type == "CNF":
+        elif type == ObjectTypes.RG or type == ObjectTypes.CFG or type == ObjectTypes.CNF:
             res = JtXConverter._json_to_xml_grammar(json_dict)
-        elif type == "UnboundedRegExp":
+        elif type == ObjectTypes.RegExp:
             res = JtXConverter._json_to_xml_regexp(json_dict)
-        elif type == "DPDA" or type == "NPDA":
+        elif type == ObjectTypes.DPDA or type == ObjectTypes.NPDA:
             res = JtXConverter._json_to_xml_pda(json_dict)
         else:
             raise TypeError
         return res
 
     @staticmethod
-    def comparision_json_to_xml(json_dict: dict) -> (str, str):
+    def comparison_json_to_xml(json_dict: dict) -> (str, str):
         """
-        Takes dictionary representation of an JSON file describing comparision
+        Takes dictionary representation of an JSON file describing comparison
         and returns XML representations of structures to be compared
         :param json_dict: dictionary representation of an JSON file
         :return: tuple of string representations of XML files
+        :raises KeyError: when JSON dict has wrong structure
         """
         res1 = JtXConverter.simple_json_to_xml(json_dict['lhs'])
         res2 = JtXConverter.simple_json_to_xml(json_dict['rhs'])
@@ -332,6 +355,7 @@ class JtXConverter:
         :param json_dict: dictionary representation of an JSON file
         :return: tuple of string code for transformation target and string XML
         representation of the transformation source
+        :raises KeyError: when JSON dict has wrong structure
         """
         res = JtXConverter.simple_json_to_xml(json_dict['source'])
         return json_dict['target'], res
@@ -343,6 +367,7 @@ class JtXConverter:
         and returns drivation string and derived regexp as XML string
         :param json_dict: dictionary representation of an JSON file
         :return: tuple of derivation string and string XML representation of the derived regular expression
+        :raises KeyError: when JSON dict has wrong structure
         """
         res = JtXConverter.simple_json_to_xml(json_dict['regexp'])
         return json_dict['derivation_string'], res
@@ -354,6 +379,7 @@ class JtXConverter:
         and returns generated string and the grammar to be checked as XML string
         :param json_dict: dictionary representation of an JSON file
         :return: tuple of generated string and string XML representation of the grammar
+        :raises KeyError: when JSON dict has wrong structure
         """
         res = JtXConverter.simple_json_to_xml(json_dict['grammar'])
         return json_dict['generated_string'], res
@@ -362,7 +388,10 @@ class JtXConverter:
 
 
 class XtJConverter:
-
+    """
+    Base class responsible for converting string representation of an XML structure
+    to a string representation of an JSON structure.
+    """
     @staticmethod
     def _flatten_child_text(child: ET.Element, referenced_values: dict) -> str:
         """
@@ -387,6 +416,8 @@ class XtJConverter:
         :param child: element we want to get text attribute from, must have tags Ref, String, Character, Integer or Pair
         :param referenced_values: list of already found references
         :return: text representation od the element
+        :raises KeyError: in case of wrong structure of the XML file - not present attributes, bad references
+        :raises TypeError: when unknown tag occurs
         """
         if child.tag == "Ref":
             child_id = child.attrib['id']
@@ -402,7 +433,7 @@ class XtJConverter:
         elif child.tag == "Set" or child.tag == "Pair":
             text = XtJConverter._flatten_child_text(child, referenced_values)
         elif child.tag == "FinalStateLabel":
-            text = "Fin"
+            text = "Final"
         elif child.tag == "InitialSymbol":
             text = "Start"
         else:
@@ -425,6 +456,7 @@ class XtJConverter:
         :param parent_tag: tag of the element, whose child's text is wanted
         :param referenced_values: list of already found references
         :return: string representation of the child attribute, None if no child is present
+        :raises IndexError: in case of wrong structure of the XML file - parent_tag is not present in the roots children
         """
         parent_element = root_element.findall(parent_tag)[0]
         if len(parent_element) == 0:
@@ -442,16 +474,12 @@ class XtJConverter:
         :param parent_tag: tag of the element, whose children's text is wanted
         :param referenced_values: list of already found references
         :return: list of string representations of the child attributes
+        :raises IndexError: in case of wrong structure of the XML file - parent_tag is not present in the roots children
         """
         parent_element = root_element.findall(parent_tag)[0]
         result = []
-        change = False
         for child in parent_element:
             text = XtJConverter._get_child_text(child, referenced_values)
-
-            if change and 'ref' in child.attrib:
-                referenced_values[child.attrib['ref']] = text
-
             result.append(text)
 
         return result
@@ -464,6 +492,7 @@ class XtJConverter:
         :param root_element: element, which has child with the tag 'transitions'
         :param referenced_values: list of already found references
         :return: list of dictionaries, that represents finite automaton transitions
+        :raises IndexError: in case of wrong structure of the XML file - transtitions tag is not present in the root
         """
         parent_element = root_element.findall('transitions')[0]
         result = []
@@ -486,6 +515,7 @@ class XtJConverter:
         :param root_element: element, which has child with the tag 'transitions'
         :param referenced_values: list of already found references
         :return: list of dictionaries, that represents finite automaton transitions
+        :raises IndexError: in case of wrong structure of the XML file - transitions tag is not present in the root
         """
         parent_element = root_element.findall('transitions')[0]
         result = []
@@ -496,11 +526,11 @@ class XtJConverter:
             t['from'] = t_from
             t_input = XtJConverter._create_string_from_subelement(child, 'input', referenced_values)
             t['input'] = t_input
-            t_pop = XtJConverter._create_string_from_subelement(child, 'pop', referenced_values)
+            t_pop = XtJConverter._create_list_from_subelements(child, 'pop', referenced_values)
             t['pop'] = t_pop
             t_to = XtJConverter._create_string_from_subelement(child, 'to', referenced_values)
             t['to'] = t_to
-            t_push = XtJConverter._create_string_from_subelement(child, 'push', referenced_values)
+            t_push = XtJConverter._create_list_from_subelements(child, 'push', referenced_values)
             t['push'] = t_push
             result.append(t)
         return result
@@ -513,6 +543,7 @@ class XtJConverter:
         :param root_element: element, which has child with the tag 'rules'
         :param referenced_values: list of already found references
         :return: list of dictionaries, that represents grammar rules
+        :raises IndexError: in case of wrong structure of the XML file - rules tag is not present in the roots children
         """
         parent_element = root_element.findall('rules')[0]
         result = []
@@ -533,6 +564,7 @@ class XtJConverter:
         :param element: element, which represents a valid regular expression
         :param referenced_values: list of already found references
         :return: list-dictionary structure, that represents regular expression value.
+        :raises IndexError: in case of wrong structure of the XML file
         """
         res = {}
         e_tag = element.tag
@@ -568,8 +600,8 @@ class XtJConverter:
         referenced_values = {}
 
         type = root.tag
-        if type == "MultiInitialStateNFA":
-            result_dict['type'] = "NFA"
+        if type == ObjectTypes.MultiNFA:
+            result_dict['type'] = ObjectTypes.NFA
         else:
             result_dict['type'] = type
 
@@ -579,7 +611,7 @@ class XtJConverter:
         input_alphabet = XtJConverter._create_list_from_subelements(root, 'inputAlphabet', referenced_values)
         result_dict['input_alphabet'] = input_alphabet
 
-        if type == 'MultiInitialStateNFA':
+        if type == ObjectTypes.MultiNFA:
             parent_tag = "initialStates"
         else:
             parent_tag = "initialState"
@@ -638,6 +670,7 @@ class XtJConverter:
         ElementTree and dictionary both represent the same regular expression.
         :param root: root element of ElementTree to be converted
         :return: dictionary representation of regular expression
+        :raises IndexError: in case of wrong structure of the XML file - wrong number of root children
         """
         result_dict = {}
         referenced_values = {}
@@ -660,12 +693,14 @@ class XtJConverter:
         ElementTree and dictionary both represent the same grammar.
         :param root: root element of ElementTree to be converted
         :return: dictionary representation of grammar
+        :raises IndexError: in case of wrong structure of the XML file - wrong appearance
+        and usage of generatesEpsilon tag
         """
         result_dict = {}
         referenced_values = {}
         type = root.tag
-        if type == "EpsilonFreeCFG":
-            result_dict['type'] = "CFG"
+        if type == ObjectTypes.EpsilonFreeCFG:
+            result_dict['type'] = ObjectTypes.CFG
         else:
             result_dict['type'] = type
 
@@ -681,10 +716,10 @@ class XtJConverter:
         rules = XtJConverter._create_list_rules(root, referenced_values)
         result_dict['rules'] = rules
 
-        if type == "RightRG" or type == "CNF":
+        if type == ObjectTypes.RG or type == ObjectTypes.CNF:
             generates_epsilon = root.findall('generatesEpsilon')[0][0].tag
             result_dict['generates_epsilon'] = generates_epsilon
-        if type == "EpsilonFreeCFG":
+        if type == ObjectTypes.EpsilonFreeCFG:
             generates_epsilon = root.findall('generatesEpsilon')[0][0].tag
             if generates_epsilon == 'true':
                 result_dict['rules'].append({'from': result_dict['initial_symbol'], 'to': [None]})
@@ -699,27 +734,28 @@ class XtJConverter:
         chooses correct conversion method.
         :param xml_file: string representation of an xml file
         :return: dictionary that represents converted object
+        :raises TypeError: when there is unknown object type
         """
         root = ET.fromstring(xml_file)
         type = root.tag
-        if type == "DFA" or type == "NFA" or type == "EpsilonNFA" or type == "MultiInitialStateNFA":
+        if type == ObjectTypes.DFA or type == ObjectTypes.NFA or type == ObjectTypes.EpsilonNFA or type == ObjectTypes.MultiNFA:
             result = XtJConverter._xml_to_json_fa(root)
-        elif type == "RightRG" or type == "CFG" or type == "CNF" or type == "EpsilonFreeCFG":
+        elif type == ObjectTypes.RG or type == ObjectTypes.CFG or type == ObjectTypes.CNF or type == ObjectTypes.EpsilonFreeCFG:
             result = XtJConverter._xml_to_json_grammar(root)
-        elif type == "DPDA" or type == "NPDA":
-            result = XtJConverter._xml_to_json_pda(root)
-        elif type == "UnboundedRegExp":
+        elif type == ObjectTypes.RegExp:
             result = XtJConverter._xml_to_json_regexp(root)
+        elif type == ObjectTypes.DPDA or type == ObjectTypes.NPDA:
+            result = XtJConverter._xml_to_json_pda(root)
         else:
             raise TypeError
 
         return result
 
     @staticmethod
-    def comparision_xml_to_json(result: bool) -> dict:
+    def comparison_xml_to_json(result: bool) -> dict:
         """
-        Converts given result of a comparision to a dictionary, that can be converted to JSON
-        :param result: result of a comparision, bool value
+        Converts given result of a comparison to a dictionary, that can be converted to JSON
+        :param result: result of a comparison, bool value
         :return: dictionary with the result, that can be converted to JSON
         """
         return {'result': result}
@@ -770,22 +806,24 @@ def json_to_xml(json_file: str, param: str = None):
     Converts given JSON string representation to corresponding XML string representation
     :param json_file: string with JSON file to convert
     :param param: optional parameter describing JSON file structure - if it's simple,
-    or one of the special cases - comparision, transformation or derivation.
+    or one of the special cases - comparison, transformation or derivation.
     If it's not a special case, it can be omitted.
     :return: representation of a converted JSON file, usually XML string or tuple of XML strings and needed parameters
+    :raises JSONDecodeError: in case of wrong structure of the JSON file
     """
     try:
         json_dict = json.loads(json_file)
-        if param == 'comparision':
-            return JtXConverter.comparision_json_to_xml(json_dict)
-        elif param == 'transformation':
-            return JtXConverter.transformation_json_to_xml(json_dict)
-        elif param == 'regexp_derivation':
-            return JtXConverter.derivation_json_to_xml(json_dict)
-        elif param == 'grammar_cyk':
-            return JtXConverter.cyk_json_to_xml(json_dict)
+        if param == AlgorithmTypes.COMPARISON:
+            res = JtXConverter.comparison_json_to_xml(json_dict)
+        elif param == AlgorithmTypes.TRANSFORMATION:
+            res = JtXConverter.transformation_json_to_xml(json_dict)
+        elif param == AlgorithmTypes.REGEXP_DERIVATION:
+            res = JtXConverter.derivation_json_to_xml(json_dict)
+        elif param == AlgorithmTypes.GRAMMAR_CYK:
+            res = JtXConverter.cyk_json_to_xml(json_dict)
         else:
-            return JtXConverter.simple_json_to_xml(json_dict)
+            res = JtXConverter.simple_json_to_xml(json_dict)
+        return XML_VERSION + res
     except json.JSONDecodeError:
         raise JSONDecodeError("JSON decode exception")
     except (KeyError, TypeError):
@@ -799,25 +837,26 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
     Converts given algorithm result to corresponding JSON string representation
     :param result: algorithm result, can be string representing XML file or a bool value, according to param attribute
     :param param: optional parameter describing result structure. If it's one of the special cases - derivation,
-    comparision, minimization, cnf conversion, left recursion removal or cyk algorithm -  it must be present.
+    comparison, minimization, cnf conversion, left recursion removal or cyk algorithm -  it must be present.
     If it's not a special case, it can be omitted.
     :param steps: optional parameter describing steps of the algorithm. Either a string or a list of strings,
     according to the param specified. May be present with derivation, minimization or cyk. Must be present with
     cnf conversion and left recursion removal.
     :return: string representation of a JSON file
+    :raises XMLDEcodeError: in case of wrong structure of the XML file
     """
     try:
-        if param == 'comparision':
-            ret = XtJConverter.comparision_xml_to_json(result)
-        elif param == 'automaton_minimization':
+        if param == AlgorithmTypes.COMPARISON:
+            ret = XtJConverter.comparison_xml_to_json(result)
+        elif param == AlgorithmTypes.AUTOMATON_MINIMIZATION:
             ret = XtJConverter.minimization_xml_to_json(result, steps)
-        elif param == 'regexp_derivation':
+        elif param == AlgorithmTypes.REGEXP_DERIVATION:
             ret = XtJConverter.derivation_xml_to_json(result, steps)
-        elif param == 'grammar_cnf':
+        elif param == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
             ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
-        elif param == "grammar_left_recursion":
+        elif param == AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL:
             ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
-        elif param == 'grammar_cyk':
+        elif param == AlgorithmTypes.GRAMMAR_CYK:
             ret = XtJConverter.cyk_xml_to_json(result, steps)
         else:
             ret = XtJConverter.simple_xml_to_json(result)
@@ -830,5 +869,28 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
         raise XMLDecodeError("Unexpected exception occurred")
 
 
+def jtx_file_tester(infile: str, param: str = None):
+    # tester function, takes parameter with name of the json file, converts it to xml and saves the result to a file
+    with open("../my_files/examples/" + infile + ".json") as f1:
+        json_text = f1.read()
+        result = json_to_xml(json_text, param)
+        # print(result)
+        with open("../my_files/examples/" + infile + "_res.xml", "w") as f2:
+            f2.write(result)
 
 
+def xtj_file_tester(infile: str, param: str = None, steps=None):
+    # tester function, takes parameter with name of the xml file, converts it to json and saves the result to a file
+    with open("../my_files/examples2/" + infile + ".xml") as f1:
+        xml_text = f1.read()
+        result = xml_to_json(xml_text, param, steps)
+        with open("../my_files/examples2/" + infile + "_res.json", "w") as f2:
+            f2.write(result)
+
+# jtx_file_tester("DPDA")
+# jtx_file_tester("EpsilonPDA")
+# jtx_file_tester("MultiPopNPDA")
+
+# xtj_file_tester("DPDA_in")
+# xtj_file_tester("EpsilonPDA_in")
+# xtj_file_tester("MultiPopNPDA_in")
