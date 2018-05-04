@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<CFG>
+    <nonterminalAlphabet>
+        <String>S</String>
+        <String>C</String>
+    </nonterminalAlphabet>
+    <terminalAlphabet>
+        <Character>c</Character>
+    </terminalAlphabet>
+    <initialSymbol>
+        <Character>S</Character>
+    </initialSymbol>
+    <rules>
+        <rule>
+            <lhs>
+                <String>S</String>
+            </lhs>
+            <rhs>
+                <String>C</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>C</String>
+            </lhs>
+            <rhs>
+                <Character>c</Character>
+            </rhs>
+        </rule>
+    </rules>
+</CFG>

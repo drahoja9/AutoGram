@@ -155,7 +155,7 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
             if (to == "fa") {
                 algorithm = "regexp::convert::ToAutomatonGlushkov";
             } else if (to == "rg") {
-                algorithm = "regexp::convert::ToGrammarRightRGGlushkov";
+                algorithm = "regexp::convert::ToGrammarRightRGDerivation";
             } else if (to == "re") {
                 this->setResultStruct(0, input);
 			    return;

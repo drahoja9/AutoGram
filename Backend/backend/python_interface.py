@@ -77,31 +77,3 @@ class AltInterface:
         result_struct = self.lib.comparison(self.interface, *params)
 
         return self._parse_result(result_struct)
-
-
-if __name__ == '__main__':
-    with AltInterface() as interface:
-        input_file = '/home/jakub/alt/automata-library/examples2/automaton/NFSM1.xml'
-        algorithm = 'automaton_epsilon'
-
-        with open(input_file, "r") as f:
-            xml_input = f.read()
-
-        with open('/home/jakub/alt/automata-library/examples2/automaton/NFSM2.xml', "r") as f:
-            xml_input2 = f.read()
-
-        res_code, res = interface.comparison(xml_input, 'fa', xml_input2, 'fa')
-        print(res_code, res)
-
-        # res = interface.run_algorithm(xml_input, algorithm)
-        # print(res)
-        # res1 = interface.run_algorithm(res['result'], 'automaton_determinization')
-        # print(res1)
-        # res2 = interface.run_algorithm(res1['result'], 'automaton_minimization')
-        # print(res2)
-        #
-        # with open('../tests/examples/grammar/rightRegular.xml', "r") as f:
-        #     xml_input = f.read()
-        #
-        # res3 = interface.conversion(xml_input, 'rg', 're')
-        # print(res3)

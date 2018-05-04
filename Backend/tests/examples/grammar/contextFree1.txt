@@ -1,9 +1,0 @@
-CFG (
-{S, A, B, C},
-{a, b, c, d, e},
-{S -> C d e S e | d d B | c A,
-A -> C d | b b,
-B -> b a C d |,
-C -> A c a | a
-},
-S)

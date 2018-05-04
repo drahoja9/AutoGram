@@ -73,7 +73,7 @@ def test_minimization(interface, automata):
     (GRAMMARS + '/contextFree.xml', 'grammar_epsilon', '</EpsilonFreeCFG>'),
     (GRAMMARS + '/contextFree.xml', 'grammar_unit', '</CFG>'),
     (GRAMMARS + '/contextFree.xml', 'grammar_cnf', '</CNF>'),
-    (GRAMMARS + '/contextFree.xml', 'grammar_left_recursion', '</CNF>'),
+    (GRAMMARS + '/epsilonFreeCFG.xml', 'grammar_left_recursion', '</EpsilonFreeCFG>'),
 ])
 def test_algorithms(interface, input_file, algorithm, result_type):
     with open(input_file, 'r') as f:
@@ -81,3 +81,22 @@ def test_algorithms(interface, input_file, algorithm, result_type):
     return_code, res = interface.algorithms(xml_input, algorithm)
     assert return_code == 0
     assert res.endswith(result_type)
+
+
+@pytest.mark.parametrize('input_file, algorithm, expected', [
+    (AUTOMATA + '/DFA1.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA1.MIN_RES.XML'),
+    (AUTOMATA + '/DFA2.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA2.MIN_RES.XML'),
+    (AUTOMATA + '/DFA1.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA1.TRIM_RES.XML'),
+    (AUTOMATA + '/DFA2.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA2.TRIM_RES.XML'),
+    (AUTOMATA + '/ENFA1.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA1.EPSILON_RES.XML'),
+    (AUTOMATA + '/ENFA2.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA2.EPSILON_RES.XML'),
+])
+def test_algorithms_2(interface, input_file, algorithm, expected):
+    with open(input_file, 'r') as f:
+        xml_input = f.read()
+    return_code, res = interface.algorithms(xml_input, algorithm)
+    assert return_code == 0
+
+    return_code, res = interface.comparison(res, 'fa', expected, 'fa')
+    assert return_code == 0
+    assert res == 'True'
