@@ -25,7 +25,7 @@ export interface FABase {
  */
 export interface DFA extends FABase {
   type: FAType.DFA;
-  transistions: { from: string, input: string, to: string }[];
+  transitions: { from: string, input: string, to: string }[];
 }
 
 /**
@@ -33,15 +33,15 @@ export interface DFA extends FABase {
  */
 export interface NFA extends FABase {
   type: FAType.NFA,
-  transistions: { from: string, input: string, to: string }[];
+  transitions: { from: string, input: string, to: string }[];
 }
 
 /**
  * This interface represents a non-teterministic FA with possible epsilon transitions.
  */
 export interface ENFA extends FABase {
-  type: FAType.NFA,
-  transistions: { from: string, input: string | null, to: string }[];
+  type: FAType.ENFA,
+  transitions: { from: string, input: string | null, to: string }[];
 }
 
 /** Type representing one of `DFA`, `NFA` or `ENFA` */
