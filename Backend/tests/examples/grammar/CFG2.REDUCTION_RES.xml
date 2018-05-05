@@ -2,15 +2,11 @@
 <CFG>
     <nonterminalAlphabet>
         <String>83</String>
-        <String>65</String>
-        <String>66</String>
-        <String>67</String>
         <String>68</String>
     </nonterminalAlphabet>
     <terminalAlphabet>
-        <Character>97</Character>
-        <Character>98</Character>
-        <Character>99</Character>
+        <Integer>0</Integer>
+        <Integer>1</Integer>
     </terminalAlphabet>
     <initialSymbol>
         <String>83</String>
@@ -21,8 +17,8 @@
                 <String>83</String>
             </lhs>
             <rhs>
-                <String>65</String>
-                <String>66</String>
+                <Integer>0</Integer>
+                <String>83</String>
             </rhs>
         </rule>
         <rule>
@@ -30,41 +26,16 @@
                 <String>83</String>
             </lhs>
             <rhs>
-                <String>67</String>
+                <Integer>1</Integer>
+                <String>68</String>
             </rhs>
         </rule>
         <rule>
             <lhs>
-                <String>65</String>
+                <String>83</String>
             </lhs>
             <rhs>
-                <Character>97</Character>
-                <String>65</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>65</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-                <String>66</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>67</String>
-            </lhs>
-            <rhs>
-                <Character>99</Character>
+                <epsilon/>
             </rhs>
         </rule>
         <rule>
@@ -72,8 +43,27 @@
                 <String>68</String>
             </lhs>
             <rhs>
-                <Character>98</Character>
-                <Character>99</Character>
+                <Integer>0</Integer>
+                <String>68</String>
+                <Integer>0</Integer>
+                <Integer>0</Integer>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>68</String>
+            </lhs>
+            <rhs>
+                <Integer>1</Integer>
+                <String>83</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>68</String>
+            </lhs>
+            <rhs>
+                <epsilon/>
             </rhs>
         </rule>
     </rules>

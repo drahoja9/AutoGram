@@ -400,7 +400,7 @@
                 <Integer>1</Integer>
             </input>
             <to>
-                <String>B</String>
+                <String>D</String>
             </to>
         </transition>
         <transition>

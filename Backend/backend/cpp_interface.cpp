@@ -17,7 +17,7 @@ struct ResultStruct {
 
 class ALT_Interface {
 public:
-	ALT_Interface() : m_ResultStruct(nullptr) {}
+	ALT_Interface() : m_ResultStruct(nullptr) { this->m_ResultStruct = new ResultStruct(); }
 	~ALT_Interface() { delete this->m_ResultStruct; }
 	void algorithms(std::string input, std::string algorithm, const char * optionalParam);
 	void convert(std::string input, std::string from, std::string to);
@@ -26,16 +26,17 @@ public:
 	ResultStruct * m_ResultStruct;
 	
 private:
-	void setResultStruct(int resCode, std::string result);
+	void setResultStruct(int resCode, const char * char_result);
 	void setResultStruct(int resCode, bool result);
 	void prepareAndRun(std::string input, std::string algorithm);
 };
 
-void ALT_Interface::setResultStruct(int resCode, std::string result) {
+void ALT_Interface::setResultStruct(int resCode, const char * char_result) {
+    std::string result = char_result;
 	this->m_ResultStruct->t_ResCode = resCode;
-	this->m_ResultStruct->t_Result = new char [result.length()];
+	this->m_ResultStruct->t_Result = new char [result.size()+1];
 	strncpy(this->m_ResultStruct->t_Result, result.c_str(), result.size());
-	this->m_ResultStruct->t_Result[result.size()-1] = '\0';
+	this->m_ResultStruct->t_Result[result.size()] = '\0';
 }
 
 void ALT_Interface::setResultStruct(int resCode, bool result) {
@@ -52,24 +53,70 @@ void ALT_Interface::setResultStruct(int resCode, bool result) {
 }
 
 void ALT_Interface::prepareAndRun(std::string input, std::string algorithm) {
-    try {
-        if (this->m_ResultStruct)
-			delete this->m_ResultStruct;
-		this->m_ResultStruct = new ResultStruct();
+	cli::Environment environment;
+	environment.setVariable("input", input);
 
-		cli::Environment environment;
-		environment.setVariable("input", input);
+	cli::Parser parser ( cli::Lexer ("") );
+	std::string query = "execute sax::SaxParseInterface $input | xml::Parse ^ - | " +
+	                    algorithm +
+	                    "| xml::Compose - | sax::SaxComposeInterface - > $output";
+	parser = cli::Parser ( cli::Lexer ( query ) );
+	parser.parse ( )->run ( environment );
 
-		cli::Parser parser ( cli::Lexer ("") );
-		std::string query = "execute sax::SaxParseInterface $input | xml::Parse ^ - | " +
-		                    algorithm +
-		                    " - | xml::Compose - | sax::SaxComposeInterface - > $output";
-		parser = cli::Parser ( cli::Lexer ( query ) );
-		parser.parse ( )->run ( environment );
+	std::string res = environment.getVariable< std::string >("output");
+	this->setResultStruct(0, res.c_str());
+}
 
-		std::string res = environment.getVariable< std::string >("output");
-		this->setResultStruct(0, res);
+void ALT_Interface::algorithms ( std::string input, std::string algorithm, const char * optionalParam ) {
+	try {
+        if (!optionalParam) {
+            if (algorithm == "automaton_determinization")
+                algorithm = "automaton::determinize::Determinize";
+            else if (algorithm == "automaton_trim")
+                algorithm = "automaton::simplify::Trim";
+            else if (algorithm == "automaton_minimization") {
+                // First we need to eliminate unreachable and pointless states (following the BI-AAG practice)
+                this->algorithms(input, "automaton_trim", nullptr);
 
+                input = this->m_ResultStruct->t_Result;
+                algorithm = "automaton::simplify::Minimize";
+            }
+            else if (algorithm == "automaton_epsilon")
+                algorithm = "automaton::simplify::EpsilonRemoverIncoming";
+            else if (algorithm == "grammar_reduction")
+                algorithm = "grammar::simplify::Trim";
+            else if (algorithm == "grammar_epsilon")
+                algorithm = "grammar::simplify::EpsilonRemover";
+            else if (algorithm == "grammar_unit")
+                algorithm = "grammar::simplify::SimpleRulesRemover";
+            else if (algorithm == "grammar_cnf")
+                algorithm = "grammar::simplify::ToCNF";
+            else if (algorithm == "grammar_left_recursion")
+                algorithm = "grammar::simplify::LeftRecursionRemover";
+            else if (algorithm == "regexp_trim")
+                algorithm = "regexp::simplify::RegExpOptimize";
+            else {
+                this->setResultStruct(1, "Unknown algorithm passed as parameter!");
+                return;
+            }
+        }
+        else {
+            if (algorithm == "regexp_derivation")
+                algorithm = "regexp::RegExpDerivation";
+            else if (algorithm == "grammar_cyk")
+                algorithm = "grammar::generate::CockeYoungerKasami";
+            else {
+                this->setResultStruct(1, "Unknown algorithm passed as parameter!");
+                return;
+            }
+        }
+
+        if (optionalParam)
+            algorithm += " - \"" + (std::string)optionalParam + "\" ";
+        else
+            algorithm += " - ";
+
+        this->prepareAndRun(input, algorithm);
 	} catch ( const exception::CommonException & exception ) {
 		this->setResultStruct(1, exception.what());
 		return;
@@ -82,54 +129,12 @@ void ALT_Interface::prepareAndRun(std::string input, std::string algorithm) {
 	}
 }
 
-void ALT_Interface::algorithms ( std::string input, std::string algorithm, const char * optionalParam ) {
-	if (!optionalParam) {
-		if (algorithm == "automaton_determinization")
-			algorithm = "automaton::determinize::Determinize";
-		else if (algorithm == "automaton_trim")
-		    algorithm = "automaton::simplify::Trim";
-		else if (algorithm == "automaton_minimization")
-			algorithm = "automaton::simplify::Minimize";
-		else if (algorithm == "automaton_epsilon")
-			algorithm = "automaton::simplify::EpsilonRemoverIncoming";
-		else if (algorithm == "grammar_reduction")
-			algorithm = "grammar::simplify::Trim";
-		else if (algorithm == "grammar_epsilon")
-			algorithm = "grammar::simplify::EpsilonRemover";
-		else if (algorithm == "grammar_unit")
-			algorithm = "grammar::simplify::SimpleRulesRemover";
-		else if (algorithm == "grammar_cnf")
-			algorithm = "grammar::simplify::ToCNF";
-		else if (algorithm == "grammar_left_recursion")
-			algorithm = "grammar::simplify::LeftRecursionRemover";
-		else {
-			this->setResultStruct(1, "Unknown algorithm passed as parameter!");
-			return;
-		}
-	}
-	else {
-		if (algorithm == "regexp_derivation")
-			algorithm = "regexp::RegExpDerivation";
-		else if (algorithm == "grammar_cyk")
-			algorithm = "grammar::generate::CockeYoungerKasami";
-		else {
-			this->setResultStruct(1, "Unknown algorithm passed as parameter!");
-			return;
-		}
-	}
-
-	if (optionalParam)
-		algorithm += "\"" + (std::string)optionalParam + "\" ";
-
-	this->prepareAndRun(input, algorithm);
-}
-
 void ALT_Interface::convert(std::string input, std::string from, std::string to) {
     try {
         std::string algorithm;
         if (from == "fa") {
             if (to == "fa") {
-                this->setResultStruct(0, input);
+                this->setResultStruct(0, input.c_str());
 			    return;
             } else if (to == "rg") {
                 algorithm = "automaton::convert::ToGrammarRightRG";
@@ -143,7 +148,7 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
             if (to == "fa") {
                 algorithm = "grammar::convert::ToAutomaton";
             } else if (to == "rg") {
-                this->setResultStruct(0, input);
+                this->setResultStruct(0, input.c_str());
 			    return;
             } else if (to == "re") {
                 algorithm = "grammar::convert::ToRegExpAlgebraic";
@@ -157,7 +162,7 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
             } else if (to == "rg") {
                 algorithm = "regexp::convert::ToGrammarRightRGDerivation";
             } else if (to == "re") {
-                this->setResultStruct(0, input);
+                this->setResultStruct(0, input.c_str());
 			    return;
             } else {
                 this->setResultStruct(1, "Unknown 'to' parameter passed as parameter!");
@@ -165,12 +170,15 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
             }
         } else {
             this->setResultStruct(1, "Unknown 'from' parameter passed as parameter!");
-			    return;
+			return;
         }
 
-		this->prepareAndRun(input, algorithm);
+		this->prepareAndRun(input, algorithm + " - ");
 	} catch ( const exception::CommonException & exception ) {
 		this->setResultStruct(1, exception.what());
+	} catch ( ... ) {
+		this->setResultStruct(127, "Unknown exception caught.");
+		return;
 	}
 }
 

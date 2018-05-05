@@ -11,6 +11,7 @@
         <Character>97</Character>
         <Character>98</Character>
         <Character>99</Character>
+        <Character>100</Character>
     </terminalAlphabet>
     <initialSymbol>
         <String>83</String>
@@ -21,8 +22,7 @@
                 <String>83</String>
             </lhs>
             <rhs>
-                <String>65</String>
-                <String>66</String>
+            	<String>65</String>
             </rhs>
         </rule>
         <rule>
@@ -30,7 +30,7 @@
                 <String>83</String>
             </lhs>
             <rhs>
-                <String>67</String>
+            	<String>66</String>
             </rhs>
         </rule>
         <rule>
@@ -38,16 +38,23 @@
                 <String>65</String>
             </lhs>
             <rhs>
-                <Character>97</Character>
-                <String>65</String>
+            	<String>67</String>
             </rhs>
-        </rule>
-        <rule>
+        </rule><rule>
             <lhs>
                 <String>65</String>
             </lhs>
             <rhs>
-                <Character>97</Character>
+            	<Character>97</Character>
+                <String>65</String>
+            </rhs>
+        </rule><rule>
+            <lhs>
+                <String>65</String>
+            </lhs>
+            <rhs>
+            	<Character>98</Character>
+                <String>83</String>
             </rhs>
         </rule>
         <rule>
@@ -55,8 +62,25 @@
                 <String>66</String>
             </lhs>
             <rhs>
-                <Character>98</Character>
+            	<String>68</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
                 <String>66</String>
+            </lhs>
+            <rhs>
+            	<Character>99</Character>
+                <String>66</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>66</String>
+            </lhs>
+            <rhs>
+            	<Character>100</Character>
+                <String>83</String>
             </rhs>
         </rule>
         <rule>
@@ -64,7 +88,16 @@
                 <String>67</String>
             </lhs>
             <rhs>
-                <Character>99</Character>
+            	<Character>98</Character>
+                <String>67</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>67</String>
+            </lhs>
+            <rhs>
+            	<Character>97</Character>
             </rhs>
         </rule>
         <rule>
@@ -72,8 +105,16 @@
                 <String>68</String>
             </lhs>
             <rhs>
-                <Character>98</Character>
-                <Character>99</Character>
+            	<Character>100</Character>
+                <String>68</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>68</String>
+            </lhs>
+            <rhs>
+            	<Character>99</Character>
             </rhs>
         </rule>
     </rules>

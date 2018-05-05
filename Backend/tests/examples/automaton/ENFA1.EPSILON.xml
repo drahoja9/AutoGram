@@ -40,7 +40,7 @@
                 <String>A</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>C</String>
@@ -51,7 +51,7 @@
                 <String>A</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>I</String>
@@ -114,7 +114,7 @@
         </transition>
         <transition>
             <from>
-                <String>B</String>
+                <String>C</String>
             </from>
             <input>
                 <Integer>1</Integer>
@@ -326,7 +326,7 @@
                 <String>B</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>E</String>
@@ -337,7 +337,7 @@
                 <String>D</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>B</String>
@@ -348,7 +348,7 @@
                 <String>D</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>C</String>
@@ -359,7 +359,7 @@
                 <String>D</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>D</String>
@@ -370,7 +370,7 @@
                 <String>D</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>G</String>
@@ -381,7 +381,7 @@
                 <String>E</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>D</String>
@@ -392,7 +392,7 @@
                 <String>F</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>D</String>
@@ -403,7 +403,7 @@
                 <String>H</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>C</String>
@@ -414,7 +414,7 @@
                 <String>I</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>C</String>

@@ -10,12 +10,9 @@ REGEXPS = os.path.dirname(__file__) + '/examples/regexp'
 
 @pytest.fixture
 def interface():
-    # Setup
-    it = AltInterface()
-    yield it.__enter__()
-
-    # Teardown
-    it.__exit__(None, None, None)
+    # Context manager is responsible for both setup and teardown
+    with AltInterface() as it:
+        yield it
 
 
 @pytest.fixture(params=[
@@ -46,7 +43,7 @@ def test_determinization(interface, input_file, output_file):
 
     return_code1, res1 = interface.algorithms(xml_input, 'automaton_determinization')
     assert return_code1 == 0
-    assert res1[-6:] == '</DFA>'
+    assert res1.endswith('</DFA>\n')
 
     # We need to trim the automaton to be able to compare with expected result
     _, trimmed_res = interface.algorithms(res1, 'automaton_trim')
@@ -55,11 +52,11 @@ def test_determinization(interface, input_file, output_file):
     assert res2 == 'True'
 
 
-def test_minimization(interface, automata):
+def test_det_and_min(interface, automata):
     _, determinized = interface.algorithms(automata, 'automaton_determinization')
     return_code, res = interface.algorithms(determinized, 'automaton_minimization')
     assert return_code == 0
-    assert res[-6:] == '</DFA>'
+    assert res.endswith('</DFA>\n')
 
 
 @pytest.mark.parametrize('input_file, algorithm, result_type', [
@@ -80,23 +77,43 @@ def test_algorithms(interface, input_file, algorithm, result_type):
         xml_input = f.read()
     return_code, res = interface.algorithms(xml_input, algorithm)
     assert return_code == 0
-    assert res.endswith(result_type)
+    assert res.endswith(result_type + '\n')
 
 
-@pytest.mark.parametrize('input_file, algorithm, expected', [
-    (AUTOMATA + '/DFA1.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA1.MIN_RES.XML'),
-    (AUTOMATA + '/DFA2.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA2.MIN_RES.XML'),
-    (AUTOMATA + '/DFA1.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA1.TRIM_RES.XML'),
-    (AUTOMATA + '/DFA2.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA2.TRIM_RES.XML'),
-    (AUTOMATA + '/ENFA1.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA1.EPSILON_RES.XML'),
-    (AUTOMATA + '/ENFA2.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA2.EPSILON_RES.XML'),
+@pytest.mark.parametrize('input_file, algorithm, expected_file', [
+    (AUTOMATA + '/DFA1.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA1.MIN_RES.xml'),
+    (AUTOMATA + '/DFA2.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA2.MIN_RES.xml'),
+    (AUTOMATA + '/DFA1.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA1.TRIM_RES.xml'),
+    (AUTOMATA + '/DFA2.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA2.TRIM_RES.xml'),
+    (AUTOMATA + '/ENFA1.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA1.EPSILON_RES.xml'),
+    (AUTOMATA + '/ENFA2.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA2.EPSILON_RES.xml'),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', 'grammar_reduction', GRAMMARS + '/CFG1.REDUCTION_RES.xml'),
+    (GRAMMARS + '/CFG2.REDUCTION.xml', 'grammar_reduction', GRAMMARS + '/CFG2.REDUCTION_RES.xml'),
+    (GRAMMARS + '/CFG1.EPSILON.xml', 'grammar_epsilon', GRAMMARS + '/CFG1.EPSILON_RES.xml'),
+    (GRAMMARS + '/CFG2.EPSILON.xml', 'grammar_epsilon', GRAMMARS + '/CFG2.EPSILON_RES.xml'),
+    (GRAMMARS + '/CFG1.UNIT.xml', 'grammar_unit', GRAMMARS + '/CFG1.UNIT_RES.xml'),
+    (GRAMMARS + '/CFG2.UNIT.xml', 'grammar_unit', GRAMMARS + '/CFG2.UNIT_RES.xml'),
+
 ])
-def test_algorithms_2(interface, input_file, algorithm, expected):
+def test_algorithms_2(interface, input_file, algorithm, expected_file):
     with open(input_file, 'r') as f:
         xml_input = f.read()
+    with open(expected_file, 'r') as f:
+        expected_output = f.read()
+
     return_code, res = interface.algorithms(xml_input, algorithm)
     assert return_code == 0
 
-    return_code, res = interface.comparison(res, 'fa', expected, 'fa')
-    assert return_code == 0
-    assert res == 'True'
+    if 'automaton' in algorithm:
+        input_type = 'fa'
+    elif 'grammar' in algorithm:
+        input_type = 'rg'
+    elif 'regexp' in algorithm:
+        input_type = 're'
+    else:
+        pytest.fail('Invalid algorithm passed as argument!!')
+        return
+
+    return_code1, res1 = interface.comparison(res, input_type, expected_output, input_type)
+    assert return_code1 == 0
+    assert res1 == 'True'

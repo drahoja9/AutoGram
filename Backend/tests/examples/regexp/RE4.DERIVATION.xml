@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<UnboundedRegExp>
+    <alphabet>
+        <Character>48</Character>
+        <Character>49</Character>
+    </alphabet>
+    <alternation>
+        <concatenation>
+            <Character>48</Character>
+            <Character>49</Character>
+            <Character>48</Character>
+        </concatenation>
+        <concatenation>
+            <Character>49</Character>
+            <Character>48</Character>
+            <Character>49</Character>
+        </concatenation>
+        <concatenation>
+            <iteration>
+                <Character>48</Character>
+            </iteration>
+            <Character>49</Character>
+        </concatenation>
+        <concatenation>
+            <iteration>
+                <Character>49</Character>
+            </iteration>
+            <Character>48</Character>
+        </concatenation>
+    </alternation>
+</UnboundedRegExp>

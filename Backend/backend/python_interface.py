@@ -77,3 +77,17 @@ class AltInterface:
         result_struct = self.lib.comparison(self.interface, *params)
 
         return self._parse_result(result_struct)
+
+
+if __name__ == '__main__':
+    with open('tests/examples/regexp/RE5.DERIVATION.xml', 'r') as f:
+        xml_input = f.read()
+
+    with open('tests/examples/regexp/RE5.DERIVATION_RES.xml', 'r') as f:
+        expected = f.read()
+
+    with AltInterface() as interface:
+        res_code, res = interface.algorithms(xml_input, 'regexp_derivation', '100')
+        _, res = interface.algorithms(res, 'regexp_trim')
+        res_code1, res1 = interface.comparison(res, 're', expected, 're')
+        print(res, res1)

@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
 <CFG>
     <nonterminalAlphabet>
-        <String>S</String>
-        <String>C</String>
+        <String>83</String>
+        <String>67</String>
     </nonterminalAlphabet>
     <terminalAlphabet>
-        <Character>c</Character>
+        <Character>99</Character>
     </terminalAlphabet>
     <initialSymbol>
-        <Character>S</Character>
+        <String>83</String>
     </initialSymbol>
     <rules>
         <rule>
             <lhs>
-                <String>S</String>
+                <String>83</String>
             </lhs>
             <rhs>
-                <String>C</String>
+                <String>67</String>
             </rhs>
         </rule>
         <rule>
             <lhs>
-                <String>C</String>
+                <String>67</String>
             </lhs>
             <rhs>
-                <Character>c</Character>
+                <Character>99</Character>
             </rhs>
         </rule>
     </rules>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ENFA>
+<EpsilonNFA>
     <states>
         <String>S</String>
         <String>A</String>
@@ -90,7 +90,7 @@
                 <String>S</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>A</String>
@@ -101,7 +101,7 @@
                 <String>S</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>B</String>
@@ -112,11 +112,11 @@
                 <String>S</String>
             </from>
             <input>
-                <Epsilon/>
+                <epsilon/>
             </input>
             <to>
                 <String>C</String>
             </to>
         </transition>
     </transitions>
-</ENFA>
+</EpsilonNFA>

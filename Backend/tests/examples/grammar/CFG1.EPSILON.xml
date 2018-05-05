@@ -5,12 +5,10 @@
         <String>65</String>
         <String>66</String>
         <String>67</String>
-        <String>68</String>
     </nonterminalAlphabet>
     <terminalAlphabet>
         <Character>97</Character>
         <Character>98</Character>
-        <Character>99</Character>
     </terminalAlphabet>
     <initialSymbol>
         <String>83</String>
@@ -23,13 +21,6 @@
             <rhs>
                 <String>65</String>
                 <String>66</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>83</String>
-            </lhs>
-            <rhs>
                 <String>67</String>
             </rhs>
         </rule>
@@ -38,7 +29,7 @@
                 <String>65</String>
             </lhs>
             <rhs>
-                <Character>97</Character>
+            	<Character>97</Character>
                 <String>65</String>
             </rhs>
         </rule>
@@ -47,7 +38,7 @@
                 <String>65</String>
             </lhs>
             <rhs>
-                <Character>97</Character>
+            	<epsilon/>
             </rhs>
         </rule>
         <rule>
@@ -55,8 +46,24 @@
                 <String>66</String>
             </lhs>
             <rhs>
-                <Character>98</Character>
+            	<String>65</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
                 <String>66</String>
+            </lhs>
+            <rhs>
+            	<Character>98</Character>
+            	<Character>98</Character>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>66</String>
+            </lhs>
+            <rhs>
+            	<epsilon/>
             </rhs>
         </rule>
         <rule>
@@ -64,16 +71,7 @@
                 <String>67</String>
             </lhs>
             <rhs>
-                <Character>99</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>68</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-                <Character>99</Character>
+            	<epsilon/>
             </rhs>
         </rule>
     </rules>
