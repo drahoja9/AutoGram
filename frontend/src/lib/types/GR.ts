@@ -40,7 +40,7 @@ export interface CFG extends GRBase {
   type: GRType.CFG;
   rules: {
     from: string;
-    to: string[];
+    to: string[] | [null];
   }[];
 }
 

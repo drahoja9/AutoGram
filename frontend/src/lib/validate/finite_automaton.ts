@@ -48,7 +48,7 @@ function deterministicTransitionCheck(transitions: Array<any>){
   })
 }
 
-function ValidateFiniteAutomaton(automaton : FA){
+function validateFiniteAutomaton(automaton : FA){
   /** states must not be empty */
   if (automaton.states.length === 0){
     throw new TypeError("Finite automaton must have at least one state")
@@ -60,11 +60,11 @@ function ValidateFiniteAutomaton(automaton : FA){
   /** each state must consist only from allowed symbols */
   automaton.states.forEach(state => {
     if (state.length < 1){
-      throw new TypeError("States must consist from al least one character")
+      throw new TypeError("States must consist of one character at least")
     }
     for (var i = 0 ; i < state.length ; i++ ){
       if (allowedSymbols.indexOf(state.charAt(i)) === -1){
-        throw new TypeError("States must consist only from allowed symbols")
+        throw new TypeError("States must consist of allowed characters only")
       }
     }
   })
@@ -74,7 +74,7 @@ function ValidateFiniteAutomaton(automaton : FA){
       throw new TypeError("Input alphabet symbols must be characters")
     }
     if (allowedSymbols.indexOf(symbol) === -1){
-      throw new TypeError("Input alphabet must consist only from allowed symbols")
+      throw new TypeError("Input alphabet must consist of allowed characters only")
     }
   })
   /** each state and input alphabet name must be unique */
@@ -99,25 +99,25 @@ function ValidateFiniteAutomaton(automaton : FA){
   })
 }
 
-export function ValidateEpsilonNFA(automaton : ENFA) : boolean {
+export function validateEpsilonNFA(automaton : ENFA) : boolean {
   /** check basic structure of the automaton */
-  ValidateFiniteAutomaton(automaton)
+  validateFiniteAutomaton(automaton)
   /** each transition must fullfil standard transition's rules */
   standardTransitionCheck(automaton.transitions, automaton.states, automaton.input_alphabet)
   return true
 }
 
-export function ValidateNFA(automaton: NFA) : boolean {
+export function validateNFA(automaton: NFA) : boolean {
   /** check basic structure of the automaton */
-  ValidateFiniteAutomaton(automaton)
+  validateFiniteAutomaton(automaton)
   /** each transition must fullfil epsilon free transition's rules */
   epsilonFreeTransitionCheck(automaton.transitions, automaton.states, automaton.input_alphabet)
   return true
 }
 
-export function ValidateDFA(automaton: DFA) : boolean {
+export function validateDFA(automaton: DFA) : boolean {
   /** check basic structure of the automaton */
-  ValidateFiniteAutomaton(automaton)
+  validateFiniteAutomaton(automaton)
   /** each transition must fullfil epsilon free transition's rules */
   epsilonFreeTransitionCheck(automaton.transitions, automaton.states, automaton.input_alphabet)
   /** automaton must be deterministic */

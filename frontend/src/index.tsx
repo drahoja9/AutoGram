@@ -10,6 +10,7 @@ import App from './views';
 import configureStore from './configureStore';
 //#endregion
 
+
 const store = configureStore();
 
 ReactDOM.render(
