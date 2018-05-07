@@ -69,52 +69,64 @@ void ALT_Interface::prepareAndRun(std::string input, std::string algorithm) {
 
 void ALT_Interface::algorithms ( std::string input, std::string algorithm, const char * optionalParam ) {
 	try {
-        if (!optionalParam) {
-            if (algorithm == "automaton_determinization")
-                algorithm = "automaton::determinize::Determinize";
-            else if (algorithm == "automaton_trim")
-                algorithm = "automaton::simplify::Trim";
-            else if (algorithm == "automaton_minimization") {
-                // First we need to eliminate unreachable and pointless states (following the BI-AAG practice)
-                this->algorithms(input, "automaton_trim", nullptr);
+        if (algorithm == "automaton_determinization")
+            algorithm = "automaton::determinize::Determinize";
+        else if (algorithm == "automaton_trim")
+            algorithm = "automaton::simplify::Trim";
+        else if (algorithm == "automaton_minimization") {
+            // First we need to eliminate unreachable and pointless states (following the BI-AAG practice)
+            this->algorithms(input, "automaton_trim", nullptr);
 
-                input = this->m_ResultStruct->t_Result;
-                algorithm = "automaton::simplify::Minimize";
-            }
-            else if (algorithm == "automaton_epsilon")
-                algorithm = "automaton::simplify::EpsilonRemoverIncoming";
-            else if (algorithm == "grammar_reduction")
-                algorithm = "grammar::simplify::Trim";
-            else if (algorithm == "grammar_epsilon")
-                algorithm = "grammar::simplify::EpsilonRemover";
-            else if (algorithm == "grammar_unit")
-                algorithm = "grammar::simplify::SimpleRulesRemover";
-            else if (algorithm == "grammar_cnf")
-                algorithm = "grammar::simplify::ToCNF";
-            else if (algorithm == "grammar_left_recursion")
-                algorithm = "grammar::simplify::LeftRecursionRemover";
-            else if (algorithm == "regexp_trim")
-                algorithm = "regexp::simplify::RegExpOptimize";
-            else {
-                this->setResultStruct(1, "Unknown algorithm passed as parameter!");
+            input = this->m_ResultStruct->t_Result;
+            algorithm = "automaton::simplify::Minimize";
+        }
+        else if (algorithm == "automaton_epsilon")
+            algorithm = "automaton::simplify::EpsilonRemoverIncoming";
+        else if (algorithm == "grammar_reduction")
+            algorithm = "grammar::simplify::Trim";
+        else if (algorithm == "grammar_epsilon")
+            algorithm = "grammar::simplify::EpsilonRemover";
+        else if (algorithm == "grammar_unit")
+            algorithm = "grammar::simplify::SimpleRulesRemover";
+        else if (algorithm == "grammar_cnf")
+            algorithm = "grammar::simplify::ToCNF";
+        else if (algorithm == "grammar_left_recursion")
+            algorithm = "grammar::simplify::LeftRecursionRemover";
+        else if (algorithm == "regexp_trim")
+            algorithm = "regexp::simplify::RegExpOptimize";
+        else if (algorithm == "regexp_derivation") {
+            if (! optionalParam) {
+                this->setResultStruct(1, "No string to differentiate by was given!");
                 return;
             }
+            algorithm = "regexp::RegExpDerivation";
+        }
+        else if (algorithm == "grammar_cyk") {
+            if (! optionalParam) {
+                this->setResultStruct(1, "No string for CYK was given!");
+                return;
+            }
+            algorithm = "grammar::generate::CockeYoungerKasami";
         }
         else {
-            if (algorithm == "regexp_derivation")
-                algorithm = "regexp::RegExpDerivation";
-            else if (algorithm == "grammar_cyk")
-                algorithm = "grammar::generate::CockeYoungerKasami";
-            else {
-                this->setResultStruct(1, "Unknown algorithm passed as parameter!");
-                return;
-            }
+            this->setResultStruct(1, "Unknown algorithm passed as parameter!");
+            return;
         }
 
-        if (optionalParam)
+        if (
+            optionalParam &&
+            (
+                algorithm.find("RegExpDerivation") != std::string::npos ||
+                algorithm.find("CockeYoungerKasami") != std::string::npos
+            )
+           )
             algorithm += " - \"" + (std::string)optionalParam + "\" ";
-        else
+        else if (! optionalParam)
             algorithm += " - ";
+        else {
+            this->setResultStruct(1, "Optional parameter was given even though it can't be used!");
+            return;
+        }
 
         this->prepareAndRun(input, algorithm);
 	} catch ( const exception::CommonException & exception ) {
@@ -176,6 +188,9 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
 		this->prepareAndRun(input, algorithm + " - ");
 	} catch ( const exception::CommonException & exception ) {
 		this->setResultStruct(1, exception.what());
+	} catch ( const std::exception & exception ) {
+		this->setResultStruct(3, exception.what());
+		return;
 	} catch ( ... ) {
 		this->setResultStruct(127, "Unknown exception caught.");
 		return;

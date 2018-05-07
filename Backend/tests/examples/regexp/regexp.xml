@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <UnboundedRegExp>
   <alphabet>
-    <Integer>0</Integer>
-    <Integer>1</Integer>
-    <Integer>11</Integer>
-    <Integer>10</Integer>
+    <Character>48</Character>
+    <Character>49</Character>
+    <Character>4949</Character>
+    <Character>4948</Character>
   </alphabet>
   <concatenation>
-    <Integer>0</Integer>
+    <Character>48</Character>
     <iteration>
-      <Integer>1</Integer>
+      <Character>49</Character>
     </iteration>
     <alternation>
-      <Integer>11</Integer>
-      <Integer>10</Integer>
+      <Character>4949</Character>
+      <Character>4948</Character>
     </alternation>
   </concatenation>
 </UnboundedRegExp>
