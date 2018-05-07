@@ -1,5 +1,7 @@
+//#region imports
 import {FA, ENFA, NFA, DFA} from 'lib/types'
 import {allowedSymbols} from 'lib/validate'
+//#endregion
 
 function standardTransitionCheck(transitions: Array<any>, states: Array<String>, alphabet: Array<String>){
   /** each transition must go from and to some state defined in states on input defined in input alphabet, or on null */

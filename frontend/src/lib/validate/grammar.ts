@@ -1,5 +1,7 @@
+//#region imports
 import {CFG, GR, RRG, CNF} from 'lib/types'
 import {allowedSymbols} from 'lib/validate'
+//#endregion
 
 function contextFreeRulesCheck(rules: Array<any>, nonterminal_alphabet: Array<string>, terminal_alphabet: Array<string>){
   /** each rule's left side must be one non-terminal character */
@@ -17,6 +19,7 @@ function contextFreeRulesCheck(rules: Array<any>, nonterminal_alphabet: Array<st
     } else {
       rule.to.forEach((element: any) => {
         if (symbol_array.indexOf(element) === -1){
+          console.log(rule)
           throw new TypeError("Right side of rule must consist of defined non-terminal and terminal symbols or of null")
         }
       })
@@ -30,6 +33,9 @@ function regularRulesCheck(rules: Array<any>, nonterminal_alphabet: Array<string
   rules.forEach(rule => {
     if (nonterminal_alphabet.indexOf(rule.from) === -1){
       throw new TypeError("Left side of rule must consist of one non-terminal symbol")
+    }
+    if (rule.to.length === 1 && rule.to[0] === null){
+      return
     }
     var type_one : boolean = (rule.to.length === 1 && terminal_alphabet.indexOf(rule.to[0]) !== -1)
     var type_two : boolean = (rule.to.length === 2 && terminal_alphabet.indexOf(rule.to[0]) !== -1
@@ -47,11 +53,35 @@ function chomskyRulesCheck(rules: Array<any>, nonterminal_alphabet: Array<string
     if (nonterminal_alphabet.indexOf(rule.from) === -1){
       throw new TypeError("Left side of rule must consist of one non-terminal symbol")
     }
+    if (rule.to.length === 1 && rule.to[0] === null){
+      return
+    }
     var type_one : boolean = (rule.to.length === 1 && terminal_alphabet.indexOf(rule.to[0]) !== -1)
     var type_two : boolean = (rule.to.length === 2 && nonterminal_alphabet.indexOf(rule.to[0]) !== -1
                               && nonterminal_alphabet.indexOf(rule.to[1]) !== -1)
     if (!type_one && !type_two){
       throw new TypeError("Right side of rule must consist of one terminal symbol or two non-terminal symbols")
+    }
+  })
+}
+
+function epsilonCheck(rules: Array<any>, initial_symbol: string){
+  /** if it is possible to rewrite initial symbol to epsilon, then initial symbol must not be on right side of any rule */
+  /** a) can any nonterminal be rewritten to epsilon? */
+  var allRewritableToNull : Array<any> = rules.filter(rule => rule.to.length === 1 && rule.to[0] === null)
+  if (allRewritableToNull.length === 0){
+    return
+  }
+  /** b) epsilon must not be anywhere else, but initial_symbol */
+  allRewritableToNull.forEach( rule => {
+    if (rule.from !== initial_symbol){
+      throw new TypeError("Only initial symbol can be rewritten to epsilon")
+    }
+  })
+  /** b) is initial symbol on the right side of any rule? */
+  rules.forEach(rule => {
+    if (rule.to.indexOf(initial_symbol) !== -1){
+      throw new TypeError("If it is possible to rewrite initial symbol to epsilon,then it must not be present on the right side of any rule")
     }
   })
 }
@@ -108,6 +138,8 @@ export function validateRRG(grammar: RRG) : boolean{
   validateGrammar(grammar)
   /** check rules */
   regularRulesCheck(grammar.rules, grammar.nonterminal_alphabet, grammar.terminal_alphabet)
+  /** check epsilon */
+  epsilonCheck(grammar.rules, grammar.initial_symbol)
   return true
 }
 
@@ -116,5 +148,7 @@ export function validateCNF(grammar: CNF) : boolean {
   validateGrammar(grammar)
   /** check rules */
   chomskyRulesCheck(grammar.rules, grammar.nonterminal_alphabet, grammar.terminal_alphabet)
+  /** check epsilon */
+  epsilonCheck(grammar.rules, grammar.initial_symbol)
   return true
 }
