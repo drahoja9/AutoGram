@@ -1,9 +1,9 @@
-.. backend documentation master file, created by
-   sphinx-quickstart on Mon May  7 22:40:23 2018.
+.. Backend documentation master file, created by
+   sphinx-quickstart on Tue May  8 17:45:53 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to backend's documentation!
+Welcome to Backend's documentation!
 ===================================
 
 .. toctree::
@@ -11,6 +11,7 @@ Welcome to backend's documentation!
    :caption: Contents:
 
    backend
+   tests
 
 
 Indices and tables

@@ -8,7 +8,7 @@ directly from Python code.
 
 .. module:: python_interface
     :platform: Unix
-    :synopsis: Python interface for Algorithms Library Toolkit (C++), using `ctypes`_ built-in library to call chosen \
+    :synopsis: Python interface for Algorithms Library Toolkit (C++), using ctypes built-in library to call chosen \
     algorithms directly from Python code.
 
 .. moduleauthor:: Jakub Drahos <drahoja9@fit.cvut.cz>
@@ -129,7 +129,21 @@ class AltInterface:
     def algorithms(self, xml_input: str, algorithm: str, optional_param: str = None) -> tuple:
         """
 
-        Python wrapper method for running algorithms from C++ ALT interface.
+        Python wrapper method for running algorithms from C++ ALT interface. Currently supported algorithms are:
+
+        * ``'automaton_determinization'``
+        * ``'automaton_minimization'``
+        * ``'automaton_trim'``
+        * ``'automaton_normalization'``
+        * ``'automaton_epsilon'``
+        * ``'grammar_reduction'``
+        * ``'grammar_epsilon'``
+        * ``'grammar_unit'``
+        * ``'grammar_cnf'``
+        * ``'grammar_left_recursion'``
+        * ``'grammar_cyk'``
+        * ``'regexp_trim'``
+        * ``'regexp_derivation'``
 
         :param xml_input: input automaton/grammar/regexp in XML format
         :param algorithm: algorithm to be used for given input, always with prefix describing input type (e.g. \
@@ -150,11 +164,19 @@ class AltInterface:
     def conversion(self, xml_input: str, source: str, target: str) -> tuple:
         """
 
-        Python wrapper method for running conversion from C++ ALT interface.
+        Python wrapper method for running conversion from C++ ALT interface. Algorithms used for conversions:
+
+        * FA to RG: successive construction algorithm
+        * FA to RE: state elimination
+        * RG to FA: successive construction algorithm
+        * RG to RE: Brzozowski's algebraic method
+        * RE to FA: Glushkov's NFA construction algorithm
+        * RE to RG: Brzozowski's derivation algorithm
+        * CFG to PDA: ###
 
         :param xml_input: input automaton/grammar/regexp in XML format
-        :param source: conversion input type (currently allowed are only ``'fa'``, ``'rg'`` and ``'re'``)
-        :param target: conversion output type (currently allowed are only ``'fa'``, ``'rg'`` and ``'re'``)
+        :param source: conversion input type (currently allowed are only ``'fa'``, ``'rg'``, ``'re'`` and ``'cfg'``)
+        :param target: conversion output type (currently allowed are only ``'fa'``, ``'rg'``, ``'re'`` and ``'pda'``)
 
         :return: `tuple` containing result code (`int`; zero when everything's OK, non-zero otherwise) and result \
         itself (`str`)
@@ -170,40 +192,43 @@ class AltInterface:
     def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> tuple:
         """
 
-        Python wrapper method for running comparison from C++ ALT interface.
+        Python wrapper method for running comparison from C++ ALT interface. Comparison is done by transforming both
+        inputs to NFA/PDA and then comparing the formal languages they accept.
+
+        .. warning::
+
+            It's possible to compare only two sets between each other: [FA, RG, RE] and [CFG, PDA]! (e.g. You can't
+            compare for example FA and PDA)
 
         :param input1: input automaton/grammar/regexp in XML format
-        :param input1_type: type of input1 (currently allowed are only ``'fa'``, ``'rg'`` and ``'re'``)
+        :param input1_type: type of input1 (currently allowed are only ``'fa'``, ``'rg'``, ``'re'``, ``'cfg'`` and \
+        ``'pda'``)
         :param input2: input automaton/grammar/regexp in XML format
-        :param input2_type: type of input2 (currently allowed are only ``'fa'``, ``'rg'`` and ``'re'``)
+        :param input2_type: type of input2 (currently allowed are only ``'fa'``, ``'rg'``, ``'re'``, ``'cfg'`` and \
+        ``'pda'``)
 
         :return: `tuple` containing result code (`int`; zero when everything's OK, non-zero otherwise) and result \
         itself (`str`)
 
         """
-        if input1_type != 'fa':
+        if input1_type in ['rg', 're']:
             _, input1 = self.conversion(input1, input1_type, 'fa')
-        if input2_type != 'fa':
+        elif input1_type == 'cfg':
+            _, input1 = self.conversion(input1, input1_type, 'pda')
+
+        if input2_type in ['rg', 're']:
             _, input2 = self.conversion(input2, input2_type, 'fa')
+        elif input1_type == 'cfg':
+            _, input2 = self.conversion(input2, input2_type, 'pda')
+
+        if input1_type in ['fa', 'rg', 're'] and input2_type in ['fa', 'rg', 're']:
+            regular = True
+        else:
+            regular = False
 
         # The order of parameters for function _prepare_strings is very important and corresponds with order for C/C++
         # interface alone! Do not change!
         params = self._prepare_strings(input1, input2)
-        result_struct = self.lib.comparison(self.interface, *params)
+        result_struct = self.lib.comparison(self.interface, *params, regular)
 
         return self._parse_result(result_struct)
-
-
-# if __name__ == '__main__':
-#     with open('tests/examples/automaton/NFSM1.xml', 'r') as f:
-#         xml_input = f.read()
-#
-#     with open('tests/examples/automaton/NFSM11.xml', 'r') as f:
-#         expected = f.read()
-#
-#     with AltInterface() as interface:
-#         res_code, res = interface.conversion(xml_input, 'fa', 'rg')
-#         res_code, res = interface.conversion(res, 'rg', 'fa')
-#         res_code, res = interface.conversion(res, 're', 'fa')
-#         res_code, res = interface.comparison(xml_input, 'fa', res, 'fa')
-#         print(res_code, res)

@@ -1,3 +1,28 @@
+################################ General ################################
+# Put it first so that "make" without argument is like "make help".
+help:
+	@echo "Type 'make interface' to compile the python_interface.cpp into the BUILD_PATH (set in this Makefile) as shared library to be used with Python ctypes built-in library."
+	@echo "Type 'make clean_interface' to clean the whole build directory set by BUILD_PATH."
+	@echo "Type 'make docs' to build the html docs into the DOCS_BUILD_PATH (set in this Makefile)."
+	@echo "Type 'make clean_docs' to clean the whole docs build directory set by DOCS_BUILD_PATH."
+
+.PHONY: help Makefile interface run_interface docs clean_docs clean_interface
+
+
+################################ DOCS part ################################
+DOCS_SOURCE_PATH = docs/source
+DOCS_BUILD_PATH = docs/build
+SPHINXPROJ = AutoGram
+SPHINXBUILD = sphinx-build
+
+docs:
+	"$(SPHINXBUILD)" "$(DOCS_SOURCE_PATH)" "$(DOCS_BUILD_PATH)"
+
+clean_docs:
+	rm -f "$(DOCS_BUILD_PATH)"/*
+
+
+################################ C++ ALT library part ################################
 ALT_PATH=/home/jakub/alt/automata-library
 ROOT_PATH=/home/jakub/BI-SP1/Backend
 
@@ -13,6 +38,6 @@ interface:
 run_interface:
 	python $(SOURCE_PATH)/python_interface.py
 	
-clean:
+clean_interface:
 	rm -rf $(BUILD_PATH)
 

@@ -17,11 +17,11 @@ struct ResultStruct {
 
 class ALT_Interface {
 public:
-	ALT_Interface() : m_ResultStruct(nullptr) { this->m_ResultStruct = new ResultStruct(); }
+	ALT_Interface() : m_ResultStruct(nullptr) {}
 	~ALT_Interface() { delete this->m_ResultStruct; }
 	void algorithms(std::string input, std::string algorithm, const char * optionalParam);
 	void convert(std::string input, std::string from, std::string to);
-	void compare(std::string input1, std::string input2);
+	void compare(std::string input1, std::string input2, bool regular);
 
 	ResultStruct * m_ResultStruct;
 	
@@ -29,9 +29,15 @@ private:
 	void setResultStruct(int resCode, const char * char_result);
 	void setResultStruct(int resCode, bool result);
 	void prepareAndRun(std::string input, std::string algorithm);
+	std::string prepareForCompare(std::string input);
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+
 void ALT_Interface::setResultStruct(int resCode, const char * char_result) {
+	delete this->m_ResultStruct;
+	this->m_ResultStruct = new ResultStruct();
+
     std::string result = char_result;
 	this->m_ResultStruct->t_ResCode = resCode;
 	this->m_ResultStruct->t_Result = new char [result.size()+1];
@@ -40,13 +46,17 @@ void ALT_Interface::setResultStruct(int resCode, const char * char_result) {
 }
 
 void ALT_Interface::setResultStruct(int resCode, bool result) {
+    delete this->m_ResultStruct;
+	this->m_ResultStruct = new ResultStruct();
+
 	this->m_ResultStruct->t_ResCode = resCode;
-	this->m_ResultStruct->t_Result = new char [6];
 	if (result) {
+	    this->m_ResultStruct->t_Result = new char [5];
 	    strncpy(this->m_ResultStruct->t_Result, "True", 4);
 	    this->m_ResultStruct->t_Result[4] = '\0';
 	}
 	else {
+	    this->m_ResultStruct->t_Result = new char [6];
 	    strncpy(this->m_ResultStruct->t_Result, "False", 5);
 	    this->m_ResultStruct->t_Result[5] = '\0';
 	}
@@ -73,6 +83,8 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
             algorithm = "automaton::determinize::Determinize";
         else if (algorithm == "automaton_trim")
             algorithm = "automaton::simplify::Trim";
+        else if (algorithm == "automaton_normalization")
+            algorithm = "automaton::simplify::Normalize";
         else if (algorithm == "automaton_minimization") {
             // First we need to eliminate unreachable and pointless states (following the BI-AAG practice)
             this->algorithms(input, "automaton_trim", nullptr);
@@ -156,8 +168,8 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
                 this->setResultStruct(1, "Unknown 'to' parameter passed as parameter!");
 			    return;
             }
-        } else if (from == "rg") {
-            if (to == "fa") {
+        } else if (from == "rg" || from == "cfg") {
+            if (to == "fa" || to == "pda") {
                 algorithm = "grammar::convert::ToAutomaton";
             } else if (to == "rg") {
                 this->setResultStruct(0, input.c_str());
@@ -197,11 +209,32 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
 	}
 }
 
-void ALT_Interface::compare(std::string input1, std::string input2) {
+std::string ALT_Interface::prepareForCompare(std::string input) {
+    // As there is currently no comparison algorithm that can find isomorphism between two NFAs, we need to determinize,
+    // minimize, trim and normalize every NFA before the comparison
+
+    this->algorithms(input, "automaton_epsilon", nullptr);
+    std::string inter_res = this->m_ResultStruct->t_Result;
+
+    this->algorithms(inter_res, "automaton_determinization", nullptr);
+    inter_res = this->m_ResultStruct->t_Result;
+
+    this->algorithms(inter_res, "automaton_minimization", nullptr);
+    inter_res = this->m_ResultStruct->t_Result;
+
+    this->algorithms(inter_res, "automaton_trim", nullptr);
+    inter_res = this->m_ResultStruct->t_Result;
+
+    this->algorithms(inter_res, "automaton_normalization", nullptr);
+    return this->m_ResultStruct->t_Result;
+}
+
+void ALT_Interface::compare(std::string input1, std::string input2, bool regular) {
     try {
-        if (this->m_ResultStruct)
-			delete this->m_ResultStruct;
-		this->m_ResultStruct = new ResultStruct();
+        if (regular) {
+		    input1 = this->prepareForCompare(input1);
+		    input2 = this->prepareForCompare(input2);
+		}
 
 		cli::Environment environment;
 		environment.setVariable("input1", input1);
@@ -251,8 +284,8 @@ extern "C" {
 	    return interface->m_ResultStruct;
 	}
 
-	ResultStruct * comparison(ALT_Interface * interface, const char * input1, const char * input2) {
-	    interface->compare(input1, input2);
+	ResultStruct * comparison(ALT_Interface * interface, const char * input1, const char * input2, bool regular) {
+	    interface->compare(input1, input2, regular);
 	    return interface->m_ResultStruct;
 	}
 	
