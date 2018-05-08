@@ -122,7 +122,7 @@ class JtXConverter:
             JtXConverter._create_list_subelements(t_push, children_list, 'Character')
 
     @staticmethod
-    def _create_grammar_rules(parent_element: ET.Element, children_list: list, nonterminal_alphabet: list):
+    def _create_grammar_rules(parent_element: ET.Element, children_list: list, nonterminal_alphabet: list, allow_epsilon: bool, initial_symbol: str):
         """
         Creates and attaches list of rules to a given parent element
         :param parent_element: the element created sub elements should be attached to
@@ -133,6 +133,10 @@ class JtXConverter:
         or when JSON dict has wrong structure of grammar rules
         """
         for rule in children_list:
+            # skip epsilon at initial symbol
+            if not allow_epsilon and rule == {'from': initial_symbol, 'to': [None]}:
+                continue
+            # continue normally
             r = ET.SubElement(parent_element, 'rule')
             r_l = ET.SubElement(r, 'lhs')
             r_l_in = ET.SubElement(r_l, "String")
@@ -148,6 +152,14 @@ class JtXConverter:
                 else:
                     r_r_in = ET.SubElement(r_r, "Character")
                     r_r_in.text = str(ord(symbol))
+
+    @staticmethod
+    def _create_grammar_generates_epsilon(parent_element: ET.Element, rule_list: list, initial_symbol: str):
+        null_rule = {'from': initial_symbol, 'to': [None]}
+        if null_rule in rule_list:
+            ET.SubElement(parent_element, 'true')
+        else:
+            ET.SubElement(parent_element, 'false')
 
     @staticmethod
     def _create_regexp_value(parent_element: ET.Element, value_dict: dict):
@@ -281,14 +293,12 @@ class JtXConverter:
         JtXConverter._create_single_subelement(initial_symbol, json_dict['initial_symbol'], "String")
 
         rules = ET.SubElement(etree_root, 'rules')
-        JtXConverter._create_grammar_rules(rules, json_dict['rules'], json_dict["nonterminal_alphabet"])
+        allow_epsilon = type == ObjectTypes.CFG
+        JtXConverter._create_grammar_rules(rules, json_dict['rules'], json_dict["nonterminal_alphabet"], allow_epsilon, json_dict['initial_symbol'])
 
         if type == ObjectTypes.RG or type == ObjectTypes.CNF:
             generates_epsilon = ET.SubElement(etree_root, 'generatesEpsilon')
-            if json_dict['generates_epsilon']:
-                ET.SubElement(generates_epsilon, "true")
-            else:
-                ET.SubElement(generates_epsilon, "false")
+            JtXConverter._create_grammar_generates_epsilon(generates_epsilon, json_dict['rules'], json_dict['initial_symbol'])
 
         return ET.tostring(etree_root).decode()
 
@@ -568,6 +578,43 @@ class XtJConverter:
         return result
 
     @staticmethod
+    def _create_generates_epsilon(generates_epsilon: bool, grammar_dict):
+        if not generates_epsilon:
+            return
+
+        rules = grammar_dict['rules']                       # pointer
+        initial_symbol = grammar_dict['initial_symbol']     # value
+
+        # is initial symbol present on the right side of any rule?
+        rules_with_initial_symbol = [rule for rule in rules if initial_symbol in rule['to']]
+
+        # if not, append new rule of rewritting initial_symbol to epsilon and end
+        if len(rules_with_initial_symbol) == 0:
+            rules.append({'from': initial_symbol, 'to': [None]})
+            return
+
+        # if yes:
+        # 1) add new initial symbol:
+        new_initial_symbol = initial_symbol + "\'"
+        while new_initial_symbol in grammar_dict['nonterminal_alphabet']:
+            new_initial_symbol += "\'"
+        grammar_dict['nonterminal_alphabet'].append(new_initial_symbol)
+        grammar_dict['initial_symbol'] = new_initial_symbol
+        # 2) modified rules must be added, where initial_symbol is not present in them
+        modified_rules = []
+        for rule in rules_with_initial_symbol:
+            new_to = [symbol for symbol in rule['to'] if symbol != initial_symbol]
+            modified_rules.append({'from': rule['from'], 'to': new_to})
+        # add them only if they are not present yet and are not empty
+        rules_to_add = [rule for rule in modified_rules if rule not in rules and rule['to'] != []]
+        rules.extend(rules_to_add)
+        # 3) rules from old initial symbol must be copied to the new one
+        rules_of_new_init = [{'from': new_initial_symbol, 'to': rule['to']} for rule in rules if rule['from'] == initial_symbol]
+        rules.extend(rules_of_new_init)
+        # 4) add rewrite to epsilon to new initial symbol
+        rules.append({'from': new_initial_symbol, 'to': [None]})
+
+    @staticmethod
     def _create_regexp_value(element: ET.Element, referenced_values: dict) -> dict:
         """
         Creates list-dictionary structure, that represents regular expression value.
@@ -728,13 +775,10 @@ class XtJConverter:
         rules = XtJConverter._create_list_rules(root, referenced_values)
         result_dict['rules'] = rules
 
-        if type == ObjectTypes.RG or type == ObjectTypes.CNF:
-            generates_epsilon = root.findall('generatesEpsilon')[0][0].tag
-            result_dict['generates_epsilon'] = generates_epsilon
-        if type == ObjectTypes.EpsilonFreeCFG:
-            generates_epsilon = root.findall('generatesEpsilon')[0][0].tag
-            if generates_epsilon == 'true':
-                result_dict['rules'].append({'from': result_dict['initial_symbol'], 'to': [None]})
+        # solve generates epsilon
+        if type == ObjectTypes.RG or type == ObjectTypes.CNF or type == ObjectTypes.EpsilonFreeCFG:
+            generates_epsilon = root.findall('generatesEpsilon')[0][0].tag == 'true'
+            XtJConverter._create_generates_epsilon(generates_epsilon, result_dict)
 
         return result_dict
 
