@@ -13,3 +13,4 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from backend.python_interface import AltInterface
+from backend import AlgorithmTypes

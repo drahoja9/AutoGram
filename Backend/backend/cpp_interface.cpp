@@ -7,6 +7,21 @@
 #include <factory/XmlDataFactory.hpp>
 
 
+#define AUTOMATON_EPSILON_REMOVAL "automaton_epsilon"
+#define AUTOMATON_DETERMINIZATION "automaton_determinization"
+#define AUTOMATON_MINIMIZATION "automaton_minimization"
+#define AUTOMATON_TRIM "automaton_trim"
+#define AUTOMATON_NORMALIZATION "automaton_normalization"
+#define GRAMMAR_REDUCTION "grammar_reduction"
+#define GRAMMAR_EPSILON_REMOVAL "grammar_epsilon"
+#define GRAMMAR_UNIT_RULES_REMOVAL "grammar_unit"
+#define GRAMMAR_CNF_CONVERSION "grammar_cnf"
+#define GRAMMAR_LEFT_RECURSION_REMOVAL "grammar_left_recursion"
+#define GRAMMAR_CYK "grammar_cyk"
+#define REGEXP_TRIM "regexp_trim"
+#define REGEXP_DERIVATION "regexp_derivation"
+
+
 struct ResultStruct {
 	ResultStruct() : t_ResCode(-1), t_Result(nullptr) {}
 	~ResultStruct() { delete [] this->t_Result; }
@@ -79,41 +94,41 @@ void ALT_Interface::prepareAndRun(std::string input, std::string algorithm) {
 
 void ALT_Interface::algorithms ( std::string input, std::string algorithm, const char * optionalParam ) {
 	try {
-        if (algorithm == "automaton_determinization")
+        if (algorithm == AUTOMATON_DETERMINIZATION)
             algorithm = "automaton::determinize::Determinize";
-        else if (algorithm == "automaton_trim")
+        else if (algorithm == AUTOMATON_TRIM)
             algorithm = "automaton::simplify::Trim";
-        else if (algorithm == "automaton_normalization")
+        else if (algorithm == AUTOMATON_NORMALIZATION)
             algorithm = "automaton::simplify::Normalize";
-        else if (algorithm == "automaton_minimization") {
+        else if (algorithm == AUTOMATON_MINIMIZATION) {
             // First we need to eliminate unreachable and pointless states (following the BI-AAG practice)
-            this->algorithms(input, "automaton_trim", nullptr);
+            this->algorithms(input, AUTOMATON_TRIM, nullptr);
 
             input = this->m_ResultStruct->t_Result;
             algorithm = "automaton::simplify::Minimize";
         }
-        else if (algorithm == "automaton_epsilon")
+        else if (algorithm == AUTOMATON_EPSILON_REMOVAL)
             algorithm = "automaton::simplify::EpsilonRemoverIncoming";
-        else if (algorithm == "grammar_reduction")
+        else if (algorithm == GRAMMAR_REDUCTION)
             algorithm = "grammar::simplify::Trim";
-        else if (algorithm == "grammar_epsilon")
+        else if (algorithm == GRAMMAR_EPSILON_REMOVAL)
             algorithm = "grammar::simplify::EpsilonRemover";
-        else if (algorithm == "grammar_unit")
+        else if (algorithm == GRAMMAR_UNIT_RULES_REMOVAL)
             algorithm = "grammar::simplify::SimpleRulesRemover";
-        else if (algorithm == "grammar_cnf")
+        else if (algorithm == GRAMMAR_CNF_CONVERSION)
             algorithm = "grammar::simplify::ToCNF";
-        else if (algorithm == "grammar_left_recursion")
+        else if (algorithm == GRAMMAR_LEFT_RECURSION_REMOVAL)
             algorithm = "grammar::simplify::LeftRecursionRemover";
-        else if (algorithm == "regexp_trim")
+        else if (algorithm == REGEXP_TRIM)
             algorithm = "regexp::simplify::RegExpOptimize";
-        else if (algorithm == "regexp_derivation") {
+        else if (algorithm == REGEXP_DERIVATION) {
             if (! optionalParam) {
                 this->setResultStruct(1, "No string to differentiate by was given!");
                 return;
             }
             algorithm = "regexp::RegExpDerivation";
         }
-        else if (algorithm == "grammar_cyk") {
+        else if (algorithm == GRAMMAR_CYK) {
             if (! optionalParam) {
                 this->setResultStruct(1, "No string for CYK was given!");
                 return;
@@ -213,19 +228,19 @@ std::string ALT_Interface::prepareForCompare(std::string input) {
     // As there is currently no comparison algorithm that can find isomorphism between two NFAs, we need to determinize,
     // minimize, trim and normalize every NFA before the comparison
 
-    this->algorithms(input, "automaton_epsilon", nullptr);
+    this->algorithms(input, AUTOMATON_EPSILON_REMOVAL, nullptr);
     std::string inter_res = this->m_ResultStruct->t_Result;
 
-    this->algorithms(inter_res, "automaton_determinization", nullptr);
+    this->algorithms(inter_res, AUTOMATON_DETERMINIZATION, nullptr);
     inter_res = this->m_ResultStruct->t_Result;
 
-    this->algorithms(inter_res, "automaton_minimization", nullptr);
+    this->algorithms(inter_res, AUTOMATON_MINIMIZATION, nullptr);
     inter_res = this->m_ResultStruct->t_Result;
 
-    this->algorithms(inter_res, "automaton_trim", nullptr);
+    this->algorithms(inter_res, AUTOMATON_TRIM, nullptr);
     inter_res = this->m_ResultStruct->t_Result;
 
-    this->algorithms(inter_res, "automaton_normalization", nullptr);
+    this->algorithms(inter_res, AUTOMATON_NORMALIZATION, nullptr);
     return this->m_ResultStruct->t_Result;
 }
 

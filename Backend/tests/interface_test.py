@@ -15,7 +15,7 @@ Testing module for class :class:`AltInterface` in python_interface module, using
 import pytest
 import os
 
-from . import AltInterface
+from . import AltInterface, AlgorithmTypes
 
 AUTOMATA = os.path.dirname(__file__) + '/examples/automaton'
 GRAMMARS = os.path.dirname(__file__) + '/examples/grammar'
@@ -52,22 +52,22 @@ def read_input(input_file: str) -> str:
 
 
 @pytest.mark.parametrize('input_file, algorithm, result_type', [
-    (AUTOMATA + '/NFSM1.xml', 'automaton_determinization', '</DFA>'),
-    (AUTOMATA + '/NFSM2.xml', 'automaton_determinization', '</DFA>'),
-    (AUTOMATA + '/NFSM3.xml', 'automaton_determinization', '</DFA>'),
-    (AUTOMATA + '/NFSM4.xml', 'automaton_determinization', '</DFA>'),
-    (AUTOMATA + '/NFSM5.xml', 'automaton_determinization', '</DFA>'),
-    (AUTOMATA + '/NFSM1.xml', 'automaton_trim', '</NFA>'),
-    (AUTOMATA + '/NFSM2.xml', 'automaton_trim', '</NFA>'),
-    (AUTOMATA + '/NFSM3.xml', 'automaton_trim', '</NFA>'),
-    (AUTOMATA + '/NFSM4.xml', 'automaton_trim', '</NFA>'),
-    (AUTOMATA + '/NFSM5.xml', 'automaton_trim', '</NFA>'),
-    (AUTOMATA + '/ENFSM2.xml', 'automaton_epsilon', '</NFA>'),
-    (GRAMMARS + '/contextFree.xml', 'grammar_reduction', '</CFG>'),
-    (GRAMMARS + '/contextFree.xml', 'grammar_epsilon', '</EpsilonFreeCFG>'),
-    (GRAMMARS + '/contextFree.xml', 'grammar_unit', '</CFG>'),
-    (GRAMMARS + '/contextFree.xml', 'grammar_cnf', '</CNF>'),
-    (GRAMMARS + '/epsilonFreeCFG.xml', 'grammar_left_recursion', '</EpsilonFreeCFG>'),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
+    (AUTOMATA + '/ENFSM2.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, '</NFA>'),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>'),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>'),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>'),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>'),
+    (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>'),
 ])
 def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str, result_type: str):
     """
@@ -87,28 +87,28 @@ def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str,
 
 
 @pytest.mark.parametrize('input_file, algorithm, expected_file, optional_param', [
-    (AUTOMATA + '/DFA1.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA1.MIN_RES.xml', None),
-    (AUTOMATA + '/DFA2.MIN.xml', 'automaton_minimization', AUTOMATA + '/DFA2.MIN_RES.xml', None),
-    (AUTOMATA + '/NFSM1.xml', 'automaton_determinization', AUTOMATA + '/NFSM1.DET.xml', None),
-    (AUTOMATA + '/NFSM2.xml', 'automaton_determinization', AUTOMATA + '/NFSM2.DET.xml', None),
-    (AUTOMATA + '/NFSM3.xml', 'automaton_determinization', AUTOMATA + '/NFSM3.DET.xml', None),
-    (AUTOMATA + '/NFSM4.xml', 'automaton_determinization', AUTOMATA + '/NFSM4.DET.xml', None),
-    (AUTOMATA + '/NFSM5.xml', 'automaton_determinization', AUTOMATA + '/NFSM5.DET.xml', None),
-    (AUTOMATA + '/DFA1.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA1.TRIM_RES.xml', None),
-    (AUTOMATA + '/DFA2.TRIM.xml', 'automaton_trim', AUTOMATA + '/DFA2.TRIM_RES.xml', None),
-    (AUTOMATA + '/ENFA1.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA1.EPSILON_RES.xml', None),
-    (AUTOMATA + '/ENFA2.EPSILON.xml', 'automaton_epsilon', AUTOMATA + '/ENFA2.EPSILON_RES.xml', None),
-    (GRAMMARS + '/CFG1.REDUCTION.xml', 'grammar_reduction', GRAMMARS + '/CFG1.REDUCTION_RES.xml', None),
-    (GRAMMARS + '/CFG2.REDUCTION.xml', 'grammar_reduction', GRAMMARS + '/CFG2.REDUCTION_RES.xml', None),
-    (GRAMMARS + '/CFG1.EPSILON.xml', 'grammar_epsilon', GRAMMARS + '/CFG1.EPSILON_RES.xml', None),
-    (GRAMMARS + '/CFG2.EPSILON.xml', 'grammar_epsilon', GRAMMARS + '/CFG2.EPSILON_RES.xml', None),
-    (GRAMMARS + '/CFG1.UNIT.xml', 'grammar_unit', GRAMMARS + '/CFG1.UNIT_RES.xml', None),
-    (GRAMMARS + '/CFG2.UNIT.xml', 'grammar_unit', GRAMMARS + '/CFG2.UNIT_RES.xml', None),
-    (REGEXPS + '/RE1.DERIVATION.xml', 'regexp_derivation', REGEXPS + '/RE1.DERIVATION_RES.xml', '1'),
-    (REGEXPS + '/RE2.DERIVATION.xml', 'regexp_derivation', REGEXPS + '/RE2.DERIVATION_RES.xml', '0'),
-    (REGEXPS + '/RE3.DERIVATION.xml', 'regexp_derivation', REGEXPS + '/RE3.DERIVATION_RES.xml', '011'),
-    (REGEXPS + '/RE4.DERIVATION.xml', 'regexp_derivation', REGEXPS + '/RE4.DERIVATION_RES.xml', '0'),
-    (REGEXPS + '/RE5.DERIVATION.xml', 'regexp_derivation', REGEXPS + '/RE5.DERIVATION_RES.xml', '100'),
+    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA1.MIN_RES.xml', None),
+    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA2.MIN_RES.xml', None),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM1.DET.xml', None),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM2.DET.xml', None),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM3.DET.xml', None),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM4.DET.xml', None),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM5.DET.xml', None),
+    (AUTOMATA + '/DFA1.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA1.TRIM_RES.xml', None),
+    (AUTOMATA + '/DFA2.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA2.TRIM_RES.xml', None),
+    (AUTOMATA + '/ENFA1.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA1.EPSILON_RES.xml', None),
+    (AUTOMATA + '/ENFA2.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA2.EPSILON_RES.xml', None),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG1.REDUCTION_RES.xml', None),
+    (GRAMMARS + '/CFG2.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG2.REDUCTION_RES.xml', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG1.EPSILON_RES.xml', None),
+    (GRAMMARS + '/CFG2.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG2.EPSILON_RES.xml', None),
+    (GRAMMARS + '/CFG1.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG1.UNIT_RES.xml', None),
+    (GRAMMARS + '/CFG2.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG2.UNIT_RES.xml', None),
+    (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE1.DERIVATION_RES.xml', '1'),
+    (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE2.DERIVATION_RES.xml', '0'),
+    (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE3.DERIVATION_RES.xml', '011'),
+    (REGEXPS + '/RE4.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE4.DERIVATION_RES.xml', '0'),
+    (REGEXPS + '/RE5.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE5.DERIVATION_RES.xml', '100'),
 ])
 def test_algorithm_result(interface: AltInterface, input_file: str,
                           algorithm: str, expected_file: str, optional_param: str):
@@ -269,12 +269,12 @@ def test_epsilon_trim_det_min(interface: AltInterface, automaton: str):
     res = read_input(automaton)
 
     for algorithm, result_type in [
-        ('epsilon', '</NFA>'),
-        ('trim', '</NFA>'),
-        ('determinization', '</DFA>'),
-        ('minimization', '</DFA>')
+        (AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, '</NFA>'),
+        (AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
+        (AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
+        (AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>')
     ]:
-        return_code, res = interface.algorithms(res, 'automaton_' + algorithm)
+        return_code, res = interface.algorithms(res, algorithm)
         assert return_code == 0
         assert res.endswith(result_type + '\n')
 
@@ -301,8 +301,13 @@ def test_epsilon_reduction_unit_recursion(interface: AltInterface, grammar: str)
     """
     res = read_input(grammar)
 
-    for algorithm in ['epsilon', 'reduction', 'unit', 'left_recursion']:
-        return_code, res = interface.algorithms(res, 'grammar_' + algorithm)
+    for algorithm in [
+        AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL,
+        AlgorithmTypes.GRAMMAR_REDUCTION,
+        AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL,
+        AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL
+    ]:
+        return_code, res = interface.algorithms(res, algorithm)
         assert return_code == 0
         assert res.endswith('</EpsilonFreeCFG>\n')
 
@@ -319,17 +324,17 @@ def test_fails(interface: AltInterface):
 
     """
     # Passing file as parameter
-    return_code, res = interface.algorithms(REGEXPS + '/regexp.xml', 'regexp_trim')
+    return_code, res = interface.algorithms(REGEXPS + '/regexp.xml', AlgorithmTypes.REGEXP_TRIM)
     assert return_code == 1
     assert 'Cannot parse the XML' in res
 
     # Omitting the optional parameter which is mandatory for some algorithms OR giving optional parameter when it's not
     # wanted
     xml_input = read_input(REGEXPS + '/regexp.xml')
-    return_code, res = interface.algorithms(xml_input, 'regexp_derivation')
+    return_code, res = interface.algorithms(xml_input, AlgorithmTypes.REGEXP_DERIVATION)
     assert return_code == 1
     assert 'No string to differentiate by was given!' in res
-    return_code, res = interface.algorithms(xml_input, 'regexp_trim', 'ThisShouldNotBeHere')
+    return_code, res = interface.algorithms(xml_input, AlgorithmTypes.REGEXP_TRIM, 'ThisShouldNotBeHere')
     assert return_code == 1
     assert 'Optional parameter was given even though it can\'t be used!' in res
 
@@ -343,7 +348,7 @@ def test_fails(interface: AltInterface):
     assert 'Unknown algorithm passed as parameter!' in res
 
     # Passing invalid input type
-    return_code, res = interface.algorithms(xml_input, 'automaton_minimization')
+    return_code, res = interface.algorithms(xml_input, AlgorithmTypes.AUTOMATON_MINIMIZATION)
     assert return_code == 3
     assert 'Entry overload' in res
     assert 'not available' in res
