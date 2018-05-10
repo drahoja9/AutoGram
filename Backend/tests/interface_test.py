@@ -49,6 +49,7 @@ def read_input(input_file: str) -> str:
         xml_input = f.read()
     return xml_input
 
+
 # ------------------------------------------------ Algorithms Tests ---------------------------------------------------
 
 
@@ -133,6 +134,8 @@ def test_algorithm_result(interface: AltInterface, input_file: str,
     expected_output = read_input(expected_file)
 
     return_code, res = interface.algorithms(xml_input, algorithm, optional_param)
+    if return_code != 0:
+        pytest.fail(res)
     assert return_code == 0
 
     if 'automaton' in algorithm:
@@ -309,6 +312,8 @@ def test_epsilon_reduction_unit_recursion(interface: AltInterface, grammar: str)
         AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL
     ]:
         return_code, res = interface.algorithms(res, algorithm)
+        if return_code != 0:
+            pytest.fail(res)
         assert return_code == 0
         assert res.endswith('</EpsilonFreeCFG>\n')
 

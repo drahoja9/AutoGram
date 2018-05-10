@@ -46,6 +46,10 @@ def read_input(input_file: str) -> str:
     (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM3.DET.xml'),
     (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM4.DET.xml'),
     (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM5.DET.xml'),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG1.REDUCTION_RES.xml'),
+    (GRAMMARS + '/CFG2.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG2.REDUCTION_RES.xml'),
+    (GRAMMARS + '/CFG1.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG1.UNIT_RES.xml'),
+    (GRAMMARS + '/CFG2.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG2.UNIT_RES.xml'),
 ])
 def test_simple_algorithm(interface, input_file, algorithm, expected):
     xml_input = read_input(input_file)
@@ -54,7 +58,15 @@ def test_simple_algorithm(interface, input_file, algorithm, expected):
     json_input = XMLConverter.xml_to_json(xml_input)
     result = logic_layer.simple_algorithm(json_input, algorithm)
 
+    if 'automaton' in algorithm:
+        input_type = 'fa'
+    elif 'grammar' in algorithm:
+        input_type = 'cfg'
+    else:
+        pytest.fail('Invalid algorithm name!')
+        return
+
     xml_output = XMLConverter.json_to_xml(result)
-    res_code, res = interface.comparison(xml_output, 'fa', expected_output, 'fa')
+    res_code, res = interface.comparison(xml_output, input_type, expected_output, input_type)
     assert res_code == 0
     assert res == 'True'

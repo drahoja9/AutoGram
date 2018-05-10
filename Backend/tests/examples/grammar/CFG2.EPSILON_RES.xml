@@ -8,10 +8,10 @@
         <String>68</String>
     </nonterminalAlphabet>
     <terminalAlphabet>
-        <Integer>0</Integer>
-        <Integer>1</Integer>
-        <Integer>2</Integer>
-        <Integer>3</Integer>
+        <Character>48</Character>
+        <Character>49</Character>
+        <Character>50</Character>
+        <Character>51</Character>
     </terminalAlphabet>
     <initialSymbol>
         <String>83</String>
@@ -22,9 +22,9 @@
                 <String>83</String>
             </lhs>
             <rhs>
-                <Integer>0</Integer>
+                <Character>48</Character>
                 <String>65</String>
-                <Integer>0</Integer>
+                <Character>48</Character>
             </rhs>
         </rule>
         <rule>
@@ -32,8 +32,8 @@
                 <String>83</String>
             </lhs>
             <rhs>
-                <Integer>0</Integer>
-                <Integer>0</Integer>
+                <Character>48</Character>
+                <Character>48</Character>
             </rhs>
         </rule>
         <rule>
@@ -41,7 +41,7 @@
                 <String>83</String>
             </lhs>
             <rhs>
-                <Integer>0</Integer>
+                <Character>48</Character>
             </rhs>
         </rule>
         <rule>
@@ -74,7 +74,7 @@
                 <String>65</String>
             </lhs>
             <rhs>
-                <Integer>2</Integer>
+                <Character>50</Character>
             </rhs>
         </rule>
         <rule>
@@ -109,7 +109,7 @@
                 <String>66</String>
             </lhs>
             <rhs>
-                <Integer>1</Integer>
+                <Character>49</Character>
                 <String>67</String>
             </rhs>
         </rule>
@@ -118,7 +118,7 @@
                 <String>66</String>
             </lhs>
             <rhs>
-                <Integer>1</Integer>
+                <Character>49</Character>
             </rhs>
         </rule>
         <rule>
@@ -126,7 +126,7 @@
                 <String>66</String>
             </lhs>
             <rhs>
-                <Integer>3</Integer>
+                <Character>51</Character>
                 <String>68</String>
             </rhs>
         </rule>
@@ -135,7 +135,7 @@
                 <String>66</String>
             </lhs>
             <rhs>
-                <Integer>3</Integer>
+                <Character>51</Character>
             </rhs>
         </rule>
         <rule>
@@ -145,7 +145,7 @@
             <rhs>
                 <String>65</String>
                 <String>65</String>
-                <Integer>3</Integer>
+                <Character>51</Character>
             </rhs>
         </rule>
         <rule>
@@ -154,7 +154,7 @@
             </lhs>
             <rhs>
                 <String>65</String>
-                <Integer>3</Integer>
+                <Character>51</Character>
             </rhs>
         </rule>
         <rule>
@@ -162,7 +162,7 @@
                 <String>67</String>
             </lhs>
             <rhs>
-                <Integer>3</Integer>
+                <Character>51</Character>
             </rhs>
         </rule>
         <rule>
@@ -171,24 +171,6 @@
             </lhs>
             <rhs>
                 <String>65</String>
-                <String>65</String>
-                <String>66</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>68</String>
-            </lhs>
-            <rhs>
-                <String>65</String>
-                <String>65</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>68</String>
-            </lhs>
-            <rhs>
                 <String>65</String>
                 <String>66</String>
             </rhs>
@@ -199,6 +181,24 @@
             </lhs>
             <rhs>
                 <String>65</String>
+                <String>65</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>68</String>
+            </lhs>
+            <rhs>
+                <String>65</String>
+                <String>66</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>68</String>
+            </lhs>
+            <rhs>
+                <String>65</String>
             </rhs>
         </rule>
         <rule>
@@ -214,7 +214,7 @@
                 <String>68</String>
             </lhs>
             <rhs>
-                <Integer>2</Integer>
+                <Character>50</Character>
             </rhs>
         </rule>
     </rules>
