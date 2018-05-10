@@ -2,6 +2,7 @@
 import * as React from 'react';
 import RegexInput from 'components/Forms/Regexp';
 import GrammarInput from 'components/Forms/Grammar';
+import AutomatonInput from 'components/Forms/Automaton';
 import View from './view';
 //#endregion
 
@@ -60,7 +61,8 @@ export default class Controller extends React.Component<{}, ControllerState> {
         C = GrammarInput;
         break;
       case 'au':
-      return null;
+        C = AutomatonInput;
+        break;
       case 'ex':
         C = RegexInput;
         break;
