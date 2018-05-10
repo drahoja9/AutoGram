@@ -1,6 +1,7 @@
 //#region imports
 import * as React from 'react';
 import RegexInput from 'components/Forms/Regexp';
+import GrammarInput from 'components/Forms/Grammar';
 import View from './view';
 //#endregion
 
@@ -16,7 +17,13 @@ interface ControllerState {
 //#endregion
 
 export default class Controller extends React.Component<{}, ControllerState> {
-  public state = { selected: 'gr', values: {} };
+  public state = {
+    selected: 'gr',
+    values: {
+      gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
+      re: ''
+    }
+  };
 
   /**
    * Handles input type change
@@ -29,9 +36,12 @@ export default class Controller extends React.Component<{}, ControllerState> {
    * Handles changes in value.
    */
   private handleChange(value: any) {
-    const { values } = this.state;
-    values[this.state.selected] = value;
-    this.setState({ values });
+    this.setState({
+      values: {
+        ...this.state.values,
+        [this.state.selected]: value
+      }
+    });
   }
 
 
@@ -47,6 +57,8 @@ export default class Controller extends React.Component<{}, ControllerState> {
     let C;
     switch (this.state.selected) {
       case 'gr':
+        C = GrammarInput;
+        break;
       case 'au':
       return null;
       case 'ex':
