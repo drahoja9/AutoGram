@@ -208,7 +208,7 @@ class AltInterface:
 
         return res
 
-    def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> str:
+    def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> bool:
         """
 
         Python wrapper method for running comparison from C++ ALT interface. Comparison is done by transforming both
@@ -255,4 +255,4 @@ class AltInterface:
         if res_code != 0:
             raise AltInterfaceException(res)
 
-        return res
+        return res == 'True'

@@ -146,7 +146,7 @@ def test_algorithm_result(interface: AltInterface, input_file: str,
 
     # Also testing comparison. If this test fails, don't forget to check also that!
     res = interface.comparison(res, input_type, expected_output, input_type)
-    assert res == 'True'
+    assert res is True
 
 
 # ------------------------------------------------ Conversion Tests ---------------------------------------------------
@@ -205,7 +205,7 @@ def test_conversion(interface: AltInterface, input_file: str, source: str, targe
     res = interface.conversion(res, target, source)
 
     res = interface.comparison(xml_input, source, res, source)
-    assert res == 'True'
+    assert res is True
 
 
 # ----------------------------------------------- Comparison Tests ----------------------------------------------------
@@ -236,7 +236,7 @@ def test_comparison(interface: AltInterface, input_file: str, source: str):
     xml_input = read_input(input_file)
 
     res = interface.comparison(xml_input, source, xml_input, source)
-    assert res == 'True'
+    assert res is True
 
 # ------------------------------------------------ Sequence Tests -----------------------------------------------------
 
