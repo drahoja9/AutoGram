@@ -67,6 +67,5 @@ def test_simple_algorithm(interface, input_file, algorithm, expected):
         return
 
     xml_output = XMLConverter.json_to_xml(result)
-    res_code, res = interface.comparison(xml_output, input_type, expected_output, input_type)
-    assert res_code == 0
+    res = interface.comparison(xml_output, input_type, expected_output, input_type)
     assert res == 'True'

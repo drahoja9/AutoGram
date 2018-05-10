@@ -7,7 +7,7 @@ def simple_algorithm(json_file: str, algorithm_name: str) -> str:
     source = Converter.json_to_xml(json_file, algorithm_name)
 
     with AltInterface() as interface:
-        algorithm_result = interface.algorithms(source, algorithm_name)[1]
+        algorithm_result = interface.algorithms(source, algorithm_name)
 
     result = Converter.xml_to_json(algorithm_result, algorithm_name)
     return result
