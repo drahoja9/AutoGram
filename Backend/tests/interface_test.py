@@ -15,7 +15,8 @@ Testing module for class :class:`AltInterface` in python_interface module, using
 import pytest
 import os
 
-from . import AltInterface, AlgorithmTypes
+from backend import AlgorithmTypes
+from backend.python_interface import AltInterface
 
 AUTOMATA = os.path.dirname(__file__) + '/examples/automaton'
 GRAMMARS = os.path.dirname(__file__) + '/examples/grammar'
@@ -23,7 +24,7 @@ REGEXPS = os.path.dirname(__file__) + '/examples/regexp'
 
 
 @pytest.fixture
-def interface():
+def interface() -> AltInterface:
     """
 
     Pytest fixture for exporting the :class:`AltInterface` instance. Context manager is responsible for both setup and teardown (

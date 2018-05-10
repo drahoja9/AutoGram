@@ -1,7 +1,7 @@
 import json
 import xml.etree.ElementTree as ET
-from . import ObjectTypes
-from . import AlgorithmTypes
+from backend import ObjectTypes
+from backend import AlgorithmTypes
 
 XML_VERSION = '<?xml version="1.0"?>'
 
