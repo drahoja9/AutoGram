@@ -1,7 +1,7 @@
 //#region imports
 import * as React from 'react';
 import { Layout, Select } from 'antd';
-import { Centered } from 'components/Layout';
+import { Centered, Header } from 'components/Layout';
 //#endregion
 
 //#region Component interfaces
@@ -30,17 +30,17 @@ const InputSelect: React.SFC<ViewProps> = (props) => (
  */
 const View: React.SFC<ViewProps> = (props) => (
   <Layout>
-    <Layout.Content>
-      { props.children }
-    </Layout.Content>
-    <Layout.Footer>
+    <Header>
       <Centered>
         <InputSelect
           onChange={props.onChange}
           defaultValue={props.defaultValue || 'gr'}
         />
       </Centered>
-    </Layout.Footer>
+    </Header>
+    <Layout.Content>
+      { props.children }
+    </Layout.Content>
   </Layout>
 );
 
