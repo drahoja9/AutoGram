@@ -1,42 +1,58 @@
 from backend import XMLConverter as Converter
-from backend.python_interface import AltInterface
+from backend.python_interface import AltInterface, AltInterfaceException
 from backend import AlgorithmTypes
 
 
 def simple_algorithm(json_file: str, algorithm_name: str) -> str:
-    source = Converter.json_to_xml(json_file, algorithm_name)
+    try:
+        source = Converter.json_to_xml(json_file, algorithm_name)
 
-    with AltInterface() as interface:
-        algorithm_result = interface.algorithms(source, algorithm_name)
+        with AltInterface() as interface:
+            algorithm_result = interface.algorithms(source, algorithm_name)
 
-    result = Converter.xml_to_json(algorithm_result, algorithm_name)
-    return result
+        result = Converter.xml_to_json(algorithm_result, algorithm_name)
+        return result
+    # TODO: What to do with different exceptions? What to send to the API/USER?
+    except AltInterfaceException as e:
+        raise
+    except Converter.JSONDecodeError as e:
+        raise
+    except Converter.XMLDecodeError as e:
+        raise
 
 
-# def transformation (json_file: str) -> str:
-#     try:
-#         terget, source = Converter.json_to_xml(json_file, AlgorithmTypes.TRANSFORMATION)
-#         # call transformation algorithm of source(xml string) to the target(code name of transformation target)
-#         # algorithm_result = Algorithm.transform(target, source)
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.TRANSFORMATION)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-#
-#
-# def comparison (json_file: str) -> str:
-#     try:
-#         lhs, rhs = Converter.json_to_xml(json_file, AlgorithmTypes.COMPARISON)
-#         # call comparison algorithm to campare lhs and rhs (both xml strings), return bool for result
-#         # algorithm_result = Algorithm.compare(lhs, rhs)
-#         result = Converter.json_to_xml(algorithm_result, AlgorithmTypes.COMPARISON)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
+def transformation(json_file: str) -> str:
+    try:
+        source, source_type, target_type = Converter.json_to_xml(json_file, AlgorithmTypes.TRANSFORMATION)
+
+        with AltInterface() as interface:
+            algorithm_result = interface.transform(source, source_type, target_type)
+
+        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.TRANSFORMATION)
+        return result
+    except AltInterfaceException:
+        raise
+    except Converter.JSONDecodeError:
+        raise
+    except Converter.XMLDecodeError:
+        raise
+
+
+def comparison(json_file: str) -> str:
+    try:
+        lhs, lhs_type, rhs, rhs_type = Converter.json_to_xml(json_file, AlgorithmTypes.COMPARISON)
+
+        with AltInterface() as interface:
+            algorithm_result = interface.comparison(lhs, lhs_type, rhs, rhs_type)
+
+        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.COMPARISON)
+        return result
+    except AltInterfaceException:
+        raise
+    except Converter.JSONDecodeError:
+        raise
+    except Converter.XMLDecodeError:
+        raise
 #
 #
 # def automaton_epsilon_removal(json_file: str) -> str:
