@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<EpsilonFreeCFG><nonterminalAlphabet><Character ref="0">83</Character></nonterminalAlphabet><terminalAlphabet><Character ref="1">91</Character><Character ref="2">93</Character><Character ref="3">116</Character></terminalAlphabet><initialSymbol><Ref id="0"/></initialSymbol><rules><rule><lhs><Ref id="0"/></lhs><rhs><Ref id="1"/><Ref id="0"/><Ref id="2"/></rhs></rule><rule><lhs><Ref id="0"/></lhs><rhs><Ref id="3"/></rhs></rule></rules><generatesEpsilon><false/></generatesEpsilon></EpsilonFreeCFG>
