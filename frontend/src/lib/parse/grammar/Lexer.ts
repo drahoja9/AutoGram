@@ -4,21 +4,14 @@ import LexerBase from 'lib/parse/Lexer';
 
 /** Represents a concrete type of the token. */
 export enum TokType {
-  Char = 'char', // [a-zA-Z0-9_]
+  Ident = 'ident', // [a-zA-Z0-9_]
 
-  Epsilon = 'epsilon', // [a-zA-Z0-9_]
+  Epsilon = 'epsilon', // ε
 
-  EmptyString = 'empty_symbol', // [a-zA-Z0-9_]
-
-  L_Paren = 'l_paren', // (
-  R_Paren = 'r_paren', // )
-
-  // Unary
-  Asterisk = 'asterisk', // *
-
-  // Binary operands
-  Plus = 'plus', // +
-  Dot = 'dot', // .
+  Arrow = 'arrow', // ->
+  Pipe = 'pipe', // |
+  Comma = 'comma', // ,
+  Newline = 'newline', // \n
 
   // Error type
   Unknown = 'unknown',
@@ -69,9 +62,6 @@ export class Token {
   }
 }
 
-/**
- * Regular expression lexer.
- */
 export class Lexer extends LexerBase<TokType, Token> {
   /**
    * Constructs basic lexer with provided source buffer.
@@ -102,16 +92,17 @@ export class Lexer extends LexerBase<TokType, Token> {
 
     // Perform lexing
     while (true) {
-      const tok = this.curr;
+      // Get the current token.
+      let tok = this.curr;
 
-      // Get first character and slice the internal buffer
+      // Advance the internal buffer
       this.advance();
 
       // Perform lexing
       switch (tok) {
       case '\0':
         // Check if we're at the end of the buffer.
-        if (this.buff.length !== 0){
+        if (this.buff.length !== 0) {
           // If we're not, consider nul-character as a whitespace.
           break;
         }
@@ -120,27 +111,32 @@ export class Lexer extends LexerBase<TokType, Token> {
       case ' ':
       case '\t':
       case '\r':
-      case '\n':
         // Ignore whitespace
         break;
 
-      case '.':
-        return this.formToken(TokType.Dot);
-      case '+':
-        return this.formToken(TokType.Plus);
-      case '*':
-        return this.formToken(TokType.Asterisk);
-      case '(':
-        return this.formToken(TokType.L_Paren);
-      case ')':
-        return this.formToken(TokType.R_Paren);
+      case '\n':
+        return this.formToken(TokType.Newline);
+
+      case '<':
+        return this.lexMulticharIdent();
+
+      case '-':
+        if (this.curr === '>') {
+          this.advance();
+          return this.formToken(TokType.Arrow);
+        }
+        return this.formToken(TokType.Unknown, tok);
+
+      case '|':
+        return this.formToken(TokType.Pipe);
+
+      case ',':
+        return this.formToken(TokType.Comma);
 
       case 'ε':
         return this.formToken(TokType.Epsilon);
-      case '∅':
-        return this.formToken(TokType.EmptyString);
 
-      // Symbol
+      // Ident
       case '0': case '1': case '2': case '3': case '4':
       case '5': case '6': case '7': case '8': case '9':
       case 'a': case 'b': case 'c': case 'd': case 'e':
@@ -155,7 +151,7 @@ export class Lexer extends LexerBase<TokType, Token> {
       case 'P': case 'Q': case 'R': case 'S': case 'T':
       case 'U': case 'V': case 'W': case 'X': case 'Y':
       case 'Z': case '_':
-        return this.formToken(TokType.Char, tok);
+        return this.formToken(TokType.Ident, tok);
 
       // Error
       default:
@@ -169,5 +165,62 @@ export class Lexer extends LexerBase<TokType, Token> {
    */
   protected isEof(): boolean {
     return this.nextTok.getType() === TokType.Eof;
+  }
+
+  /** Lex multicharacter identifier like `<AB>` */
+  private lexMulticharIdent() {
+    let tok = '';
+
+    while (true) {
+      switch (this.curr) {
+      case '\0':
+        // Check if we're at the end of the buffer.
+        if (this.buff.length !== 0) {
+          // If we're not, consider nul-character as a whitespace.
+          this.advance();
+          break;
+        }
+        return this.formToken(TokType.Unknown, tok);
+
+      case ' ':
+      case '\t':
+      case '\r':
+      case '\n':
+        // Ignore whitespace
+        break;
+
+      case '>':
+        this.advance();
+        return this.formToken(TokType.Ident, tok);
+
+      case '0': case '1': case '2': case '3': case '4':
+      case '5': case '6': case '7': case '8': case '9':
+      case 'a': case 'b': case 'c': case 'd': case 'e':
+      case 'f': case 'g': case 'h': case 'i': case 'j':
+      case 'k': case 'l': case 'm': case 'n': case 'o':
+      case 'p': case 'q': case 'r': case 's': case 't':
+      case 'u': case 'v': case 'w': case 'x': case 'y':
+      case 'z':
+      case 'A': case 'B': case 'C': case 'D': case 'E':
+      case 'F': case 'G': case 'H': case 'I': case 'J':
+      case 'K': case 'L': case 'M': case 'N': case 'O':
+      case 'P': case 'Q': case 'R': case 'S': case 'T':
+      case 'U': case 'V': case 'W': case 'X': case 'Y':
+      case 'Z': case '_':
+        tok += this.curr;
+        this.advance();
+        break;
+
+      default:
+        while (this.curr !== '>' || this.buff.length > 0) {
+          tok += this.curr;
+          this.advance();
+        }
+        if (this.curr === '>') {
+          this.advance();
+        }
+        return this.formToken(TokType.Unknown, tok);
+      }
+    }
   }
 }
