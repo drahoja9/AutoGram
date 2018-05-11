@@ -131,46 +131,48 @@ def comparison(json_file: str) -> str:
 #         raise
 #
 #
-# def grammar_cnf(json_file: str) -> str:
-#     try:
-#         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
-#         # call cnf conversion in four steps, save steps in an array
-#         # result is not put in steps array - could stay so, or should change?
-#         # algorithm_steps = []
-#         # after_reduction = Algorithm.algorithm(source, 'grammar_reduction')
-#         # algorithm_steps.append(after_reduction)
-#         # after_epsilon = Algorithm.algorithm(after_reduction, 'grammar_epsilon')
-#         # algorithm_steps.append(after_epsilon)
-#         # after_unit= Algorithm.algorithm(after_epsilon, 'grammar_unit')
-#         # algorithm_steps.append(after_unit)
-#         # algorithm_result = Algorithm.algorithm(after_unit, 'grammar_cnf')
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CNF_CONVERSION, algorithm_steps)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-#
-#
-# def grammar_left_recursion(json_file: str) -> str:
-#     try:
-#         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
-#         # call left recursion removal in four steps, save steps in an array
-#         # result is not put in steps array - could stay so, or should change?
-#         # algorithm_steps = []
-#         # after_reduction = Algorithm.algorithm(source, 'grammar_reduction')
-#         # algorithm_steps.append(after_reduction)
-#         # after_epsilon = Algorithm.algorithm(after_reduction, 'grammar_epsilon')
-#         # algorithm_steps.append(after_epsilon)
-#         # after_unit= Algorithm.algorithm(after_epsilon, 'grammar_unit')
-#         # algorithm_steps.append(after_unit)
-#         # algorithm_result = Algorithm.algorithm(after_unit, 'grammar_left_recursion')
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, algorithm_steps)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
+
+
+def grammar_cnf(json_file: str) -> str:
+    try:
+        source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
+
+        # Calling CNF transformation in four steps, saving steps in an array
+        with AltInterface() as interface:
+            after_reduction = interface.algorithms(source, AlgorithmTypes.GRAMMAR_REDUCTION)
+            after_epsilon = interface.algorithms(after_reduction, AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL)
+            after_unit = interface.algorithms(after_epsilon, AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL)
+            after_cnf = interface.algorithms(after_unit, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
+
+        algorithm_steps = {'after_reduction': after_reduction, 'after_epsilon': after_epsilon,
+                           'after_unit': after_unit, 'result': after_cnf}
+        result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
+        return result
+    except Converter.JSONDecodeError:
+        raise
+    except Converter.XMLDecodeError:
+        raise
+
+
+def grammar_left_recursion(json_file: str) -> str:
+    try:
+        source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
+
+        # Calling left recursion removal in four steps, saving steps in an array
+        with AltInterface() as interface:
+            after_reduction = interface.algorithms(source, AlgorithmTypes.GRAMMAR_REDUCTION)
+            after_epsilon = interface.algorithms(after_reduction, AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL)
+            after_unit = interface.algorithms(after_epsilon, AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL)
+            after_recursion = interface.algorithms(after_unit, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
+
+        algorithm_steps = {'after_reduction': after_reduction, 'after_epsilon': after_epsilon,
+                           'after_unit': after_unit, 'result': after_recursion}
+        result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
+        return result
+    except Converter.JSONDecodeError:
+        raise
+    except Converter.XMLDecodeError:
+        raise
 #
 #
 # def grammar_cyk(json_file: str) -> str:

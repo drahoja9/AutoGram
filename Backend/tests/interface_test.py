@@ -69,6 +69,10 @@ def read_input(input_file: str) -> str:
     (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>'),
     (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>'),
     (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>'),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>'),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>'),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>'),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>'),
     (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>'),
 ])
 def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str, result_type: str):
@@ -86,7 +90,7 @@ def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str,
     res = interface.algorithms(xml_input, algorithm)
     assert res.endswith(result_type + '\n')
 
-
+# TODO: Add CNF transformation and left recursion removal test inputs/outputs
 @pytest.mark.parametrize('input_file, algorithm, expected_file, optional_param', [
     (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA1.MIN_RES.xml', None),
     (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA2.MIN_RES.xml', None),

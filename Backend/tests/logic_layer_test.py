@@ -57,7 +57,7 @@ def read_input(input_file: str) -> str:
     (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, 'CFG'),
     (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, 'CFG'),
     (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, 'CNF'),
-    # (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, 'CFG'),
+    (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, 'CFG'),
 ])
 def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str):
     """
@@ -71,10 +71,26 @@ def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str)
     """
     json_input = XMLConverter.xml_to_json(read_input(input_file))
 
-    res = logic_layer.simple_algorithm(json_input, algorithm)
-    assert result_type == json.loads(res)['type']
+    if 'recursion' in algorithm:
+        res = logic_layer.grammar_left_recursion(json_input)
+        res = json.loads(res)
+        assert 'after_reduction' in res.keys()
+        assert 'after_epsilon' in res.keys()
+        assert 'after_unit_rules' in res.keys()
+        assert result_type == res['result']['type']
+    elif 'cnf' in algorithm:
+        res = logic_layer.grammar_cnf(json_input)
+        res = json.loads(res)
+        assert 'after_reduction' in res.keys()
+        assert 'after_epsilon' in res.keys()
+        assert 'after_unit_rules' in res.keys()
+        assert result_type == res['result']['type']
+    else:
+        res = logic_layer.simple_algorithm(json_input, algorithm)
+        assert result_type == json.loads(res)['type']
 
 
+# TODO: Add CNF transformation and left recursion removal test inputs/outputs
 @pytest.mark.parametrize('input_file, algorithm, expected_file', [
     (AUTOMATA + '/DFA1.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA1.TRIM_RES.xml'),
     (AUTOMATA + '/DFA2.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA2.TRIM_RES.xml'),
@@ -87,6 +103,8 @@ def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str)
     (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM5.DET.xml'),
     (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG1.REDUCTION_RES.xml'),
     (GRAMMARS + '/CFG2.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG2.REDUCTION_RES.xml'),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG1.EPSILON_RES.xml'),
+    (GRAMMARS + '/CFG2.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG2.EPSILON_RES.xml'),
     (GRAMMARS + '/CFG1.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG1.UNIT_RES.xml'),
     (GRAMMARS + '/CFG2.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG2.UNIT_RES.xml'),
 ])
@@ -109,8 +127,8 @@ def test_simple_algorithm_result(input_file, algorithm, expected_file):
     expected_output = read_input(expected_file)
 
     json_input = XMLConverter.xml_to_json(xml_input)
-    json_output = XMLConverter.xml_to_json(expected_output
-                                           )
+    json_output = XMLConverter.xml_to_json(expected_output)
+
     result = logic_layer.simple_algorithm(json_input, algorithm)
 
     to_compare = {
@@ -153,37 +171,6 @@ def test_epsilon_trim_det_min(automaton: str):
     ]:
         res = logic_layer.simple_algorithm(res, algorithm)
         assert result_type == json.loads(res)['type']
-
-
-@pytest.mark.parametrize('grammar', [
-    (GRAMMARS + '/CFG1.EPSILON.xml'),
-    (GRAMMARS + '/CFG2.EPSILON.xml'),
-    (GRAMMARS + '/CFG1.REDUCTION.xml'),
-    (GRAMMARS + '/CFG2.REDUCTION.xml'),
-    (GRAMMARS + '/CFG1.UNIT.xml'),
-    (GRAMMARS + '/CFG2.UNIT.xml'),
-    (GRAMMARS + '/contextFree.xml'),
-    (GRAMMARS + '/epsilonFreeCFG.xml'),
-])
-def test_epsilon_reduction_unit_recursion(grammar: str):
-    """
-
-    Testing sequence of grammar algorithms: epsilon rules removal, grammar reduction, unit rules removal and left
-    recursion removal. In each step checking for valid output type.
-
-    :param grammar: path to XML file containing input grammar
-
-    """
-    res = XMLConverter.xml_to_json(read_input(grammar))
-
-    for algorithm in [
-        AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL,
-        AlgorithmTypes.GRAMMAR_REDUCTION,
-        AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL,
-        # AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL
-    ]:
-        res = logic_layer.simple_algorithm(res, algorithm)
-        assert 'CFG' == json.loads(res)['type']
 
 
 # ------------------------------------------------- Failing Tests -----------------------------------------------------

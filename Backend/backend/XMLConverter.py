@@ -14,6 +14,7 @@ class JSONDecodeError(Exception):
     :param msg: message describing the error
 
     """
+
     def __init__(self, msg: str = ''):
         self.msg = msg
 
@@ -26,8 +27,10 @@ class XMLDecodeError(Exception):
     :param msg: message describing the error
 
     """
+
     def __init__(self, msg: str = ''):
         self.msg = msg
+
 
 # ----------------------------------------------------------------------------------------------------------------------
 
@@ -143,7 +146,8 @@ class JtXConverter:
             JtXConverter._create_list_subelements(t_push, children_list, 'Character')
 
     @staticmethod
-    def _create_grammar_rules(parent_element: ET.Element, children_list: list, nonterminal_alphabet: list, allow_epsilon: bool, initial_symbol: str):
+    def _create_grammar_rules(parent_element: ET.Element, children_list: list, nonterminal_alphabet: list,
+                              allow_epsilon: bool, initial_symbol: str):
         """
 
         Creates and attaches list of rules to a given parent element
@@ -351,11 +355,13 @@ class JtXConverter:
 
         rules = ET.SubElement(etree_root, 'rules')
         allow_epsilon = g_type == ObjectTypes.CFG
-        JtXConverter._create_grammar_rules(rules, json_dict['rules'], json_dict["nonterminal_alphabet"], allow_epsilon, json_dict['initial_symbol'])
+        JtXConverter._create_grammar_rules(rules, json_dict['rules'], json_dict["nonterminal_alphabet"], allow_epsilon,
+                                           json_dict['initial_symbol'])
 
         if g_type == ObjectTypes.RG or g_type == ObjectTypes.CNF:
             generates_epsilon = ET.SubElement(etree_root, 'generatesEpsilon')
-            JtXConverter._create_grammar_generates_epsilon(generates_epsilon, json_dict['rules'], json_dict['initial_symbol'])
+            JtXConverter._create_grammar_generates_epsilon(generates_epsilon, json_dict['rules'],
+                                                           json_dict['initial_symbol'])
 
         return ET.tostring(etree_root).decode()
 
@@ -435,7 +441,6 @@ class JtXConverter:
             return 'pda'
         else:
             raise TypeError
-
 
     @staticmethod
     def comparison_json_to_xml(json_dict: dict) -> (str, str, str, str):
@@ -518,6 +523,7 @@ class JtXConverter:
         res = JtXConverter.simple_json_to_xml(json_dict['grammar'])
         return json_dict['generated_string'], res
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -528,6 +534,7 @@ class XtJConverter:
     to a string representation of an JSON structure.
 
     """
+
     @staticmethod
     def _flatten_child_text(child: ET.Element, referenced_values: dict, allow_name_change: bool) -> str:
         """
@@ -762,8 +769,8 @@ class XtJConverter:
         if not generates_epsilon:
             return
 
-        rules = grammar_dict['rules']                       # pointer
-        initial_symbol = grammar_dict['initial_symbol']     # value
+        rules = grammar_dict['rules']  # pointer
+        initial_symbol = grammar_dict['initial_symbol']  # value
 
         # is initial symbol present on the right side of any rule?
         rules_with_initial_symbol = [rule for rule in rules if initial_symbol in rule['to']]
@@ -789,7 +796,8 @@ class XtJConverter:
         rules_to_add = [rule for rule in modified_rules if rule not in rules and rule['to'] != []]
         rules.extend(rules_to_add)
         # 3) rules from old initial symbol must be copied to the new one
-        rules_of_new_init = [{'from': new_initial_symbol, 'to': rule['to']} for rule in rules if rule['from'] == initial_symbol]
+        rules_of_new_init = [{'from': new_initial_symbol, 'to': rule['to']} for rule in rules if
+                             rule['from'] == initial_symbol]
         rules.extend(rules_of_new_init)
         # 4) add rewrite to epsilon to new initial symbol
         rules.append({'from': new_initial_symbol, 'to': [None]})
@@ -903,7 +911,8 @@ class XtJConverter:
         initial_states = XtJConverter._create_list_from_subelements(root, 'initialState', referenced_values)
         result_dict['initial_states'] = initial_states
 
-        init_pd_symbol = XtJConverter._create_string_from_subelement(root, 'initialPushdownStoreSymbol', referenced_values)
+        init_pd_symbol = XtJConverter._create_string_from_subelement(root, 'initialPushdownStoreSymbol',
+                                                                     referenced_values)
         result_dict['initial_pushdown_store_symbol'] = init_pd_symbol
 
         final_states = XtJConverter._create_list_from_subelements(root, 'finalStates', referenced_values)
@@ -1049,23 +1058,22 @@ class XtJConverter:
         return ret
 
     @staticmethod
-    def cnf_leftrec_xml_to_json(result: str, steps: list) -> dict:
+    def cnf_leftrec_xml_to_json(result: dict) -> dict:
         """
 
         Converts given result of a conversion to CNF or left recursion removal and its steps to a dictionary,
         that can be converted to JSON
 
-        :param result: resulting grammar of the algorithm
-        :param steps: list of grammars that represents the steps of the algorithm
+        :param result: dictionary containing each step of CNF transformation/left recursion removal
 
         :return: dictionary representation of the result and the steps, can be converted to JSON
 
         """
         ret = {}
-        ret['result'] = XtJConverter.simple_xml_to_json(result)
-        ret['after_reduction'] = XtJConverter.simple_xml_to_json(steps[0])
-        ret['after_epsilon'] = XtJConverter.simple_xml_to_json(steps[1])
-        ret['after_unit_rules'] = XtJConverter.simple_xml_to_json(steps[2])
+        ret['after_reduction'] = XtJConverter.simple_xml_to_json(result['after_reduction'])
+        ret['after_epsilon'] = XtJConverter.simple_xml_to_json(result['after_epsilon'])
+        ret['after_unit_rules'] = XtJConverter.simple_xml_to_json(result['after_unit'])
+        ret['result'] = XtJConverter.simple_xml_to_json(result['result'])
         return ret
 
     @staticmethod
@@ -1118,7 +1126,8 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
 
     Converts given algorithm result to corresponding JSON string representation
 
-    :param result: algorithm result, can be string representing XML file or a bool value, according to param attribute
+    :param result: algorithm result, can be string representing XML file, dictionary or a bool value, according to \
+    param attribute
     :param param: optional parameter describing result structure. If it's one of the special cases - derivation, \
     comparison, minimization, cnf conversion, left recursion removal or cyk algorithm -  it must be present. \
     If it's not a special case, it can be omitted.
@@ -1139,9 +1148,9 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
         elif param == AlgorithmTypes.REGEXP_DERIVATION:
             ret = XtJConverter.derivation_xml_to_json(result, steps)
         elif param == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
-            ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
+            ret = XtJConverter.cnf_leftrec_xml_to_json(result)
         elif param == AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL:
-            ret = XtJConverter.cnf_leftrec_xml_to_json(result, steps)
+            ret = XtJConverter.cnf_leftrec_xml_to_json(result)
         elif param == AlgorithmTypes.GRAMMAR_CYK:
             ret = XtJConverter.cyk_xml_to_json(result, steps)
         else:
