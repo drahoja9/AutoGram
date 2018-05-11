@@ -1,10 +1,10 @@
-export {ValidationError} from './ValidationError'
+//#region imports
+import * as FiniteAutomatonExceptions from './finiteAutomatonExceptions';
+import * as GrammarExceptions from './grammarExceptions';
+import * as RegexpExceptions from './regexpExceptions';
+//#endregion
 
-import * as FiniteAutomatonExceptions from './finiteAutomatonExceptions'
-export { FiniteAutomatonExceptions }
-
-import * as GrammarExceptions from './grammarExceptions'
-export { GrammarExceptions }
-
-import * as RegexpExceptions from './regexpExceptions'
-export { RegexpExceptions }
+export {ValidationError} from './ValidationError';
+export { FiniteAutomatonExceptions };
+export { GrammarExceptions };
+export { RegexpExceptions };
