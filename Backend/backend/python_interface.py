@@ -25,7 +25,11 @@ class AltInterfaceException(Exception):
     Base exception for class :class:`AltInterface`, when something goes wrong. Carries the exception message.
 
     """
-    pass
+    def __init__(self, msg: str):
+        self.msg = msg
+
+    def msg(self) -> str:
+        return self.msg
 
 
 class AltInterface:
