@@ -71,39 +71,45 @@ def comparison(json_file: str) -> str:
 #         raise
 #     except Converter.XMLDecodeError:
 #         raise
-#
-#
+
+
 # def automaton_minimization(json_file: str) -> str:
 #     try:
 #         source = Converter.json_to_xml(json_file, AlgorithmTypes.AUTOMATON_MINIMIZATION)
-#         # call minimization algorithm, when implemented, should return the result and the steps leading to it
-#         # interface can change according to final implementation of the steps
-#         # algorithm_result, algorithm_steps = Algorithm.algorithm('automaton_minimization')
+#
+#         with AltInterface() as interface:
+#             algorithm_result = interface.algorithms(source, AlgorithmTypes.AUTOMATON_MINIMIZATION)
+#
 #         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.AUTOMATON_MINIMIZATION, algorithm_steps)
 #         return result
 #     except Converter.JSONDecodeError:
 #         raise
 #     except Converter.XMLDecodeError:
 #         raise
-#
-#
-# def regexp_derivation(json_file: str) -> str:
-#     try:
-#         derivation_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.REGEXP_DERIVATION)
-#         # call derivation algorithm in a loop, one character after another, save steps in an array
-#         # discuss: leave result as a last step in steps?
-#         # algorithm_steps = []
-#         # for c in derivation_string:
-#         #   algorithm_steps.append(Algorithm.algorithm(source, 'regexp_derivation', c)
-#         # algorithm_result = alhorithm_steps[-1]
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.REGEXP_DERIVATION, algorithm_steps)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-#
-#
+
+
+def regexp_derivation(json_file: str) -> str:
+    try:
+        derivation_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.REGEXP_DERIVATION)
+        algorithm_steps = []
+
+        with AltInterface() as interface:
+            for c in derivation_string:
+                source = interface.algorithms(source, AlgorithmTypes.REGEXP_DERIVATION, c)
+                algorithm_steps.append(source)
+
+        # The last step is the desired result, but we have to delete it from algorithm_steps list to avoid duplicates
+        algorithm_result = algorithm_steps[-1]
+        del algorithm_steps[-1]
+
+        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.REGEXP_DERIVATION, algorithm_steps)
+        return result
+    except Converter.JSONDecodeError:
+        raise
+    except Converter.XMLDecodeError:
+        raise
+
+
 # def grammar_reduction(json_file: str) -> str:
 #     try:
 #         return simple_algorithm(json_file, AlgorithmTypes.GRAMMAR_REDUCTION)

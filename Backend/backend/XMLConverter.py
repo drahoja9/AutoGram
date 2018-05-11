@@ -494,7 +494,7 @@ class JtXConverter:
         """
 
         Takes dictionary representation of an JSON file describing derivation
-        and returns drivation string and derived regexp as XML string
+        and returns derivation string and derived regexp as XML string
 
         :param json_dict: dictionary representation of an JSON file
 
