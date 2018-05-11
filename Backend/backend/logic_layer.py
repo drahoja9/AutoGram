@@ -3,7 +3,7 @@ from backend.python_interface import AltInterface, AltInterfaceException
 from backend import AlgorithmTypes
 
 
-def simple_algorithm(json_file: str, algorithm_name: str) -> str:
+def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
     try:
         if 'derivation' in algorithm_name:
             return _regexp_derivation(json_file)
@@ -28,7 +28,7 @@ def simple_algorithm(json_file: str, algorithm_name: str) -> str:
         raise
 
 
-def transformation(json_file: str) -> str:
+def transformation(json_file: dict) -> dict:
     try:
         source, source_type, target_type = Converter.json_to_xml(json_file, AlgorithmTypes.TRANSFORMATION)
 
@@ -45,7 +45,7 @@ def transformation(json_file: str) -> str:
         raise
 
 
-def comparison(json_file: str) -> str:
+def comparison(json_file: dict) -> dict:
     try:
         lhs, lhs_type, rhs, rhs_type = Converter.json_to_xml(json_file, AlgorithmTypes.COMPARISON)
 
@@ -95,7 +95,7 @@ def comparison(json_file: str) -> str:
 #         raise
 
 
-def _regexp_derivation(json_file: str) -> str:
+def _regexp_derivation(json_file: dict) -> dict:
     try:
         derivation_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.REGEXP_DERIVATION)
         algorithm_steps = []
@@ -148,7 +148,7 @@ def _regexp_derivation(json_file: str) -> str:
 #
 
 
-def _grammar_cnf(json_file: str) -> str:
+def _grammar_cnf(json_file: dict) -> dict:
     try:
         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
 
@@ -171,7 +171,7 @@ def _grammar_cnf(json_file: str) -> str:
         raise
 
 
-def _grammar_left_recursion(json_file: str) -> str:
+def _grammar_left_recursion(json_file: dict) -> dict:
     try:
         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
 

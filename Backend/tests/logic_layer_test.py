@@ -65,26 +65,23 @@ def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str,
     json_input = XMLConverter.xml_to_json(read_input(input_file))
     if 'derivation' in algorithm:
         json_input = {
-            'regexp': json.loads(json_input),
+            'regexp': json_input,
             'derivation_string': optional_param
         }
-        json_input = json.dumps(json_input)
 
     res = logic_layer.simple_algorithm(json_input, algorithm)
 
     if 'recursion' in algorithm or 'cnf' in algorithm:
-        res = json.loads(res)
         assert 'after_reduction' in res.keys()
         assert 'after_epsilon' in res.keys()
         assert 'after_unit_rules' in res.keys()
         assert result_type == res['result']['type']
     elif 'derivation' in algorithm:
-        res = json.loads(res)
         assert 'result' in res.keys()
         assert 'steps' in res.keys()
         assert result_type == res['result']['type']
     else:
-        assert result_type == json.loads(res)['type']
+        assert result_type == res['type']
 
 
 # TODO: Add CNF transformation and left recursion removal test inputs/outputs
@@ -134,23 +131,20 @@ def test_simple_algorithm_result(input_file: str, algorithm: str, expected_file:
 
     if 'derivation' in algorithm:
         json_input = {
-            'regexp': json.loads(json_input),
+            'regexp': json_input,
             'derivation_string': optional_param
         }
-        result = logic_layer._regexp_derivation(json.dumps(json_input))
-        # Transforming result to dictionary to pick the 'result' dictionary inside
-        result = json.loads(result)['result']
-        # Transforming it back to string, because later we will transform it to dictionary once again :)
-        result = json.dumps(result)
+        result = logic_layer._regexp_derivation(json_input)
+        result = result['result']
     else:
         result = logic_layer.simple_algorithm(json_input, algorithm)
 
     to_compare = {
-        'lhs': json.loads(result),
-        'rhs': json.loads(json_output)
+        'lhs': result,
+        'rhs': json_output
     }
-    res = logic_layer.comparison(json.dumps(to_compare))
-    assert json.loads(res)['result'] is True
+    res = logic_layer.comparison(to_compare)
+    assert res['result'] is True
 
 
 # ------------------------------------------------ Sequence Tests -----------------------------------------------------
@@ -184,7 +178,7 @@ def test_epsilon_trim_det_min(automaton: str):
         # (AlgorithmTypes.AUTOMATON_MINIMIZATION, 'DFA')         <--- Uncomment when minimization is ready
     ]:
         res = logic_layer.simple_algorithm(res, algorithm)
-        assert result_type == json.loads(res)['type']
+        assert result_type == res['type']
 
 
 # ------------------------------------------------- Failing Tests -----------------------------------------------------

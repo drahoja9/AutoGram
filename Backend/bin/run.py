@@ -3,4 +3,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from backend import test_api
+from backend import api
+
+app = api.create_app()
+app.run()

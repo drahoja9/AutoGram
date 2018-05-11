@@ -962,7 +962,7 @@ class XtJConverter:
 
         :return: dictionary representation of grammar
 
-        :raises IndexError: in case of wrong structure of the XML file - wrong appearance \
+        :raises IndexError: in case of wrong structure of the XML file -minimization_xml_to_json(result, ste wrong appearance \
         and usage of generatesEpsilon tag
 
         """
@@ -1085,12 +1085,12 @@ class XtJConverter:
         raise NotImplementedError
 
 
-def json_to_xml(json_file: str, param: str = None):
+def json_to_xml(json_file: dict, param: str = None):
     """
 
-    Converts given JSON string representation to corresponding XML string representation
+    Converts given JSON (Python dictionary) to corresponding XML string representation
 
-    :param json_file: string with JSON file to convert
+    :param json_file: dictionary with JSON file to convert
     :param param: optional parameter describing JSON file structure - if it's simple, \
     or one of the special cases - comparison, transformation or derivation. \
     If it's not a special case, it can be omitted.
@@ -1101,17 +1101,16 @@ def json_to_xml(json_file: str, param: str = None):
 
     """
     try:
-        json_dict = json.loads(json_file)
         if param == AlgorithmTypes.COMPARISON:
-            res = JtXConverter.comparison_json_to_xml(json_dict)
+            res = JtXConverter.comparison_json_to_xml(json_file)
         elif param == AlgorithmTypes.TRANSFORMATION:
-            res = JtXConverter.transformation_json_to_xml(json_dict)
+            res = JtXConverter.transformation_json_to_xml(json_file)
         elif param == AlgorithmTypes.REGEXP_DERIVATION:
-            res = JtXConverter.derivation_json_to_xml(json_dict)
+            res = JtXConverter.derivation_json_to_xml(json_file)
         elif param == AlgorithmTypes.GRAMMAR_CYK:
-            res = JtXConverter.cyk_json_to_xml(json_dict)
+            res = JtXConverter.cyk_json_to_xml(json_file)
         else:
-            res = JtXConverter.simple_json_to_xml(json_dict)
+            res = JtXConverter.simple_json_to_xml(json_file)
         return res
     except json.JSONDecodeError:
         raise JSONDecodeError("JSON decode exception")
@@ -1121,10 +1120,10 @@ def json_to_xml(json_file: str, param: str = None):
         raise JSONDecodeError("Unexpected exception occurred")
 
 
-def xml_to_json(result, param: str = None, steps=None) -> str:
+def xml_to_json(result, param: str = None, steps=None) -> dict:
     """
 
-    Converts given algorithm result to corresponding JSON string representation
+    Converts given algorithm result to corresponding JSON (Python dictionary)
 
     :param result: algorithm result, can be string representing XML file, dictionary or a bool value, according to \
     param attribute
@@ -1135,7 +1134,7 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
     according to the param specified. May be present with derivation, minimization or cyk. Must be present with \
     cnf conversion and left recursion removal.
 
-    :return: string representation of a JSON file
+    :return: dictionary representing the JSON file
 
     :raises XMLDEcodeError: in case of wrong structure of the XML file
 
@@ -1155,7 +1154,7 @@ def xml_to_json(result, param: str = None, steps=None) -> str:
             ret = XtJConverter.cyk_xml_to_json(result, steps)
         else:
             ret = XtJConverter.simple_xml_to_json(result)
-        return json.dumps(ret)
+        return ret
     except ET.ParseError:
         raise XMLDecodeError("XML parse exception")
     except (IndexError, KeyError, TypeError):
