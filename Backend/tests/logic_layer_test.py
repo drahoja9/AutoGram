@@ -3,24 +3,11 @@ import os
 import json
 
 from backend import logic_layer, XMLConverter, AlgorithmTypes
-from backend.python_interface import AltInterface, AltInterfaceException
+from backend.python_interface import AltInterfaceException
 
 AUTOMATA = os.path.dirname(__file__) + '/examples/automaton'
 GRAMMARS = os.path.dirname(__file__) + '/examples/grammar'
 REGEXPS = os.path.dirname(__file__) + '/examples/regexp'
-
-
-@pytest.fixture
-def interface() -> AltInterface:
-    """
-
-    Pytest fixture for exporting the :class:`AltInterface` instance. Context manager is responsible for both setup and teardown (
-    thanks to ``yield`` keyword).
-
-    :return: new :class:`AltInterface` instance
-    """
-    with AltInterface() as it:
-        yield it
 
 
 def read_input(input_file: str) -> str:
@@ -76,33 +63,27 @@ def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str,
 
     """
     json_input = XMLConverter.xml_to_json(read_input(input_file))
+    if 'derivation' in algorithm:
+        json_input = {
+            'regexp': json.loads(json_input),
+            'derivation_string': optional_param
+        }
+        json_input = json.dumps(json_input)
 
-    if 'recursion' in algorithm:
-        res = logic_layer.grammar_left_recursion(json_input)
-        res = json.loads(res)
-        assert 'after_reduction' in res.keys()
-        assert 'after_epsilon' in res.keys()
-        assert 'after_unit_rules' in res.keys()
-        assert result_type == res['result']['type']
-    elif 'cnf' in algorithm:
-        res = logic_layer.grammar_cnf(json_input)
+    res = logic_layer.simple_algorithm(json_input, algorithm)
+
+    if 'recursion' in algorithm or 'cnf' in algorithm:
         res = json.loads(res)
         assert 'after_reduction' in res.keys()
         assert 'after_epsilon' in res.keys()
         assert 'after_unit_rules' in res.keys()
         assert result_type == res['result']['type']
     elif 'derivation' in algorithm:
-        json_input = {
-            'regexp': json.loads(json_input),
-            'derivation_string': optional_param
-        }
-        res = logic_layer.regexp_derivation(json.dumps(json_input))
         res = json.loads(res)
         assert 'result' in res.keys()
         assert 'steps' in res.keys()
         assert result_type == res['result']['type']
     else:
-        res = logic_layer.simple_algorithm(json_input, algorithm)
         assert result_type == json.loads(res)['type']
 
 
@@ -156,7 +137,7 @@ def test_simple_algorithm_result(input_file: str, algorithm: str, expected_file:
             'regexp': json.loads(json_input),
             'derivation_string': optional_param
         }
-        result = logic_layer.regexp_derivation(json.dumps(json_input))
+        result = logic_layer._regexp_derivation(json.dumps(json_input))
         # Transforming result to dictionary to pick the 'result' dictionary inside
         result = json.loads(result)['result']
         # Transforming it back to string, because later we will transform it to dictionary once again :)

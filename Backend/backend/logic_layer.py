@@ -5,13 +5,20 @@ from backend import AlgorithmTypes
 
 def simple_algorithm(json_file: str, algorithm_name: str) -> str:
     try:
-        source = Converter.json_to_xml(json_file, algorithm_name)
+        if 'derivation' in algorithm_name:
+            return _regexp_derivation(json_file)
+        elif 'recursion' in algorithm_name:
+            return _grammar_left_recursion(json_file)
+        elif 'cnf' in algorithm_name:
+            return _grammar_cnf(json_file)
+        else:
+            source = Converter.json_to_xml(json_file, algorithm_name)
 
-        with AltInterface() as interface:
-            algorithm_result = interface.algorithms(source, algorithm_name)
+            with AltInterface() as interface:
+                algorithm_result = interface.algorithms(source, algorithm_name)
 
-        result = Converter.xml_to_json(algorithm_result, algorithm_name)
-        return result
+            result = Converter.xml_to_json(algorithm_result, algorithm_name)
+            return result
     # TODO: What to do with different exceptions? What to send to the API/USER?
     except AltInterfaceException as e:
         raise
@@ -88,7 +95,7 @@ def comparison(json_file: str) -> str:
 #         raise
 
 
-def regexp_derivation(json_file: str) -> str:
+def _regexp_derivation(json_file: str) -> str:
     try:
         derivation_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.REGEXP_DERIVATION)
         algorithm_steps = []
@@ -104,6 +111,8 @@ def regexp_derivation(json_file: str) -> str:
 
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.REGEXP_DERIVATION, algorithm_steps)
         return result
+    except AltInterfaceException:
+        raise
     except Converter.JSONDecodeError:
         raise
     except Converter.XMLDecodeError:
@@ -139,7 +148,7 @@ def regexp_derivation(json_file: str) -> str:
 #
 
 
-def grammar_cnf(json_file: str) -> str:
+def _grammar_cnf(json_file: str) -> str:
     try:
         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
 
@@ -154,13 +163,15 @@ def grammar_cnf(json_file: str) -> str:
                            'after_unit': after_unit, 'result': after_cnf}
         result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
         return result
+    except AltInterfaceException:
+        raise
     except Converter.JSONDecodeError:
         raise
     except Converter.XMLDecodeError:
         raise
 
 
-def grammar_left_recursion(json_file: str) -> str:
+def _grammar_left_recursion(json_file: str) -> str:
     try:
         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
 
@@ -175,6 +186,8 @@ def grammar_left_recursion(json_file: str) -> str:
                            'after_unit': after_unit, 'result': after_recursion}
         result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
         return result
+    except AltInterfaceException:
+        raise
     except Converter.JSONDecodeError:
         raise
     except Converter.XMLDecodeError:
