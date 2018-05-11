@@ -181,6 +181,111 @@ def test_epsilon_trim_det_min(automaton: str):
         assert result_type == res['type']
 
 
+# ------------------------------------------------ Conversion Tests ---------------------------------------------------
+
+
+@pytest.mark.parametrize('input_file, source, target', [
+    (AUTOMATA + '/NFSM1.xml', 'fa', 'rg'),
+    (AUTOMATA + '/NFSM1.xml', 'fa', 're'),
+    (AUTOMATA + '/NFSM1.xml', 'fa', 'fa'),
+    (AUTOMATA + '/DFA1.MIN.xml', 'fa', 'rg'),
+    (AUTOMATA + '/DFA1.MIN.xml', 'fa', 're'),
+    (GRAMMARS + '/rightRegular.xml', 'rg', 'fa'),
+    (GRAMMARS + '/rightRegular.xml', 'rg', 're'),
+    (GRAMMARS + '/rightRegular.xml', 'rg', 'rg'),
+    (GRAMMARS + '/rightRegular2.xml', 'rg', 'fa'),
+    (GRAMMARS + '/rightRegular2.xml', 'rg', 're'),
+    (GRAMMARS + '/rightRegular2.xml', 'rg', 'rg'),
+    (REGEXPS + '/regexp.xml', 're', 'fa'),
+    (REGEXPS + '/regexp.xml', 're', 'rg'),
+    (REGEXPS + '/regexp.xml', 're', 're'),
+    (REGEXPS + '/RE4.DERIVATION.xml', 're', 'fa'),
+    (REGEXPS + '/RE4.DERIVATION.xml', 're', 'rg'),
+    (REGEXPS + '/RE4.DERIVATION.xml', 're', 're'),
+])
+def test_conversion(input_file: str, source: str, target: str):
+    """
+
+    Simple conversion test. Converts input to `target`, checks the output type, converts it back to `source` and compare
+    it with original input.
+
+    .. note::
+
+        Bare on mind that this function is also slightly testing comparison. If this test fails, don't forget to check
+        also comparison function and wrapper!
+
+    :param input_file: path to XML file containing input
+    :param source: type of input
+    :param target: type of conversion output
+
+    """
+    if target == 'fa':
+        result_type = 'NFA'
+    elif target == 'rg':
+        result_type = 'RightRG'
+    elif target == 're':
+        result_type = 'UnboundedRegExp'
+    else:
+        pytest.fail('Invalid target passed as argument!!')
+        return
+
+    xml_input = XMLConverter.xml_to_json(read_input(input_file))
+    json_file = {
+        'target': target,
+        'source': xml_input
+    }
+
+    # Converting to target
+    res = logic_layer.transformation(json_file)
+    assert result_type == res['type']
+
+    json_file = {
+        'target': source,
+        'source': res
+    }
+    # Converting back to source
+    res = logic_layer.transformation(json_file)
+
+    json_file = {
+        'lhs': res,
+        'rhs': xml_input
+    }
+    res = logic_layer.comparison(json_file)
+    assert res['result'] is True
+
+
+# ----------------------------------------------- Comparison Tests ----------------------------------------------------
+# Tests for comparison are, in a way, already done in test_algorithm_result function. So if anything goes wrong with
+# comparison functions, test_algorithm_result function will probably fail.
+
+
+@pytest.mark.parametrize('input_file', [
+    (AUTOMATA + '/NFSM1.xml'),
+    (AUTOMATA + '/DFA1.MIN.xml'),
+    (AUTOMATA + '/ENFA1.EPSILON.xml'),
+    (GRAMMARS + '/rightRegular.xml'),
+    (GRAMMARS + '/CFG1.EPSILON.xml'),
+    (REGEXPS + '/regexp.xml'),
+    (REGEXPS + '/RE4.DERIVATION.xml'),
+])
+def test_comparison(input_file: str):
+    """
+
+    Basic comparison test. Takes input and compares it with itself.
+
+    :param input_file: path to XML file containing input
+
+    """
+    xml_input = XMLConverter.xml_to_json(read_input(input_file))
+    json_file = {
+        'lhs': xml_input,
+        'rhs': xml_input
+    }
+
+    res = logic_layer.comparison(json_file)
+    assert res['result'] is True
+
+
 # ------------------------------------------------- Failing Tests -----------------------------------------------------
 
 
@@ -194,5 +299,17 @@ def test_fails():
     # Passing file as parameter
     with pytest.raises(XMLConverter.JSONDecodeError):
         logic_layer.simple_algorithm(REGEXPS + '/regexp.xml', AlgorithmTypes.REGEXP_TRIM)
+
+    # Passing invalid name of algorithm
+    json_input = XMLConverter.xml_to_json(read_input(REGEXPS + '/regexp.xml'))
+    res = logic_layer.simple_algorithm(json_input, 'regexp_trimmm')
+    assert res['exception'] == 'Unknown algorithm passed as parameter!'
+    assert res['type'] is AltInterfaceException
+
+    # Passing invalid input type
+    res = logic_layer.simple_algorithm(json_input, AlgorithmTypes.AUTOMATON_DETERMINIZATION)
+    assert 'Entry overload' in res['exception']
+    assert 'not available' in res['exception']
+    assert res['type'] is AltInterfaceException
 
     # TODO: Add more failing tests

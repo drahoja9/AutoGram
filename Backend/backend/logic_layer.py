@@ -21,7 +21,7 @@ def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
             return result
     # TODO: What to do with different exceptions? What to send to the API/USER?
     except AltInterfaceException as e:
-        raise
+        return {'exception': e.msg, 'type': AltInterfaceException}
     except Converter.JSONDecodeError as e:
         raise
     except Converter.XMLDecodeError as e:
@@ -33,7 +33,7 @@ def transformation(json_file: dict) -> dict:
         source, source_type, target_type = Converter.json_to_xml(json_file, AlgorithmTypes.TRANSFORMATION)
 
         with AltInterface() as interface:
-            algorithm_result = interface.transform(source, source_type, target_type)
+            algorithm_result = interface.conversion(source, source_type, target_type)
 
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.TRANSFORMATION)
         return result
@@ -60,39 +60,6 @@ def comparison(json_file: dict) -> dict:
         raise
     except Converter.XMLDecodeError:
         raise
-#
-#
-# def automaton_epsilon_removal(json_file: str) -> str:
-#     try:
-#         return simple_algorithm(json_file, AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL)
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-#
-#
-# def automaton_determinization(json_file: str) -> str:
-#     try:
-#         return simple_algorithm(json_file, AlgorithmTypes.AUTOMATON_DETERMINIZATION)
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-
-
-# def automaton_minimization(json_file: str) -> str:
-#     try:
-#         source = Converter.json_to_xml(json_file, AlgorithmTypes.AUTOMATON_MINIMIZATION)
-#
-#         with AltInterface() as interface:
-#             algorithm_result = interface.algorithms(source, AlgorithmTypes.AUTOMATON_MINIMIZATION)
-#
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.AUTOMATON_MINIMIZATION, algorithm_steps)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
 
 
 def _regexp_derivation(json_file: dict) -> dict:
@@ -117,35 +84,6 @@ def _regexp_derivation(json_file: dict) -> dict:
         raise
     except Converter.XMLDecodeError:
         raise
-
-
-# def grammar_reduction(json_file: str) -> str:
-#     try:
-#         return simple_algorithm(json_file, AlgorithmTypes.GRAMMAR_REDUCTION)
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-#
-#
-# def grammar_epsilon_removal(json_file: str) -> str:
-#     try:
-#         return simple_algorithm(json_file, AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL)
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-#
-#
-# def grammar_unit_rules_removal(json_file: str) -> str:
-#     try:
-#         return simple_algorithm(json_file, AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL)
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
-#
-#
 
 
 def _grammar_cnf(json_file: dict) -> dict:
@@ -192,8 +130,23 @@ def _grammar_left_recursion(json_file: dict) -> dict:
         raise
     except Converter.XMLDecodeError:
         raise
+
+
+# def automaton_minimization(json_file: str) -> str:
+#     try:
+#         source = Converter.json_to_xml(json_file, AlgorithmTypes.AUTOMATON_MINIMIZATION)
 #
+#         with AltInterface() as interface:
+#             algorithm_result = interface.algorithms(source, AlgorithmTypes.AUTOMATON_MINIMIZATION)
 #
+#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.AUTOMATON_MINIMIZATION, algorithm_steps)
+#         return result
+#     except Converter.JSONDecodeError:
+#         raise
+#     except Converter.XMLDecodeError:
+#         raise
+
+
 # def grammar_cyk(json_file: str) -> str:
 #     try:
 #         generated_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CYK)
