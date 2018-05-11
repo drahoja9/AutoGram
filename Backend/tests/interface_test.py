@@ -53,42 +53,52 @@ def read_input(input_file: str) -> str:
 # ------------------------------------------------ Algorithms Tests ---------------------------------------------------
 
 
-@pytest.mark.parametrize('input_file, algorithm, result_type', [
-    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/ENFSM2.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, '</NFA>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>'),
-    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>'),
-    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>'),
-    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>'),
-    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>'),
-    (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>'),
+@pytest.mark.parametrize('input_file, algorithm, result_type, optional_param', [
+    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
+    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/ENFSM2.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, '</NFA>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>', None),
+    (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>', None),
+    (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '1'),
+    (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '0'),
+    (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '011'),
+    (REGEXPS + '/RE4.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '0'),
+    (REGEXPS + '/RE5.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '100'),
 ])
-def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str, result_type: str):
+def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str, result_type: str, optional_param: str):
     """
 
     Simple algorithms test. Just run the given algorithm with given input and checks the output type.
+    Testing whether the algorithm even runs and finishes without any problems.
 
     :param interface: pytest fixture returning :class:`AltInterface` instance
     :param input_file: path to XML file containing input
     :param algorithm: algorithm to be run
     :param result_type: expected type of the output
+    :param optional_param: extra parameter for algorithms that need it (currently only regexp derivation and CYK)
 
     """
     xml_input = read_input(input_file)
-    res = interface.algorithms(xml_input, algorithm)
+    res = interface.algorithms(xml_input, algorithm, optional_param)
     assert res.endswith(result_type + '\n')
+
 
 # TODO: Add CNF transformation and left recursion removal test inputs/outputs
 @pytest.mark.parametrize('input_file, algorithm, expected_file, optional_param', [
