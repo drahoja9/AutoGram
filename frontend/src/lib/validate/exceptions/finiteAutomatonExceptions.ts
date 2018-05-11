@@ -8,7 +8,7 @@ export class FiniteAutomatonValidationError extends ValidationError {
     Object.setPrototypeOf(this, FiniteAutomatonValidationError.prototype)
   }
   public getMessage() : string {
-    return "Error occured during automaton validation"
+    return "Error occurred during automaton validation."
   }
 }
 
@@ -18,7 +18,7 @@ export class FA_StatesEmpty extends FiniteAutomatonValidationError {
     Object.setPrototypeOf(this, FA_StatesEmpty.prototype)
   }
   public getMessage() : string {
-    return "Finite automaton must have at least one state"
+    return "Finite automaton must have at least one state."
   }
 }
 
@@ -28,7 +28,7 @@ export class FA_InitialStatesEmpty extends FiniteAutomatonValidationError {
     Object.setPrototypeOf(this, FA_InitialStatesEmpty.prototype)
   }
   public getMessage() : string {
-    return "Finite automaton must have at least one initial state"
+    return "Finite automaton must have at least one initial state."
   }
 }
 
@@ -38,7 +38,7 @@ export class FA_StateZeroLength extends FiniteAutomatonValidationError {
     Object.setPrototypeOf(this, FA_StateZeroLength.prototype)
   }
   public getMessage() : string {
-    return "States must consist of at last one character"
+    return "States must consist of at last one character."
   }
 }
 
@@ -76,7 +76,7 @@ export class FA_NotUniqueNames extends FiniteAutomatonValidationError {
     this.problem = problem
   }
   public getMessage() : string {
-    return "Each state and input alphabet symbol must be unique. Collision in case of symbol '" + this.problem + "' detected."
+    return "Each state and input alphabet symbol must be unique. Collision in symbol '" + this.problem + "' detected."
   }
 }
 

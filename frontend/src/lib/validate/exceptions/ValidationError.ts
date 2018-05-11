@@ -6,6 +6,6 @@ export class ValidationError extends Error{
   }
 
   public getMessage() : string {
-    return "Error occured during validation."
+    return "Error occurred during validation."
   }
 }
