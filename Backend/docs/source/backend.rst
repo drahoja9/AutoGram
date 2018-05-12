@@ -12,4 +12,5 @@ Submodules
 .. toctree::
 
    backend.python_interface
+   backend.api
 
