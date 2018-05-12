@@ -6,7 +6,7 @@ import { FiniteAutomatonExceptions as FA_Error } from 'lib/validate';
 
 /** 
  * Function to validate common finite automaton rules. Allows epsilon transitions.
- * Checks: 
+ * @description Checks: 
  *  - source is defiend in states
  *  - target is defiend in states
  *  - input is defined in input alphabet or is null
@@ -18,20 +18,20 @@ function standardTransitionCheck(transitions: any[], states: string[], alphabet:
   //each transition must go from and to some state defined in states on input defined in input alphabet, or on null
   for (let transition of transitions){
     if (states.indexOf(transition.from) === -1){
-      throw new FA_Error.FA_TransitionAttributeNotDefined("source", "states", transition.from, false);
+      throw new FA_Error.TransitionAttributeNotDefined("source", "states", transition.from, false);
     }
     if (states.indexOf(transition.to) === -1){
-      throw new FA_Error.FA_TransitionAttributeNotDefined("target", "states", transition.to, false);
+      throw new FA_Error.TransitionAttributeNotDefined("target", "states", transition.to, false);
     }
     if (alphabet.indexOf(transition.input) === -1 && transition.input !== null){
-      throw new FA_Error.FA_TransitionAttributeNotDefined("input", "input alphabet", transition.input, true);
+      throw new FA_Error.TransitionAttributeNotDefined("input", "input alphabet", transition.input, true);
     }
   }
 }
 
 /** 
  * Function to validate epsilon-free finite automaton rules. Does NOT allow epsilon transitions.
- * Checks: 
+ * @description Checks: 
  *  - source is defiend in states
  *  - target is defiend in states
  *  - input is defined in input alphabet
@@ -43,13 +43,13 @@ function epsilonFreeTransitionCheck(transitions: any[], states: string[], alphab
   //each transition must go from and to some state defined in states on input defined in input alphabet, null is not allowed
   for (let transition of transitions){
     if (states.indexOf(transition.from) === -1){
-      throw new FA_Error.FA_TransitionAttributeNotDefined("source", "states", transition.from, false);
+      throw new FA_Error.TransitionAttributeNotDefined("source", "states", transition.from, false);
     }
     if (states.indexOf(transition.to) === -1){
-      throw new FA_Error.FA_TransitionAttributeNotDefined("target", "states", transition.to, false);
+      throw new FA_Error.TransitionAttributeNotDefined("target", "states", transition.to, false);
     }
     if (alphabet.indexOf(transition.input) === -1){
-      throw new FA_Error.FA_TransitionAttributeNotDefined("input", "input alphabet", transition.input, false);
+      throw new FA_Error.TransitionAttributeNotDefined("input", "input alphabet", transition.input, false);
     }
   }
 }
@@ -63,14 +63,14 @@ function epsilonFreeTransitionCheck(transitions: any[], states: string[], alphab
 function deterministicTransitionCheck(transitions: any[], initial_states: string[]){
   //from one state can go only transitions with different inputs
   if (initial_states.length !== 1){
-    throw new FA_Error.FA_MultipleInitialStates();
+    throw new FA_Error.MultipleInitialStates();
   }
-  let statesAndInputs : {[key: string] : Array<string>} = {};
+  let statesAndInputs : {[key: string] : string[]} = {};
   for (let transition of transitions){
     let res : string[] = statesAndInputs[transition.from];
     if (res){
       if (res.indexOf(transition.input) !== -1){
-        throw new FA_Error.FA_NotDeterministic(transition.from, transition.input);
+        throw new FA_Error.NotDeterministic(transition.from, transition.input);
       } else {
         res.push(transition.input);
       }
@@ -82,7 +82,7 @@ function deterministicTransitionCheck(transitions: any[], initial_states: string
 
 /**
  * Function to validate core structure of a finitie automaton. It validates everything except for transitions and determinism.
- * Checks:
+ * @description Checks:
  *  - states and initial states are not empty arrays
  *  - states are not empty strings and consist of allowed symbols
  *  - input alphabet symbols are characters and are allowed symbols
@@ -93,50 +93,50 @@ function deterministicTransitionCheck(transitions: any[], initial_states: string
 function validateFiniteAutomaton(automaton : FA){
   //states must not be empty
   if (automaton.states.length === 0){
-    throw new FA_Error.FA_StatesEmpty();
+    throw new FA_Error.StatesEmpty();
   }
   //initial states must not be empty
   if (automaton.initial_states.length === 0){
-    throw new FA_Error.FA_InitialStatesEmpty();
+    throw new FA_Error.InitialStatesEmpty();
   }
   //each state must consist only from allowed symbols
   for (let state of automaton.states){
     if (state.length < 1){
-      throw new FA_Error.FA_StateZeroLength();
+      throw new FA_Error.StateZeroLength();
     }
     for (let i = 0 ; i < state.length ; i++ ){
       if (!allowedSymbols.has(state.charAt(i))){
-        throw new FA_Error.FA_NotAllowedChar("states", state);
+        throw new FA_Error.NotAllowedChar("states", state);
       }
     }
   }
   //each symbol of input alphabet must be only character and that must be an allowed symbol
   for (let symbol of automaton.input_alphabet){
     if (symbol.length !== 1){
-      throw new FA_Error.FA_AlphabetNotChar(symbol);
+      throw new FA_Error.AlphabetNotChar(symbol);
     }
     if (!allowedSymbols.has(symbol)){
-      throw new FA_Error.FA_NotAllowedChar("input alphabet", symbol);
+      throw new FA_Error.NotAllowedChar("input alphabet", symbol);
     }
   }
   //each state and input alphabet name must be unique 
-  const symbol_array : string[] = automaton.states.concat(automaton.input_alphabet);
-  for (let symbol of symbol_array){
-    const res : number = symbol_array.filter( element => element === symbol).length;
+  const symbolArray : string[] = automaton.states.concat(automaton.input_alphabet);
+  for (let symbol of symbolArray){
+    const res : number = symbolArray.filter( element => element === symbol).length;
     if (res !== 1){
-      throw new FA_Error.FA_NotUniqueNames(symbol);
+      throw new FA_Error.NotUniqueNames(symbol);
     }
   }
   //each initial state must be defined in states
   for (let state of automaton.initial_states){
     if (automaton.states.indexOf(state) === -1){
-      throw new FA_Error.FA_StateNotDefined("initial state", state);
+      throw new FA_Error.StateNotDefined("initial state", state);
     }
   }
   //each final state must be defined in states
   for (let state of automaton.final_states){
     if (automaton.states.indexOf(state) === -1){
-      throw new FA_Error.FA_StateNotDefined("final state", state);
+      throw new FA_Error.StateNotDefined("final state", state);
     }
   }
 }

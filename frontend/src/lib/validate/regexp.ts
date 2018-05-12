@@ -15,11 +15,11 @@ import { RegexpExceptions as RE_Error } from 'lib/validate';
 function validateConcat(node : Concat, alphabet: string[]) {
   //concatenation length must not be 0
   if (node.value.length < 2){
-    throw new RE_Error.RE_NotEnoughChildNodes("concatenation");
+    throw new RE_Error.NotEnoughChildNodes("concatenation");
   }
   //check all children nodes
   for (let child of node.value){
-    validateNode(child, alphabet)
+    validateNode(child, alphabet);
   }
 }
 
@@ -32,11 +32,11 @@ function validateConcat(node : Concat, alphabet: string[]) {
 function validateAlter(node : Alter, alphabet: string[]) {
   //alternation length must not be 0
   if (node.value.length < 2){
-    throw new RE_Error.RE_NotEnoughChildNodes("alternation");
+    throw new RE_Error.NotEnoughChildNodes("alternation");
   } 
   //check all children nodes
   for (let child of node.value){
-    validateNode(child, alphabet)
+    validateNode(child, alphabet);
   }
 }
 
@@ -60,7 +60,7 @@ function validateIter(node : Iter, alphabet: string[]) {
 function validateTerm(node : Term, alphabet: string[]) {
   //value must be in alphabet
   if (alphabet.indexOf(node.value) === -1){
-    throw new RE_Error.RE_TermNotInAlphabet(node.value);
+    throw new RE_Error.TermNotInAlphabet(node.value);
   }
 }
 
@@ -84,7 +84,6 @@ function validateEmpty(node : EmptySymbol, alphabet: string[]) {}
  * @param alphabet Regexp alphabet
  */
 function validateNode(node : RENode, alphabet: string[]){
-  let nt = node.type
   switch (node.type){
     case NodeType.Concat:
       return validateConcat(node as Concat, alphabet);
@@ -98,15 +97,13 @@ function validateNode(node : RENode, alphabet: string[]){
       return validateEpsilon(node as Epsilon, alphabet);
     case NodeType.EmptySymbol:
       return validateEmpty(node as EmptySymbol, alphabet);
-    default:
-      throw new RE_Error.RE_UnknownNodeType(nt);
   }
 }
 
 /**
  * Function to validate core structure of the regular expression (it's alphabet).
  * Does NOT validate regexp's value.
- * Chacks:
+ * @description Checks:
  *  - alphabet symbols are characters
  *  - alphabet symbols are from allowedSymbols
  *  - alphabet symbols are unique
@@ -117,15 +114,15 @@ function validateRegexp(regexp: RE){
   for (let symbol of regexp.alphabet){
     //alphabet symbols must be only characters
     if (symbol.length !== 1){
-      throw new RE_Error.RE_alphabetNotChar(symbol);
+      throw new RE_Error.AlphabetNotChar(symbol);
     }
     //alphabet symbols must consist only of allowed characters
     if (!allowedSymbols.has(symbol)){
-      throw new RE_Error.RE_NotAllowedChar(symbol);
+      throw new RE_Error.NotAllowedChar(symbol);
     }
     //alphabet symbols must be unique
     if (regexp.alphabet.filter(element => element === symbol).length !== 1){
-      throw new RE_Error.RE_NotUniqueNames(symbol);
+      throw new RE_Error.NotUniqueNames(symbol);
     }
   }
 }
@@ -140,5 +137,5 @@ export function validateRE(regexp: RE) : boolean {
   validateRegexp(regexp);
   //validate nodes
   validateNode(regexp.value, regexp.alphabet);
-  return true
+  return true;
 }

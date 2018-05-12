@@ -5,6 +5,8 @@ import * as RegexpExceptions from './regexpExceptions';
 //#endregion
 
 export {ValidationError} from './ValidationError';
-export { FiniteAutomatonExceptions };
-export { GrammarExceptions };
-export { RegexpExceptions };
+export {
+  FiniteAutomatonExceptions,
+  GrammarExceptions,
+  RegexpExceptions
+};
