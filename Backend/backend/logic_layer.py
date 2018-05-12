@@ -5,11 +5,11 @@ from backend import AlgorithmTypes
 
 def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
     try:
-        if 'derivation' in algorithm_name:
+        if algorithm_name == AlgorithmTypes.REGEXP_DERIVATION:
             return _regexp_derivation(json_file)
-        elif 'recursion' in algorithm_name:
+        elif algorithm_name == AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL:
             return _grammar_left_recursion(json_file)
-        elif 'cnf' in algorithm_name:
+        elif algorithm_name == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
             return _grammar_cnf(json_file)
         else:
             source = Converter.json_to_xml(json_file, algorithm_name)
