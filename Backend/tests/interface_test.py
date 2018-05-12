@@ -15,7 +15,8 @@ Testing module for class :class:`AltInterface` in python_interface module, using
 import pytest
 import os
 
-from . import AltInterface, AlgorithmTypes
+from backend import AlgorithmTypes
+from backend.python_interface import AltInterface, AltInterfaceException
 
 AUTOMATA = os.path.dirname(__file__) + '/examples/automaton'
 GRAMMARS = os.path.dirname(__file__) + '/examples/grammar'
@@ -23,7 +24,7 @@ REGEXPS = os.path.dirname(__file__) + '/examples/regexp'
 
 
 @pytest.fixture
-def interface():
+def interface() -> AltInterface:
     """
 
     Pytest fixture for exporting the :class:`AltInterface` instance. Context manager is responsible for both setup and teardown (
@@ -48,44 +49,58 @@ def read_input(input_file: str) -> str:
         xml_input = f.read()
     return xml_input
 
+
 # ------------------------------------------------ Algorithms Tests ---------------------------------------------------
 
 
-@pytest.mark.parametrize('input_file, algorithm, result_type', [
-    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
-    (AUTOMATA + '/ENFSM2.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, '</NFA>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>'),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>'),
-    (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>'),
+@pytest.mark.parametrize('input_file, algorithm, result_type, optional_param', [
+    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
+    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_TRIM, '</NFA>', None),
+    (AUTOMATA + '/ENFSM2.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, '</NFA>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>', None),
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_REDUCTION, '</CFG>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>', None),
+    (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>', None),
+    (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '1'),
+    (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '0'),
+    (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '011'),
+    (REGEXPS + '/RE4.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '0'),
+    (REGEXPS + '/RE5.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '100'),
 ])
-def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str, result_type: str):
+def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str, result_type: str, optional_param: str):
     """
 
     Simple algorithms test. Just run the given algorithm with given input and checks the output type.
+    Testing whether the algorithm even runs and finishes without any problems.
 
     :param interface: pytest fixture returning :class:`AltInterface` instance
     :param input_file: path to XML file containing input
     :param algorithm: algorithm to be run
     :param result_type: expected type of the output
+    :param optional_param: extra parameter for algorithms that need it (currently only regexp derivation and CYK)
 
     """
     xml_input = read_input(input_file)
-    return_code, res = interface.algorithms(xml_input, algorithm)
-    assert return_code == 0
+    res = interface.algorithms(xml_input, algorithm, optional_param)
     assert res.endswith(result_type + '\n')
 
 
+# TODO: Add CNF transformation and left recursion removal test inputs/outputs
 @pytest.mark.parametrize('input_file, algorithm, expected_file, optional_param', [
     (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA1.MIN_RES.xml', None),
     (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA2.MIN_RES.xml', None),
@@ -131,8 +146,7 @@ def test_algorithm_result(interface: AltInterface, input_file: str,
     xml_input = read_input(input_file)
     expected_output = read_input(expected_file)
 
-    return_code, res = interface.algorithms(xml_input, algorithm, optional_param)
-    assert return_code == 0
+    res = interface.algorithms(xml_input, algorithm, optional_param)
 
     if 'automaton' in algorithm:
         input_type = 'fa'
@@ -145,9 +159,8 @@ def test_algorithm_result(interface: AltInterface, input_file: str,
         return
 
     # Also testing comparison. If this test fails, don't forget to check also that!
-    return_code, res = interface.comparison(res, input_type, expected_output, input_type)
-    assert return_code == 0
-    assert res == 'True'
+    res = interface.comparison(res, input_type, expected_output, input_type)
+    assert res is True
 
 
 # ------------------------------------------------ Conversion Tests ---------------------------------------------------
@@ -200,16 +213,13 @@ def test_conversion(interface: AltInterface, input_file: str, source: str, targe
         return
 
     xml_input = read_input(input_file)
-    return_code, res = interface.conversion(xml_input, source, target)
-    assert return_code == 0
+    res = interface.conversion(xml_input, source, target)
     assert res.endswith(result_type + '\n')
 
-    return_code, res = interface.conversion(res, target, source)
-    assert return_code == 0
+    res = interface.conversion(res, target, source)
 
-    return_code, res = interface.comparison(xml_input, source, res, source)
-    assert return_code == 0
-    assert res == 'True'
+    res = interface.comparison(xml_input, source, res, source)
+    assert res is True
 
 
 # ----------------------------------------------- Comparison Tests ----------------------------------------------------
@@ -239,9 +249,8 @@ def test_comparison(interface: AltInterface, input_file: str, source: str):
     """
     xml_input = read_input(input_file)
 
-    return_code, res = interface.comparison(xml_input, source, xml_input, source)
-    assert return_code == 0
-    assert res == 'True'
+    res = interface.comparison(xml_input, source, xml_input, source)
+    assert res is True
 
 # ------------------------------------------------ Sequence Tests -----------------------------------------------------
 
@@ -274,8 +283,7 @@ def test_epsilon_trim_det_min(interface: AltInterface, automaton: str):
         (AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
         (AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>')
     ]:
-        return_code, res = interface.algorithms(res, algorithm)
-        assert return_code == 0
+        res = interface.algorithms(res, algorithm)
         assert res.endswith(result_type + '\n')
 
 
@@ -307,8 +315,7 @@ def test_epsilon_reduction_unit_recursion(interface: AltInterface, grammar: str)
         AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL,
         AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL
     ]:
-        return_code, res = interface.algorithms(res, algorithm)
-        assert return_code == 0
+        res = interface.algorithms(res, algorithm)
         assert res.endswith('</EpsilonFreeCFG>\n')
 
 
@@ -323,57 +330,44 @@ def test_fails(interface: AltInterface):
     :param interface: pytest fixture returning :class:`AltInterface` instance
 
     """
+
     # Passing file as parameter
-    return_code, res = interface.algorithms(REGEXPS + '/regexp.xml', AlgorithmTypes.REGEXP_TRIM)
-    assert return_code == 1
-    assert 'Cannot parse the XML' in res
+    with pytest.raises(AltInterfaceException, match='Cannot parse the XML'):
+        interface.algorithms(REGEXPS + '/regexp.xml', AlgorithmTypes.REGEXP_TRIM)
 
     # Omitting the optional parameter which is mandatory for some algorithms OR giving optional parameter when it's not
     # wanted
     xml_input = read_input(REGEXPS + '/regexp.xml')
-    return_code, res = interface.algorithms(xml_input, AlgorithmTypes.REGEXP_DERIVATION)
-    assert return_code == 1
-    assert 'No string to differentiate by was given!' in res
-    return_code, res = interface.algorithms(xml_input, AlgorithmTypes.REGEXP_TRIM, 'ThisShouldNotBeHere')
-    assert return_code == 1
-    assert 'Optional parameter was given even though it can\'t be used!' in res
+    with pytest.raises(AltInterfaceException, match='No string to differentiate by was given!'):
+        interface.algorithms(xml_input, AlgorithmTypes.REGEXP_DERIVATION)
+    with pytest.raises(AltInterfaceException, match='Optional parameter was given even though it can\'t be used!'):
+        interface.algorithms(xml_input, AlgorithmTypes.REGEXP_TRIM, 'ThisShouldNotBeHere')
 
     # Passing invalid algorithm
     xml_input = read_input(AUTOMATA + '/NFSM1.xml')
-    return_code, res = interface.algorithms(xml_input, 'determinization')
-    assert return_code == 1
-    assert 'Unknown algorithm passed as parameter!' in res
-    return_code, res = interface.algorithms(xml_input, 'automaton_determinize')
-    assert return_code == 1
-    assert 'Unknown algorithm passed as parameter!' in res
+    with pytest.raises(AltInterfaceException, match='Unknown algorithm passed as parameter!'):
+        interface.algorithms(xml_input, 'determinization')
+    with pytest.raises(AltInterfaceException, match='Unknown algorithm passed as parameter!'):
+        interface.algorithms(xml_input, 'automaton_determinize')
 
     # Passing invalid input type
-    return_code, res = interface.algorithms(xml_input, AlgorithmTypes.AUTOMATON_MINIMIZATION)
-    assert return_code == 3
-    assert 'Entry overload' in res
-    assert 'not available' in res
+    with pytest.raises(AltInterfaceException, match='Entry overload'):
+        interface.algorithms(xml_input, AlgorithmTypes.AUTOMATON_MINIMIZATION)
 
     # Passing invalid source or target type to conversion
-    return_code, res = interface.conversion(xml_input, 'fsm', 'rg')
-    assert return_code == 1
-    assert 'Unknown \'from\' parameter passed as parameter!' in res
-    return_code, res = interface.conversion(xml_input, 'fa', 'cfg')
-    assert return_code == 1
-    assert 'Unknown \'to\' parameter passed as parameter!' in res
-    return_code, res = interface.conversion(xml_input, 'pda', 'cfg')
-    assert return_code == 1
-    assert 'Unknown \'from\' parameter passed as parameter!' in res
+    with pytest.raises(AltInterfaceException, match='Unknown \'from\' parameter passed as parameter!'):
+        interface.conversion(xml_input, 'fsm', 'rg')
+    with pytest.raises(AltInterfaceException, match='Unknown \'to\' parameter passed as parameter'):
+        interface.conversion(xml_input, 'fa', 'cfg')
+    with pytest.raises(AltInterfaceException, match='Unknown \'from\' parameter passed as parameter'):
+        interface.conversion(xml_input, 'pda', 'cfg')
 
     # Trying to convert ENFA to RG
     xml_input = read_input(AUTOMATA + '/ENFA1.EPSILON.xml')
-    return_code, res = interface.conversion(xml_input, 'fa', 'rg')
-    assert return_code == 3
-    assert 'Entry overload' in res
-    assert 'not available' in res
+    with pytest.raises(AltInterfaceException, match='Entry overload'):
+        interface.conversion(xml_input, 'fa', 'rg')
 
     # Trying to compare FA and CFG
     xml_input2 = read_input(GRAMMARS + '/CFG1.UNIT.xml')
-    return_code, res = interface.comparison(xml_input, 'fa', xml_input2, 'cfg')
-    assert return_code == 3
-    assert 'Entry overload' in res
-    assert 'not available' in res
+    with pytest.raises(AltInterfaceException, match='Entry overload'):
+        interface.comparison(xml_input, 'fa', xml_input2, 'cfg')

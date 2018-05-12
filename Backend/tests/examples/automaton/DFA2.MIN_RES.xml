@@ -8,9 +8,9 @@
         <String>F</String>
     </states>
     <inputAlphabet>
-        <Integer>0</Integer>
-        <Integer>1</Integer>
-        <Integer>2</Integer>
+        <Character>48</Character>
+        <Character>49</Character>
+        <Character>50</Character>
     </inputAlphabet>
     <initialState>
         <String>A</String>
@@ -26,7 +26,7 @@
                 <String>A</String>
             </from>
             <input>
-                <Integer>0</Integer>
+               <Character>48</Character>
             </input>
             <to>
                 <String>D</String>
@@ -37,7 +37,7 @@
                 <String>A</String>
             </from>
             <input>
-                <Integer>1</Integer>
+                <Character>49</Character>
             </input>
             <to>
                 <String>D</String>
@@ -48,7 +48,7 @@
                 <String>A</String>
             </from>
             <input>
-                <Integer>2</Integer>
+                <Character>50</Character>
             </input>
             <to>
                 <String>D</String>
@@ -59,7 +59,7 @@
                 <String>B</String>
             </from>
             <input>
-                <Integer>0</Integer>
+                <Character>48</Character>
             </input>
             <to>
                 <String>A</String>
@@ -70,7 +70,7 @@
                 <String>B</String>
             </from>
             <input>
-                <Integer>1</Integer>
+                <Character>49</Character>
             </input>
             <to>
                 <String>B</String>
@@ -81,7 +81,7 @@
                 <String>B</String>
             </from>
             <input>
-                <Integer>2</Integer>
+                <Character>50</Character>
             </input>
             <to>
                 <String>B</String>
@@ -92,7 +92,7 @@
                 <String>C</String>
             </from>
             <input>
-                <Integer>0</Integer>
+               <Character>48</Character>
             </input>
             <to>
                 <String>A</String>
@@ -103,7 +103,7 @@
                 <String>C</String>
             </from>
             <input>
-                <Integer>1</Integer>
+                <Character>49</Character>
             </input>
             <to>
                 <String>B</String>
@@ -114,7 +114,7 @@
                 <String>C</String>
             </from>
             <input>
-                <Integer>2</Integer>
+                <Character>50</Character>
             </input>
             <to>
                 <String>B</String>
@@ -125,7 +125,7 @@
                 <String>D</String>
             </from>
             <input>
-                <Integer>0</Integer>
+                <Character>48</Character>
             </input>
             <to>
                 <String>B</String>
@@ -136,7 +136,7 @@
                 <String>D</String>
             </from>
             <input>
-                <Integer>1</Integer>
+                <Character>49</Character>
             </input>
             <to>
                 <String>F</String>
@@ -147,7 +147,7 @@
                 <String>D</String>
             </from>
             <input>
-                <Integer>2</Integer>
+                <Character>50</Character>
             </input>
             <to>
                 <String>C</String>
@@ -157,7 +157,7 @@
                 <String>F</String>
             </from>
             <input>
-                <Integer>0</Integer>
+                <Character>48</Character>
             </input>
             <to>
                 <String>B</String>
@@ -168,7 +168,7 @@
                 <String>F</String>
             </from>
             <input>
-                <Integer>1</Integer>
+                <Character>49</Character>
             </input>
             <to>
                 <String>A</String>
@@ -179,7 +179,7 @@
                 <String>F</String>
             </from>
             <input>
-                <Integer>2</Integer>
+                <Character>50</Character>
             </input>
             <to>
                 <String>B</String>

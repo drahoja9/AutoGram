@@ -19,6 +19,16 @@ import os
 import ctypes
 
 
+class AltInterfaceException(Exception):
+    """
+
+    Base exception for class :class:`AltInterface`, when something goes wrong. Carries the exception message.
+
+    """
+    def __init__(self, msg: str):
+        self.msg = msg
+
+
 class AltInterface:
     """
 
@@ -126,7 +136,7 @@ class AltInterface:
         result = self.lib.getResult(result_struct)
         return return_code, result.decode()
 
-    def algorithms(self, xml_input: str, algorithm: str, optional_param: str = None) -> tuple:
+    def algorithms(self, xml_input: str, algorithm: str, optional_param: str = None) -> str:
         """
 
         Python wrapper method for running algorithms from C++ ALT interface. Currently supported algorithms are:
@@ -150,18 +160,23 @@ class AltInterface:
         ``'grammar_reduction'``)
         :param optional_param: extra parameter for algorithms that need it (currently only regexp derivation and CYK)
 
-        :return: `tuple` containing result code (`int`; zero when everything's OK, non-zero otherwise) and result \
-        itself (`str`)
+        :return: result of the given algorithm
+
+        :raises: :class:`AltInterfaceException`
 
         """
         # The order of parameters for function _prepare_strings is very important and corresponds with order for C/C++
         # interface alone! Do not change!
         params = self._prepare_strings(xml_input, algorithm, optional_param)
         result_struct = self.lib.algorithms(self.interface, *params)
+        res_code, res = self._parse_result(result_struct)
 
-        return self._parse_result(result_struct)
+        if res_code != 0:
+            raise AltInterfaceException(res)
 
-    def conversion(self, xml_input: str, source: str, target: str) -> tuple:
+        return res
+
+    def conversion(self, xml_input: str, source: str, target: str) -> str:
         """
 
         Python wrapper method for running conversion from C++ ALT interface. Algorithms used for conversions:
@@ -178,18 +193,23 @@ class AltInterface:
         :param source: conversion input type (currently allowed are only ``'fa'``, ``'rg'``, ``'re'`` and ``'cfg'``)
         :param target: conversion output type (currently allowed are only ``'fa'``, ``'rg'``, ``'re'`` and ``'pda'``)
 
-        :return: `tuple` containing result code (`int`; zero when everything's OK, non-zero otherwise) and result \
-        itself (`str`)
+        :return: result of conversion
+
+        :raises: :class:`AltInterfaceException`
 
         """
         # The order of parameters for function _prepare_strings is very important and corresponds with order for C/C++
         # interface alone! Do not change!
         params = self._prepare_strings(xml_input, source, target)
         result_struct = self.lib.conversion(self.interface, *params)
+        res_code, res = self._parse_result(result_struct)
 
-        return self._parse_result(result_struct)
+        if res_code != 0:
+            raise AltInterfaceException(res)
 
-    def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> tuple:
+        return res
+
+    def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> bool:
         """
 
         Python wrapper method for running comparison from C++ ALT interface. Comparison is done by transforming both
@@ -207,19 +227,20 @@ class AltInterface:
         :param input2_type: type of input2 (currently allowed are only ``'fa'``, ``'rg'``, ``'re'``, ``'cfg'`` and \
         ``'pda'``)
 
-        :return: `tuple` containing result code (`int`; zero when everything's OK, non-zero otherwise) and result \
-        itself (`str`)
+        :return: result of comparison ('True" or 'False')
+
+        :raises: :class:`AltInterfaceException`
 
         """
         if input1_type in ['rg', 're']:
-            _, input1 = self.conversion(input1, input1_type, 'fa')
+            input1 = self.conversion(input1, input1_type, 'fa')
         elif input1_type == 'cfg':
-            _, input1 = self.conversion(input1, input1_type, 'pda')
+            input1 = self.conversion(input1, input1_type, 'pda')
 
         if input2_type in ['rg', 're']:
-            _, input2 = self.conversion(input2, input2_type, 'fa')
+            input2 = self.conversion(input2, input2_type, 'fa')
         elif input1_type == 'cfg':
-            _, input2 = self.conversion(input2, input2_type, 'pda')
+            input2 = self.conversion(input2, input2_type, 'pda')
 
         if input1_type in ['fa', 'rg', 're'] and input2_type in ['fa', 'rg', 're']:
             regular = True
@@ -230,5 +251,9 @@ class AltInterface:
         # interface alone! Do not change!
         params = self._prepare_strings(input1, input2)
         result_struct = self.lib.comparison(self.interface, *params, regular)
+        res_code, res = self._parse_result(result_struct)
 
-        return self._parse_result(result_struct)
+        if res_code != 0:
+            raise AltInterfaceException(res)
+
+        return res == 'True'

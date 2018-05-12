@@ -19,8 +19,8 @@
     </Set>
   </states>
   <inputAlphabet>
-    <Integer>0</Integer>
-    <Integer>1</Integer>
+    <Character>48</Character>
+    <Character>49</Character>
   </inputAlphabet>
   <initialState>
     <Set>
@@ -42,7 +42,7 @@
         </Set>
       </from>
       <input>
-        <Integer>0</Integer>
+        <Character>48</Character>
       </input>
       <to>
         <Set>
@@ -58,7 +58,7 @@
         </Set>
       </from>
       <input>
-        <Integer>1</Integer>
+        <Character>49</Character>
       </input>
       <to>
         <Set>
@@ -74,7 +74,7 @@
         </Set>
       </from>
       <input>
-        <Integer>0</Integer>
+        <Character>48</Character>
       </input>
       <to>
         <Set>
@@ -91,7 +91,7 @@
         </Set>
       </from>
       <input>
-        <Integer>1</Integer>
+        <Character>49</Character>
       </input>
       <to>
         <Set>
@@ -108,7 +108,7 @@
         </Set>
       </from>
       <input>
-        <Integer>0</Integer>
+        <Character>48</Character>
       </input>
       <to>
         <Set>
@@ -126,7 +126,7 @@
         </Set>
       </from>
       <input>
-        <Integer>1</Integer>
+        <Character>49</Character>
       </input>
       <to>
         <Set>
@@ -143,7 +143,7 @@
         </Set>
       </from>
       <input>
-        <Integer>0</Integer>
+        <Character>48</Character>
       </input>
       <to>
         <Set>
@@ -161,7 +161,7 @@
         </Set>
       </from>
       <input>
-        <Integer>1</Integer>
+        <Character>49</Character>
       </input>
       <to>
         <Set>
