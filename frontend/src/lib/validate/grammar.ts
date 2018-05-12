@@ -6,6 +6,7 @@ import { GrammarExceptions as GR_Error} from 'lib/validate';
 
 /**
  * Function to check correct structure of context-free grammar rules. Allows epsilon on the left side of the rule.
+ * 
  * @description Checks:
  *  - on the right side there is nonterminal symbol
  *  - on the left side there is combination of defined terminals and non-terminals or null
@@ -39,6 +40,7 @@ function contextFreeRulesCheck(rules: any[], nonterminal_alphabet: string[], ter
 /**
  * Function to check correct structure of (right) regular grammar rules. Allows epsilon on the left side of the rule.
  * Does not check if epsilon is placed correctly.
+ * 
  * @description Checks:
  *  - on the right side there is nonterminal symbol
  *  - on the left side there is either one terminal OR one terminal and one non-terminal (in this order) OR null
@@ -68,6 +70,7 @@ function regularRulesCheck(rules: any[], nonterminal_alphabet: string[], termina
 /**
  * Function to check correct structure of CNF grammar rules. Allows epsilon on the left side of the rule.
  * Does not check if epsilon is placed correctly.
+ * 
  * @description Checks:
  *  - on the right side there is nonterminal symbol
  *  - on the left side there is either one terminal OR two non-terminals OR null
@@ -96,6 +99,7 @@ function chomskyRulesCheck(rules: any[], nonterminal_alphabet: string[], termina
 
 /**
  * Function to check correct placement of epsilon rule.
+ * 
  * @description Epsilon can be on the right side of a rule, if on the left side there is initial symbol. 
  * Plus if this situation occurs, then initial symbol must not be on the right side of any rule.
  * Function does NOT check structure of rules or usage of terminal and non-terminal symbols.
@@ -125,6 +129,7 @@ function epsilonCheck(rules: any[], initial_symbol: string){
 
 /**
  * Function to validate core stucture of grammar. validates everything but grammar rules.
+ * 
  * @description Checks:
  *  - non-terminal alphabet is not empty
  *  - non-terminal symbols are not empty strings and consist of allowed symbols

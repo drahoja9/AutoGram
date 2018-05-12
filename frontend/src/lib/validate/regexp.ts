@@ -103,6 +103,7 @@ function validateNode(node : RENode, alphabet: string[]){
 /**
  * Function to validate core structure of the regular expression (it's alphabet).
  * Does NOT validate regexp's value.
+ * 
  * @description Checks:
  *  - alphabet symbols are characters
  *  - alphabet symbols are from allowedSymbols

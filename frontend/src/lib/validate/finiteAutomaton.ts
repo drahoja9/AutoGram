@@ -6,6 +6,7 @@ import { FiniteAutomatonExceptions as FA_Error } from 'lib/validate';
 
 /** 
  * Function to validate common finite automaton rules. Allows epsilon transitions.
+ * 
  * @description Checks: 
  *  - source is defiend in states
  *  - target is defiend in states
@@ -31,6 +32,7 @@ function standardTransitionCheck(transitions: any[], states: string[], alphabet:
 
 /** 
  * Function to validate epsilon-free finite automaton rules. Does NOT allow epsilon transitions.
+ * 
  * @description Checks: 
  *  - source is defiend in states
  *  - target is defiend in states
@@ -82,6 +84,7 @@ function deterministicTransitionCheck(transitions: any[], initial_states: string
 
 /**
  * Function to validate core structure of a finitie automaton. It validates everything except for transitions and determinism.
+ * 
  * @description Checks:
  *  - states and initial states are not empty arrays
  *  - states are not empty strings and consist of allowed symbols
