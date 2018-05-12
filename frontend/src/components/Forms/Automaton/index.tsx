@@ -1,8 +1,10 @@
+//#region imports
 import * as React from 'react';
 import ControlCell from './components/InputRow/ControlCell';
-import style from 'styled-components';
+import styled from 'styled-components';
+//#endregion
 
-const Table = style.table`
+const Table = styled.table`
   border: 1px solid black;
   td {
     border: 1px solid black;
