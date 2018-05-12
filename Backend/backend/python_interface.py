@@ -28,9 +28,6 @@ class AltInterfaceException(Exception):
     def __init__(self, msg: str):
         self.msg = msg
 
-    def msg(self) -> str:
-        return self.msg
-
 
 class AltInterface:
     """
