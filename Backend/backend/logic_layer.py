@@ -20,12 +20,8 @@ def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
             result = Converter.xml_to_json(algorithm_result, algorithm_name)
             return result
     # TODO: What to do with different exceptions? What to send to the API/USER?
-    except AltInterfaceException as e:
-        return {'exception': e.msg, 'type': AltInterfaceException}
-    except Converter.JSONDecodeError as e:
-        raise
-    except Converter.XMLDecodeError as e:
-        raise
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': type(e)}
 
 
 def transformation(json_file: dict) -> dict:
@@ -37,12 +33,8 @@ def transformation(json_file: dict) -> dict:
 
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.TRANSFORMATION)
         return result
-    except AltInterfaceException:
-        raise
-    except Converter.JSONDecodeError:
-        raise
-    except Converter.XMLDecodeError:
-        raise
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': type(e)}
 
 
 def comparison(json_file: dict) -> dict:
@@ -54,12 +46,8 @@ def comparison(json_file: dict) -> dict:
 
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.COMPARISON)
         return result
-    except AltInterfaceException:
-        raise
-    except Converter.JSONDecodeError:
-        raise
-    except Converter.XMLDecodeError:
-        raise
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': type(e)}
 
 
 def _regexp_derivation(json_file: dict) -> dict:
@@ -78,12 +66,8 @@ def _regexp_derivation(json_file: dict) -> dict:
 
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.REGEXP_DERIVATION, algorithm_steps)
         return result
-    except AltInterfaceException:
-        raise
-    except Converter.JSONDecodeError:
-        raise
-    except Converter.XMLDecodeError:
-        raise
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': type(e)}
 
 
 def _grammar_cnf(json_file: dict) -> dict:
@@ -97,16 +81,17 @@ def _grammar_cnf(json_file: dict) -> dict:
             after_unit = interface.algorithms(after_epsilon, AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL)
             after_cnf = interface.algorithms(after_unit, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
 
-        algorithm_steps = {'after_reduction': after_reduction, 'after_epsilon': after_epsilon,
-                           'after_unit': after_unit, 'result': after_cnf}
+        algorithm_steps = {
+            'after_reduction': after_reduction,
+            'after_epsilon': after_epsilon,
+            'after_unit': after_unit,
+            'result': after_cnf
+        }
+
         result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
         return result
-    except AltInterfaceException:
-        raise
-    except Converter.JSONDecodeError:
-        raise
-    except Converter.XMLDecodeError:
-        raise
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': type(e)}
 
 
 def _grammar_left_recursion(json_file: dict) -> dict:
@@ -120,16 +105,17 @@ def _grammar_left_recursion(json_file: dict) -> dict:
             after_unit = interface.algorithms(after_epsilon, AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL)
             after_recursion = interface.algorithms(after_unit, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
 
-        algorithm_steps = {'after_reduction': after_reduction, 'after_epsilon': after_epsilon,
-                           'after_unit': after_unit, 'result': after_recursion}
+        algorithm_steps = {
+            'after_reduction': after_reduction,
+            'after_epsilon': after_epsilon,
+            'after_unit': after_unit,
+            'result': after_recursion
+        }
+
         result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
         return result
-    except AltInterfaceException:
-        raise
-    except Converter.JSONDecodeError:
-        raise
-    except Converter.XMLDecodeError:
-        raise
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': type(e)}
 
 
 # def automaton_minimization(json_file: str) -> str:

@@ -1,6 +1,19 @@
+"""
+
+Testing module for class :module:`logic_layer`, using `pytest`_ library.
+
+.. _pytest: https://pytest.org/
+
+.. module:: interface_test
+    :platform: Unix
+    :synopsis: Testing module for module logic_layer, using pytest library.
+
+.. moduleauthor:: Jakub Drahos <drahoja9@fit.cvut.cz>
+
+"""
+
 import pytest
 import os
-import json
 
 from backend import logic_layer, XMLConverter, AlgorithmTypes
 from backend.python_interface import AltInterfaceException
@@ -181,7 +194,7 @@ def test_epsilon_trim_det_min(automaton: str):
         assert result_type == res['type']
 
 
-# ------------------------------------------------ Conversion Tests ---------------------------------------------------
+# --------------------------------------------- Transformation Tests --------------------------------------------------
 
 
 @pytest.mark.parametrize('input_file, source, target', [
@@ -203,7 +216,7 @@ def test_epsilon_trim_det_min(automaton: str):
     (REGEXPS + '/RE4.DERIVATION.xml', 're', 'rg'),
     (REGEXPS + '/RE4.DERIVATION.xml', 're', 're'),
 ])
-def test_conversion(input_file: str, source: str, target: str):
+def test_transformation(input_file: str, source: str, target: str):
     """
 
     Simple conversion test. Converts input to `target`, checks the output type, converts it back to `source` and compare
@@ -292,13 +305,9 @@ def test_comparison(input_file: str):
 def test_fails():
     """
 
-    Testing invalid requests for :class:`AltInterface` that should always fail.
+    Testing invalid requests for :module:`logic_layer` that should always fail.
 
     """
-
-    # Passing file as parameter
-    with pytest.raises(XMLConverter.JSONDecodeError):
-        logic_layer.simple_algorithm(REGEXPS + '/regexp.xml', AlgorithmTypes.REGEXP_TRIM)
 
     # Passing invalid name of algorithm
     json_input = XMLConverter.xml_to_json(read_input(REGEXPS + '/regexp.xml'))
@@ -306,8 +315,49 @@ def test_fails():
     assert res['exception'] == 'Unknown algorithm passed as parameter!'
     assert res['type'] is AltInterfaceException
 
+    # Omitting the optional parameter which is mandatory for some algorithms
+    res = logic_layer.simple_algorithm(json_input, AlgorithmTypes.REGEXP_DERIVATION)
+    assert res['exception'] == 'Invalid JSON structure'
+    assert res['type'] is XMLConverter.JSONDecodeError
+
     # Passing invalid input type
     res = logic_layer.simple_algorithm(json_input, AlgorithmTypes.AUTOMATON_DETERMINIZATION)
+    assert 'Entry overload' in res['exception']
+    assert 'not available' in res['exception']
+    assert res['type'] is AltInterfaceException
+
+    # Missing 'target' in transformation input
+    res = logic_layer.transformation(json_input)
+    assert res['exception'] == 'Invalid JSON structure'
+    assert res['type'] is XMLConverter.JSONDecodeError
+
+    # Passing invalid target type to transformation
+    json_input_transformation = {
+        'source': json_input,
+        'target': 'NFA'
+    }
+    res = logic_layer.transformation(json_input_transformation)
+    assert res['exception'] == 'Unknown \'to\' parameter passed as parameter!'
+    assert res['type'] is AltInterfaceException
+
+    # Trying to convert ENFA to RG
+    json_input = XMLConverter.xml_to_json(read_input(AUTOMATA + '/ENFA1.EPSILON.xml'))
+    json_input_transformation = {
+        'source': json_input,
+        'target': 'rg'
+    }
+    res = logic_layer.transformation(json_input_transformation)
+    assert 'Entry overload' in res['exception']
+    assert 'not available' in res['exception']
+    assert res['type'] is AltInterfaceException
+
+    # Trying to compare FA and CFG
+    json_input2 = XMLConverter.xml_to_json(read_input(GRAMMARS + '/CFG1.UNIT.xml'))
+    json_input_comparison = {
+        'lhs': json_input,
+        'rhs': json_input2
+    }
+    res = logic_layer.comparison(json_input_comparison)
     assert 'Entry overload' in res['exception']
     assert 'not available' in res['exception']
     assert res['type'] is AltInterfaceException
