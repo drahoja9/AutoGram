@@ -21,6 +21,7 @@ export default class Controller extends React.Component<{}, ControllerState> {
   public state = {
     selected: 'gr',
     values: {
+      au: { header: [], body: [] },
       gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
       re: ''
     }
@@ -57,17 +58,17 @@ export default class Controller extends React.Component<{}, ControllerState> {
   private renderInput() {
     let C;
     switch (this.state.selected) {
-      case 'gr':
-        C = GrammarInput;
-        break;
-      case 'au':
-        C = AutomatonInput;
-        break;
-      case 'ex':
-        C = RegexInput;
-        break;
-      default:
-        throw new TypeError('Unexpected input type');
+    case 'gr':
+      C = GrammarInput;
+      break;
+    case 'au':
+      C = AutomatonInput;
+      break;
+    case 'ex':
+      C = RegexInput;
+      break;
+    default:
+      throw new TypeError('Unexpected input type');
     }
     return (
       <C

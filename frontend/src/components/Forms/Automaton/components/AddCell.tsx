@@ -1,19 +1,29 @@
 //#region imports
 import * as React from 'react';
+import styled from 'styled-components';
 //#endregion
 
+//#region Styled
+const Cell = styled.td`
+  text-align: center;
+  cursor: pointer;
+`;
+//#endregion
+
+//#region Component interfaces
 export interface AddCellProps {
   isFirst: boolean;
   onClick: () => any;
 }
+//#endregion
 
 /**
  * Represents a single cell for add row/column of the table.
  */
 const AddCell: React.SFC<AddCellProps> = (props) => (
-  <td onClick={() => props.onClick()}>
+  <Cell onClick={() => props.onClick()}>
     { props.isFirst ? '+' : null }
-  </td>
+  </Cell>
 );
 
 export default AddCell;

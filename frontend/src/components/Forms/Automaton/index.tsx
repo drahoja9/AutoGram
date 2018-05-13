@@ -1,35 +1,136 @@
 //#region imports
 import * as React from 'react';
-import ControlCell from './components/InputRow/ControlCell';
 import styled from 'styled-components';
+import { cloneDeep } from 'lodash';
+
+import AddRow from './components/AddRow';
+import InputRow from './components/InputRow';
+import InputCell from './components/InputRow/InputCell';
+import HeaderRow from './components/HeaderRow';
 //#endregion
 
+//#region Styled
 const Table = styled.table`
   border: 1px solid black;
   td {
     border: 1px solid black;
   }
 `;
+//#endregion
 
-export default (props: any) => (
+//#region Component interfaces
+export interface AutomatonInputProps {
+  onChange: (value: any) => any;
+  value: any;
+}
+//#endregion
+
+//#region Change handling functions
+function addRow(props: AutomatonInputProps) {
+  const value = cloneDeep(props.value);
+  value.body = value.body.concat({
+    value: '',
+    values: value.header.map((_: string) => ''),
+    isInitial: false,
+    isFinal: false
+  });
+  props.onChange(value);
+}
+
+function addCol(props: AutomatonInputProps) {
+  const value = cloneDeep(props.value);
+  value.header.push('');
+  for (const row of value.body) {
+    row.values.push('');
+  }
+  props.onChange(value);
+}
+
+function removeRow(props: AutomatonInputProps, idx: number) {
+  const value = cloneDeep(props.value);
+  value.body.splice(idx, 1);
+  props.onChange(value);
+}
+
+function toggleInitial(props: AutomatonInputProps, idx: number) {
+  const value = cloneDeep(props.value);
+  value.body[idx].isInitial = !value.body[idx].isInitial
+  props.onChange(value);
+}
+
+function toggleFinal(props: AutomatonInputProps, idx: number) {
+  const value = cloneDeep(props.value);
+  value.body[idx].isFinal = !value.body[idx].isFinal
+  props.onChange(value);
+}
+
+function valueChange(props: AutomatonInputProps, idx: number, value: string) {
+  const value_ = cloneDeep(props.value);
+  value_.body[idx].value = value;
+  props.onChange(value_);
+}
+
+function headerValueChange(props: AutomatonInputProps, idx: number, value: string) {
+  const value_ = cloneDeep(props.value);
+  value_.header[idx] = value;
+  props.onChange(value_);
+}
+
+function inputValueChange(props: AutomatonInputProps, ridx: number, vidx: number, value: string) {
+  const value_ = cloneDeep(props.value);
+  value_.body[ridx].values[vidx] = value;
+  props.onChange(value_);
+}
+//#endregion
+
+/**
+ * Top level component representing an automaton input
+ */
+const AutomatonInput: React.SFC<AutomatonInputProps> = (props) => (
   <Table>
     <thead>
-      <tr><td>δ</td></tr>
+      <HeaderRow onAddCol={() => addCol(props)}>
+      {
+        props.value.header.map((value: string, idx: number) => (
+          <InputCell
+            key={`input-cell.${idx}`}
+            onChange={(val: string) => headerValueChange(props, idx, val)}
+            value={value}
+          />
+        ))
+      }
+      </HeaderRow>
     </thead>
-
     <tbody>
-      <tr>
-        <ControlCell
-          onInitialToggle={() => console.log('Initial toggle')}
-          onFinalToggle={() => console.log('Final toggle')}
-          onRemove={() => console.log('Remove')}
-          onValueChange={(value: string) => console.log(value)}
-          value=""
-          isInitial={true}
-          isFinal={false}
-        />
-      </tr>
+    {
+      props.value.body.map((row: any, idx: number) => (
+        <InputRow
+          key={`input-row.${idx}`}
+          onInitialToggle={() => toggleInitial(props, idx)}
+          onFinalToggle={() => toggleFinal(props, idx)}
+          onRemove={() => removeRow(props, idx)}
+          onValueChange={(value: string) => valueChange(props, idx, value)}
+          value={row.value}
+          isInitial={row.isInitial}
+          isFinal={row.isFinal}
+
+          onAddCol={() => addCol(props)}
+        >
+        {
+          row.values.map((value: string, vidx: number) => (
+            <InputCell
+              key={`input-row.${idx}.${vidx}`}
+              onChange={(val: string) => inputValueChange(props, idx, vidx, val)}
+              value={value}
+            />
+          ))
+        }
+        </InputRow>
+      ))
+    }
+      <AddRow width={props.value.header.length} onClick={() => addRow(props)} />
     </tbody>
   </Table>
 );
 
+export default AutomatonInput;

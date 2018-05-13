@@ -18,7 +18,7 @@ const AddRow: React.SFC<AddRowProps> = (props) => (
   <tr>
   {
     range(props.width + 1).map((_: any, idx: number) => (
-      <AddCell isFirst={idx === 0} onClick={props.onClick} />
+      <AddCell key={`${idx}`} isFirst={idx === 0} onClick={props.onClick} />
     ))
   }
   </tr>
