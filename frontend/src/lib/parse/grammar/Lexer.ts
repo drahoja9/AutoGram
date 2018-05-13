@@ -219,6 +219,8 @@ export class Lexer extends LexerBase<TokType, Token> {
         }
         return this.formToken(TokType.Unknown, tok);
       }
+
+      // Advance the internal buffer.
       this.advance();
     }
   }
