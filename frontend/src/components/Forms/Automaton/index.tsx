@@ -7,6 +7,7 @@ import AddRow from './components/AddRow';
 import InputRow from './components/InputRow';
 import InputCell from './components/InputRow/InputCell';
 import HeaderRow from './components/HeaderRow';
+import HeaderCell from './components/HeaderCell';
 //#endregion
 
 //#region Styled
@@ -52,6 +53,15 @@ function removeRow(props: AutomatonInputProps, idx: number) {
   props.onChange(value);
 }
 
+function removeCol(props: AutomatonInputProps, idx: number) {
+  const value = cloneDeep(props.value);
+  value.header.splice(idx, 1);
+  for (const row of value.body) {
+    row.values.splice(idx, 1);
+  }
+  props.onChange(value);
+}
+
 function toggleInitial(props: AutomatonInputProps, idx: number) {
   const value = cloneDeep(props.value);
   value.body[idx].isInitial = !value.body[idx].isInitial
@@ -92,8 +102,9 @@ const AutomatonInput: React.SFC<AutomatonInputProps> = (props) => (
       <HeaderRow onAddCol={() => addCol(props)}>
       {
         props.value.header.map((value: string, idx: number) => (
-          <InputCell
-            key={`input-cell.${idx}`}
+          <HeaderCell
+            key={`header-cell.${idx}`}
+            onRemove={() => removeCol(props, idx)}
             onChange={(val: string) => headerValueChange(props, idx, val)}
             value={value}
           />
