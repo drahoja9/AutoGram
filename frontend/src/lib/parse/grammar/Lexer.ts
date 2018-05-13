@@ -177,7 +177,6 @@ export class Lexer extends LexerBase<TokType, Token> {
         // Check if we're at the end of the buffer.
         if (this.buff.length !== 0) {
           // If we're not, consider nul-character as a whitespace.
-          this.advance();
           break;
         }
         return this.formToken(TokType.Unknown, tok);
@@ -208,7 +207,6 @@ export class Lexer extends LexerBase<TokType, Token> {
       case 'U': case 'V': case 'W': case 'X': case 'Y':
       case 'Z': case '_':
         tok += this.curr;
-        this.advance();
         break;
 
       default:
@@ -221,6 +219,7 @@ export class Lexer extends LexerBase<TokType, Token> {
         }
         return this.formToken(TokType.Unknown, tok);
       }
+      this.advance();
     }
   }
 }
