@@ -125,7 +125,7 @@ export class Lexer extends LexerBase<TokType, Token> {
           this.advance();
           return this.formToken(TokType.Arrow);
         }
-        return this.formToken(TokType.Unknown, tok);
+        return this.formToken(TokType.Ident, tok);
 
       case '|':
         return this.formToken(TokType.Pipe);
@@ -150,7 +150,7 @@ export class Lexer extends LexerBase<TokType, Token> {
       case 'K': case 'L': case 'M': case 'N': case 'O':
       case 'P': case 'Q': case 'R': case 'S': case 'T':
       case 'U': case 'V': case 'W': case 'X': case 'Y':
-      case 'Z': case '_': case '-': case '\'':
+      case 'Z': case '_': case '\'':
         return this.formToken(TokType.Ident, tok);
 
       // Error
@@ -210,7 +210,7 @@ export class Lexer extends LexerBase<TokType, Token> {
         break;
 
       default:
-        while (this.curr !== '>' || this.buff.length > 0) {
+        while (this.curr !== '>' && this.buff.length !== 0) {
           tok += this.curr;
           this.advance();
         }

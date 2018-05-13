@@ -98,6 +98,9 @@ export class Parser {
       case TokType.Ident:
         rules.push(...this.parseRule());
         break;
+
+      default:
+        throw new TypeError('Unexpected token.');
       }
     }
   }
