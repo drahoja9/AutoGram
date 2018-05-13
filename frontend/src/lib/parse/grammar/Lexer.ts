@@ -4,7 +4,7 @@ import LexerBase from 'lib/parse/Lexer';
 
 /** Represents a concrete type of the token. */
 export enum TokType {
-  Ident = 'ident', // [a-zA-Z0-9_]
+  Ident = 'ident', // [a-zA-Z0-9_-']
 
   Epsilon = 'epsilon', // ε
 
@@ -150,7 +150,7 @@ export class Lexer extends LexerBase<TokType, Token> {
       case 'K': case 'L': case 'M': case 'N': case 'O':
       case 'P': case 'Q': case 'R': case 'S': case 'T':
       case 'U': case 'V': case 'W': case 'X': case 'Y':
-      case 'Z': case '_':
+      case 'Z': case '_': case '-': case '\'':
         return this.formToken(TokType.Ident, tok);
 
       // Error
@@ -205,7 +205,7 @@ export class Lexer extends LexerBase<TokType, Token> {
       case 'K': case 'L': case 'M': case 'N': case 'O':
       case 'P': case 'Q': case 'R': case 'S': case 'T':
       case 'U': case 'V': case 'W': case 'X': case 'Y':
-      case 'Z': case '_':
+      case 'Z': case '_': case '-': case '\'':
         tok += this.curr;
         break;
 

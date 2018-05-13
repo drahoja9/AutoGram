@@ -6,9 +6,8 @@ import LexerBase from 'lib/parse/Lexer';
 export enum TokType {
   Char = 'char', // [a-zA-Z0-9_]
 
-  Epsilon = 'epsilon', // [a-zA-Z0-9_]
-
-  EmptyString = 'empty_symbol', // [a-zA-Z0-9_]
+  Epsilon = 'epsilon', // ε
+  EmptyString = 'empty_symbol', // ∅
 
   L_Paren = 'l_paren', // (
   R_Paren = 'r_paren', // )
