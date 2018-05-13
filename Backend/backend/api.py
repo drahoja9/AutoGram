@@ -66,12 +66,14 @@ def _error_response(status_code: int, message: str = None, exc_type: str = None)
     Helper function for creating error response.
 
     Takes status code, generates appropriate text description and adds error message and exception type. Structure of
-    JSON response is::
+    JSON response is:
+
+    .. code-block:: JSON
 
         {
-            'error': <status code, short message describing what given status code means>,
-            'message: <description of what went wrong>,
-            'type': <name of exception class that was raised and caught>
+            "error": <status code, short message describing what given status code means>,
+            "message": <description of what went wrong>,
+            "type": <name of exception class that was raised and caught>
         }
 
     :param status_code: HTTP status code
@@ -135,7 +137,7 @@ def algorithms(algorithm_name: str) -> Response:
     Algorithms view.
 
     Checks for correct algorithm name (returns bad request (400) if not valid) and calls given algorithm through
-    :module:`logic_layer`. Currently supported algorithm names are:
+    :mod:`logic_layer`. Currently supported algorithm names are:
 
         * ``'automaton_determinization'``
         * ``'automaton_epsilon'``
@@ -168,7 +170,7 @@ def transformation() -> Response:
 
     Transformation view.
 
-    Performs no validation, just passes given JSON to :module:`logic_layer` for transformation.
+    Performs no validation, just passes given JSON to :mod:`logic_layer` for transformation.
 
     :return: instance of :class:`Response` representing JSON response (structure of JSON depends on output type)
 
@@ -187,10 +189,12 @@ def comparison() -> Response:
 
     Comparison view.
 
-    Performs no validation, just passes given JSON to :module:`logic_layer` for comparison. Structure of JSON is::
+    Performs no validation, just passes given JSON to :mod:`logic_layer` for comparison. Structure of JSON is:
+
+    .. code-block:: JSON
 
         {
-            'result': <true/false>
+            "result": <true/false>
         }
 
     :return: instance of :class:`Response` representing JSON response
