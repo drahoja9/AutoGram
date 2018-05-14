@@ -6,9 +6,10 @@ import View from './view';
 import Controls from './components/controls';
 //#endregion
 
-export default class Controller extends React.Component {
+export default class Controller extends React.Component<{}, any> {
+
   private handleSubmit() {
-    console.log('Should compare.');
+
   }
 
   public render() {
@@ -19,10 +20,14 @@ export default class Controller extends React.Component {
       >
         <Row>
           <Col span={12}>
-            <LangInput />
+            <LangInput
+              onChange={(data: any) => console.log(data)}
+            />
           </Col>
           <Col span={12}>
-            <LangInput />
+            <LangInput
+              onChange={(data: any) => console.log(data)}
+            />
           </Col>
         </Row>
       </View>
