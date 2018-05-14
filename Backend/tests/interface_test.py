@@ -1,6 +1,9 @@
 """
 
-Testing module for class :class:`AltInterface` in python_interface module, using `pytest`_ library.
+Testing module for class :class:`AltInterface` in :mod:`python_interface` module, using `pytest`_ library.
+
+All tests are just copy-pasted from module :mod:`logic_layer_test` tests. This way, when something goes wrong, we'll be
+able to tell where exactly is the evildoing happening.
 
 .. _pytest: https://pytest.org/
 
@@ -27,8 +30,8 @@ REGEXPS = os.path.dirname(__file__) + '/examples/regexp'
 def interface() -> AltInterface:
     """
 
-    Pytest fixture for exporting the :class:`AltInterface` instance. Context manager is responsible for both setup and teardown (
-    thanks to ``yield`` keyword).
+    Pytest fixture for exporting the :class:`AltInterface` instance. Context manager is responsible for both setup and
+    teardown (thanks to ``yield`` keyword).
 
     :return: new :class:`AltInterface` instance
     """

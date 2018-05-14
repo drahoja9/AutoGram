@@ -12,4 +12,4 @@ Submodules
 .. toctree::
 
    tests.interface_test
-
+   tests.logic_layer_test

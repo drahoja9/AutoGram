@@ -1,10 +1,13 @@
 """
 
-Testing module for class :module:`logic_layer`, using `pytest`_ library.
+Testing module for module :mod:`logic_layer`, using `pytest`_ library.
+
+All tests are just copy-pasted from module :mod:`interface_test`. This way, when something goes wrong, we'll be able
+to tell where exactly is the evildoing happening.
 
 .. _pytest: https://pytest.org/
 
-.. module:: interface_test
+.. module:: logic_layer_test
     :platform: Unix
     :synopsis: Testing module for module logic_layer, using pytest library.
 
@@ -305,7 +308,7 @@ def test_comparison(input_file: str):
 def test_fails():
     """
 
-    Testing invalid requests for :module:`logic_layer` that should always fail.
+    Testing invalid requests for :mod:`logic_layer` that should always fail.
 
     """
 

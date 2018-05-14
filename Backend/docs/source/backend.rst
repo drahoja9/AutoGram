@@ -13,4 +13,4 @@ Submodules
 
    backend.python_interface
    backend.api
-
+   backend.XMLConverter

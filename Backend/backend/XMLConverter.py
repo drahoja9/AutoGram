@@ -1,3 +1,20 @@
+"""
+
+Module responsible for converting JSON from :mod:`api` to XML compatible with `ALT library`_ and converting this XML
+back to JSON for :mod:`api`.
+
+.. _ALT library: https://gitlab.fit.cvut.cz/algorithms-library-toolkit/automata-library
+
+.. module:: XMLConverter
+    :platform: Unix
+    :synopsis: Module responsible for converting JSON from REST API to XML compatible with ALT library and converting \
+    this XML back to JSON for REST API.
+
+.. moduleauthor:: Dominika Kralikova <kralidom@fit.cvut.cz>
+
+"""
+
+
 import json
 import xml.etree.ElementTree as ET
 from backend import ObjectTypes

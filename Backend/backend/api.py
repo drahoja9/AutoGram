@@ -20,7 +20,7 @@ from werkzeug.http import HTTP_STATUS_CODES
 from backend import logic_layer, AlgorithmTypes
 
 
-def create_app(test_config=None) -> Response:
+def create_app(test_config=None) -> Flask:
     """
 
     Flask app factory.
@@ -81,6 +81,7 @@ def _error_response(status_code: int, message: str = None, exc_type: str = None)
     :param exc_type: type of exception that was caught
 
     :return: instance of :class:`Response` representing JSON response, containing error code, message and exception type
+
     """
     payload = {'error': '{0}, {1}'.format(status_code, HTTP_STATUS_CODES.get(status_code, 'Unknown error'))}
     if message:
