@@ -26,6 +26,28 @@ class AlgorithmTypes:
     GRAMMAR_LEFT_RECURSION_REMOVAL = "grammar_left_recursion"
     GRAMMAR_CYK = 'grammar_cyk'
 
+    def __init__(self):
+        self._all = [
+            'transformation',
+            'comparison',
+            'automaton_epsilon',
+            'automaton_determinization',
+            'automaton_minimization',
+            'automaton_trim',
+            'automaton_normalization',
+            'regexp_derivation',
+            'regexp_trim',
+            'grammar_reduction',
+            'grammar_epsilon',
+            'grammar_unit',
+            'grammar_cnf',
+            'grammar_left_recursion',
+            'grammar_cyk'
+        ]
+
+    def __contains__(self, item):
+        return item in self._all
+
 
 class ObjectTypes:
     DFA = 'DFA'

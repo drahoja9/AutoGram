@@ -19,9 +19,8 @@ def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
 
             result = Converter.xml_to_json(algorithm_result, algorithm_name)
             return result
-    # TODO: What to do with different exceptions? What to send to the API/USER?
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
-        return {'exception': e.msg, 'type': type(e)}
+        return {'exception': e.msg, 'type': e.exc_type}
 
 
 def transformation(json_file: dict) -> dict:
@@ -34,7 +33,7 @@ def transformation(json_file: dict) -> dict:
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.TRANSFORMATION)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
-        return {'exception': e.msg, 'type': type(e)}
+        return {'exception': e.msg, 'type': e.exc_type}
 
 
 def comparison(json_file: dict) -> dict:
@@ -47,7 +46,7 @@ def comparison(json_file: dict) -> dict:
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.COMPARISON)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
-        return {'exception': e.msg, 'type': type(e)}
+        return {'exception': e.msg, 'type': e.exc_type}
 
 
 def _regexp_derivation(json_file: dict) -> dict:
@@ -67,7 +66,7 @@ def _regexp_derivation(json_file: dict) -> dict:
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.REGEXP_DERIVATION, algorithm_steps)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
-        return {'exception': e.msg, 'type': type(e)}
+        return {'exception': e.msg, 'type': e.exc_type}
 
 
 def _grammar_cnf(json_file: dict) -> dict:
@@ -91,7 +90,7 @@ def _grammar_cnf(json_file: dict) -> dict:
         result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
-        return {'exception': e.msg, 'type': type(e)}
+        return {'exception': e.msg, 'type': e.exc_type}
 
 
 def _grammar_left_recursion(json_file: dict) -> dict:
@@ -115,7 +114,7 @@ def _grammar_left_recursion(json_file: dict) -> dict:
         result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
-        return {'exception': e.msg, 'type': type(e)}
+        return {'exception': e.msg, 'type': e.exc_type}
 
 
 # def automaton_minimization(json_file: str) -> str:

@@ -27,6 +27,7 @@ class AltInterfaceException(Exception):
     """
     def __init__(self, msg: str):
         self.msg = msg
+        self.exc_type = 'AltInterfaceException'
 
 
 class AltInterface:
@@ -124,7 +125,7 @@ class AltInterface:
     def _parse_result(self, result_struct: int) -> tuple:
         """
 
-        Parses result from C++ interface (comes as void pointer, but in Python it is represented as integer).
+        Parses result from C++ interface (comes as void pointer, but in Python it is represented as an integer).
 
         :param result_struct: result structure from C++ interface
 
@@ -139,7 +140,9 @@ class AltInterface:
     def algorithms(self, xml_input: str, algorithm: str, optional_param: str = None) -> str:
         """
 
-        Python wrapper method for running algorithms from C++ ALT interface. Currently supported algorithms are:
+        Python wrapper method for running algorithms from C++ ALT interface.
+
+        Currently supported algorithms are:
 
         * ``'automaton_determinization'``
         * ``'automaton_minimization'``
@@ -179,7 +182,9 @@ class AltInterface:
     def conversion(self, xml_input: str, source: str, target: str) -> str:
         """
 
-        Python wrapper method for running conversion from C++ ALT interface. Algorithms used for conversions:
+        Python wrapper method for running conversion from C++ ALT interface.
+
+        Algorithms used for conversions:
 
         * FA to RG: successive construction algorithm
         * FA to RE: state elimination
@@ -212,8 +217,9 @@ class AltInterface:
     def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> bool:
         """
 
-        Python wrapper method for running comparison from C++ ALT interface. Comparison is done by transforming both
-        inputs to NFA/PDA and then comparing the formal languages they accept.
+        Python wrapper method for running comparison from C++ ALT interface.
+
+        Comparison is done by transforming both inputs to NFA/PDA and then comparing the formal languages they accept.
 
         .. warning::
 
