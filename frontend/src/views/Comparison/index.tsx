@@ -83,6 +83,7 @@ class Controller extends React.Component<ControllerProps, any> {
       <Controls
         onSubmit={this.handleSubmit.bind(this)}
         pending={this.props.meta.pending}
+        result={this.props.meta.retrieved ? this.props.result : undefined}
       />
     );
   }

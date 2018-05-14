@@ -38,8 +38,7 @@ function _request(method: HTTPMethod,
     headers,
     body: data,
     timeout: 5000,
-    crossDomain: true,
-    withCredentials: true,
+    crossDomain: true
   })
 }
 
