@@ -11,13 +11,17 @@ interface ValueStore {
   [key: string]: any;
 }
 
+export interface ControllerProps {
+  onChange: (data: any) => any;
+}
+
 interface ControllerState {
   selected: string;
   values: ValueStore;
 }
 //#endregion
 
-export default class Controller extends React.Component<{}, ControllerState> {
+export default class Controller extends React.Component<ControllerProps, ControllerState> {
   public state = {
     selected: 'gr',
     values: {
@@ -31,7 +35,7 @@ export default class Controller extends React.Component<{}, ControllerState> {
    * Handles input type change
    */
   private handleTypeChange(selected: string) {
-    this.setState({ selected });
+    this.setState({ selected }, () => this.props.onChange(this.state));
   }
 
   /**
@@ -43,7 +47,7 @@ export default class Controller extends React.Component<{}, ControllerState> {
         ...this.state.values,
         [this.state.selected]: value
       }
-    });
+    }, () => this.props.onChange(this.state));
   }
 
 
