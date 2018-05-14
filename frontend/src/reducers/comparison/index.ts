@@ -13,7 +13,7 @@ export interface State {
     error: Error | null;
     pending: boolean;
     retrieved: boolean;
-  }
+  };
 }
 
 const initialState: State = {

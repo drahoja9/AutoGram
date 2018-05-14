@@ -3,7 +3,7 @@ import { Parser as GRParser } from 'lib/parse/grammar/Parser';
 import { Parser as REParser } from 'lib/parse/regexp/Parser';
 import { validateRE, validateRRG, validateNFA } from 'lib/validate';
 
-export function validate(data: any): boolean {
+export function validate(data: any): any {
   const values = data.values[data.selected];
   console.log(data);
 
@@ -31,7 +31,7 @@ export function validate(data: any): boolean {
         });
       }
 
-      console.log({
+      validateNFA({
         type: FAType.NFA,
         initial_states: initStates,
         final_states: finStates,
@@ -40,14 +40,14 @@ export function validate(data: any): boolean {
         transitions
       });
 
-      return validateNFA({
+      return {
         type: FAType.NFA,
         initial_states: initStates,
         final_states: finStates,
         input_alphabet: input,
         states,
         transitions
-      });
+      };
     }
 
 
@@ -60,19 +60,27 @@ export function validate(data: any): boolean {
       const rules = p.parseRules();
       const startSymbol = values.startSymbol;
 
-      return validateRRG({
+      validateRRG({
         type: GRType.RRG,
         nonterminal_alphabet: nonTerm,
         terminal_alphabet: terms,
         initial_symbol: startSymbol,
         rules
       });
+      return {
+        type: GRType.RRG,
+        nonterminal_alphabet: nonTerm,
+        terminal_alphabet: terms,
+        initial_symbol: startSymbol,
+        rules
+      };
     }
 
     case 're': {
       const p = new REParser(values);
       const re = p.parse();
-      return validateRE(re);
+      validateRE(re);
+      return re;
     }
 
 

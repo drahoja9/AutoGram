@@ -10,6 +10,7 @@ import { Centered } from 'components/Layout';
  */
 export interface ControlsProps {
   onSubmit?: () => any;
+  pending?: boolean;
 }
 //#endregion
 
@@ -18,7 +19,7 @@ export interface ControlsProps {
  */
 const Controls: React.SFC<ControlsProps> = (props) => (
   <Centered>
-    <Button onClick={props.onSubmit}>
+    <Button onClick={props.onSubmit} loading={props.pending}>
       Compare
     </Button>
   </Centered>

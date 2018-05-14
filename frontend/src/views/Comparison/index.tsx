@@ -1,13 +1,29 @@
 //#region imports
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
 import LangInput from 'components/LangInput';
 import View from './view';
 import Controls from './components/controls';
 import { validate } from './validation';
+import { ComparisonRequest } from 'lib/types';
+import {
+  mapStateToProps,
+  mapDispatchToProps
+} from './selectors';
 //#endregion
 
-export default class Controller extends React.Component<{}, any> {
+export interface ControllerProps {
+  result: boolean;
+  meta: {
+    error: Error | null;
+    pending: boolean;
+    retrieved: boolean;
+  };
+  onCompare: (data: ComparisonRequest) => any;
+}
+
+class Controller extends React.Component<ControllerProps, any> {
   public state = {
     lhs: {
       selected: 'gr',
@@ -29,8 +45,11 @@ export default class Controller extends React.Component<{}, any> {
 
 
   private handleSubmit() {
-    console.log(validate(this.state.lhs));
-    console.log(validate(this.state.rhs));
+    const lhs = validate(this.state.lhs);
+    const rhs = validate(this.state.rhs);
+    if (validate(this.state.lhs) && validate(this.state.rhs)) {
+      this.props.onCompare({ lhs, rhs });
+    }
   }
 
   public render() {
@@ -63,7 +82,13 @@ export default class Controller extends React.Component<{}, any> {
     return (
       <Controls
         onSubmit={this.handleSubmit.bind(this)}
+        pending={this.props.meta.pending}
       />
     );
   }
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Controller);

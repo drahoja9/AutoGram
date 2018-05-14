@@ -1,7 +1,7 @@
 //#region imports
 import { ajax } from 'rxjs/observable/dom/ajax';
 import * as qs from 'querystring';
-const config = require('config');
+const config = require('config').default;
 //#endregion
 
 enum HTTPMethod {
@@ -18,7 +18,7 @@ function _request(method: HTTPMethod,
                       cb = (_?: Error) => {},
                 headers?: any)
 {
-  let url = `${config.URL.API}${uri}`;
+  let url = `${config.API.URL}${uri}`;
 
   if (method === HTTPMethod.get && data) {
     url += `?${qs.stringify(data)}`;
