@@ -36,12 +36,15 @@ export class Parser {
         return [];
 
       case TokType.Newline:
+        // Ignore newlines
+        this.consumeToken();
         break;
 
       case TokType.Ident:
         const first = this.tok.getValue();
         this.consumeToken();
         return this.parseIdentListBody(first);
+
       default:
         throw new TypeError('Unexpected token');
       }
@@ -56,6 +59,8 @@ export class Parser {
         return list;
 
       case TokType.Newline:
+        // Ignore newlines
+        this.consumeToken();
         break;
 
       case TokType.Comma:
@@ -93,6 +98,9 @@ export class Parser {
       case TokType.Ident:
         rules.push(...this.parseRule());
         break;
+
+      default:
+        throw new TypeError('Unexpected token.');
       }
     }
   }
@@ -147,7 +155,7 @@ export class Parser {
     this.tok = this.lexer.lex();
   }
 
-  /**Consumes token of provided type. */
+  /** Consumes token of provided type. */
   private consume(tok: TokType) {
     if (!this.consumeIf(tok)) {
       throw new TypeError(`Expected token of type\`${tok}\` but found \`${this.tok.getType()}\``);
