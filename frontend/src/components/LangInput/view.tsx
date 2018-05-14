@@ -20,7 +20,7 @@ const InputSelect: React.SFC<ViewProps> = (props) => (
   <Select onChange={props.onChange} defaultValue="gr">
     <Select.Option value="gr">Grammar</Select.Option>
     <Select.Option value="au">Automaton</Select.Option>
-    <Select.Option value="ex">Expression</Select.Option>
+    <Select.Option value="re">Expression</Select.Option>
   </Select>
 );
 

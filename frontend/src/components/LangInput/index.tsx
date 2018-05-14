@@ -68,7 +68,7 @@ export default class Controller extends React.Component<ControllerProps, Control
     case 'au':
       C = AutomatonInput;
       break;
-    case 'ex':
+    case 're':
       C = RegexInput;
       break;
     default:

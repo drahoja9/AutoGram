@@ -4,12 +4,33 @@ import { Row, Col } from 'antd';
 import LangInput from 'components/LangInput';
 import View from './view';
 import Controls from './components/controls';
+import { validate } from './validation';
 //#endregion
 
 export default class Controller extends React.Component<{}, any> {
+  public state = {
+    lhs: {
+      selected: 'gr',
+      values: {
+        au: { header: [], body: [] },
+        gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
+        re: ''
+      }
+    },
+    rhs: {
+      selected: 'gr',
+      values: {
+        au: { header: [], body: [] },
+        gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
+        re: ''
+      }
+    }
+  };
+
 
   private handleSubmit() {
-
+    console.log(validate(this.state.lhs));
+    console.log(validate(this.state.rhs));
   }
 
   public render() {
@@ -21,12 +42,12 @@ export default class Controller extends React.Component<{}, any> {
         <Row>
           <Col span={12}>
             <LangInput
-              onChange={(data: any) => console.log(data)}
+              onChange={(data: any) => this.setState({lhs: data})}
             />
           </Col>
           <Col span={12}>
             <LangInput
-              onChange={(data: any) => console.log(data)}
+              onChange={(data: any) => this.setState({rhs: data})}
             />
           </Col>
         </Row>
