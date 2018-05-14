@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<CFG>
+    <nonterminalAlphabet>
+        <String>83</String>
+        <String>67</String>
+    </nonterminalAlphabet>
+    <terminalAlphabet>
+        <Character>99</Character>
+    </terminalAlphabet>
+    <initialSymbol>
+        <String>83</String>
+    </initialSymbol>
+    <rules>
+        <rule>
+            <lhs>
+                <String>83</String>
+            </lhs>
+            <rhs>
+                <String>67</String>
+            </rhs>
+        </rule>
+        <rule>
+            <lhs>
+                <String>67</String>
+            </lhs>
+            <rhs>
+                <Character>99</Character>
+            </rhs>
+        </rule>
+    </rules>
+</CFG>

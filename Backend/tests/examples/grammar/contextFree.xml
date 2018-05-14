@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<CFG>
+  <nonterminalAlphabet>
+    <Character>83</Character>
+  </nonterminalAlphabet>
+  <terminalAlphabet>
+    <Character>91</Character>
+    <Character>116</Character>
+    <Character>93</Character>
+  </terminalAlphabet>
+  <initialSymbol>
+    <Character>83</Character>
+  </initialSymbol>
+  <rules>
+    <rule>
+      <lhs>
+        <Character>83</Character>
+      </lhs>
+      <rhs>
+        <Character>116</Character>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Character>83</Character>
+      </lhs>
+      <rhs>
+        <Character>91</Character>
+        <Character>83</Character>
+        <Character>93</Character>
+      </rhs>
+    </rule>
+  </rules>
+</CFG>

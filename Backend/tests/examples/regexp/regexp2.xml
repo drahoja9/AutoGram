@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<UnboundedRegExp>
+  <alphabet>
+    <Integer>0</Integer>
+    <Integer>1</Integer>
+    <Integer>11</Integer>
+    <Integer>10</Integer>
+  </alphabet>
+  <concatenation>
+    <Integer>0</Integer>
+    <Integer>1</Integer>
+    <iteration>
+      <alternation>
+        <Integer>0</Integer>
+        <Integer>1</Integer>
+      </alternation>
+    </iteration>
+    <alternation>
+      <iteration>
+        <Integer>11</Integer>
+      </iteration>
+      <iteration>
+        <Integer>10</Integer>
+      </iteration>
+    </alternation>
+  </concatenation>
+</UnboundedRegExp>

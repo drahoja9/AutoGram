@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<UnboundedRegExp>
+  <alphabet>
+    <String>We</String>
+    <String>have</String>
+    <String>to</String>
+    <String>go</String>
+    <String>deeper</String>
+  </alphabet>
+  <iteration>
+    <iteration>
+      <iteration>
+        <iteration>
+          <iteration>
+            <iteration>
+              <iteration>
+                <iteration>
+                  <iteration>
+                    <iteration>
+                      <concatenation>
+                        <String>We</String>
+                        <String>have</String>
+                        <String>to</String>
+                        <String>go</String>
+                        <String>deeper</String>
+                      </concatenation>
+                    </iteration>
+                  </iteration>
+                </iteration>
+              </iteration>
+            </iteration>
+          </iteration>
+        </iteration>
+      </iteration>
+    </iteration>
+  </iteration>
+</UnboundedRegExp>
