@@ -103,6 +103,8 @@ module.exports = {
       '.jsx',
     ],
     alias: {
+      // Configuration
+      config: `${paths.appSrc}/config/${process.env.NODE_ENV || 'production'}`,
 
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/

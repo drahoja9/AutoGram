@@ -21,6 +21,9 @@
       "actions/*": ["./src/actions/*"],
       "actions": ["./src/actions"],
 
+      "API/*": ["./src/API/*"],
+      "API": ["./src/API"],
+
       "components/*": ["./src/components/*"],
       "components": ["./src/components"],
 
