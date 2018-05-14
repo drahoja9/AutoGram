@@ -15,6 +15,7 @@
 import os
 
 from flask import Flask, Blueprint, jsonify, request, Response
+from flask_cors import CORS
 from werkzeug.http import HTTP_STATUS_CODES
 
 from backend import logic_layer, AlgorithmTypes
@@ -35,6 +36,7 @@ def create_app(test_config=None) -> Flask:
     """
     # Create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.config.from_mapping(
         SECRET_KEY='dev',
     )
