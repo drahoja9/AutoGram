@@ -31,11 +31,12 @@ def create_app(test_config=None) -> Flask:
 
     :param test_config: configuration mapping for testing purposes
 
-    :return: instance of :class:`Flask`
+    :return: instance of :class:`~flask.Flask`
 
     """
     # Create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+    # Setting up a Cross-Origin Resource Sharing (for any origin as this is supposed to be a public API)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -82,7 +83,8 @@ def _error_response(status_code: int, message: str = None, exc_type: str = None)
     :param message: description of error
     :param exc_type: type of exception that was caught
 
-    :return: instance of :class:`Response` representing JSON response, containing error code, message and exception type
+    :return: instance of :class:`~flask.Response` representing JSON response, containing error code, message and \
+    exception type
 
     """
     payload = {'error': '{0}, {1}'.format(status_code, HTTP_STATUS_CODES.get(status_code, 'Unknown error'))}
@@ -106,7 +108,8 @@ def _bad_request(message: str, exc_type: str) -> Response:
     :param message: description of error
     :param exc_type: type of exception that was caught
 
-    :return: instance of :class:`Response` representing JSON response, containing error code, message and exception type
+    :return: instance of :class:`~flask.Response` representing JSON response, containing error code, message and \
+    exception type
 
     """
     return _error_response(400, message, exc_type)
@@ -122,7 +125,8 @@ def _internal_error(message: str, exc_type: str) -> Response:
     :param message: description of error
     :param exc_type: type of exception that was caught
 
-    :return: instance of :class:`Response` representing JSON response, containing error code, message and exception type
+    :return: instance of :class:`~flask.Response` representing JSON response, containing error code, message and \
+    exception type
 
     """
     return _error_response(500, message, exc_type)
@@ -140,7 +144,7 @@ def algorithms(algorithm_name: str) -> Response:
     Algorithms view.
 
     Checks for correct algorithm name (returns bad request (400) if not valid) and calls given algorithm through
-    :mod:`logic_layer`. Currently supported algorithm names are:
+    :func:`backend.logic_layer.simple_algorithm`. Currently supported algorithm names are:
 
         * ``'automaton_determinization'``
         * ``'automaton_epsilon'``
@@ -151,9 +155,10 @@ def algorithms(algorithm_name: str) -> Response:
         * ``'grammar_left_recursion'``
         * ``'regexp_derivation'``
 
-    :param algorithm_name: string representing name of the algorithm
+    :param algorithm_name: `string` representing name of the algorithm
 
-    :return: instance of :class:`Response` representing JSON response (structure of JSON depends on given algorithm)
+    :return: instance of :class:`~flask.Response` representing JSON response (structure of JSON depends on given \
+    algorithm)
 
     """
     if algorithm_name not in AlgorithmTypes():
@@ -173,9 +178,9 @@ def transformation() -> Response:
 
     Transformation view.
 
-    Performs no validation, just passes given JSON to :mod:`logic_layer` for transformation.
+    Performs no validation, just passes given JSON to :func:`backend.logic_layer.transformation` for transformation.
 
-    :return: instance of :class:`Response` representing JSON response (structure of JSON depends on output type)
+    :return: instance of :class:`~flask.Response` representing JSON response (structure of JSON depends on output type)
 
     """
     response = logic_layer.transformation(request.get_json())
@@ -192,7 +197,8 @@ def comparison() -> Response:
 
     Comparison view.
 
-    Performs no validation, just passes given JSON to :mod:`logic_layer` for comparison. Structure of JSON is:
+    Performs no validation, just passes given JSON to :func:`backend.logic_layer.comparison` for comparison. Structure
+    of JSON is:
 
     .. code-block:: JSON
 
@@ -200,7 +206,7 @@ def comparison() -> Response:
             "result": <true/false>
         }
 
-    :return: instance of :class:`Response` representing JSON response
+    :return: instance of :class:`~flask.Response` representing JSON response
 
     """
     response = logic_layer.comparison(request.get_json())

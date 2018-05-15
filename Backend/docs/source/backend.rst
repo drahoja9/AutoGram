@@ -12,5 +12,6 @@ Submodules
 .. toctree::
 
    backend.python_interface
-   backend.api
    backend.XMLConverter
+   backend.logic_layer
+   backend.api

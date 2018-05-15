@@ -1,9 +1,38 @@
+"""
+
+Logic layer module responsible for connecting all the components of the backend together.
+
+Functions from this layer are using :mod:`JSON/XML converter <backend.XMLConverter>` module, running the
+algorithm/transformation/comparison from our :mod:`Python ALT interface <backend.python_interface>` module and
+delivering the results to :mod:`REST API <backend.api>` module (from where is this layer originally called).
+
+.. module:: logic_layer
+    :platform: Unix
+    :synopsis: Logic layer module responsible for connecting all the components of the backend together.
+
+.. moduleauthor:: Jakub Drahos <drahoja9@fit.cvut.cz>, Dominika Kralikova <kralidom@fit.cvut.cz>
+
+"""
+
 from backend import XMLConverter as Converter
 from backend.python_interface import AltInterface, AltInterfaceException
 from backend import AlgorithmTypes
 
 
 def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
+    """
+
+    Logic layer function for calling correct JSON/XML conversion, running the algorithm through our Python ALT interface
+    and converting the result back to JSON for REST API.
+
+    :param json_file: `dictionary` containing the input (automaton, grammar or regexp)
+    :param algorithm_name: `string` representing name of the algorithm to be used (see \
+    :class:`~backend.AlgorithmTypes`) for available algorithm names
+
+    :return: `dictionary` containing the output of given algorithm (automaton, grammar or regexp) OR `dictionary` with \
+    exception message and exception type
+
+    """
     try:
         if algorithm_name == AlgorithmTypes.REGEXP_DERIVATION:
             return _regexp_derivation(json_file)
@@ -24,6 +53,17 @@ def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
 
 
 def transformation(json_file: dict) -> dict:
+    """
+
+    Logic layer function for calling correct JSON/XML conversion, running the transformation through our Python ALT
+    interface and converting result back to JSON for REST API.
+
+    :param json_file: `dictionary` containing the input (finite automaton, regular grammar or regexp)
+
+    :return: `dictionary` containing the output of transformation (finite automaton, regular grammar or regexp) OR \
+    `dictionary` with exception message and exception type
+
+    """
     try:
         source, source_type, target_type = Converter.json_to_xml(json_file, AlgorithmTypes.TRANSFORMATION)
 
@@ -37,6 +77,17 @@ def transformation(json_file: dict) -> dict:
 
 
 def comparison(json_file: dict) -> dict:
+    """
+
+    Logic layer function for calling correct JSON/XML conversion, running the comparison through our Python ALT
+    interface and converting result back to JSON for REST API.
+
+    :param json_file: `dictionary` containing the input
+
+    :return: `dictionary` containing the output of comparison (true or false) OR `dictionary` with exception message \
+    and exception type
+
+    """
     try:
         lhs, lhs_type, rhs, rhs_type = Converter.json_to_xml(json_file, AlgorithmTypes.COMPARISON)
 
@@ -50,10 +101,22 @@ def comparison(json_file: dict) -> dict:
 
 
 def _regexp_derivation(json_file: dict) -> dict:
+    """
+
+    Logic layer function for calling correct JSON/XML conversion, running the derivation through our Python ALT
+    interface and converting the result back to JSON for REST API.
+
+    :param json_file: `dictionary` containing the input (regexp and derivation string)
+
+    :return: `dictionary` containing the output of derivation (regexp) OR `dictionary` with exception message and \
+    exception type
+
+    """
     try:
         derivation_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.REGEXP_DERIVATION)
         algorithm_steps = []
 
+        # Derivation of regexp is called separately for each character of derivation string
         with AltInterface() as interface:
             for c in derivation_string:
                 source = interface.algorithms(source, AlgorithmTypes.REGEXP_DERIVATION, c)
@@ -70,10 +133,21 @@ def _regexp_derivation(json_file: dict) -> dict:
 
 
 def _grammar_cnf(json_file: dict) -> dict:
+    """
+
+    Logic layer function for calling correct JSON/XML conversion, running the CNF conversion through our Python ALT
+    interface and converting the result back to JSON for REST API.
+
+    :param json_file: `dictionary` containing the input (context-free grammar)
+
+    :return: `dictionary` containing the output of CNF conversion (context-free grammar in CNF) OR `dictionary` with \
+    exception message and exception type
+
+    """
     try:
         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
 
-        # Calling CNF transformation in four steps, saving steps in an array
+        # Calling CNF transformation in four steps (following BI-AAG practice), saving steps in an array
         with AltInterface() as interface:
             after_reduction = interface.algorithms(source, AlgorithmTypes.GRAMMAR_REDUCTION)
             after_epsilon = interface.algorithms(after_reduction, AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL)
@@ -94,6 +168,17 @@ def _grammar_cnf(json_file: dict) -> dict:
 
 
 def _grammar_left_recursion(json_file: dict) -> dict:
+    """
+
+    Logic layer function for calling correct JSON/XML conversion, running the left recursion removal through our Python\
+    ALT interface and converting the result back to JSON for REST API.
+
+    :param json_file: `dictionary` containing the input (context-free grammar)
+
+    :return: `dictionary` containing the output of left recursion removal (context-free grammar without left recursion)\
+    OR `dictionary` with exception message and exception type
+
+    """
     try:
         source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
 
@@ -115,7 +200,6 @@ def _grammar_left_recursion(json_file: dict) -> dict:
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
         return {'exception': e.msg, 'type': e.exc_type}
-
 
 # def automaton_minimization(json_file: str) -> str:
 #     try:

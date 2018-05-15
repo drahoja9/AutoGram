@@ -1,5 +1,7 @@
 """
 
+Backend structure of web application AutoGram.
+
 .. module:: backend
     :platform: Unix
     :synopsis: Backend structure of web application AutoGram.
@@ -10,6 +12,20 @@
 
 
 class AlgorithmTypes:
+    """
+
+    Simple enum class representing currently supported algorithms (their names).
+
+    Can be used in two ways. First, without instantiating just for specific algorithm name::
+
+        AlgorithmTypes.<NAME_OF_ALGORITHM>
+
+    or with class instance for validating algorithm name::
+
+        if algorithm in AlgorithmTypes():
+            # do something
+
+    """
     TRANSFORMATION = 'transformation'
     COMPARISON = 'comparison'
     AUTOMATON_EPSILON_REMOVAL = 'automaton_epsilon'
@@ -45,11 +61,33 @@ class AlgorithmTypes:
             'grammar_cyk'
         ]
 
-    def __contains__(self, item):
+    def __contains__(self, item: str) -> bool:
+        """
+
+        Implementing this special (magical) method to be able to "query" (use ``in`` keyword) in :class:`AlgorithmTypes`
+        instance::
+
+            if algorithm in AlgorithmTypes():
+                # do something
+
+        :param item: algorithm name to be used in ALT library
+
+        :return: True if ``item`` is in self._all (currently supported algorithm names), otherwise False
+
+        """
         return item in self._all
 
 
 class ObjectTypes:
+    """
+
+    Simple enum class representing currently supported types of object.
+
+    Can be used without instantiating::
+
+        ObjectTypes.<OBJECT_TYPE_NAME>
+
+    """
     DFA = 'DFA'
     NFA = 'NFA'
     EpsilonNFA = 'EpsilonNFA'

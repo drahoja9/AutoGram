@@ -42,7 +42,10 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
+    'sphinx.ext.intersphinx',
 ]
+
+intersphinx_mapping = {'flask': ('http://flask.pocoo.org/docs/1.0/', None)}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

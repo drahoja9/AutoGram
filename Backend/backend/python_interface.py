@@ -41,7 +41,7 @@ class AltInterface:
     Usage example::
 
             with AltInterface() as interface:
-                res_code, res = interface.algorithms(xml_input, algorithm_name)
+                res = interface.algorithms(xml_input, algorithm_name)
 
 
     .. _context manager: https://docs.python.org/3/reference/compound_stmts.html#with

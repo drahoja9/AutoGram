@@ -1,9 +1,9 @@
 """
 
-Testing module for module :mod:`logic_layer`, using `pytest`_ library.
+Testing module for module :mod:`~backend.logic_layer`, using `pytest`_ library.
 
-All tests are just copy-pasted from module :mod:`interface_test`. This way, when something goes wrong, we'll be able
-to tell where exactly is the evildoing happening.
+All tests are just copy-pasted from module :mod:`~tests.interface_test`. This way, when something goes wrong, we'll be
+able to tell where exactly is the evildoing happening.
 
 .. _pytest: https://pytest.org/
 
@@ -33,7 +33,7 @@ def read_input(input_file: str) -> str:
 
     :param input_file: path to XML file containing input
 
-    :return: string representing XML input from given file
+    :return: `string` representing XML input from given file
     """
     with open(input_file, 'r') as f:
         xml_input = f.read()
@@ -308,7 +308,7 @@ def test_comparison(input_file: str):
 def test_fails():
     """
 
-    Testing invalid requests for :mod:`logic_layer` that should always fail.
+    Testing invalid requests for :mod:`~backend.logic_layer` that should always fail.
 
     """
 

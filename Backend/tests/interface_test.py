@@ -1,9 +1,9 @@
 """
 
-Testing module for class :class:`AltInterface` in :mod:`python_interface` module, using `pytest`_ library.
+Testing module for class :class:`~backend.python_interface.AltInterface`, using `pytest`_ library.
 
-All tests are just copy-pasted from module :mod:`logic_layer_test` tests. This way, when something goes wrong, we'll be
-able to tell where exactly is the evildoing happening.
+All tests are just copy-pasted from module :mod:`~tests.logic_layer_test` tests. This way, when something goes wrong,
+we'll be able to tell where exactly is the evildoing happening.
 
 .. _pytest: https://pytest.org/
 
@@ -30,10 +30,10 @@ REGEXPS = os.path.dirname(__file__) + '/examples/regexp'
 def interface() -> AltInterface:
     """
 
-    Pytest fixture for exporting the :class:`AltInterface` instance. Context manager is responsible for both setup and
-    teardown (thanks to ``yield`` keyword).
+    Pytest fixture for exporting the :class:`~backend.python_interface.AltInterface` instance. Context manager is
+    responsible for both setup and teardown (thanks to ``yield`` keyword).
 
-    :return: new :class:`AltInterface` instance
+    :return: new :class:`~backend.python_interface.AltInterface` instance
     """
     with AltInterface() as it:
         yield it
@@ -46,7 +46,7 @@ def read_input(input_file: str) -> str:
 
     :param input_file: path to XML file containing input
 
-    :return: string representing XML input from given file
+    :return: `string` representing XML input from given file
     """
     with open(input_file, 'r') as f:
         xml_input = f.read()
@@ -91,7 +91,7 @@ def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str,
     Simple algorithms test. Just run the given algorithm with given input and checks the output type.
     Testing whether the algorithm even runs and finishes without any problems.
 
-    :param interface: pytest fixture returning :class:`AltInterface` instance
+    :param interface: `pytest fixture` returning :class:`~backend.python_interface.AltInterface` instance
     :param input_file: path to XML file containing input
     :param algorithm: algorithm to be run
     :param result_type: expected type of the output
@@ -139,7 +139,7 @@ def test_algorithm_result(interface: AltInterface, input_file: str,
         Bare on mind that this function is heavily testing comparison. If this test fails, don't forget to check also
         comparison function and wrapper!
 
-    :param interface: pytest fixture returning :class:`AltInterface` instance
+    :param interface: `pytest fixture` returning :class:`~backend.python_interface.AltInterface` instance
     :param input_file: path to XML file containing input
     :param algorithm: algorithm to be run
     :param expected_file: path to XML file containing expected output
@@ -199,7 +199,7 @@ def test_conversion(interface: AltInterface, input_file: str, source: str, targe
         Bare on mind that this function is also slightly testing comparison. If this test fails, don't forget to check
         also comparison function and wrapper!
 
-    :param interface: pytest fixture returning :class:`AltInterface` instance
+    :param interface: `pytest fixture` returning :class:`~backend.python_interface.AltInterface` instance
     :param input_file: path to XML file containing input
     :param source: type of input
     :param target: type of conversion output
@@ -245,7 +245,7 @@ def test_comparison(interface: AltInterface, input_file: str, source: str):
 
     Basic comparison test. Takes input and compares it with itself.
 
-    :param interface: pytest fixture returning :class:`AltInterface` instance
+    :param interface: `pytest fixture` returning :class:`~backend.python_interface.AltInterface` instance
     :param input_file: path to XML file containing input
     :param source: type of input
 
@@ -274,7 +274,7 @@ def test_epsilon_trim_det_min(interface: AltInterface, automaton: str):
     Testing sequence of automata algorithms: epsilon transition removal, automaton trim, determinization and
     minimization. In each step checking for valid output type.
 
-    :param interface: pytest fixture returning :class:`AltInterface` instance
+    :param interface: `pytest fixture` returning :class:`~backend.python_interface.AltInterface` instance
     :param automaton: path to XML file containing input automaton
 
     """
@@ -306,7 +306,7 @@ def test_epsilon_reduction_unit_recursion(interface: AltInterface, grammar: str)
     Testing sequence of grammar algorithms: epsilon rules removal, grammar reduction, unit rules removal and left
     recursion removal. In each step checking for valid output type.
 
-    :param interface: pytest fixture returning :class:`AltInterface` instance
+    :param interface: `pytest fixture` returning :class:`~backend.python_interface.AltInterface` instance
     :param grammar: path to XML file containing input grammar
 
     """
@@ -328,9 +328,9 @@ def test_epsilon_reduction_unit_recursion(interface: AltInterface, grammar: str)
 def test_fails(interface: AltInterface):
     """
 
-    Testing invalid requests for :class:`AltInterface` that should always fail.
+    Testing invalid requests for :class:`~backend.python_interface.AltInterface` that should always fail.
 
-    :param interface: pytest fixture returning :class:`AltInterface` instance
+    :param interface: `pytest fixture` returning :class:`~backend.python_interface.AltInterface` instance
 
     """
 
