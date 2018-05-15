@@ -4,8 +4,6 @@
 #include <lexer/Lexer.h>
 #include <parser/Parser.h>
 
-#include <factory/XmlDataFactory.hpp>
-
 
 #define AUTOMATON_EPSILON_REMOVAL "automaton_epsilon"
 #define AUTOMATON_DETERMINIZATION "automaton_determinization"
