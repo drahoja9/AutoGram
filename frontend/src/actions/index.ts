@@ -1,3 +1,5 @@
 import { ComparisonAction } from './comparison';
+import { TransformationAction } from './transformation';
 
-export type RootAction = ComparisonAction;
+//TODO - add transformation somewhere somehow
+export type RootAction = ComparisonAction | TransformationAction;
