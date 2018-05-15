@@ -100,11 +100,12 @@ class Controller extends React.Component<ControllerProps, any> {
   }
 
   private renderControls() {
+    const { retrieved, error } = this.props.meta;
     return (
       <Controls
         onSubmit={this.handleSubmit.bind(this)}
         pending={this.props.meta.pending}
-        result={this.props.meta.retrieved ? this.props.result : undefined}
+        result={retrieved && !error ? this.props.result : undefined}
       />
     );
   }
