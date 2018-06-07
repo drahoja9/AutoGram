@@ -1,0 +1,5 @@
+docs
+tests
+README.md
+__pycache__
+Dockerfile
