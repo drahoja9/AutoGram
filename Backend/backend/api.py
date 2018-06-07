@@ -39,6 +39,7 @@ def create_app(test_config=None) -> Flask:
     # Setting up a Cross-Origin Resource Sharing (for any origin as this is supposed to be a public API)
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.config.from_mapping(
+        DEBUG=False,
         SECRET_KEY='dev',
     )
 
