@@ -15,6 +15,9 @@ export enum InputType {
 
 export type InputValue = AutomatonInputValue | GrammarInputValue | RegexpInputValue;
 
+/**
+ * Interfaces storing state of each input type.
+ */
 export interface ValueStore {
   [InputType.Automaton]: AutomatonInputValue;
   [InputType.Grammar]: GrammarInputValue;
@@ -31,6 +34,9 @@ interface ControllerState {
 }
 //#endregion
 
+/**
+ * Language input root component.
+ */
 export default class Controller extends React.Component<ControllerProps, ControllerState> {
   public state = {
     selected: InputType.Grammar,
