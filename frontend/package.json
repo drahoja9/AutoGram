@@ -54,7 +54,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "docs": "./node_modules/.bin/typedoc --exclude node_modules --ignoreCompilerErrors --out docs src"
   },
   "devDependencies": {
     "@types/antd": "^1.0.0",
@@ -71,6 +72,7 @@
     "less": "^3.0.2",
     "less-loader": "^4.1.0",
     "svg-react-loader": "^0.4.5",
+    "typedoc": "^0.11.1",
     "typescript": "^2.8.3",
     "utility-types": "^2.0.0"
   },
