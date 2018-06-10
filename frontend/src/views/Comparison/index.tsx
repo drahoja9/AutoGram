@@ -11,6 +11,7 @@ import Controls from './components/controls';
 import { validate } from './validation';
 import { ComparisonRequest } from 'lib/types';
 import { ValidationError } from 'lib/validate';
+import { ParseError } from 'lib/parse';
 import {
   mapStateToProps,
   mapDispatchToProps
@@ -80,16 +81,20 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
   /**
    * Handle form submission error.
    *
-   * @description If passed error is an instance of a custom error (`ValidationError`),
-   * use name and description of that error to present an error notification.
-   * If the error is not of any expected type, present user with default erro name
-   * and description.
+   * @description If passed error is an instance of a custom error (`ValidationError`,
+   * `ParseError`), use name and description of that error to present an error
+   * notification. If the error is not of any expected type, present user with
+   * default error name and description.
    *
    * @param err An error emitted during input validation process.
    */
   private handleSubmitError(err: Error) {
     if (err instanceof ValidationError) {
       this.presentError(err.name, err.getMessage());
+
+    } else if (err instanceof ParseError) {
+      this.presentError(err.name, err.message);
+
     } else {
       const message = 'Unexpected error';
       const description = 'There was an unexpected error. '

@@ -19,7 +19,7 @@ export class RegexpValidationError extends ValidationError {
 /** Exception thrown when regexp alphabet symbol is not character. Derived from RegexpValidationError. */
 export class AlphabetNotChar extends RegexpValidationError {
   private problem : string;
-  
+
   /**
    * Constructs exception object with provided attributes.
    * @param problem the symbol that is not character

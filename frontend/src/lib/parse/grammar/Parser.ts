@@ -1,5 +1,6 @@
 //#region import
 import { Lexer, Token, TokType } from './Lexer';
+import { UnexpectedTokenError } from '../exceptions/UnexpectedTokenError';
 //#endregion
 
 type Rule = string[] | [null];
@@ -46,7 +47,8 @@ export class Parser {
         return this.parseIdentListBody(first);
 
       default:
-        throw new TypeError('Unexpected token');
+        throw new UnexpectedTokenError(this.tok.getString())
+          .addFixit('Identifier list should only contain identifiers separated by a comma `,`');
       }
     }
   }
@@ -70,7 +72,7 @@ export class Parser {
         break;
 
       default:
-        throw new TypeError('Unexpected token.');
+        throw new UnexpectedTokenError(this.tok.getString());
       }
     }
   }
@@ -100,7 +102,8 @@ export class Parser {
         break;
 
       default:
-        throw new TypeError('Unexpected token.');
+        throw new UnexpectedTokenError(this.tok.getString())
+          .addFixit('Expected an identifier at the left side of the rules.');
       }
     }
   }
@@ -128,7 +131,8 @@ export class Parser {
         break;
 
       default:
-        throw new TypeError('Unexpected token.');
+        throw new UnexpectedTokenError(this.tok.getString())
+          .addFixit('Expected identifier separator \`|\` or the end of the list.');
       }
     }
   }
@@ -139,7 +143,7 @@ export class Parser {
       return [null];
     }
     if (this.tok.getType() !== TokType.Ident) {
-      throw new TypeError('Unexpected token.');
+      throw new UnexpectedTokenError(this.tok.getString());
     }
 
     const to = [];
@@ -158,7 +162,8 @@ export class Parser {
   /** Consumes token of provided type. */
   private consume(tok: TokType) {
     if (!this.consumeIf(tok)) {
-      throw new TypeError(`Expected token of type\`${tok}\` but found \`${this.tok.getType()}\``);
+      throw new UnexpectedTokenError(this.tok.getString())
+        .addFixit(`Expected token of type \`${tok}\``);
     }
   }
 
