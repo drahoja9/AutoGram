@@ -10,34 +10,6 @@ import App from './views';
 import configureStore from './configureStore';
 //#endregion
 
-import {regexpToString} from "./lib"
-//import { RE, REType, NodeType } from 'lib/types'
-import { Parser } from 'lib/parse/regexp';
-
-const p = new Parser('((((((((a)*)*)*)*)*)*)*)*');
-const re = p.parse();
-
-/*var re : RE = {
-  type: REType.Unbounded,
-  alphabet: ["a", "b", "c"],
-  value: {
-    type: NodeType.Alter,
-    value: [S
-      {type: NodeType.Alter,
-      value: [
-        {type: NodeType.Iter, value: {type: NodeType.Concat, value: [{type: NodeType.Term, value: "A"}, {type: NodeType.Term, value: "B"}]}},
-        {type: NodeType.Epsilon},
-        {type: NodeType.EmptySymbol}
-      ]},
-      {type: NodeType.Term, value: "X"}
-    ]
-    
-  }
-}*/
-
-console.log(regexpToString(re));
-
-
 const store = configureStore();
 
 ReactDOM.render(

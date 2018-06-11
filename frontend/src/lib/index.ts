@@ -1,1 +1,1 @@
-export {grammarRulesToString, regexpToString} from './tmp'
+export {grammarRulesToString, regexpToString, automatonTransitionsToString} from './tmp'
