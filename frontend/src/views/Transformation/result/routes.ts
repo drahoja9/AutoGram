@@ -9,21 +9,21 @@ const { asyncComponent } = require('react-async-component');
  */
 export const routes: RouteProps[] = [
   {
-    path: '/trans/result/au',
+    path: '/tran/result/au',
     exact: true,
     component: asyncComponent({
       resolve: () => System.import('./automaton')
     })
   },
   {
-    path: '/trans/result/gr',
+    path: '/tran/result/gr',
     exact: true,
     component: asyncComponent({
       resolve: () => System.import('./grammar')
     })
   },
   {
-    path: '/trans/result/re',
+    path: '/tran/result/ex',
     exact: true,
     component: asyncComponent({
       resolve: () => System.import('./regexp')

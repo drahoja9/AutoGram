@@ -43,7 +43,7 @@ const TransformationResult: React.SFC<TransformationResultProps> = (props) => (
     <Layout>
       <RouteHandler
         routes={routes}
-        {...props}
+        value={props.value}
       />
     </Layout>
   </Layout>
