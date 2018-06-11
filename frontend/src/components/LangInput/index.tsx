@@ -25,6 +25,7 @@ export interface ValueStore {
 }
 
 export interface ControllerProps {
+  defaultValue?: ControllerState;
   onChange: (data: any) => any;
 }
 
@@ -38,15 +39,11 @@ interface ControllerState {
  * Language input root component.
  */
 export default class Controller extends React.Component<ControllerProps, ControllerState> {
-  public state = {
-    selected: InputType.Grammar,
-    values: {
-      [InputType.Automaton]: { header: [], body: [] },
-      [InputType.Grammar]: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
-      [InputType.Regexp]: ''
-    }
-  };
-
+  constructor(props: ControllerProps, context: any) {
+    super(props, context);
+    this.state = this.props.defaultValue || Controller.defaultInitialState;
+    console.log(this.state);
+  }
   /**
    * Handles input type change.
    */
@@ -104,6 +101,17 @@ export default class Controller extends React.Component<ControllerProps, Control
         />
       );
     }
+  }
+
+  static get defaultInitialState(): ControllerState {
+    return {
+      selected: InputType.Grammar,
+      values: {
+        [InputType.Automaton]: { header: [], body: [] },
+        [InputType.Grammar]: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
+        [InputType.Regexp]: ''
+      }
+    };
   }
 }
 

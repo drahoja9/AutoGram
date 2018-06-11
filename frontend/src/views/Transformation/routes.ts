@@ -12,34 +12,22 @@ const { asyncComponent } = require('react-async-component');
  */
 export const routes: RouteProps[] = [
   {
-    path: '/',
-    exact: true,
-    component: Redirect('/vis')
-  },
-  {
-    path: '/vis',
-    exact: true,
-    component: asyncComponent({
-      resolve: () => System.import('./Visualization')
-    })
-  },
-  {
-    path: '/cmp',
-    exact: true,
-    component: asyncComponent({
-      resolve: () => System.import('./Comparison')
-    })
-  },
-  {
     path: '/tran',
+    exact: true,
+    component: Redirect('/tran/input')
+  },
+  {
+    path: '/tran/input',
+    exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./Transformation')
+      resolve: () => System.import('./input')
     })
   },
   {
-    path: '/algo',
+    path: '/tran/result',
+    exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./Algorithms')
+      resolve: () => System.import('./result')
     })
   },
 ];

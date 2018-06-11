@@ -1,49 +1,70 @@
 //#region imports
 import * as React from 'react';
-import LangInput from 'components/LangInput';
-import View from './view';
-import Controls from './components/controls';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import {
+  InputType,
+  ValueStore
+} from 'components/LangInput';
+import { RouteHandler } from 'components';
+import { routes } from './routes';
 //#endregion
 
-interface ControllerState {
-  target: string;
+//#region Component interfaces
+interface InputState {
+  selected: InputType;
+  values: ValueStore;
 }
 
-export default class Controller extends React.Component<{}, ControllerState> {
-  public state = { target: '' };
+interface ControllerState extends InputState {
+  target: InputType;
+}
+//#endregion
 
-  private handleSubmit()  {
-    console.log('Should transform.');
+class Controller extends React.Component<RouteComponentProps<any>, ControllerState> {
+  public state = {
+    target: InputType.Grammar,
+    selected: InputType.Grammar,
+    values: {
+      au: { header: [], body: [] },
+      gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
+      re: ''
+    }
+  };
+
+  public componentDidMount() {
+    if (this.props.location.pathname === '/tran/result') {
+      this.props.history.push('/tran/input');
+    }
   }
 
-  private handleTargetChange(target: string) {
+  private handleSubmit()  {
+    this.props.history.push('/tran/result');
+  }
+
+  private handleNavigateBack() {
+    this.props.history.goBack();
+  }
+
+  private handleTargetChange(target: InputType) {
     this.setState({ target });
-    console.log(target);
+  }
+
+  private handleValueChange(change: InputState) {
+    this.setState(change);
   }
 
   public render() {
     return (
-      <View
-        Header={this.renderHeader()}
-        Controls={this.renderControls()}
-      >
-        <LangInput
-          onChange={(data: any) => console.log(data)}
-        />
-      </View>
-    );
-  }
-
-  private renderHeader() {
-    return <h1>Transformation</h1>;
-  }
-
-  private renderControls() {
-    return (
-      <Controls
-        onChange={this.handleTargetChange.bind(this)}
+      <RouteHandler
+        routes={routes}
+        onBack={this.handleNavigateBack.bind(this)}
         onSubmit={this.handleSubmit.bind(this)}
+        onTargetChange={this.handleTargetChange.bind(this)}
+        onValueChange={this.handleValueChange.bind(this)}
+        defaultValue={this.state}
       />
     );
   }
 }
+
+export default withRouter(Controller);
