@@ -2,6 +2,8 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { notification } from 'antd';
+import { connect } from 'react-redux';
+
 import {
   InputType,
   ValueStore
@@ -9,12 +11,32 @@ import {
 import { RouteHandler } from 'components';
 import { ValidationError } from 'lib/validate';
 import { ParseError } from 'lib/parse';
+import {
+  FAType,
+  GRType,
+  REType,
+  TransformRequest
+} from 'lib/types';
 
 import { routes } from './routes';
 import { validate } from './validation';
+import {
+  mapStateToProps,
+  mapDispatchToProps
+} from './selectors';
 //#endregion
 
 //#region Component interfaces
+export interface ControllerProps extends RouteComponentProps<any> {
+  meta: {
+    error: Error | null;
+    pending: boolean;
+    retrieved: boolean;
+  };
+  onTransform: (data: TransformRequest) => any;
+  onCancelTransform: () => any;
+}
+
 interface InputState {
   selected: InputType;
   values: ValueStore;
@@ -25,7 +47,7 @@ interface ControllerState extends InputState {
 }
 //#endregion
 
-class Controller extends React.Component<RouteComponentProps<any>, ControllerState> {
+class Controller extends React.Component<ControllerProps, ControllerState> {
   public state = {
     target: InputType.Grammar,
     selected: InputType.Grammar,
@@ -42,12 +64,31 @@ class Controller extends React.Component<RouteComponentProps<any>, ControllerSta
     }
   }
 
+  public componentDidReceiveProps(nextProps: ControllerProps) {
+    if (this.props.meta.pending && !nextProps.meta.pending && nextProps.meta.retrieved) {
+      if (!nextProps.meta.error) {
+        nextProps.history.push(`/tran/result/${this.state.target}`);
+      }
+    }
+  }
+
+  private getSource(): FAType.NFA | GRType.RRG | REType.Unbounded {
+    switch (this.state.target) {
+    case InputType.Automaton: return FAType.NFA;
+    case InputType.Grammar: return GRType.RRG;
+    case InputType.Regexp: return REType.Unbounded;
+    }
+  }
+
   private handleSubmit()  {
     try {
       const { selected, values } = this.state;
-      /*const value =*/ validate({ selected, values });
+      const value = validate({ selected, values });
 
-      this.props.history.push(`/tran/result/${this.state.target}`);
+      this.props.onTransform({
+        target: this.getSource(),
+        source: value
+      });
     } catch (err) {
       this.handleSubmitError(err);
     }
@@ -93,6 +134,9 @@ class Controller extends React.Component<RouteComponentProps<any>, ControllerSta
   }
 
   private handleTargetChange(target: InputType) {
+    if (this.props.meta.pending) {
+      this.props.onCancelTransform();
+    }
     this.setState({ target });
   }
 
@@ -109,9 +153,13 @@ class Controller extends React.Component<RouteComponentProps<any>, ControllerSta
         onTargetChange={this.handleTargetChange.bind(this)}
         onValueChange={this.handleValueChange.bind(this)}
         defaultValue={this.state}
+        pending={this.props.meta.pending}
       />
     );
   }
 }
 
-export default withRouter(Controller);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Controller));

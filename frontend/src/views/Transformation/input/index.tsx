@@ -31,6 +31,7 @@ export interface TransformationInputProps extends InputState {
   onTargetChange: (value: InputType) => any;
   onSubmit: () => any;
   defaultValue?: InputState;
+  pending: boolean;
 }
 //#endregion
 
@@ -49,6 +50,7 @@ const TransformationInput: React.SFC<TransformationInputProps> = (props) => (
       <Controls
         onChange={props.onTargetChange}
         onSubmit={props.onSubmit}
+        pending={props.pending}
       />
     </Footer>
   </Layout>

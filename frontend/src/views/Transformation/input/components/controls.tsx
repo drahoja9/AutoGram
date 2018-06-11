@@ -12,6 +12,7 @@ import { InputType } from 'components/LangInput';
 export interface ControlsProps {
   onChange?: (value: InputType) => any;
   onSubmit?: () => any;
+  pending?: boolean;
 }
 //#endregion
 
@@ -26,7 +27,7 @@ const Controls: React.SFC<ControlsProps> = (props) => (
         <Select.Option value="au">Automaton</Select.Option>
         <Select.Option value="ex">Expression</Select.Option>
       </Select>
-      <Button onClick={props.onSubmit}>
+      <Button onClick={props.onSubmit} disabled={props.pending}>
         Transform
       </Button>
     </Centered>

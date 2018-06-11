@@ -1,6 +1,5 @@
 //#region imports
 import { getType } from 'typesafe-actions';
-import { merge } from 'lodash';
 import {
   compare as compareAction,
   ComparisonAction

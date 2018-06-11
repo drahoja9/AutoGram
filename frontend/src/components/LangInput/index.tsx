@@ -42,7 +42,6 @@ export default class Controller extends React.Component<ControllerProps, Control
   constructor(props: ControllerProps, context: any) {
     super(props, context);
     this.state = this.props.defaultValue || Controller.defaultInitialState;
-    console.log(this.state);
   }
   /**
    * Handles input type change.
