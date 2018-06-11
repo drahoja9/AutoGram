@@ -18,9 +18,16 @@ const Monospaced = styled.div`
 //#endregion
 
 //#region Component interfaces
+export interface GrammarInputValue {
+  nonTerms: string;
+  terms: string;
+  rules: string;
+  startSymbol: string;
+}
+
 export interface GrammarInputProps {
   onChange: (value: any) => any;
-  value: any;
+  value: GrammarInputValue;
 }
 //#endregion
 

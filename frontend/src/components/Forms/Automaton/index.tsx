@@ -20,9 +20,19 @@ const Table = styled.table`
 //#endregion
 
 //#region Component interfaces
+export interface AutomatonInputValue {
+  header: string[];
+  body: {
+    value: string;
+    isInitial: boolean;
+    isFinal: boolean;
+    values: string[];
+  }[];
+}
+
 export interface AutomatonInputProps {
   onChange: (value: any) => any;
-  value: any;
+  value: AutomatonInputValue;
 }
 //#endregion
 

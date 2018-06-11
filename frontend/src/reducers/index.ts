@@ -1,5 +1,7 @@
 //#region imports
 import { combineReducers } from 'redux';
+import { compare, State as ComparisonState } from './comparison';
+import { transform, State as TransformationState } from './transformation';
 //#endregion
 
 /**
@@ -8,9 +10,15 @@ import { combineReducers } from 'redux';
  * This is an object representing a whole application state
  * which is managed by Redux.
  */
-export interface RootState { }
+export interface RootState {
+  compare: ComparisonState,
+  transform: TransformationState
+}
 
 /**
  * Application root reducer.
  */
-export const rootReducer = combineReducers<RootState>({});
+export const rootReducer = combineReducers<RootState>({
+  compare,
+  transform
+});

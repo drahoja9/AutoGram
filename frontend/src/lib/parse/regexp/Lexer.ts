@@ -62,6 +62,11 @@ export class Token {
     return this.value;
   }
 
+  /** Returns string representation of the token. */
+  public getString(): string {
+    return this.value || this.type;
+  }
+
   /** Return `true` if token if of known type, `false` otherwise. */
   public isValid(): boolean {
     return this.type !== TokType.Unknown;

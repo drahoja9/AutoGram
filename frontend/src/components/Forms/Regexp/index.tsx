@@ -15,9 +15,10 @@ const Monospaced = styled.div`
 //#endregion
 
 //#region Component interfaces
+export type RegexpInputValue = string;
 export interface RegexpInputProps {
   onChange: (value: any) => any;
-  value: any;
+  value: RegexpInputValue;
 }
 //#endregion
 

@@ -2,9 +2,10 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 import styled from 'styled-components';
+import { TopHeader as Header } from 'components/Layout';
 //#endregion
 
-const { Content, Header, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 //#region Styled
 const InputContent = styled(Content)`

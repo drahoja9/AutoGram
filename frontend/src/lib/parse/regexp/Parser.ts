@@ -3,6 +3,10 @@ import { RE, REType, RENode, NodeType } from 'lib/types';
 import { Term } from 'lib/types/RE';
 import { Lexer, Token, TokType } from './Lexer';
 import Visitor from './Visitor';
+import {
+  UnexpectedTokenError,
+  UnterminatedParenthesisError,
+} from '../exceptions';
 //#endregion
 
 /**
@@ -72,7 +76,7 @@ export class Parser {
         break;
 
       default:
-        throw new Error('Unexpected token.');
+        throw new UnexpectedTokenError(this.tok.getString());
       }
     }
   }
@@ -110,7 +114,7 @@ export class Parser {
         break;
 
       default:
-        throw new Error('Unexpected token.');
+        throw new UnexpectedTokenError(this.tok.getString());
       }
     }
   }
@@ -142,12 +146,13 @@ export class Parser {
       this.consumeToken();
       const expr = this.parseExpression();
       if (!this.consumeIf(TokType.R_Paren)) {
-        throw new Error('Expected closing parenthesis \')\'');
+        throw new UnterminatedParenthesisError()
+          .addFixit(`Insert a closing parenthesis \`)\`.`);
       }
       return expr;
 
     default:
-      throw new Error('Unexpected token.');
+      throw new UnexpectedTokenError(this.tok.getString());
     }
   }
 

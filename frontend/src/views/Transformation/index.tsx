@@ -27,7 +27,9 @@ export default class Controller extends React.Component<{}, ControllerState> {
         Header={this.renderHeader()}
         Controls={this.renderControls()}
       >
-        <LangInput />
+        <LangInput
+          onChange={(data: any) => console.log(data)}
+        />
       </View>
     );
   }
