@@ -1,7 +1,9 @@
+//#region imports
 import { Dispatch } from 'react-redux';
 import { RootState } from 'reducers';
 import { transform } from 'actions/transformation';
 import { TransformRequest } from 'lib/types';
+//#endregion
 
 export const mapStateToProps = (state: RootState) => ({ meta: state.transform.meta });
 
