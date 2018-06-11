@@ -12,9 +12,6 @@ import { RouteHandler } from 'components';
 import { ValidationError } from 'lib/validate';
 import { ParseError } from 'lib/parse';
 import {
-  FAType,
-  GRType,
-  REType,
   TransformRequest,
   TransformationTarget
 } from 'lib/types';
@@ -25,7 +22,6 @@ import {
   mapStateToProps,
   mapDispatchToProps
 } from './selectors';
-import { transform } from 'reducers/transformation';
 //#endregion
 
 //#region Component interfaces
@@ -66,7 +62,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
     }
   }
 
-  public componentDidReceiveProps(nextProps: ControllerProps) {
+  public componentWillReceiveProps(nextProps: ControllerProps) {
     if (this.props.meta.pending && !nextProps.meta.pending && nextProps.meta.retrieved) {
       if (!nextProps.meta.error) {
         nextProps.history.push(`/tran/result/${this.state.target}`);
@@ -79,6 +75,9 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
     case InputType.Automaton: return TransformationTarget.FA;
     case InputType.Grammar: return TransformationTarget.RRG;
     case InputType.Regexp: return TransformationTarget.Regexp;
+    default:
+      console.error(`Unexpected case '${this.state.target}'`)
+      throw new TypeError();
     }
   }
 

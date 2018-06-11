@@ -153,9 +153,9 @@ export function automatonTransitionsToString (automaton: FA) {
     let input : string = transition.input || 'ε';
 
     if (transitionMap[transition.from][input] === ""){
-      transitionMap[transition.from][input] = transition.to
+      transitionMap[transition.from][input] = transition.to;
     } else {
-      transitionMap[transition.from][input] += ", " + transition.to
+      transitionMap[transition.from][input] += ", " + transition.to;
     }
   }
 

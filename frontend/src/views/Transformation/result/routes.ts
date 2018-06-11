@@ -23,7 +23,7 @@ export const routes: RouteProps[] = [
     })
   },
   {
-    path: '/tran/result/ex',
+    path: '/tran/result/re',
     exact: true,
     component: asyncComponent({
       resolve: () => System.import('./regexp')

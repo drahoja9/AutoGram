@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Row, Col } from 'antd';
 
 import { GR } from 'lib/types';
-import { Centered } from 'components/Layout';
+// import { Centered } from 'components/Layout';
 import MonoText from '../components/MonoText';
 import { grammarRulesToString } from './stringify';
 //#endregion
@@ -30,7 +30,7 @@ const ContentRow: React.SFC<ContentRowProps> = (props) => (
 );
 
 const GrammarView: React.SFC<GrammarViewProps> = (props) => (
-  <Centered>
+  <>
     <ContentRow label="Terminal alphabet">
       <MonoText>{ props.value.nonterminal_alphabet.join(', ') }</MonoText>
     </ContentRow>
@@ -46,11 +46,10 @@ const GrammarView: React.SFC<GrammarViewProps> = (props) => (
     <ContentRow label="Rules">
     {
       grammarRulesToString(props.value)
-      .map((rules) => <MonoText>{ rules }</MonoText>)
+      .map((rules, idx) => <MonoText key={idx}>{ rules }</MonoText>)
     }
     </ContentRow>
-
-  </Centered>
+  </>
 );
 
 export default GrammarView;

@@ -22,10 +22,10 @@ export interface ControlsProps {
 const Controls: React.SFC<ControlsProps> = (props) => (
   <Row>
     <Centered>
-      <Select onChange={props.onChange} defaultValue="gr">
-        <Select.Option value="gr">Grammar</Select.Option>
-        <Select.Option value="au">Automaton</Select.Option>
-        <Select.Option value="ex">Expression</Select.Option>
+      <Select onChange={props.onChange} defaultValue={InputType.Grammar}>
+        <Select.Option value={InputType.Grammar}>Grammar</Select.Option>
+        <Select.Option value={InputType.Automaton}>Automaton</Select.Option>
+        <Select.Option value={InputType.Regexp}>Expression</Select.Option>
       </Select>
       <Button onClick={props.onSubmit} disabled={props.pending}>
         Transform
