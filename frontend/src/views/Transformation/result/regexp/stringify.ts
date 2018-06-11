@@ -2,7 +2,7 @@
 import { RE, NodeType, RENode, Alter, Iter, Concat } from 'lib/types';
 //#endregion
 
-function alterToString(node: Alter, outer: boolean) : string {
+function alterToString(node: Alter, outer: boolean): string {
   let res : string = '';
   let first: boolean = true;
 
@@ -26,7 +26,7 @@ function alterToString(node: Alter, outer: boolean) : string {
   return res;
 }
 
-function concatToString(node: Concat) : string {
+function concatToString(node: Concat): string {
   let res : string = '';
 
   for (let child of node.value){
@@ -36,7 +36,7 @@ function concatToString(node: Concat) : string {
   return res;
 }
 
-function iterToString(node: Iter) : string {
+function iterToString(node: Iter): string {
   let res : string = ''
   if (node.value.type === NodeType.Concat || node.value.type === NodeType.Iter) {
     res += '('
@@ -49,7 +49,7 @@ function iterToString(node: Iter) : string {
   return res;
 }
 
-function nodeToString (node: RENode, outer: boolean = false) : string {
+function nodeToString(node: RENode, outer: boolean = false): string {
   switch(node.type){
     case NodeType.Alter:
       return alterToString(node, outer);
@@ -66,6 +66,6 @@ function nodeToString (node: RENode, outer: boolean = false) : string {
   }
 }
 
-export function regexpToString (regexp: RE) {
+export function regexpToString(regexp: RE): string {
   return nodeToString(regexp.value, true);
 }

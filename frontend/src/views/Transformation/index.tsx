@@ -32,7 +32,7 @@ class Controller extends React.Component<RouteComponentProps<any>, ControllerSta
   };
 
   public componentDidMount() {
-    if (this.props.location.pathname === '/tran/result') {
+    if (this.props.location.pathname !== '/tran/input') {
       this.props.history.push('/tran/input');
     }
   }
