@@ -2,16 +2,16 @@
 import * as React from 'react';
 import { Layout, Row, Col, Button } from 'antd';
 
+import { RouteHandler } from 'components';
 import { InputType } from 'components/LangInput';
 import {
   TopHeader as Header,
   PullRight
 } from 'components/Layout';
 import { FA, GR, RE } from 'lib/types';
+
+import { routes } from './routes';
 //#endregion
-
-const { Content } = Layout;
-
 
 //#region Component interfaces
 export interface TransformationResultProps {
@@ -41,9 +41,10 @@ const TransformationResult: React.SFC<TransformationResultProps> = (props) => (
       </Row>
     </Header>
     <Layout>
-      <Content>
-        Result
-      </Content>
+      <RouteHandler
+        routes={routes}
+        {...props}
+      />
     </Layout>
   </Layout>
 );

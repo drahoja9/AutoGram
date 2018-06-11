@@ -38,7 +38,7 @@ class Controller extends React.Component<RouteComponentProps<any>, ControllerSta
   }
 
   private handleSubmit()  {
-    this.props.history.push('/tran/result');
+    this.props.history.push(`/tran/result/${this.state.target}`);
   }
 
   private handleNavigateBack() {
