@@ -1,10 +1,18 @@
 //#region imports
 import * as React from 'react';
 import { Row, Col } from 'antd';
+import styled from 'styled-components';
 
 import { GR } from 'lib/types';
+import { PullRight } from 'components/Layout'
 import MonoText from '../components/MonoText';
 import { grammarRulesToString } from './stringify';
+//#endregion
+
+//#region Styled
+const Label = styled(Col)`
+  padding-right: 1em;
+`;
 //#endregion
 
 //#region Component interfaces
@@ -21,7 +29,9 @@ const ContentRow: React.SFC<ContentRowProps> = (props) => (
   <Row>
   {
     props.label ?
-      <Col span={8}><b>{ props.label }</b></Col> :
+      <Label span={8}>
+        <PullRight><b>{ props.label }</b></PullRight>
+      </Label> :
       <Col offset={8} />
   }
     <Col span={16}>
