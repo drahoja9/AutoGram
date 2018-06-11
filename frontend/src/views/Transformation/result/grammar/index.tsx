@@ -3,11 +3,11 @@ import * as React from 'react';
 import { Row, Col } from 'antd';
 
 import { GR } from 'lib/types';
-// import { Centered } from 'components/Layout';
 import MonoText from '../components/MonoText';
 import { grammarRulesToString } from './stringify';
 //#endregion
 
+//#region Component interfaces
 export interface GrammarViewProps {
   value: GR;
 }
@@ -15,6 +15,7 @@ export interface GrammarViewProps {
 interface ContentRowProps {
   label?: string;
 }
+//#endregion
 
 const ContentRow: React.SFC<ContentRowProps> = (props) => (
   <Row>
