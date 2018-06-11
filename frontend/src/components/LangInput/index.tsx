@@ -66,7 +66,10 @@ export default class Controller extends React.Component<ControllerProps, Control
 
   public render() {
     return (
-      <View onChange={this.handleTypeChange.bind(this)}>
+      <View
+        defaultValue={this.props.defaultValue ? this.props.defaultValue.selected : undefined}
+        onChange={this.handleTypeChange.bind(this)}
+      >
         { this.renderInput() }
       </View>
     );
