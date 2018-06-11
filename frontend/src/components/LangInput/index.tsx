@@ -42,7 +42,6 @@ export default class Controller extends React.Component<ControllerProps, Control
   constructor(props: ControllerProps, context: any) {
     super(props, context);
     this.state = this.props.defaultValue || Controller.defaultInitialState;
-    console.log(this.state);
   }
   /**
    * Handles input type change.
@@ -66,7 +65,10 @@ export default class Controller extends React.Component<ControllerProps, Control
 
   public render() {
     return (
-      <View onChange={this.handleTypeChange.bind(this)}>
+      <View
+        defaultValue={this.props.defaultValue ? this.props.defaultValue.selected : undefined}
+        onChange={this.handleTypeChange.bind(this)}
+      >
         { this.renderInput() }
       </View>
     );

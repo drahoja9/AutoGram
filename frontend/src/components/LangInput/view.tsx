@@ -17,7 +17,7 @@ interface InputSelectProps {
  * Renders a select component with input types.
  */
 const InputSelect: React.SFC<ViewProps> = (props) => (
-  <Select onChange={props.onChange} defaultValue="gr">
+  <Select onChange={props.onChange} defaultValue={props.defaultValue}>
     <Select.Option value="gr">Grammar</Select.Option>
     <Select.Option value="au">Automaton</Select.Option>
     <Select.Option value="re">Expression</Select.Option>
