@@ -1,14 +1,15 @@
 //#region imports
 import { getType } from 'typesafe-actions';
-import { merge } from 'lodash';
 import {
   transform as transformAction,
   TransformationAction
 } from 'actions/transformation';
+
+import { TransformResponse } from 'lib/types';
 //#endregion
 
 export interface State {
-  result: boolean;
+  result: TransformResponse | null;
   meta: {
     error: Error | null;
     pending: boolean;
@@ -17,7 +18,7 @@ export interface State {
 }
 
 const initialState: State = {
-  result: false,
+  result: null,
   meta: {
     error: null,
     pending: false,
@@ -28,40 +29,46 @@ const initialState: State = {
 /** Transformation reducer. */
 export const transform = (state = initialState, action: TransformationAction) : State => {
   switch (action.type) {
-    case getType(transformAction.request):
-      return merge({}, state, {
-        meta: {
-          error: null,
-          pending: true
-        }
-      });
-    
-    case getType(transformAction.success):
-      return merge({}, state, {
-        result: action.payload,
-        meta: {
-          pending: false,
-          retrieved: true
-        }
-      });
-    
-    case getType(transformAction.cancel):
-      return merge({}, state, {
-        meta: {
-          pending: false,
-        }
-      });
+  case getType(transformAction.request):
+    return {
+      ...state,
+      meta: {
+        ...state.meta,
+        error: null,
+        pending: true
+      }
+    };
 
-    case getType(transformAction.fail):
-      return merge({}, state, {
-        meta: {
-          error: action.payload,
-          pending: false,
-          retrieved: true
-        }
-      });
-    
-    default:
-      return state;
+  case getType(transformAction.success):
+  return {
+    result: action.payload,
+    meta: {
+      ...state.meta,
+      pending: false,
+      retrieved: true
+    }
+  };
+
+  case getType(transformAction.cancel):
+    return {
+      ...state,
+      meta: {
+        ...state.meta,
+        pending: false
+      }
+    };
+
+  case getType(transformAction.fail):
+    return {
+      ...state,
+      meta: {
+        error: action.payload,
+        pending: false,
+        retrieved: true
+      }
+    };
+
+  default:
+    return state;
   }
 }

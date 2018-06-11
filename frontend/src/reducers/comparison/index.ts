@@ -29,38 +29,43 @@ const initialState: State = {
 export const compare = (state = initialState, action: ComparisonAction): State => {
   switch (action.type) {
   case getType(compareAction.request):
-    return merge({}, state, {
+    return {
+      ...state,
       meta: {
+        ...state.meta,
         error: null,
         pending: true
       }
-    });
+    };
 
   case getType(compareAction.success):
-    return merge({}, state, {
+    return {
       result: action.payload.result,
       meta: {
+        ...state.meta,
         pending: false,
         retrieved: true
       }
-    });
-
+    };
 
   case getType(compareAction.cancel):
-    return merge({}, state, {
+    return {
+      ...state,
       meta: {
+        ...state.meta,
         pending: false
       }
-    });
+    };
 
   case getType(compareAction.fail):
-    return merge({}, state, {
+    return {
+      ...state,
       meta: {
         error: action.payload,
         pending: false,
-        retrieved: true,
+        retrieved: true
       }
-    });
+    };
 
   default:
     return state;
