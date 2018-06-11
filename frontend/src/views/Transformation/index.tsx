@@ -15,7 +15,8 @@ import {
   FAType,
   GRType,
   REType,
-  TransformRequest
+  TransformRequest,
+  TransformationTarget
 } from 'lib/types';
 
 import { routes } from './routes';
@@ -24,6 +25,7 @@ import {
   mapStateToProps,
   mapDispatchToProps
 } from './selectors';
+import { transform } from 'reducers/transformation';
 //#endregion
 
 //#region Component interfaces
@@ -72,11 +74,11 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
     }
   }
 
-  private getSource(): FAType.NFA | GRType.RRG | REType.Unbounded {
+  private getSource(): TransformationTarget {
     switch (this.state.target) {
-    case InputType.Automaton: return FAType.NFA;
-    case InputType.Grammar: return GRType.RRG;
-    case InputType.Regexp: return REType.Unbounded;
+    case InputType.Automaton: return TransformationTarget.FA;
+    case InputType.Grammar: return TransformationTarget.RRG;
+    case InputType.Regexp: return TransformationTarget.Regexp;
     }
   }
 

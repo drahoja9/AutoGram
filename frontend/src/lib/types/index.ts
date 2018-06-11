@@ -1,7 +1,7 @@
 //#region imports
-import {  FAType, DFA, NFA } from './FA';
-import { GRType, RRG, CFG, CNF } from './GR';
-import { RE, REType } from './RE';
+import { DFA, NFA } from './FA';
+import { RRG, CFG, CNF } from './GR';
+import { RE } from './RE';
 //#endregion imports
 
 export interface ComparisonRequest {
@@ -13,8 +13,16 @@ export interface ComparisonResponse {
   result: boolean;
 }
 
+export enum TransformationTarget {
+  FA = 'fa',
+  RRG = 'rg',
+  Regexp = 're',
+  CFG = 'cfg',
+  PDA = 'pda',
+}
+
 export interface TransformRequest {
-  target: FAType.NFA | GRType.RRG | REType.Unbounded;
+  target: TransformationTarget;
   source: NFA | RRG | RE;
 }
 
