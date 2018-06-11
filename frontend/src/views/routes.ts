@@ -32,7 +32,6 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/tran',
-    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./Transformation')
     })

@@ -30,26 +30,28 @@ export interface TransformationInputProps extends InputState {
   onValueChange: (value: InputState) => any;
   onTargetChange: (value: InputType) => any;
   onSubmit: () => any;
+  defaultValue?: InputState;
 }
 //#endregion
 
 const TransformationInput: React.SFC<TransformationInputProps> = (props) => (
   <Layout>
-  <Header><h1>Transformation</h1></Header>
-  <Layout>
-    <InputContent>
-      <LangInput
-        onChange={props.onValueChange}
+    <Header><h1>Transformation</h1></Header>
+    <Layout>
+      <InputContent>
+        <LangInput
+          defaultValue={props.defaultValue}
+          onChange={props.onValueChange}
+        />
+      </InputContent>
+    </Layout>
+    <Footer>
+      <Controls
+        onChange={props.onTargetChange}
+        onSubmit={props.onSubmit}
       />
-    </InputContent>
+    </Footer>
   </Layout>
-  <Footer>
-    <Controls
-      onChange={props.onTargetChange}
-      onSubmit={props.onSubmit}
-    />
-  </Footer>
-</Layout>
 );
 
 export default TransformationInput;
