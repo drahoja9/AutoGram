@@ -1,48 +1,54 @@
 //#region imports
 import * as React from 'react';
-import LangInput from 'components/LangInput';
-import View from './view';
-import Controls from './components/controls';
+import {
+  InputType,
+  ValueStore
+} from 'components/LangInput';
+import { RouteHandler } from 'components';
+import { routes } from './routes';
 //#endregion
 
-interface ControllerState {
-  target: string;
+//#region Component interfaces
+interface InputState {
+  selected: InputType;
+  values: ValueStore;
 }
 
+interface ControllerState extends InputState {
+  target: InputType;
+}
+//#endregion
+
 export default class Controller extends React.Component<{}, ControllerState> {
-  public state = { target: '' };
+  public state = {
+    target: InputType.Grammar,
+    selected: InputType.Grammar,
+    values: {
+      au: { header: [], body: [] },
+      gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
+      re: ''
+    }
+  };
 
   private handleSubmit()  {
     console.log('Should transform.');
   }
 
-  private handleTargetChange(target: string) {
+  private handleTargetChange(target: InputType) {
     this.setState({ target });
-    console.log(target);
+  }
+
+  private handleValueChange(change: InputState) {
+    this.setState(change);
   }
 
   public render() {
     return (
-      <View
-        Header={this.renderHeader()}
-        Controls={this.renderControls()}
-      >
-        <LangInput
-          onChange={(data: any) => console.log(data)}
-        />
-      </View>
-    );
-  }
-
-  private renderHeader() {
-    return <h1>Transformation</h1>;
-  }
-
-  private renderControls() {
-    return (
-      <Controls
-        onChange={this.handleTargetChange.bind(this)}
+      <RouteHandler
+        routes={routes}
         onSubmit={this.handleSubmit.bind(this)}
+        onTargetChange={this.handleTargetChange.bind(this)}
+        onValueChange={this.handleValueChange.bind(this)}
       />
     );
   }

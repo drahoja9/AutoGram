@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Row, Button, Select } from 'antd';
 import { Centered } from 'components/Layout';
+import { InputType } from 'components/LangInput';
 //#endregion
 
 //#region Component interfaces
@@ -9,7 +10,7 @@ import { Centered } from 'components/Layout';
  * @property onSubmit Submission handler for control button.
  */
 export interface ControlsProps {
-  onChange?: (value: string) => any;
+  onChange?: (value: InputType) => any;
   onSubmit?: () => any;
 }
 //#endregion
