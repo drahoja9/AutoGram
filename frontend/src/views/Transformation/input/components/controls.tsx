@@ -23,12 +23,16 @@ export interface ControlsProps {
 const Controls: React.SFC<ControlsProps> = (props) => (
   <Row>
     <Centered>
-      <Select onChange={props.onChange} defaultValue={props.defaultValue}>
+      <Select
+        disabled={props.pending}
+        onChange={props.onChange}
+        defaultValue={props.defaultValue}
+      >
         <Select.Option value={InputType.Grammar}>Grammar</Select.Option>
         <Select.Option value={InputType.Automaton}>Automaton</Select.Option>
         <Select.Option value={InputType.Regexp}>Expression</Select.Option>
       </Select>
-      <Button onClick={props.onSubmit} disabled={props.pending}>
+      <Button onClick={props.onSubmit} loading={props.pending}>
         Transform
       </Button>
     </Centered>
