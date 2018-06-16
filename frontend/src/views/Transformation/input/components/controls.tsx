@@ -10,6 +10,7 @@ import { InputType } from 'components/LangInput';
  * @property onSubmit Submission handler for control button.
  */
 export interface ControlsProps {
+  defaultValue?: InputType;
   onChange?: (value: InputType) => any;
   onSubmit?: () => any;
   pending?: boolean;
@@ -22,7 +23,7 @@ export interface ControlsProps {
 const Controls: React.SFC<ControlsProps> = (props) => (
   <Row>
     <Centered>
-      <Select onChange={props.onChange} defaultValue={InputType.Grammar}>
+      <Select onChange={props.onChange} defaultValue={props.defaultValue}>
         <Select.Option value={InputType.Grammar}>Grammar</Select.Option>
         <Select.Option value={InputType.Automaton}>Automaton</Select.Option>
         <Select.Option value={InputType.Regexp}>Expression</Select.Option>

@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Layout, Select } from 'antd';
 import { Centered, Header } from 'components/Layout';
+import { InputType } from './index';
 //#endregion
 
 //#region Component interfaces
@@ -9,7 +10,7 @@ export interface ViewProps extends InputSelectProps { }
 
 interface InputSelectProps {
   onChange: (value: string) => any;
-  defaultValue?: string;
+  defaultValue?: InputType;
 }
 //#endregion
 
@@ -18,9 +19,9 @@ interface InputSelectProps {
  */
 const InputSelect: React.SFC<ViewProps> = (props) => (
   <Select onChange={props.onChange} defaultValue={props.defaultValue}>
-    <Select.Option value="gr">Grammar</Select.Option>
-    <Select.Option value="au">Automaton</Select.Option>
-    <Select.Option value="re">Expression</Select.Option>
+    <Select.Option value={InputType.Grammar}>Grammar</Select.Option>
+    <Select.Option value={InputType.Automaton}>Automaton</Select.Option>
+    <Select.Option value={InputType.Regexp}>Expression</Select.Option>
   </Select>
 );
 
@@ -34,7 +35,7 @@ const View: React.SFC<ViewProps> = (props) => (
       <Centered>
         <InputSelect
           onChange={props.onChange}
-          defaultValue={props.defaultValue || 'gr'}
+          defaultValue={props.defaultValue || InputType.Grammar}
         />
       </Centered>
     </Header>
