@@ -26,7 +26,7 @@ const Controls: React.SFC<ControlsProps> = (props) => (
       <Select
         disabled={props.pending}
         onChange={props.onChange}
-        defaultValue={props.defaultValue}
+        defaultValue={props.defaultValue || InputType.Grammar}
       >
         <Select.Option value={InputType.Grammar}>Grammar</Select.Option>
         <Select.Option value={InputType.Automaton}>Automaton</Select.Option>
