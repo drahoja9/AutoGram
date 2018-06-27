@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6992.189 706.868 36.308 14.046">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #707070;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <g id="Double_sided_arrow" data-name="Double sided arrow" transform="translate(6138 62)">
+    <path id="Right_arrow" data-name="Right arrow" class="cls-1" d="M0,0,6.746,5.866,0,11.782" transform="translate(863.216 657.782) rotate(180)"/>
+    <path id="Right_arrow-2" data-name="Right arrow" class="cls-1" d="M0,0,6.746,5.866,0,11.782" transform="translate(881.47 646)"/>
+    <path id="Path_1" data-name="Path 1" class="cls-1" d="M851.6,391.811h29.474" transform="translate(1738.282 1043.702) rotate(180)"/>
+  </g>
+</svg>
