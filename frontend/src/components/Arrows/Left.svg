@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2749.189 3057.873 32.492 14.042">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #707070;
+        stroke-width: 3px;
+      }
+    </style>
+  </defs>
+  <g id="Left_arrow" data-name="Left arrow" transform="translate(3638.149 3456.766) rotate(180)">
+    <path id="Right_arrow" data-name="Right arrow" class="cls-1" d="M0,0,6.746,5.866,0,11.782" transform="translate(879.932 385.984)"/>
+    <path id="Path_1" data-name="Path 1" class="cls-1" d="M851.6,391.811h29.474" transform="translate(4.867 0.064)"/>
+  </g>
+</svg>
