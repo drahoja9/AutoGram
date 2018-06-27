@@ -1,9 +1,11 @@
 //#region imports
 import * as React from 'react';
-import { Layout, Input } from 'antd';
+import { Layout } from 'antd';
+
 import styled from 'styled-components';
 
 import SpecialChars from './SpecialCharacters';
+import TextArea from 'antd/lib/input/TextArea';
 //#endregion
 
 //#region Styled
@@ -25,29 +27,46 @@ export interface RegexpInputProps {
 /**
  * Regular expression input component.
  */
-const RegexpInput: React.SFC<RegexpInputProps> = (props) => (
-  <Layout>
+class RegexpInput extends React.Component<RegexpInputProps> {
+  private input: TextArea | null = null;
+
+  private handleInputSpecialCharacher(value: string) {
+    if (this.input) {
+      this.input.focus();
+    }
+    this.props.onChange(value);
+  }
+
+  public render() {
+    return (
     <Layout>
-      <Layout.Content>
-        <SpecialChars value={props.value || ''} onChange={props.onChange} />
-      </Layout.Content>
-    </Layout>
-    <Layout>
-      <Layout.Content>
-        <Monospaced>
-          <Input.TextArea
-            placeholder="(a + b)*"
-            autosize={{
-              minRows: 4,
-              maxRows: 16
-            }}
-            value={props.value}
-            onChange={(e) => props.onChange(e.currentTarget.value)}
-          />
-        </Monospaced>
-      </Layout.Content>
-    </Layout>
-  </Layout>
-);
+        <Layout>
+          <Layout.Content>
+            <SpecialChars
+              value={this.props.value || ''}
+              onChange={this.handleInputSpecialCharacher.bind(this)}
+            />
+          </Layout.Content>
+        </Layout>
+        <Layout>
+          <Layout.Content>
+            <Monospaced>
+              <TextArea
+                ref={(input) => this.input = input}
+                placeholder="(a + b)*"
+                autosize={{
+                  minRows: 4,
+                  maxRows: 16
+                }}
+                value={this.props.value}
+                onChange={(e) => this.props.onChange(e.currentTarget.value)}
+              />
+            </Monospaced>
+          </Layout.Content>
+        </Layout>
+      </Layout>
+    );
+  }
+}
 
 export default RegexpInput;
