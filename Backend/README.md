@@ -13,7 +13,7 @@ There are two ways to run this app:
 
 This is very simple method how to run this application and is STRONGLY RECOMMENDED over the second one. There are only three steps:
 1. Make sure you have Docker installed on your computer: `docker --version`
-2. Build our Docker image: `docker build -t backend .`
+2. Build our Docker image: `docker build -t backend .` (make sure you are inside a directory with Dockerfile)
 3. Run it in a container, on background, named "backend" and map host's port 5000 to container's port 5000 : `docker run -d --name=backend -p 5000:5000 backend`
  
 Depending on your Docker settings, all commands above may need to be run as root (with `sudo`). 
@@ -30,3 +30,10 @@ In this case, you'll have to download the ALT library, compile it and edit our M
 Note that THIS OPTION IS STRONGLY DISCOURAGED.
 
 Either way, your application should be up and running by now.
+
+
+### Docs
+
+To generate docs, you have to have a Sphinx installed. (`pip install sphinx` to install it globally). Then just type in `make docs` and that's it.
+
+Generated documentation can be found inside docs/build (by default).
