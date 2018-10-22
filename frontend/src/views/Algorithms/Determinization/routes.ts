@@ -20,11 +20,12 @@ export const routes: RouteProps[] = [
     path: '/algo/det/input',
     exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./input/index.tsx')
+      resolve: () => System.import('./input')
     })
   },
   {
     path: '/algo/det/result',
+    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./result')
     })

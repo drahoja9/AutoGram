@@ -18,7 +18,6 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/algo/det',
-    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./Determinization')
     })

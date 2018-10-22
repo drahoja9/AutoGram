@@ -49,15 +49,15 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
   };
 
   public componentdDidMount() {
-    if (this.props.location.pathname !== '/algo/der/input') {
-      this.props.history.push('/algo/der/input');
+    if (this.props.location.pathname !== '/algo/det/input') {
+      this.props.history.push('/algo/det/input');
     }
   }
 
   public componentWillReceiveProps(nextProps: ControllerProps) {
     if (this.props.meta.pending && !nextProps.meta.pending && nextProps.meta.retrieved) {
       if (!nextProps.meta.error) {
-        nextProps.history.push('/algo/der/result');
+        nextProps.history.push('/algo/det/result');
       }
     }
   }
@@ -68,6 +68,7 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
 
   private handleSubmit() {
     console.log("submit");
+    console.log(this.state.values);
   }
 
   /*private handleSubmitError(err: Error) {
