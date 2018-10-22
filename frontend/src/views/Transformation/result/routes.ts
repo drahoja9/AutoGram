@@ -12,21 +12,21 @@ export const routes: RouteProps[] = [
     path: '/tran/result/au',
     exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./automaton')
+      resolve: () => System.import('components/Results/automaton')
     })
   },
   {
     path: '/tran/result/gr',
     exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./grammar')
+      resolve: () => System.import('components/Results/grammar')
     })
   },
   {
     path: '/tran/result/re',
     exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./regexp')
+      resolve: () => System.import('components/Results/regexp')
     })
   },
 ];

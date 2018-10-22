@@ -43,6 +43,8 @@ const TableBody: React.SFC<AutomatonViewProps & { transitions: TransitionMap }> 
   const initial = new Set(props.value.initial_states);
   const final = new Set(props.value.final_states);
 
+  console.log("here");
+
   return (
     <tbody>
     {

@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Row, Button } from 'antd';
 //#endregion
 
+
 //#region Component interfaces
 interface RegexpInputProps {
   onChange: (value: any) => any;
