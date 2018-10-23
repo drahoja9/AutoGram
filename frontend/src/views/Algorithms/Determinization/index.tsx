@@ -1,23 +1,17 @@
 //#region imports
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-//import { notification } from 'antd';
+import { notification } from 'antd';
 import { connect } from 'react-redux';
 
-import {
-  AutomatonInputValue
-} from 'components/Forms/Automaton';
+import { AutomatonInputValue } from 'components/Forms/Automaton';
 import { RouteHandler } from 'components';
-//import AutomatonInput from 'components/Forms/Automaton';
-//import { ValidationError } from 'lib/validate';
-//import { ParseError } from 'lib/parse';
-import {
-  NFA,
-  //DFA
-} from 'lib/types';
+import { ValidationError } from 'lib/validate';
+import { ParseError } from 'lib/parse';
+import { NFA } from 'lib/types';
 
 import { routes } from './routes';
-//import { validate } from './validation';
+import { validate } from './validation';
 import {
   mapStateToProps,
   mapDispatchToProps
@@ -62,22 +56,38 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
     }
   }
 
-  /*private getSource() : NFA {
-    
-  }*/
-
   private handleSubmit() {
+    const values = this.state.values;
     console.log("submit");
-    console.log(this.state.values);
+    console.log(values);
+    try {
+      const value = validate({values});
+      console.log(value);
+      this.props.onSubmit(value);
+    } catch (err) {
+      this.handleSubmitError(err);
+    }
+
   }
 
-  /*private handleSubmitError(err: Error) {
+  private handleSubmitError(err: Error) {
+    if (err instanceof ValidationError) {
+      this.presentError(err.name, err.getMessage());
 
-  }*/
+    } else if (err instanceof ParseError) {
+      this.presentError(err.name, err.message);
 
-  /*private presentError(message: string, description: string) {
+    } else {
+      const message = 'Unexpected error';
+      const description = 'There was an unexpected error. '
+      + 'Try repeating the anction and/or reviewing the syntax.';
+      this.presentError(message, description);
+    }
+  }
 
-  }*/
+  private presentError(message: string, description: string) {
+    notification.error({ message, description });
+  }
 
   private handleNavigateBack(){
     this.props.history.goBack();
@@ -87,33 +97,22 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
     this.setState(change);
   }
 
-  /*public render() {
-    return (<AutomatonInput
-      value={this.state.values}
-      onChange={this.handleValueChange.bind(this)}
-    />)
-  }*/
-
   public render() {
-    //console.log("rendering determinization top");
     return (
       <RouteHandler
         routes={routes}
         onBack={this.handleNavigateBack.bind(this)}
         onSubmit={this.handleSubmit.bind(this)}
         onValueChange={this.handleValueChange.bind(this)}
+        defaultValue={this.state}
         pending={this.props.meta.pending}
       />
     
     )
   }
 
-
-
-  
 }
 
-//export default () => <h1>Determinimization</h1>;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
