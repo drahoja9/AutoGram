@@ -27,38 +27,38 @@ interface ContentRowProps {
 
 const ContentRow: React.SFC<ContentRowProps> = (props) => (
   <Row>
-  {
-    props.label ?
-      <Label span={8}>
-        <PullRight><b>{ props.label }</b></PullRight>
-      </Label> :
-      <Col offset={8} />
-  }
+    {
+      props.label ?
+        <Label span={8}>
+          <PullRight><b>{props.label}</b></PullRight>
+        </Label> :
+        <Col offset={8} />
+    }
     <Col span={16}>
-      { props.children }
+      {props.children}
     </Col>
   </Row>
 );
 
 const GrammarView: React.SFC<GrammarViewProps> = (props) => (
   <>
-    <ContentRow label="Terminal alphabet">
-      <MonoText>{ props.value.nonterminal_alphabet.join(', ') }</MonoText>
+    <ContentRow label="Non-terminal alphabet">
+      <MonoText>{props.value.nonterminal_alphabet.join(', ')}</MonoText>
     </ContentRow>
 
     <ContentRow label="Terminal alphabet">
-      <MonoText>{ props.value.terminal_alphabet.join(', ') }</MonoText>
+      <MonoText>{props.value.terminal_alphabet.join(', ')}</MonoText>
     </ContentRow>
 
     <ContentRow label="Initial symbol">
-      <MonoText>{ props.value.initial_symbol }</MonoText>
+      <MonoText>{props.value.initial_symbol}</MonoText>
     </ContentRow>
 
     <ContentRow label="Rules">
-    {
-      grammarRulesToString(props.value)
-      .map((rules, idx) => <MonoText key={idx}>{ rules }</MonoText>)
-    }
+      {
+        grammarRulesToString(props.value)
+          .map((rules, idx) => <MonoText key={idx}>{rules}</MonoText>)
+      }
     </ContentRow>
   </>
 );
