@@ -13,9 +13,9 @@ import {
 function getSelectedKeys(pathname: string){
   let result: string;
   if (pathname.endsWith("/input")){
-    result = pathname.substring(0, pathname.length - "/input".length)
+    result = pathname.substring(0, pathname.length - "/input".length);
   } else if (pathname.endsWith("/result")){
-    result = pathname.substring(0, pathname.length - "/result".length)
+    result = pathname.substring(0, pathname.length - "/result".length);
   } else {
     result = pathname;
   }

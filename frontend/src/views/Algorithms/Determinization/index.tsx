@@ -58,11 +58,8 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
 
   private handleSubmit() {
     const values = this.state.values;
-    console.log("submit");
-    console.log(values);
     try {
       const value = validate({values});
-      console.log(value);
       this.props.onSubmit(value);
     } catch (err) {
       this.handleSubmitError(err);

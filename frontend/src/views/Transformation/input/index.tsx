@@ -48,7 +48,7 @@ const TransformationInput: React.SFC<TransformationInputProps> = (props) => (
     </Layout>
     <Footer>
       <Controls
-        defaultValue={props.defaultValue ? props.defaultValue.selected : undefined}
+        defaultValue={props.target}
         onChange={props.onTargetChange}
         onSubmit={props.onSubmit}
         pending={props.pending}
