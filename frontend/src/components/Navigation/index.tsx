@@ -10,15 +10,17 @@ import {
 //#endregion
 
 
-function getSelectedKeys(pathname: string){
-  let result: string;
-  if (pathname.endsWith("/input")){
-    result = pathname.substring(0, pathname.length - "/input".length)
-  } else if (pathname.endsWith("/result")){
-    result = pathname.substring(0, pathname.length - "/result".length)
-  } else {
-    result = pathname;
+function getSelectedKeys(pathname: string) {
+  let result: string = pathname;
+  let inputIdx: number = pathname.indexOf("/input");
+  let resultIdx: number = pathname.indexOf("/result");
+
+  if (inputIdx !== -1) {
+    result = pathname.substring(0, inputIdx);
+  } else if (resultIdx !== -1) {
+    result = pathname.substring(0, resultIdx);
   }
+
   return result;
 }
 
