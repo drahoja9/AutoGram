@@ -29,15 +29,15 @@ export interface ControllerProps {
   onCompare: (data: ComparisonRequest) => any;
 }
 
+interface InputValue {
+  selected: InputType;
+  values: ValueStore;
+}
+
 interface ControllerState {
-  lhs: {
-    selected: InputType;
-    values: ValueStore;
-  };
-  rhs: {
-    selected: InputType;
-    values: ValueStore;
-  }
+  lhs: InputValue;
+  rhs: InputValue;
+  error: boolean;
 }
 //#endregion
 
@@ -58,7 +58,8 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
         re: ''
       }
-    }
+    },
+    error: false
   };
 
   /**
@@ -73,6 +74,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
       const lhs = validate(this.state.lhs);
       const rhs = validate(this.state.rhs);
       this.props.onCompare({ lhs, rhs });
+      this.setState({ error: false });
     } catch (err) {
       this.handleSubmitError(err);
     }
@@ -111,6 +113,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
    */
   private presentError(message: string, description: string) {
     notification.error({ message, description });
+    this.setState({ error: true });
   }
 
   public componentWillReceiveProps(nextProps: ControllerProps) {
@@ -132,12 +135,12 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         <Row>
           <Col span={12}>
             <LangInput
-              onChange={(data: any) => this.setState({lhs: data})}
+              onChange={(data: InputValue) => this.setState({ lhs: data })}
             />
           </Col>
           <Col span={12}>
             <LangInput
-              onChange={(data: any) => this.setState({rhs: data})}
+              onChange={(data: InputValue) => this.setState({ rhs: data })}
             />
           </Col>
         </Row>
@@ -150,12 +153,13 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
   }
 
   private renderControls() {
-    const { retrieved, error } = this.props.meta;
+    const { retrieved, pending } = this.props.meta;
+    const { error } = this.state;
     return (
       <Controls
         onSubmit={this.handleSubmit.bind(this)}
         pending={this.props.meta.pending}
-        result={retrieved && !error ? this.props.result : undefined}
+        result={retrieved && !pending && !error ? this.props.result : undefined}
       />
     );
   }
