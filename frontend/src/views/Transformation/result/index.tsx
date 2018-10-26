@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Layout, Row, Col, Button } from 'antd';
 import { connect } from 'react-redux';
 
-//import { RouteHandler } from 'components';
 import { InputType } from 'components/LangInput';
 import {
   TopHeader as Header,
@@ -14,7 +13,6 @@ import AutomatonView from 'components/Results/automaton';
 import GrammarView from 'components/Results/grammar';
 import RegexpView from 'components/Results/regexp';
 
-//import { routes } from './routes';
 import {
   mapStateToProps,
   mapDispatchToProps

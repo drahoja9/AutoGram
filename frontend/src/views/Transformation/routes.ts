@@ -25,6 +25,7 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/tran/result',
+    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./result')
     })
