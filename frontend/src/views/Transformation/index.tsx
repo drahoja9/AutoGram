@@ -65,7 +65,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
   public componentWillReceiveProps(nextProps: ControllerProps) {
     if (this.props.meta.pending && !nextProps.meta.pending && nextProps.meta.retrieved) {
       if (!nextProps.meta.error) {
-        nextProps.history.push(`/tran/result/${this.state.target}`);
+        nextProps.history.push(`/tran/result`);
       }
     }
   }
@@ -155,6 +155,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         onValueChange={this.handleValueChange.bind(this)}
         defaultValue={this.state}
         pending={this.props.meta.pending}
+        target={this.state.target}
       />
     );
   }

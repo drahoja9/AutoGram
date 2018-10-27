@@ -1,32 +1,33 @@
 //#region imports
 declare var System: any;
 import { RouteProps } from 'react-router-dom';
+import { Redirect } from 'components';
 const { asyncComponent } = require('react-async-component');
 //#endregion
 
 /**
- * Top level routing for `/tran/result*` paths.
+ * Top level routing for `/algo/det*` paths.
+ *
+ * Redirects all users from `/algo/det` to `/algo/det/input`.
  */
 export const routes: RouteProps[] = [
   {
-    path: '/tran/result/au',
+    path: '/algo/det',
+    exact: true,
+    component: Redirect('/algo/det/input')
+  },
+  {
+    path: '/algo/det/input',
     exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./automaton')
+      resolve: () => System.import('./input')
     })
   },
   {
-    path: '/tran/result/gr',
+    path: '/algo/det/result',
     exact: true,
     component: asyncComponent({
-      resolve: () => System.import('./grammar')
-    })
-  },
-  {
-    path: '/tran/result/re',
-    exact: true,
-    component: asyncComponent({
-      resolve: () => System.import('./regexp')
+      resolve: () => System.import('./result')
     })
   },
 ];

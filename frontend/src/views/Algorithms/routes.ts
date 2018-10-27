@@ -18,35 +18,30 @@ export const routes: RouteProps[] = [
   },
   {
     path: '/algo/det',
-    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./Determinization')
     })
   },
   {
     path: '/algo/min',
-    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./Minimization')
     })
   },
   {
     path: '/algo/der',
-    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./Derivation')
     })
   },
   {
     path: '/algo/cnf',
-    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./CNF')
     })
   },
   {
     path: '/algo/cyk',
-    exact: true,
     component: asyncComponent({
       resolve: () => System.import('./CYK')
     })

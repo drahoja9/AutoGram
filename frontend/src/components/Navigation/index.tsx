@@ -9,6 +9,21 @@ import {
 } from 'react-router-dom';
 //#endregion
 
+
+function getSelectedKeys(pathname: string) {
+  let result: string = pathname;
+  let inputIdx: number = pathname.indexOf("/input");
+  let resultIdx: number = pathname.indexOf("/result");
+
+  if (inputIdx !== -1) {
+    result = pathname.substring(0, inputIdx);
+  } else if (resultIdx !== -1) {
+    result = pathname.substring(0, resultIdx);
+  }
+
+  return result;
+}
+
 /**
  * Stateless component. Renders navigation panel for the application.
  *
@@ -20,7 +35,7 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
     <Menu
       mode="inline" theme="dark"
       defaultSelectedKeys={['/vis']}
-      selectedKeys={[props.location.pathname]}
+      selectedKeys={[getSelectedKeys(props.location.pathname)]}
     >
       <Menu.Item key="/vis">
         <NavLink to="/vis">
@@ -40,7 +55,7 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
         </NavLink>
       </Menu.Item>
 
-      <Menu.SubMenu key="/algoalgorithms" title="Algorithms">
+      <Menu.SubMenu key="/algo" title="Algorithms">
         <Menu.Item key="/algo/det">
           <NavLink to="/algo/det">
             Determinization

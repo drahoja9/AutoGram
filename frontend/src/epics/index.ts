@@ -2,6 +2,7 @@
 import { combineEpics } from 'redux-observable';
 import { compareEpic } from './comparison';
 import { transformEpic } from './transformation';
+import { determinizeEpic } from './determinization';
 //#endregion
 
 /**
@@ -9,5 +10,6 @@ import { transformEpic } from './transformation';
  */
 export const rootEpic = combineEpics(
   compareEpic,
-  transformEpic
+  transformEpic,
+  determinizeEpic
 );
