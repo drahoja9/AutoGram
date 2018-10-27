@@ -1,15 +1,15 @@
 //#region imports
 import { getType } from 'typesafe-actions';
 import {
-  determinize as determinizeAction,
-  DeterminizationAction
-} from 'actions/determinization';
+  derivate as deriveAction,
+  DerivationAction
+} from 'actions/derivation';
 
-import { DFA } from 'lib/types';
+import { RE } from 'lib/types';
 //#endregion
 
 export interface State {
-  result: DFA | null;
+  result: RE | null;
   meta: {
     error: Error | null;
     pending: boolean;
@@ -26,10 +26,10 @@ const initialState: State = {
   }
 };
 
-/** Determinization reducer. */
-export const determinize = (state = initialState, action: DeterminizationAction): State => {
+/** Derivation reducer. */
+export const derivate = (state = initialState, action: DerivationAction): State => {
   switch (action.type) {
-    case getType(determinizeAction.request):
+    case getType(deriveAction.request):
       return {
         ...state,
         meta: {
@@ -39,9 +39,9 @@ export const determinize = (state = initialState, action: DeterminizationAction)
         }
       };
 
-    case getType(determinizeAction.success):
+    case getType(deriveAction.success):
       return {
-        result: action.payload,
+        result: action.payload['result'],
         meta: {
           ...state.meta,
           pending: false,
@@ -49,7 +49,7 @@ export const determinize = (state = initialState, action: DeterminizationAction)
         }
       };
 
-    case getType(determinizeAction.cancel):
+    case getType(deriveAction.cancel):
       return {
         ...state,
         meta: {
@@ -58,7 +58,7 @@ export const determinize = (state = initialState, action: DeterminizationAction)
         }
       };
 
-    case getType(determinizeAction.fail):
+    case getType(deriveAction.fail):
       return {
         ...state,
         meta: {

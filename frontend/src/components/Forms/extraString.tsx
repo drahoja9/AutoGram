@@ -2,32 +2,23 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 
-import styled from 'styled-components';
-
-import SpecialChars from './SpecialCharacters';
+import SpecialChars from './Regexp/SpecialCharacters';
 import TextArea from 'antd/lib/input/TextArea';
-//#endregion
 
-//#region Styled
-export const Monospaced = styled.div`
-  textarea {
-    font-family: monospace;
-  }
-`;
+import { Monospaced } from './Regexp/index'
 //#endregion
 
 //#region Component interfaces
-export type RegexpInputValue = string;
-export interface RegexpInputProps {
+export interface ExtraStringInputProps {
   onChange: (value: any) => any;
-  value: RegexpInputValue;
+  value: string;
 }
 //#endregion
 
 /**
- * Regular expression input component.
+ * Extra string input component.
  */
-class RegexpInput extends React.Component<RegexpInputProps> {
+class ExtraStringInput extends React.Component<ExtraStringInputProps> {
   private input: TextArea | null = null;
 
   private handleInputSpecialCharacher(value: string) {
@@ -53,10 +44,10 @@ class RegexpInput extends React.Component<RegexpInputProps> {
             <Monospaced>
               <TextArea
                 ref={(input) => this.input = input}
-                placeholder="(a + b)*"
+                placeholder="abc"
                 autosize={{
-                  minRows: 4,
-                  maxRows: 16
+                  minRows: 1,
+                  maxRows: 3
                 }}
                 value={this.props.value}
                 onChange={(e) => this.props.onChange(e.currentTarget.value)}
@@ -69,4 +60,4 @@ class RegexpInput extends React.Component<RegexpInputProps> {
   }
 }
 
-export default RegexpInput;
+export default ExtraStringInput;
