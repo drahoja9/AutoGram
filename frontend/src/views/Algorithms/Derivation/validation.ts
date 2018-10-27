@@ -1,7 +1,7 @@
 //#region imports
 import { RE } from 'lib/types';
 import { Parser } from 'lib/parse/regexp/Parser';
-import { validateRE } from 'lib/validate';
+import { validateRE, validateExtraString } from 'lib/validate';
 import { RegexpInputValue } from 'components/Forms/Regexp';
 //#endregion
 
@@ -22,7 +22,7 @@ interface Data {
  */
 export function validate(data: Data): RE {
   const values = data.values;
-  // const derivationString = data.derivationString;
+  const secondParameter = data.derivationString;
 
   //Parse
   const parser = new Parser(values);
@@ -30,9 +30,16 @@ export function validate(data: Data): RE {
   // Assemble regexp object
   const regexp = parser.parse();
 
-  validateRE(regexp);
-  // validateDerivationString(derivationString);
-  return regexp;
+  let derivationString = '';
+  for (const char of secondParameter) {
+    if (char !== ' ' && char !== '\n' && char !== '\t') {
+      derivationString += char;
+    }
+  }
 
+  validateRE(regexp);
+  validateExtraString(derivationString, 'derivation string');
+
+  return regexp;
 }
 

@@ -2,16 +2,25 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 
+import styled from 'styled-components';
+
 import SpecialChars from './Regexp/SpecialCharacters';
 import TextArea from 'antd/lib/input/TextArea';
 
 import { Monospaced } from './Regexp/index'
 //#endregion
 
+//#region Styled
+export const HeaderStyle = styled.div`
+    font-size: 1.3em;
+`;
+//#endregion
+
 //#region Component interfaces
 export interface ExtraStringInputProps {
   onChange: (value: any) => any;
   value: string;
+  header: string;
 }
 //#endregion
 
@@ -31,6 +40,7 @@ class ExtraStringInput extends React.Component<ExtraStringInputProps> {
   public render() {
     return (
       <Layout>
+        <HeaderStyle>{this.props.header}:</HeaderStyle>
         <Layout>
           <Layout.Content>
             <SpecialChars

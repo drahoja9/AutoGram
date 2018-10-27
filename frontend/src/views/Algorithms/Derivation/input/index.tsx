@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { TopHeader as Header } from 'components/Layout';
 import RegexpInput, { RegexpInputValue } from 'components/Forms/Regexp'
-import ExtraStringInput from 'components/Forms/extraString';
+import ExtraStringInput, { HeaderStyle } from 'components/Forms/extraString';
 import Controls from './components/controls';
 //#endregion
 
@@ -55,6 +55,7 @@ export default class Controller extends React.Component<InputProps, InputState> 
         <Header><h1>Regexp derivation</h1></Header>
         <Layout>
           <InputContent>
+            <HeaderStyle>Regexp to be derived:</HeaderStyle>
             <RegexpInput
               value={this.state.values}
               onChange={this.handleChangeValue.bind(this)}
@@ -62,6 +63,7 @@ export default class Controller extends React.Component<InputProps, InputState> 
           </InputContent>
           <InputContent>
             <ExtraStringInput
+              header={'Derivation string'}
               value={this.state.derivationString}
               onChange={this.handleChangeDerivationString.bind(this)}
             />
