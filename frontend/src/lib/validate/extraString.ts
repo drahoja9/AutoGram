@@ -1,5 +1,4 @@
-import { allowedSymbols } from 'lib/validate';
-import { ExtraStringExceptions as ES_Error } from 'lib/validate';
+import { allowedSymbols, ExtraStringExceptions as ES_Error } from 'lib/validate';
 
 
 export function validateExtraString(extraString: string, type: string = ''): boolean {
@@ -8,7 +7,7 @@ export function validateExtraString(extraString: string, type: string = ''): boo
   }
 
   for (const char of extraString) {
-    if (!allowedSymbols.has(char)) {
+    if (!allowedSymbols.has(char) && char !== 'ε' && char !== '∅') {
       throw new ES_Error.NotAllowedChar(char, type);
     }
   }
