@@ -1,4 +1,4 @@
-backend.XMLConverter module
+XML/JSON Converter module
 ================================
 
 .. automodule:: backend.XMLConverter

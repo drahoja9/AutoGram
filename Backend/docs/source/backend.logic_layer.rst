@@ -1,4 +1,4 @@
-backend.logic\_layer module
+Logic layer module
 ===========================
 
 .. automodule:: backend.logic_layer

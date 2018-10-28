@@ -8,12 +8,16 @@ Welcome to AutoGram's documentation!
 
 .. toctree::
    :maxdepth: 4
-   :caption: Contents:
+   :caption: API parts:
 
    backend
    tests
    
-   structures
+.. toctree::
+    :maxdepth: 2
+    :caption: Structures:
+    
+    structures
 
 
 Indices and tables

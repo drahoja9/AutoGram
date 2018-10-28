@@ -1,4 +1,4 @@
-backend.python\_interface module
+Python interface for ALT library
 ================================
 
 .. automodule:: backend.python_interface

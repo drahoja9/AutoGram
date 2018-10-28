@@ -1,4 +1,4 @@
-backend.api module
+REST API
 ================================
 
 .. automodule:: backend.api
