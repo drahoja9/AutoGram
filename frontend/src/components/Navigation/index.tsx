@@ -68,6 +68,12 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
           </NavLink>
         </Menu.Item>
 
+        <Menu.Item key="/algo/eps">
+          <NavLink to="/algo/eps">
+            Elimination of ε-transitions
+          </NavLink>
+        </Menu.Item>
+
         <Menu.Item key="/algo/der">
           <NavLink to="/algo/der">
             Derivation

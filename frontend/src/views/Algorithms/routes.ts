@@ -29,6 +29,12 @@ export const routes: RouteProps[] = [
     })
   },
   {
+    path: '/algo/eps',
+    component: asyncComponent({
+      resolve: () => System.import('./Epsremoval')
+    })
+  },
+  {
     path: '/algo/der',
     component: asyncComponent({
       resolve: () => System.import('./Derivation')
