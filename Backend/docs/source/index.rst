@@ -12,6 +12,8 @@ Welcome to AutoGram's documentation!
 
    backend
    tests
+   
+   structures
 
 
 Indices and tables
