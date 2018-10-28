@@ -52,6 +52,7 @@ export default class Controller extends React.Component<InputProps, InputState> 
             <AutomatonInput
                 value={this.state.values}
                 onChange={this.handleChange.bind(this)}
+                isEpsilon={true}
               />
           </InputContent>
         </Layout>
