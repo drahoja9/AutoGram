@@ -34,7 +34,7 @@ export function validate(data: Data): DerivationRequest {
   let derivationString = '';
   let whiteSpace = [' ', '\t', '\n'];
   for (const char of secondParameter) {
-    if (whiteSpace.indexOf(char) !== -1) {
+    if (whiteSpace.indexOf(char) === -1) {
       derivationString += char;
     }
   }
