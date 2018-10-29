@@ -1,0 +1,26 @@
+version: '3.2'
+
+services:
+  app:
+    restart: always
+    image: backend:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/srv/Backend/backend:ro
+    command: ["python", "bin/run.py"]
+    depends_on:
+      - tests
+
+  tests:
+    restart: "no"
+    build:
+      context: .
+      cache_from:
+      - python:3.6.5-alpine:latest
+      - pet3rmatta/alibc:latest
+    image: backend:latest
+    volumes:
+    - ./backend:/srv/Backend/backend:ro
+    - ./tests:/srv/Backend/tests:ro
+    command: ["pytest"]
