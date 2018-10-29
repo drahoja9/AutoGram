@@ -12,9 +12,8 @@ There are two ways to run this app:
 ##### 1. Docker mode
 
 This is very simple method how to run this application and is STRONGLY RECOMMENDED over the second one. There are only three steps:
-1. Make sure you have Docker installed on your computer: `docker --version`
-2. Build our Docker image: `docker build -t backend .` (make sure you are inside a directory with Dockerfile)
-3. Run it in a container, on background, named "backend" and map host's port 5000 to container's port 5000 : `docker run -d --name=backend -p 5000:5000 backend`
+1. Make sure you have Docker and Docker-compose installed on your computer: `docker --version` and `docker-compose --version`
+2. Run our app through Docker-compose: `docker-compose up` (append the `-d` at the end to run in background)
  
 Depending on your Docker settings, all commands above may need to be run as root (with `sudo`). 
 
