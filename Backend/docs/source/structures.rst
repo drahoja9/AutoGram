@@ -89,9 +89,9 @@ Regular expressions
 
 **alphabet:** *String[]*
 
-**value:** *{ "type": RE_Node_type, "value":  RE_Node }*
+**value:** *{ "type": Object<RE_Node_type>, "value":  Object<RE_Node> }*
 
-**RE_Node:** *{ "type": RE_Node_type, "value": <String|RE_NODE|RE_NODE[]> }*
+**RE_Node:** *{ "type": Object<RE_Node_type>, "value": <String|Object<RE_NODE>|Object<RE_NODE>[]> }*
 
 **RE_Node_type:** *String, either concatenation, iteration, alternation, empty_symbol, epsilon or term*
 
@@ -153,8 +153,8 @@ Comparison
 **input:** :: 
 
     { 
-        "lhs": <NFA|RightRG|UnboundedRegExp>,
-        "rhs": <NFA|RightRG|UnboundedRegExp> 
+        "lhs": Object<NFA|RightRG|UnboundedRegExp>,
+        "rhs": Object<NFA|RightRG|UnboundedRegExp> 
     }
 
 **output:** :: 
@@ -173,12 +173,12 @@ Transformation
 
     { 
         "target" : String<"fa"|"gr"|"re">,
-        "source" : <NFA|RightRG|UnboundedRegExp>
+        "source" : Object<NFA|RightRG|UnboundedRegExp>
     }
 
 **output:** :: 
 
-   <NFA|RightRG|UnboundedRegExp>
+   Object<NFA|RightRG|UnboundedRegExp>
    
 
 Automaton determinization
@@ -188,11 +188,11 @@ Automaton determinization
 
 **input:** :: 
 
-    NFA
+    Object<NFA>
 
 **output:** :: 
 
-   DFA
+   Object<DFA>
 
 
 Automaton epsilon
@@ -202,11 +202,11 @@ Automaton epsilon
 
 **input:** :: 
 
-    ENFA
+    Object<ENFA>
 
 **output:** :: 
 
-   NFA
+   Object<NFA>
 
 
 Grammar reduction
@@ -216,11 +216,11 @@ Grammar reduction
 
 **input:** :: 
 
-    CFG
+    Object<CFG>
 
 **output:** :: 
 
-   CFG
+   Object<CFG>
 
 
 Removal of epsilon rules
@@ -230,11 +230,11 @@ Removal of epsilon rules
 
 **input:** :: 
 
-    CFG
+    Object<CFG>
 
 **output:** :: 
 
-   CFG
+   Object<CFG>
 
 
 Removal of unit rules
@@ -244,11 +244,11 @@ Removal of unit rules
 
 **input:** :: 
 
-    CFG
+    Object<CFG>
 
 **output:** :: 
 
-   CFG
+   Object<CFG>
 
 
 Chomsky normal form
@@ -258,15 +258,15 @@ Chomsky normal form
 
 **input:** :: 
 
-    CFG
+    Object<CFG>
 
 **output:** :: 
 
    {
-        "after_reduction" : CFG,
-        "after_epsion" : CFG,
-        "after_unit_rules" : CFG,
-        "result": CNF
+        "after_reduction" : Object<CFG>,
+        "after_epsion" : Object<CFG>,
+        "after_unit_rules" : Object<CFG>,
+        "result": Object<CNF>
    }
 
 
@@ -277,15 +277,15 @@ Left recursion removal
 
 **input:** :: 
 
-    CFG
+    Object<CFG>
 
 **output:** :: 
 
    {
-        "after_reduction" : CFG,
-        "after_epsion" : CFG,
-        "after_unit_rules" : CFG,
-        "result": CFG
+        "after_reduction" : Object<CFG>,
+        "after_epsion" : Object<CFG>,
+        "after_unit_rules" : Object<CFG>,
+        "result": Object<CFG>
    }
 
 
@@ -297,17 +297,17 @@ Regular expression derivation
 **input:** :: 
 
     {
-        "regexp": UnboundedRegExp,
+        "regexp": Object<UnboundedRegExp>,
         "derivation_string": String
     }
 
 **output:** :: 
 
    {
-        "result" : UnboundedRegExp,
+        "result" : Object<UnboundedRegExp>,
         "steps" : [
-            UnboundedRegExp,
-            UnboundedRegExp,
+            Object<UnboundedRegExp>,
+            Object<UnboundedRegExp>,
             ...
         ]
    }
