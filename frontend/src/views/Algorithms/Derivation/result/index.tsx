@@ -7,7 +7,6 @@ import {
   TopHeader as Header,
   PullRight
 } from 'components/Layout';
-import RegexpView from 'components/Results/regexp';
 import { DerivationResponse } from 'lib/types';
 
 import {
@@ -44,10 +43,8 @@ const DerivationResult: React.SFC<DerivationResultProps> = (props) => (
     </Header>
     <Layout>
       <DerivationStepsView
-        value={props.steps}
-      />
-      <RegexpView
-        value={props.result}
+        steps={props.steps}
+        trimmed_steps={props.trimmed_steps}
       />
     </Layout>
   </Layout>

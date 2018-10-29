@@ -13,23 +13,28 @@ const Text = styled(MonoText)`
 `;
 
 const CenteredUnderneath = styled(Centered)`
-  display: block;
-  text-align: center;
+  // display: block;
+  // text-align: center;
 `;
 
-export interface DerivationStepsProps {
-  value: RE[];
+interface DerivationStepsProps {
+  steps: RE[];
+  trimmed_steps: RE[];
 }
 
 const DerivationStepsView: React.SFC<DerivationStepsProps> = (props) => (
   <CenteredUnderneath>
-    {
-      props.value.map((step: RE, idx: Number) => (
-        <Text key={`step-row.${idx}`}>
-          {regexpToString(step)} =
-        </Text>
-      ))
-    }
+    <ol>
+      {
+        props.steps.map((step: RE, idx: number) => (
+          <li key={`step-row.${idx}`}>
+            <Text>
+              {regexpToString(step)} = {regexpToString(props.trimmed_steps[idx])}
+            </Text>
+          </li>
+        ))
+      }
+    </ol>
   </CenteredUnderneath>
 );
 
