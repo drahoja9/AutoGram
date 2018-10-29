@@ -1,8 +1,5 @@
-.pytest_cache
 docs
+tests
 README.md
-*__pycache__*
-*.pyc*
+__pycache__
 Dockerfile
-docker-compose.yml
-venv
