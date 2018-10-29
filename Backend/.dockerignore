@@ -1,5 +1,11 @@
 docs
-tests
+build
+venv
 README.md
-__pycache__
+.directory
+.dockerignore
+*pytest
+*__pycache__*
 Dockerfile
+docker-compose.yml
+README.md
