@@ -8,17 +8,17 @@ import {
   PullRight
 } from 'components/Layout';
 import RegexpView from 'components/Results/regexp';
-import { RE } from 'lib/types';
+import { DerivationResponse } from 'lib/types';
 
 import {
   mapStateToProps,
   mapDispatchToProps
 } from './selectors';
+import DerivationStepsView from './components/derivationSteps';
 //#endregion
 
 //#region Component interfaces
-export interface DerivationResultProps {
-  value: RE;
+export interface DerivationResultProps extends DerivationResponse {
   onBack: () => any;
 }
 //#endregion
@@ -43,8 +43,11 @@ const DerivationResult: React.SFC<DerivationResultProps> = (props) => (
       </Row>
     </Header>
     <Layout>
+      <DerivationStepsView
+        value={props.steps}
+      />
       <RegexpView
-        value={props.value}
+        value={props.result}
       />
     </Layout>
   </Layout>

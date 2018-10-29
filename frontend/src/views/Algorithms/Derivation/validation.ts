@@ -1,5 +1,5 @@
 //#region imports
-import { RE } from 'lib/types';
+import { DerivationRequest } from 'lib/types';
 import { Parser } from 'lib/parse/regexp/Parser';
 import { validateRE, validateExtraString } from 'lib/validate';
 import { RegexpInputValue } from 'components/Forms/Regexp';
@@ -18,9 +18,10 @@ interface Data {
  * is in sync.
  *
  * @param data A data object that contains input for validation.
+ * 
  * @return A parsed input, which corresponds to `RE` object.
  */
-export function validate(data: Data): RE {
+export function validate(data: Data): DerivationRequest {
   const values = data.values;
   const secondParameter = data.derivationString;
 
@@ -31,8 +32,9 @@ export function validate(data: Data): RE {
   const regexp = parser.parse();
 
   let derivationString = '';
+  let whiteSpace = [' ', '\t', '\n'];
   for (const char of secondParameter) {
-    if (char !== ' ' && char !== '\n' && char !== '\t') {
+    if (whiteSpace.indexOf(char) !== -1) {
       derivationString += char;
     }
   }
@@ -40,6 +42,6 @@ export function validate(data: Data): RE {
   validateRE(regexp);
   validateExtraString(derivationString, 'derivation string');
 
-  return regexp;
+  return { regexp: regexp, derivation_string: derivationString };
 }
 

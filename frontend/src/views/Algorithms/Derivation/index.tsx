@@ -8,7 +8,7 @@ import { RegexpInputValue } from 'components/Forms/Regexp';
 import { RouteHandler } from 'components';
 import { ValidationError } from 'lib/validate';
 import { ParseError } from 'lib/parse';
-import { RE } from 'lib/types';
+import { DerivationRequest } from 'lib/types';
 
 import { routes } from './routes';
 import { validate } from './validation';
@@ -25,7 +25,7 @@ export interface ControllerProps extends RouteComponentProps<any> {
     pending: boolean;
     retrieved: boolean;
   };
-  onSubmit: (data: { 'regexp': RE, 'derivation_string': string }) => any;
+  onSubmit: (data: DerivationRequest) => any;
   onCancel: () => any;
 }
 
@@ -56,8 +56,8 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
     const values = this.state.values;
     const derivationString = this.state.derivationString;
     try {
-      const value = validate({ values, derivationString });
-      this.props.onSubmit({ 'regexp': value, 'derivation_string': derivationString });
+      const derivationRequest = validate({ values, derivationString });
+      this.props.onSubmit(derivationRequest);
     } catch (err) {
       this.handleSubmitError(err);
     }

@@ -10,6 +10,7 @@ import { RE } from 'lib/types';
 
 export interface State {
   result: RE | null;
+  steps: RE[];
   meta: {
     error: Error | null;
     pending: boolean;
@@ -19,6 +20,7 @@ export interface State {
 
 const initialState: State = {
   result: null,
+  steps: [],
   meta: {
     error: null,
     pending: false,
@@ -41,7 +43,8 @@ export const derivate = (state = initialState, action: DerivationAction): State 
 
     case getType(deriveAction.success):
       return {
-        result: action.payload['result'],
+        result: action.payload.result,
+        steps: action.payload.steps,
         meta: {
           ...state.meta,
           pending: false,
