@@ -12,18 +12,13 @@ const Text = styled(MonoText)`
   font-size: 16px;
 `;
 
-const CenteredUnderneath = styled(Centered)`
-  // display: block;
-  // text-align: center;
-`;
-
 interface DerivationStepsProps {
   steps: RE[];
   trimmed_steps: RE[];
 }
 
 const DerivationStepsView: React.SFC<DerivationStepsProps> = (props) => (
-  <CenteredUnderneath>
+  <Centered>
     <ol>
       {
         props.steps.map((step: RE, idx: number) => (
@@ -35,7 +30,7 @@ const DerivationStepsView: React.SFC<DerivationStepsProps> = (props) => (
         ))
       }
     </ol>
-  </CenteredUnderneath>
+  </Centered>
 );
 
 export default DerivationStepsView;
