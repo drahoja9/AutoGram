@@ -34,7 +34,7 @@ class JSONDecodeError(Exception):
 
     def __init__(self, msg: str = ''):
         self.msg = msg
-        self.exc_type = 'JSONDecodeError'
+        self.exc_type = self.__class__
 
 
 class XMLDecodeError(Exception):
@@ -48,7 +48,7 @@ class XMLDecodeError(Exception):
 
     def __init__(self, msg: str = ''):
         self.msg = msg
-        self.exc_type = 'XMLDecodeError'
+        self.exc_type = self.__class__
 
 
 # ----------------------------------------------------------------------------------------------------------------------
