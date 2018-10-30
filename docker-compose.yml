@@ -1,0 +1,37 @@
+version: '3.2'
+
+services:
+  frontend:
+    restart: always
+    build:
+      context: ./frontend
+      cache_from:
+        - node:8.12-alpine
+    image: frontend:latest
+    ports:
+    - "3000:3000"
+    volumes:
+    - ./frontend/src:/srv/frontend/src:ro
+
+  backend:
+    restart: always
+    image: backend:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Backend/backend:/srv/Backend/backend:ro
+    depends_on:
+      - backend_tests
+
+  backend_tests:
+    restart: "no"
+    build:
+      context: ./Backend
+      cache_from:
+      - python:3.6.5-alpine
+      - pet3rmatta/alibc
+    image: backend:latest
+    volumes:
+    - ./Backend/backend:/srv/Backend/backend:ro
+    - ./Backend/tests:/srv/Backend/tests:ro
+    command: ["pytest"]

@@ -27,7 +27,7 @@ class AltInterfaceException(Exception):
     """
     def __init__(self, msg: str):
         self.msg = msg
-        self.exc_type = 'AltInterfaceException'
+        self.exc_type = self.__class__
 
 
 class AltInterface:

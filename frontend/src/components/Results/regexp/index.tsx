@@ -19,7 +19,7 @@ export interface RegexpViewProps {
 const RegexpView: React.SFC<RegexpViewProps> = (props) => (
   <Centered>
     <Text>
-      { regexpToString(props.value) }
+      {regexpToString(props.value)}
     </Text>
   </Centered>
 );

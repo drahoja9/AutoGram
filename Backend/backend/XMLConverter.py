@@ -34,7 +34,7 @@ class JSONDecodeError(Exception):
 
     def __init__(self, msg: str = ''):
         self.msg = msg
-        self.exc_type = 'JSONDecodeError'
+        self.exc_type = self.__class__
 
 
 class XMLDecodeError(Exception):
@@ -48,7 +48,7 @@ class XMLDecodeError(Exception):
 
     def __init__(self, msg: str = ''):
         self.msg = msg
-        self.exc_type = 'XMLDecodeError'
+        self.exc_type = self.__class__
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -1057,23 +1057,29 @@ class XtJConverter:
         return {'result': result}
 
     @staticmethod
-    def derivation_xml_to_json(result: str, steps: list) -> dict:
+    def derivation_xml_to_json(steps: list, trimmed_steps: list) -> dict:
         """
 
-        Converts given result of a derivation and its steps to a dictionary, that can be converted to JSON
+        Converts given result of a derivation (its steps) to a dictionary, that can be converted to JSON
 
-        :param result: resulting RegExp of a derivation
-        :param steps: `list` of RegExps that represents the steps of the derivation
+        :param steps: `list` of RegExps that represents the untrimmed steps of the derivation
+        :param trimmed_steps: `list` of RegExps that represents the trimmed steps of the derivation
 
-        :return: `dictionary` representation of the result and the steps, can be converted to JSON
+        :return: `dictionary` representation of the result (derivation steps), can be converted to JSON
 
         """
         ret = {}
-        ret['result'] = XtJConverter.simple_xml_to_json(result)
         r_steps = []
+        r_trimmed_steps = []
+
         for step in steps:
             r_steps.append(XtJConverter.simple_xml_to_json(step))
+        for step in trimmed_steps:
+            r_trimmed_steps.append(XtJConverter.simple_xml_to_json(step))
+
         ret['steps'] = r_steps
+        ret['trimmed_steps'] = r_trimmed_steps
+
         return ret
 
     @staticmethod
@@ -1140,7 +1146,7 @@ def json_to_xml(json_file: dict, param: str = None):
         raise JSONDecodeError("Unexpected exception occurred")
 
 
-def xml_to_json(result, param: str = None, steps=None) -> dict:
+def xml_to_json(result, param: str = None, **steps) -> dict:
     """
 
     Converts given algorithm result to corresponding JSON (Python `dictionary`)
@@ -1150,9 +1156,9 @@ def xml_to_json(result, param: str = None, steps=None) -> dict:
     :param param: optional parameter describing result structure. If it's one of the special cases - derivation, \
     comparison, minimization, cnf conversion, left recursion removal or cyk algorithm -  it must be present. \
     If it's not a special case, it can be omitted.
-    :param steps: optional parameter describing steps of the algorithm. Either a `string` or a `list` of `strings`, \
-    according to the param specified. May be present with derivation, minimization or cyk. Must be present with \
-    cnf conversion and left recursion removal.
+    :param steps: optional keyword parameters describing steps of the algorithm. Either a `string` or a `list` of \
+    `strings`, according to the param specified. May be present with minimization or cyk. Must be present with \
+    regexp derivation, cnf conversion and left recursion removal.
 
     :return: `dictionary` representing the JSON file
 
@@ -1166,13 +1172,13 @@ def xml_to_json(result, param: str = None, steps=None) -> dict:
             # ret = XtJConverter.minimization_xml_to_json(result, steps)
             ret = XtJConverter.simple_xml_to_json(result)
         elif param == AlgorithmTypes.REGEXP_DERIVATION:
-            ret = XtJConverter.derivation_xml_to_json(result, steps)
+            ret = XtJConverter.derivation_xml_to_json(steps['steps'], steps['trimmed_steps'])
         elif param == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
             ret = XtJConverter.cnf_leftrec_xml_to_json(result)
         elif param == AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL:
             ret = XtJConverter.cnf_leftrec_xml_to_json(result)
         elif param == AlgorithmTypes.GRAMMAR_CYK:
-            ret = XtJConverter.cyk_xml_to_json(result, steps)
+            ret = XtJConverter.cyk_xml_to_json(result, steps['steps'])
         else:
             ret = XtJConverter.simple_xml_to_json(result)
         return ret

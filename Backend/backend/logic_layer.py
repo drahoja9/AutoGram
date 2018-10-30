@@ -108,25 +108,25 @@ def _regexp_derivation(json_file: dict) -> dict:
 
     :param json_file: `dictionary` containing the input (regexp and derivation string)
 
-    :return: `dictionary` containing the output of derivation (regexp) OR `dictionary` with exception message and \
-    exception type
+    :return: `dictionary` containing the output of derivation (result, steps and trimmed_Steps) OR `dictionary` with \
+    exception message and exception type
 
     """
     try:
         derivation_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.REGEXP_DERIVATION)
         algorithm_steps = []
+        trimmed_algorithm_steps = []
 
         # Derivation of regexp is called separately for each character of derivation string
         with AltInterface() as interface:
             for c in derivation_string:
                 source = interface.algorithms(source, AlgorithmTypes.REGEXP_DERIVATION, c)
                 algorithm_steps.append(source)
+                source = interface.algorithms(source, AlgorithmTypes.REGEXP_TRIM)
+                trimmed_algorithm_steps.append(source)
 
-        # The last step is the desired result, but we have to delete it from algorithm_steps list to avoid duplicates
-        algorithm_result = algorithm_steps[-1]
-        del algorithm_steps[-1]
-
-        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.REGEXP_DERIVATION, algorithm_steps)
+        result = Converter.xml_to_json(None, AlgorithmTypes.REGEXP_DERIVATION, steps=algorithm_steps,
+                                       trimmed_steps=trimmed_algorithm_steps)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
         return {'exception': e.msg, 'type': e.exc_type}
@@ -208,7 +208,7 @@ def _grammar_left_recursion(json_file: dict) -> dict:
 #         with AltInterface() as interface:
 #             algorithm_result = interface.algorithms(source, AlgorithmTypes.AUTOMATON_MINIMIZATION)
 #
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.AUTOMATON_MINIMIZATION, algorithm_steps)
+#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.AUTOMATON_MINIMIZATION, steps=algorithm_steps)
 #         return result
 #     except Converter.JSONDecodeError:
 #         raise
@@ -222,7 +222,7 @@ def _grammar_left_recursion(json_file: dict) -> dict:
 #         # call cyk algorithm, when implemented, should return bool result and step table as an xml_string
 #         # interface can change when implemented
 #         # algorithm_result, algorithm_steps = Algorithm.algorithm(source, 'grammar_cyk', generated_string)
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CYK, algorithm_steps)
+#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CYK, steps=algorithm_steps)
 #         return result
 #     except Converter.JSONDecodeError:
 #         raise

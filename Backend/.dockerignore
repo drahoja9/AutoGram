@@ -1,5 +1,9 @@
+.idea
 docs
-tests
+build
+venv
 README.md
-__pycache__
-Dockerfile
+.directory
+*pytest
+*__pycache__*
+README.md
