@@ -46,11 +46,7 @@ pip install -r requirements.txt
 ```
 make interface
 ```
-5. Run the app ether via 
-```
-make run
-```
-or 
+5. Run the app ether via:
 ```
 python bin/run.py
 ```
