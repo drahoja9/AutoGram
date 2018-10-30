@@ -304,8 +304,12 @@ Regular expression derivation
 **output:** :: 
 
    {
-        "result" : Object<UnboundedRegExp>,
         "steps" : [
+            Object<UnboundedRegExp>,
+            Object<UnboundedRegExp>,
+            ...
+        ],
+        "trimmed_steps" : [
             Object<UnboundedRegExp>,
             Object<UnboundedRegExp>,
             ...
