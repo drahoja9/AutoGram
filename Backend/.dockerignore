@@ -1,11 +1,9 @@
+.idea
 docs
 build
 venv
 README.md
 .directory
-.dockerignore
 *pytest
 *__pycache__*
-Dockerfile
-docker-compose.yml
 README.md
