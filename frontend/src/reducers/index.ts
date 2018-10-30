@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { compare, State as ComparisonState } from './comparison';
 import { transform, State as TransformationState } from './transformation';
 import { determinize, State as DeterminizationState } from './determinization';
+import { minimize, State as MinimizationState } from './minimization';
 import { derivate, State as DerivationState } from './derivation';
 //#endregion
 
@@ -17,6 +18,7 @@ export interface RootState {
   transform: TransformationState,
   determinize: DeterminizationState,
   derivate: DerivationState,
+  minimize: MinimizationState
 }
 
 /**
@@ -27,4 +29,5 @@ export const rootReducer = combineReducers<RootState>({
   transform,
   determinize,
   derivate,
+  minimize
 });

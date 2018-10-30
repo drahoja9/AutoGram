@@ -1169,7 +1169,8 @@ def xml_to_json(result, param: str = None, **steps) -> dict:
         if param == AlgorithmTypes.COMPARISON:
             ret = XtJConverter.comparison_xml_to_json(result)
         elif param == AlgorithmTypes.AUTOMATON_MINIMIZATION:
-            ret = XtJConverter.minimization_xml_to_json(result, steps['steps'])
+            # ret = XtJConverter.minimization_xml_to_json(result, steps)
+            ret = XtJConverter.simple_xml_to_json(result)
         elif param == AlgorithmTypes.REGEXP_DERIVATION:
             ret = XtJConverter.derivation_xml_to_json(steps['steps'], steps['trimmed_steps'])
         elif param == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
