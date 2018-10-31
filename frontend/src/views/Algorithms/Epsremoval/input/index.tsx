@@ -32,7 +32,7 @@ export interface InputProps extends InputState {
 //#endregion
 
 export default class Controller extends React.Component<InputProps, InputState> {
-  constructor(props: InputProps, context: any){
+  constructor(props: InputProps, context: any) {
     super(props, context);
     this.state = this.props.defaultValue || Controller.defaultInitialState;
   }
@@ -43,17 +43,17 @@ export default class Controller extends React.Component<InputProps, InputState> 
     }, () => this.props.onValueChange(this.state));
   }
 
-  public render(){
-    return(
+  public render() {
+    return (
       <Layout>
         <Header><h1>Elimination of ε-transitions</h1></Header>
         <Layout>
           <InputContent>
             <AutomatonInput
-                value={this.state.values}
-                onChange={this.handleChange.bind(this)}
-                isEpsilon={true}
-              />
+              value={this.state.values}
+              onChange={this.handleChange.bind(this)}
+              isEpsilon={true}
+            />
           </InputContent>
         </Layout>
         <Footer>
@@ -66,11 +66,12 @@ export default class Controller extends React.Component<InputProps, InputState> 
     )
   }
 
-  static get defaultInitialState() : InputState {
+  static get defaultInitialState(): InputState {
     return {
-      values : {
-        header: [], 
-        body: []
+      values: {
+        header: [],
+        body: [],
+        isEpsilonOn: false
       }
     }
   }

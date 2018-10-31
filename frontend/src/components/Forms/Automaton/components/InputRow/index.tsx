@@ -29,7 +29,7 @@ const InputRow: React.SFC<InputRowProps> = (props) => (
       onRemove={props.onRemove}
     />
 
-    { props.children }
+    {props.children}
 
     <AddCell
       isFirst={false}

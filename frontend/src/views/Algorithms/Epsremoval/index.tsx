@@ -25,7 +25,7 @@ export interface ControllerProps extends RouteComponentProps<any> {
     pending: boolean;
     retrieved: boolean;
   };
-  onSubmit: (data: ENFA ) => any;
+  onSubmit: (data: ENFA) => any;
   onCancel: () => any;
 }
 
@@ -37,8 +37,8 @@ interface ControllerState {
 class Controller extends React.Component<ControllerProps, ControllerState>{
   public state = {
     values: {
-      header: [], 
-      body: []
+      header: [],
+      body: [],
     }
   };
 
@@ -59,7 +59,7 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
   private handleSubmit() {
     const values = this.state.values;
     try {
-      const value = validate({values});
+      const value = validate({ values });
       this.props.onSubmit(value);
     } catch (err) {
       this.handleSubmitError(err);
@@ -77,7 +77,7 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
     } else {
       const message = 'Unexpected error';
       const description = 'There was an unexpected error. '
-      + 'Try repeating the anction and/or reviewing the syntax.';
+        + 'Try repeating the anction and/or reviewing the syntax.';
       this.presentError(message, description);
     }
   }
@@ -86,7 +86,7 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
     notification.error({ message, description });
   }
 
-  private handleNavigateBack(){
+  private handleNavigateBack() {
     this.props.history.goBack();
   }
 
@@ -104,7 +104,7 @@ class Controller extends React.Component<ControllerProps, ControllerState>{
         defaultValue={this.state}
         pending={this.props.meta.pending}
       />
-    
+
     )
   }
 
