@@ -8,7 +8,6 @@ import InputRow from './components/InputRow';
 import InputCell from './components/InputRow/InputCell';
 import HeaderRow from './components/HeaderRow';
 import HeaderCell from './components/HeaderCell';
-import EpsilonInput from './components/EpsilonInput';
 //#endregion
 
 //#region Styled
@@ -18,9 +17,6 @@ const Table = styled.table`
     border: 1px solid black;
   }
 `;
-const BottomMargin = styled.div`
-  margin-bottom: 10px;
-`
 //#endregion
 
 //#region Component interfaces
@@ -56,9 +52,13 @@ function addRow(props: AutomatonInputProps) {
 
 function addCol(props: AutomatonInputProps) {
   const value = cloneDeep(props.value);
-  value.header.push('');
+  // Defining an index where to insert new column (and it's values) =>
+  // If there's already an epsilon column, we want it at the end (for sake of clarity), 
+  // so we have to insert new column before last element, hence the -1
+  const idx = value.isEpsilonOn ? -1 : value.header.length;
+  value.header.splice(idx, 0, '');
   for (const row of value.body) {
-    row.values.push('');
+    row.values.splice(idx, 0, '');
   }
   props.onChange(value);
 }
@@ -81,6 +81,9 @@ function removeRow(props: AutomatonInputProps, idx: number) {
 
 function removeCol(props: AutomatonInputProps, idx: number) {
   const value = cloneDeep(props.value);
+  if (value.header[idx] === 'ε') {
+    value.isEpsilonOn = false;
+  }
   value.header.splice(idx, 1);
   for (const row of value.body) {
     row.values.splice(idx, 1);
@@ -124,17 +127,6 @@ function inputValueChange(props: AutomatonInputProps, ridx: number, vidx: number
  */
 const AutomatonInput: React.SFC<AutomatonInputProps> = (props) => (
   <div>
-    {
-      props.isEpsilon ?
-        <BottomMargin>
-          <EpsilonInput
-            onClick={() => addEpsilonCol(props)}
-            headerValues={props.value.header}
-          />
-        </BottomMargin>
-        :
-        <div></div>
-    }
     <Table>
       <thead>
         <HeaderRow

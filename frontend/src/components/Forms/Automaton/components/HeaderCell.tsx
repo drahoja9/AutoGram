@@ -74,6 +74,7 @@ class HeaderCell extends React.Component<HeaderCellProps> {
           </ControlWrapper>
         </Anchor>
         <Input
+          disabled={props.value === 'ε' ? true : false}
           onChange={(e) => props.onChange(e.currentTarget.value)}
           value={props.value}
         />
