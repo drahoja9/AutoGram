@@ -1,4 +1,4 @@
-tests.interface\_test module
+Tests for Python interface
 ============================
 
 .. automodule:: tests.interface_test

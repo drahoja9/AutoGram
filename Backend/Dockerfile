@@ -1,27 +1,39 @@
+# Build stage
 FROM pet3rmatta/alibc AS build
 
+WORKDIR /srv/Backend
+
+COPY ./backend/cpp_interface.cpp /srv/Backend/backend/cpp_interface.cpp
+COPY ./Makefile /srv/Backend/Makefile
+
+# Install tools required to build a C++ interface for ALT library and build it through `make interface`
+# Run `docker build --no-cache .` to update dependencies
 RUN apk add --no-cache build-base \
                         libexecinfo-dev \
-                        libxml2-dev
+                        libxml2-dev \
+        && make interface
 
-COPY . /srv/backend
-
-WORKDIR /srv/backend
-
-RUN make interface
-
+        
 # Runtime stage
 FROM python:3.6.5-alpine AS runtime
 
+WORKDIR /srv/Backend
+
+# Install libraries necessary for application to run
+# These will probably never change, so we leverage the cache
 RUN apk add --no-cache libstdc++ libxml2-dev
 
-COPY --from=build /srv/backend /srv/backend
+# Copying from previous stage (build) the built interface and the whole ALT library
+# This won't probably change either, so same as above
+COPY --from=build /srv/Backend/build /srv/Backend/build
 COPY --from=build /usr/lib/libalib2*.so /usr/lib/
 
-WORKDIR /srv/backend
+# Copy list of required packages and install them through pip
+# This way,  copying and installing the packages is re-done only when something changes in requirements.txt
+COPY ./requirements.txt /srv/Backend/requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt 
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+# Copying rest of the project (source code mainly ) at last as this will change most frequently
+COPY . /srv/Backend
 
-CMD [ "python", "bin/run.py" ]
-
+CMD ["python", "bin/run.py"]

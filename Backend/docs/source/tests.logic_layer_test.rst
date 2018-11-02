@@ -1,4 +1,4 @@
-tests.logic\_layer\_test module
+Tests for logic layer
 ===============================
 
 .. automodule:: tests.logic_layer_test

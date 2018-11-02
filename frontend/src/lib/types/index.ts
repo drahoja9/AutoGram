@@ -40,8 +40,8 @@ export interface DerivationRequest {
 }
 
 export interface DerivationResponse {
-  result: RE;
   steps: RE[];
+  trimmed_steps: RE[];
 }
 
 export type CNFRequest = CFG;

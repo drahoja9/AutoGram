@@ -9,7 +9,7 @@ import TextArea from 'antd/lib/input/TextArea';
 //#endregion
 
 //#region Styled
-const Monospaced = styled.div`
+export const Monospaced = styled.div`
   textarea {
     font-family: monospace;
   }
@@ -39,7 +39,7 @@ class RegexpInput extends React.Component<RegexpInputProps> {
 
   public render() {
     return (
-    <Layout>
+      <Layout>
         <Layout>
           <Layout.Content>
             <SpecialChars

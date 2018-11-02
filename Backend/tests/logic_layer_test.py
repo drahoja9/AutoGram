@@ -93,9 +93,9 @@ def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str,
         assert 'after_unit_rules' in res.keys()
         assert result_type == res['result']['type']
     elif 'derivation' in algorithm:
-        assert 'result' in res.keys()
         assert 'steps' in res.keys()
-        assert result_type == res['result']['type']
+        assert 'trimmed_steps' in res.keys()
+        assert result_type == res['steps'][-1]['type']
     else:
         assert result_type == res['type']
 
@@ -151,7 +151,7 @@ def test_simple_algorithm_result(input_file: str, algorithm: str, expected_file:
             'derivation_string': optional_param
         }
         result = logic_layer._regexp_derivation(json_input)
-        result = result['result']
+        result = result['steps'][-1]
     else:
         result = logic_layer.simple_algorithm(json_input, algorithm)
 
