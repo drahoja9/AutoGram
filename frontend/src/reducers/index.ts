@@ -5,6 +5,7 @@ import { transform, State as TransformationState } from './transformation';
 import { determinize, State as DeterminizationState } from './determinization';
 import { minimize, State as MinimizationState } from './minimization';
 import { derivate, State as DerivationState } from './derivation';
+
 //#endregion
 
 /**
@@ -17,8 +18,8 @@ export interface RootState {
   compare: ComparisonState,
   transform: TransformationState,
   determinize: DeterminizationState,
-  derivate: DerivationState,
-  minimize: MinimizationState
+  minimize: MinimizationState,
+  derivate: DerivationState
 }
 
 /**
@@ -28,6 +29,6 @@ export const rootReducer = combineReducers<RootState>({
   compare,
   transform,
   determinize,
-  derivate,
-  minimize
+  minimize,
+  derivate
 });

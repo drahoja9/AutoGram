@@ -27,48 +27,48 @@ const initialState: State = {
 };
 
 /** Transformation reducer. */
-export const transform = (state = initialState, action: TransformationAction) : State => {
+export const transform = (state = initialState, action: TransformationAction): State => {
   switch (action.type) {
-  case getType(transformAction.request):
-    return {
-      ...state,
-      meta: {
-        ...state.meta,
-        error: null,
-        pending: true
-      }
-    };
+    case getType(transformAction.request):
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          error: null,
+          pending: true
+        }
+      };
 
-  case getType(transformAction.success):
-  return {
-    result: action.payload,
-    meta: {
-      ...state.meta,
-      pending: false,
-      retrieved: true
-    }
-  };
+    case getType(transformAction.success):
+      return {
+        result: action.payload,
+        meta: {
+          ...state.meta,
+          pending: false,
+          retrieved: true
+        }
+      };
 
-  case getType(transformAction.cancel):
-    return {
-      ...state,
-      meta: {
-        ...state.meta,
-        pending: false
-      }
-    };
+    case getType(transformAction.cancel):
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          pending: false
+        }
+      };
 
-  case getType(transformAction.fail):
-    return {
-      ...state,
-      meta: {
-        error: action.payload,
-        pending: false,
-        retrieved: true
-      }
-    };
+    case getType(transformAction.fail):
+      return {
+        ...state,
+        meta: {
+          error: action.payload,
+          pending: false,
+          retrieved: true
+        }
+      };
 
-  default:
-    return state;
+    default:
+      return state;
   }
 }

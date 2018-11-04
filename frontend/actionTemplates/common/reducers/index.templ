@@ -1,0 +1,21 @@
+//#region imports
+import { combineReducers } from 'redux';
+{%imports%}
+//#endregion
+
+/**
+ * Application root state.
+ *
+ * This is an object representing a whole application state
+ * which is managed by Redux.
+ */
+export interface RootState {
+{%states%}
+}
+
+/**
+ * Application root reducer.
+ */
+export const rootReducer = combineReducers<RootState>({
+{%reducers%}
+});

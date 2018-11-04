@@ -17,8 +17,12 @@ import DerivationStepsView from './components/derivationSteps';
 //#endregion
 
 //#region Component interfaces
-export interface DerivationResultProps extends DerivationResponse {
+/*export interface DerivationResultProps extends DerivationResponse {
   onBack: () => any;
+}*/
+export interface DerivationResultProps {
+  onBack: () => any;
+  result: DerivationResponse;
 }
 //#endregion
 
@@ -43,8 +47,8 @@ const DerivationResult: React.SFC<DerivationResultProps> = (props) => (
     </Header>
     <Layout>
       <DerivationStepsView
-        steps={props.steps}
-        trimmed_steps={props.trimmed_steps}
+        steps={props.result.steps}
+        trimmed_steps={props.result.trimmed_steps}
       />
     </Layout>
   </Layout>

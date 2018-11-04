@@ -1,0 +1,28 @@
+//#region imports
+import { $Values, $Call } from 'utility-types';
+import { createAction } from 'typesafe-actions';
+import * as types from './constants';
+
+import { {%RequestResponseTypes%} } from 'lib/types';
+//#endregion
+
+export const {%action%} = {
+  request: createAction(types.{%AlgorithmUppercase%}_REQUEST, (data: {%AlgorithmRequest%}) =>
+    ({ type: types.{%AlgorithmUppercase%}_REQUEST, payload: data })
+  ),
+
+  // Create new type for REGEXP result?
+  success: createAction(types.{%AlgorithmUppercase%}_SUCCES, (data: {%AlgorithmResponse%}) =>
+    ({ type: types.{%AlgorithmUppercase%}_SUCCES, payload: data })
+  ),
+
+  cancel: createAction(types.{%AlgorithmUppercase%}_CANCEL, () =>
+    ({ type: types.{%AlgorithmUppercase%}_CANCEL })
+  ),
+
+  fail: createAction(types.{%AlgorithmUppercase%}_FAIL, (err: Error) =>
+    ({ type: types.{%AlgorithmUppercase%}_FAIL, payload: err })
+  )
+};
+
+export type {%AlgorithmCamelcase%}Action = $Call<$Values<typeof {%action%}>>;

@@ -6,7 +6,7 @@ import { Epic } from 'redux-observable';
 
 import { RootAction } from 'actions';
 import { RootState } from 'reducers';
-import * as derivateApi from 'API/Derivation';
+import * as derivateApi from 'API/derivation';
 import * as derivateActions from 'actions/derivation';
 //#endregion
 

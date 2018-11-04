@@ -1,0 +1,8 @@
+//#region imports
+import { {%AlgorithmRequest%} } from 'lib/types';
+import { post } from '../Base';
+//#endregion
+
+export function {%action%}(data: {%AlgorithmRequest%}) {
+  return post('{%backendPath%}', data);
+}

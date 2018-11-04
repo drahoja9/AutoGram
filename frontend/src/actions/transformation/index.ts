@@ -7,20 +7,21 @@ import { TransformRequest, TransformResponse } from 'lib/types';
 //#endregion
 
 export const transform = {
-  request: createAction(types.TRANSFORMATION_REQUEST, (data: TransformRequest) => 
-    ({type: types.TRANSFORMATION_REQUEST, payload: data})
+  request: createAction(types.TRANSFORMATION_REQUEST, (data: TransformRequest) =>
+    ({ type: types.TRANSFORMATION_REQUEST, payload: data })
   ),
 
-  success: createAction(types.TRANSFORMATION_SUCCESS, (data: TransformResponse) => 
-    ({type: types.TRANSFORMATION_SUCCESS, payload: data})
+  // Create new type for REGEXP result?
+  success: createAction(types.TRANSFORMATION_SUCCES, (data: TransformResponse) =>
+    ({ type: types.TRANSFORMATION_SUCCES, payload: data })
   ),
 
-  cancel: createAction(types.TRANSFORMATION_CANCEL, () => 
-    ({type: types.TRANSFORMATION_CANCEL})
+  cancel: createAction(types.TRANSFORMATION_CANCEL, () =>
+    ({ type: types.TRANSFORMATION_CANCEL })
   ),
 
-  fail: createAction(types.TRANSFORMATION_FAIL, (err: Error) => 
-    ({type: types.TRANSFORMATION_FAIL, payload: err})
+  fail: createAction(types.TRANSFORMATION_FAIL, (err: Error) =>
+    ({ type: types.TRANSFORMATION_FAIL, payload: err })
   )
 };
 

@@ -1,0 +1,37 @@
+[
+  {
+    "algorithm" : "comparison",
+    "action" : "compare",
+    "algorithmRequest" : "ComparisonRequest",
+    "algorithmResponse" : "ComparisonResponse",
+    "backendPath" : "/comparison"
+  },
+  {
+    "algorithm" : "transformation",
+    "action" : "transform",
+    "algorithmRequest" : "TransformRequest",
+    "algorithmResponse" : "TransformResponse",
+    "backendPath" : "/transformation"
+  },
+  {
+    "algorithm" : "determinization",
+    "action" : "determinize",
+    "algorithmRequest" : "NFA",
+    "algorithmResponse" : "DFA",
+    "backendPath" : "/algorithms/automaton_determinization"
+  },
+  {
+    "algorithm" : "minimization",
+    "action" : "minimize",
+    "algorithmRequest" : "DFA",
+    "algorithmResponse" : "DFA",
+    "backendPath" : "/algorithms/automaton_minimization"
+  },
+  {
+    "algorithm" : "derivation",
+    "action" : "derivate",
+    "algorithmRequest" : "DerivationRequest",
+    "algorithmResponse" : "DerivationResponse",
+    "backendPath" : "/algorithms/regexp_derivation"
+  }
+]
