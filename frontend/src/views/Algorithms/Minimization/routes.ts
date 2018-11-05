@@ -1,34 +1,16 @@
 //#region imports
 declare var System: any;
-import { RouteProps } from 'react-router-dom';
-import { Redirect } from 'components';
-const { asyncComponent } = require('react-async-component');
+import getRoutes from 'components/AlgorithmView/Routes';
 //#endregion
 
 /**
- * Top level routing for `/algo/det*` paths.
+ * Top level routing for `/algo/min*` paths.
  *
- * Redirects all users from `/algo/det` to `/algo/det/input`.
+ * Redirects all users from `/algo/min` to `/algo/min/input`.
  */
-export const routes: RouteProps[] = [
-  {
-    path: '/algo/min',
-    exact: true,
-    component: Redirect('/algo/min/input')
-  },
-  {
-    path: '/algo/min/input',
-    exact: true,
-    component: asyncComponent({
-      resolve: () => System.import('./input')
-    })
-  },
-  {
-    path: '/algo/min/result',
-    exact: true,
-    component: asyncComponent({
-      resolve: () => System.import('./result')
-    })
-  },
-];
+export const routes = getRoutes(
+  '/algo/min', 
+  System.import('./input'), 
+  System.import('./result')
+);
 
