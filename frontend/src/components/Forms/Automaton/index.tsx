@@ -141,6 +141,7 @@ const AutomatonInput: React.SFC<AutomatonInputProps> = (props) => (
                 onRemove={() => removeCol(props, idx)}
                 onChange={(val: string) => headerValueChange(props, idx, val)}
                 value={value}
+                isEpsilonOn={props.value.isEpsilonOn && value === 'ε'}
               />
             ))
           }
