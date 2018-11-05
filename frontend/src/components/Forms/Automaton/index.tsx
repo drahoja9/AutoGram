@@ -111,6 +111,9 @@ function valueChange(props: AutomatonInputProps, idx: number, value: string) {
 
 function headerValueChange(props: AutomatonInputProps, idx: number, value: string) {
   const value_ = cloneDeep(props.value);
+  if (value === 'ε') {
+    value = 'ThisIsNotEpsilon';
+  }
   value_.header[idx] = value;
   props.onChange(value_);
 }
