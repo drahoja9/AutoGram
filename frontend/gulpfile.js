@@ -1,5 +1,5 @@
-const gulp = require("gulp");
-const replace = require("gulp-replace");
+const gulp = require('gulp');
+const replace = require('gulp-replace');
 const fs = require('fs');
 const rename = require('gulp-rename');
 
@@ -18,15 +18,15 @@ function generateAlgorithmFiles(algo){
     .pipe(replace('{%backendPath%}', algo.backendPath))
 
     .pipe(rename(function(path){
-      path.dirname += "/" + algo.algorithm;
-      path.extname = ".ts"
+      path.dirname += '/' + algo.algorithm;
+      path.extname = '.ts';
     }))
 
     .pipe(gulp.dest(actionTemplatesDistDir));
 }
 
 function generateActionIndex(algos){
-  let imports = "", union = "";
+  let imports = '', union = '';
   for (let algo of algos){
     let capitalized = algo.algorithm.charAt(0).toUpperCase() + algo.algorithm.slice(1);
     imports += `import { ${capitalized}Action } from './${algo.algorithm}';\n`;
@@ -38,7 +38,7 @@ function generateActionIndex(algos){
     .pipe(replace('{%imports%}', imports))
     .pipe(replace('{%actions%}', union))
     .pipe(rename(function(path){
-      path.extname = ".ts"
+      path.extname = '.ts';
     }))
     .pipe(gulp.dest(actionTemplatesDistDir + '/actions'));
 }
@@ -46,13 +46,13 @@ function generateActionIndex(algos){
 function generateApiBase(){
   gulp.src(actionTemplatesDir + '/common/API/Base.templ')
     .pipe(rename(function(path){
-      path.extname = ".ts"
+      path.extname = '.ts';
     }))
     .pipe(gulp.dest(actionTemplatesDistDir + '/API'));
 }
 
 function generateEpicsIndex(algos){
-  let imports = "", union = "";
+  let imports = '', union = '';
   for (let algo of algos){
     imports += `import { ${algo.action}Epic } from './${algo.algorithm}';\n`;
     union += `  ${algo.action}Epic,\n`
@@ -63,13 +63,13 @@ function generateEpicsIndex(algos){
     .pipe(replace('{%imports%}', imports))
     .pipe(replace('{%epics%}', union))
     .pipe(rename(function(path){
-      path.extname = ".ts"
+      path.extname = '.ts'
     }))
     .pipe(gulp.dest(actionTemplatesDistDir + '/epics'));
 }
 
 function generateReducerIndex(algos){
-  let imports = "", union = "", states = "";
+  let imports = '', union = '', states = '';
   for (let algo of algos){
     let capitalized = algo.algorithm.charAt(0).toUpperCase() + algo.algorithm.slice(1);
     imports += `import { ${algo.action}, State as ${capitalized}State } from './${algo.algorithm}';\n`;
@@ -84,7 +84,7 @@ function generateReducerIndex(algos){
     .pipe(replace('{%reducers%}', union))
     .pipe(replace('{%states%}', states))
     .pipe(rename(function(path){
-      path.extname = ".ts"
+      path.extname = '.ts';
     }))
     .pipe(gulp.dest(actionTemplatesDistDir + '/reducers'));
 }
@@ -92,7 +92,7 @@ function generateReducerIndex(algos){
 gulp.task('generate', () => {
   const config = JSON.parse(fs.readFileSync( actionTemplatesDir + '/config/config.json'));
   for (const algorithm of config){
-    console.log("Generating output files for " + algorithm.algorithm);
+    console.log('Generating output files for ' + algorithm.algorithm);
     generateAlgorithmFiles(algorithm);
   }
   generateActionIndex(config);
