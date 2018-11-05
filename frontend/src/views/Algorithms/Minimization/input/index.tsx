@@ -1,7 +1,7 @@
 //#region imports
 import * as React from 'react';
 import AutomatonInput, { AutomatonInputValue } from 'components/Forms/Automaton';
-import Controller, { InputDefaultProps } from 'components/AlgorithmView/InputController';
+import Controller, { InputDefaultProps } from 'components/AlgorithmView/InputView';
 //#endregion
 
 //#region Component interfaces

@@ -4,7 +4,7 @@ import * as React from 'react';
 import RegexpInput, { RegexpInputValue } from 'components/Forms/Regexp'
 import ExtraStringInput, { HeaderStyle } from 'components/Forms/extraString';
 
-import Controller , {InputDefaultProps} from 'components/AlgorithmView/InputController';
+import Controller , {InputDefaultProps} from 'components/AlgorithmView/InputView';
 
 //#endregion
 
