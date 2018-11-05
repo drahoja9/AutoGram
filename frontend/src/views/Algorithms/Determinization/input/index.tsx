@@ -1,41 +1,19 @@
 //#region imports
 import * as React from 'react';
-import { Layout } from 'antd';
-import styled from 'styled-components';
-
-import { TopHeader as Header } from 'components/Layout';
-import AutomatonInput, {
-  AutomatonInputValue,
-} from 'components/Forms/Automaton';
-import Controls from 'components/AlgorithmView/controls/Submit';
-
-//#endregion
-
-const { Content, Footer } = Layout;
-
-//#region Styled
-const InputContent = styled(Content)`
-  padding: 2em;
-`;
+import AutomatonInput, { AutomatonInputValue } from 'components/Forms/Automaton';
+import Controller, { InputDefaultProps } from 'components/AlgorithmView/InputController';
 //#endregion
 
 //#region Component interfaces
 interface InputState {
   values: AutomatonInputValue;
 }
-
-export interface InputProps extends InputState {
-  defaultValue?: InputState;
-  onValueChange: (value: InputState) => any;
-  onSubmit: () => any;
-  pending: boolean;
-}
 //#endregion
 
-export default class Controller extends React.Component<InputProps, InputState> {
-  constructor(props: InputProps, context: any){
+export default class DeterminizationController extends Controller<InputState> {
+  constructor(props: InputDefaultProps<InputState>, context: any) {
     super(props, context);
-    this.state = this.props.defaultValue || Controller.defaultInitialState;
+    this.state = this.props.defaultValue || this.defaultInitialState;
   }
 
   private handleChange(value: AutomatonInputValue) {
@@ -44,33 +22,21 @@ export default class Controller extends React.Component<InputProps, InputState> 
     }, () => this.props.onValueChange(this.state));
   }
 
-  public render(){
-    return(
-      <Layout>
-        <Header><h1>Determinization</h1></Header>
-        <Layout>
-          <InputContent>
-            <AutomatonInput
-                value={this.state.values}
-                onChange={this.handleChange.bind(this)}
-              />
-          </InputContent>
-        </Layout>
-        <Footer>
-          <Controls
-            onSubmit={this.props.onSubmit}
-            pending={this.props.pending}
-            text='Determinize'
-          />
-        </Footer>
-      </Layout>
+  protected get headline() { return 'Determinization'; }
+  protected get action() { return 'Determinize' }
+  protected get content() {
+    return (
+      <AutomatonInput
+        value={this.state.values}
+        onChange={this.handleChange.bind(this)}
+      />
     )
   }
 
-  static get defaultInitialState() : InputState {
+  public get defaultInitialState(): InputState {
     return {
-      values : {
-        header: [], 
+      values: {
+        header: [],
         body: []
       }
     }
