@@ -7,7 +7,7 @@ import { TopHeader as Header } from 'components/Layout';
 import AutomatonInput, {
   AutomatonInputValue,
 } from 'components/Forms/Automaton';
-import Controls from './components/controls';
+import Controls from 'components/AlgorithmView/controls/Submit';
 //#endregion
 
 const { Content, Footer } = Layout;
@@ -59,6 +59,7 @@ export default class Controller extends React.Component<InputProps, InputState> 
           <Controls
             onSubmit={this.props.onSubmit}
             pending={this.props.pending}
+            text='Minimize'
           />
         </Footer>
       </Layout>
