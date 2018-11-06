@@ -16,11 +16,11 @@ export interface AddRowProps {
  */
 const AddRow: React.SFC<AddRowProps> = (props) => (
   <tr>
-  {
-    range(props.width + 1).map((_: any, idx: number) => (
-      <AddCell key={`${idx}`} isFirst={idx === 0} onClick={props.onClick} />
-    ))
-  }
+    {
+      range(props.width + 1).map((_: any, idx: number) => (
+        <AddCell key={`${idx}`} isFirst={idx === 0} onClick={props.onClick} />
+      ))
+    }
   </tr>
 );
 

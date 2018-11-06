@@ -35,6 +35,7 @@ export interface HeaderCellProps {
   onRemove: () => any;
   onChange: (value: string) => any;
   value: string;
+  isEpsilonOn?: boolean
 }
 //#endregion
 
@@ -74,6 +75,7 @@ class HeaderCell extends React.Component<HeaderCellProps> {
           </ControlWrapper>
         </Anchor>
         <Input
+          disabled={props.isEpsilonOn ? true : false}
           onChange={(e) => props.onChange(e.currentTarget.value)}
           value={props.value}
         />

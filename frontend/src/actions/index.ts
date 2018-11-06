@@ -3,6 +3,7 @@ import { TransformationAction } from './transformation';
 import { DeterminizationAction } from './determinization';
 import { MinimizationAction } from './minimization';
 import { DerivationAction } from './derivation';
+import { EpsremovalAction } from './epsremoval';
 
 //TODO - add transformation somewhere somehow
-export type RootAction = ComparisonAction | TransformationAction | DeterminizationAction | DerivationAction | MinimizationAction;
+export type RootAction = ComparisonAction | TransformationAction | DeterminizationAction | DerivationAction | MinimizationAction | EpsremovalAction;

@@ -28,11 +28,13 @@ export interface AutomatonInputValue {
     isFinal: boolean;
     values: string[];
   }[];
+  isEpsilonOn?: boolean;
 }
 
 export interface AutomatonInputProps {
   onChange: (value: any) => any;
   value: AutomatonInputValue;
+  isEpsilon?: boolean;
 }
 //#endregion
 
@@ -50,7 +52,21 @@ function addRow(props: AutomatonInputProps) {
 
 function addCol(props: AutomatonInputProps) {
   const value = cloneDeep(props.value);
-  value.header.push('');
+  // Defining an index where to insert new column (and it's values) =>
+  // If there's already an epsilon column, we want it at the end (for sake of clarity), 
+  // so we have to insert new column before last element, hence the -1
+  const idx = value.isEpsilonOn ? -1 : value.header.length;
+  value.header.splice(idx, 0, '');
+  for (const row of value.body) {
+    row.values.splice(idx, 0, '');
+  }
+  props.onChange(value);
+}
+
+function addEpsilonCol(props: AutomatonInputProps) {
+  const value = cloneDeep(props.value);
+  value.isEpsilonOn = true;
+  value.header.push('ε');
   for (const row of value.body) {
     row.values.push('');
   }
@@ -65,6 +81,9 @@ function removeRow(props: AutomatonInputProps, idx: number) {
 
 function removeCol(props: AutomatonInputProps, idx: number) {
   const value = cloneDeep(props.value);
+  if (value.header[idx] === 'ε') {
+    value.isEpsilonOn = false;
+  }
   value.header.splice(idx, 1);
   for (const row of value.body) {
     row.values.splice(idx, 1);
@@ -74,13 +93,13 @@ function removeCol(props: AutomatonInputProps, idx: number) {
 
 function toggleInitial(props: AutomatonInputProps, idx: number) {
   const value = cloneDeep(props.value);
-  value.body[idx].isInitial = !value.body[idx].isInitial
+  value.body[idx].isInitial = !value.body[idx].isInitial;
   props.onChange(value);
 }
 
 function toggleFinal(props: AutomatonInputProps, idx: number) {
   const value = cloneDeep(props.value);
-  value.body[idx].isFinal = !value.body[idx].isFinal
+  value.body[idx].isFinal = !value.body[idx].isFinal;
   props.onChange(value);
 }
 
@@ -92,6 +111,9 @@ function valueChange(props: AutomatonInputProps, idx: number, value: string) {
 
 function headerValueChange(props: AutomatonInputProps, idx: number, value: string) {
   const value_ = cloneDeep(props.value);
+  if (value === 'ε') {
+    value = 'ThisIsNotEpsilon';
+  }
   value_.header[idx] = value;
   props.onChange(value_);
 }
@@ -107,51 +129,59 @@ function inputValueChange(props: AutomatonInputProps, ridx: number, vidx: number
  * Top level component representing an automaton input
  */
 const AutomatonInput: React.SFC<AutomatonInputProps> = (props) => (
-  <Table>
-    <thead>
-      <HeaderRow onAddCol={() => addCol(props)}>
-      {
-        props.value.header.map((value: string, idx: number) => (
-          <HeaderCell
-            key={`header-cell.${idx}`}
-            onRemove={() => removeCol(props, idx)}
-            onChange={(val: string) => headerValueChange(props, idx, val)}
-            value={value}
-          />
-        ))
-      }
-      </HeaderRow>
-    </thead>
-    <tbody>
-    {
-      props.value.body.map((row: any, idx: number) => (
-        <InputRow
-          key={`input-row.${idx}`}
-          onInitialToggle={() => toggleInitial(props, idx)}
-          onFinalToggle={() => toggleFinal(props, idx)}
-          onRemove={() => removeRow(props, idx)}
-          onValueChange={(value: string) => valueChange(props, idx, value)}
-          value={row.value}
-          isInitial={row.isInitial}
-          isFinal={row.isFinal}
-
+  <div>
+    <Table>
+      <thead>
+        <HeaderRow
           onAddCol={() => addCol(props)}
+          isEpsilon={props.isEpsilon && !props.value.isEpsilonOn}
+          onAddEpsilon={() => addEpsilonCol(props)}
         >
+          {
+            props.value.header.map((value: string, idx: number) => (
+              <HeaderCell
+                key={`header-cell.${idx}`}
+                onRemove={() => removeCol(props, idx)}
+                onChange={(val: string) => headerValueChange(props, idx, val)}
+                value={value}
+                isEpsilonOn={props.value.isEpsilonOn && value === 'ε'}
+              />
+            ))
+          }
+        </HeaderRow>
+      </thead>
+      <tbody>
         {
-          row.values.map((value: string, vidx: number) => (
-            <InputCell
-              key={`input-row.${idx}.${vidx}`}
-              onChange={(val: string) => inputValueChange(props, idx, vidx, val)}
-              value={value}
-            />
+          props.value.body.map((row: any, idx: number) => (
+            <InputRow
+              key={`input-row.${idx}`}
+              onInitialToggle={() => toggleInitial(props, idx)}
+              onFinalToggle={() => toggleFinal(props, idx)}
+              onRemove={() => removeRow(props, idx)}
+              onValueChange={(value: string) => valueChange(props, idx, value)}
+              value={row.value}
+              isInitial={row.isInitial}
+              isFinal={row.isFinal}
+
+              onAddCol={() => addCol(props)}
+            >
+              {
+                row.values.map((value: string, vidx: number) => (
+                  <InputCell
+                    key={`input-row.${idx}.${vidx}`}
+                    onChange={(val: string) => inputValueChange(props, idx, vidx, val)}
+                    value={value}
+                  />
+                ))
+              }
+            </InputRow>
           ))
         }
-        </InputRow>
-      ))
-    }
-      <AddRow width={props.value.header.length} onClick={() => addRow(props)} />
-    </tbody>
-  </Table>
+        <AddRow width={props.value.header.length} onClick={() => addRow(props)} />
+      </tbody>
+    </Table>
+  </div>
 );
+
 
 export default AutomatonInput;

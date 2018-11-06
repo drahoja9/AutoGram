@@ -1,11 +1,14 @@
 //#region imports
 import * as React from 'react';
 import AddCell from './AddCell';
+import AddEpsilonCell from './AddEpsilonCell';
 //#endregion
 
 //#region Component interfaces
 export interface HeaderRowProps {
   onAddCol: () => any;
+  onAddEpsilon: () => any;
+  isEpsilon?: boolean;
 }
 //#endregion
 
@@ -13,11 +16,20 @@ export interface HeaderRowProps {
 const HeaderRow: React.SFC<HeaderRowProps> = (props) => (
   <tr>
     <td>δ</td>
-    { props.children }
+    {props.children}
     <AddCell
       isFirst
       onClick={props.onAddCol}
     />
+    {
+      props.isEpsilon
+        ?
+        <AddEpsilonCell
+          onClick={props.onAddEpsilon}
+        />
+        :
+        null
+    }
   </tr>
 );
 

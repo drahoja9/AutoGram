@@ -5,6 +5,7 @@ import { transform, State as TransformationState } from './transformation';
 import { determinize, State as DeterminizationState } from './determinization';
 import { minimize, State as MinimizationState } from './minimization';
 import { derivate, State as DerivationState } from './derivation';
+import { epsremove, State as EpsremovalState } from './epsremoval';
 //#endregion
 
 /**
@@ -18,7 +19,8 @@ export interface RootState {
   transform: TransformationState,
   determinize: DeterminizationState,
   derivate: DerivationState,
-  minimize: MinimizationState
+  minimize: MinimizationState,
+  epsremove: EpsremovalState,
 }
 
 /**
@@ -29,5 +31,6 @@ export const rootReducer = combineReducers<RootState>({
   transform,
   determinize,
   derivate,
-  minimize
+  minimize,
+  epsremove,
 });
