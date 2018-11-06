@@ -1,0 +1,30 @@
+//#region imports
+import * as React from 'react';
+import { connect } from 'react-redux';
+
+import ***resultView*** from ***;
+import { {%AlgorithmResponse%} } from 'lib/types';
+
+import {
+  mapStateToProps,
+  mapDispatchToProps
+} from './selectors';
+import Controller from 'components/AlgorithmView//ResultView';
+
+//#endregion
+
+class {%AlgorithmCapitalized%}Controller extends Controller<{%AlgorithmResponse%}> {
+  protected get headline(){
+    return '{%AlgoritmCapitalized%} result';
+  }
+  protected get content(){
+    return (
+      ***
+    )
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)({%AlgorithmCapitalized%}Controller);

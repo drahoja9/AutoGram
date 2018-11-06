@@ -1,0 +1,41 @@
+//#region imports
+import * as React from 'react';
+import ***input***, { ***inputValue*** } from ***;
+import Controller, { InputDefaultProps } from 'components/AlgorithmView/InputView';
+//#endregion
+
+//#region Component interfaces
+interface InputState {
+  values: ***inputValue***
+}
+//#endregion
+
+export default class {%AlgorithmCapitalized%}Controller extends Controller<InputState> {
+  constructor(props: InputDefaultProps<InputState>, context: any) {
+    super(props, context);
+    this.state = this.props.defaultValue || this.defaultInitialState;
+  }
+
+  private handleChange(value: ***inputValue***) {
+    this.setState({
+      values: value
+    }, () => this.props.onValueChange(this.state));
+  }
+
+  protected get headline() { return '{%AlgorithmCapitalized%}'; }
+  protected get action() { return '{%ActionCapitalized%}' }
+  protected get content() {
+    return (
+      ***
+    )
+  }
+
+  public get defaultInitialState(): InputState {
+    return {
+      values: {
+        ***
+      }
+    }
+  }
+
+}
