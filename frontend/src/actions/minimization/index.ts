@@ -11,9 +11,8 @@ export const minimize = {
     ({ type: types.MINIMIZATION_REQUEST, payload: data })
   ),
 
-  // Create new type for REGEXP result?
-  success: createAction(types.MINIMIZATION_SUCCES, (data: DFA) =>
-    ({ type: types.MINIMIZATION_SUCCES, payload: data })
+  success: createAction(types.MINIMIZATION_SUCCESS, (data: DFA) =>
+    ({ type: types.MINIMIZATION_SUCCESS, payload: data })
   ),
 
   cancel: createAction(types.MINIMIZATION_CANCEL, () =>

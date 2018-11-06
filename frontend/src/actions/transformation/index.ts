@@ -11,9 +11,8 @@ export const transform = {
     ({ type: types.TRANSFORMATION_REQUEST, payload: data })
   ),
 
-  // Create new type for REGEXP result?
-  success: createAction(types.TRANSFORMATION_SUCCES, (data: TransformResponse) =>
-    ({ type: types.TRANSFORMATION_SUCCES, payload: data })
+  success: createAction(types.TRANSFORMATION_SUCCESS, (data: TransformResponse) =>
+    ({ type: types.TRANSFORMATION_SUCCESS, payload: data })
   ),
 
   cancel: createAction(types.TRANSFORMATION_CANCEL, () =>

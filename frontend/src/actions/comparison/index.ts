@@ -11,9 +11,8 @@ export const compare = {
     ({ type: types.COMPARISON_REQUEST, payload: data })
   ),
 
-  // Create new type for REGEXP result?
-  success: createAction(types.COMPARISON_SUCCES, (data: ComparisonResponse) =>
-    ({ type: types.COMPARISON_SUCCES, payload: data })
+  success: createAction(types.COMPARISON_SUCCESS, (data: ComparisonResponse) =>
+    ({ type: types.COMPARISON_SUCCESS, payload: data })
   ),
 
   cancel: createAction(types.COMPARISON_CANCEL, () =>

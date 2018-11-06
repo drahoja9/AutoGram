@@ -11,9 +11,8 @@ export const {%action%} = {
     ({ type: types.{%AlgorithmUppercase%}_REQUEST, payload: data })
   ),
 
-  // Create new type for REGEXP result?
-  success: createAction(types.{%AlgorithmUppercase%}_SUCCES, (data: {%AlgorithmResponse%}) =>
-    ({ type: types.{%AlgorithmUppercase%}_SUCCES, payload: data })
+  success: createAction(types.{%AlgorithmUppercase%}_SUCCESS, (data: {%AlgorithmResponse%}) =>
+    ({ type: types.{%AlgorithmUppercase%}_SUCCESS, payload: data })
   ),
 
   cancel: createAction(types.{%AlgorithmUppercase%}_CANCEL, () =>

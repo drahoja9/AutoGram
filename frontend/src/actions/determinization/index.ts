@@ -11,9 +11,8 @@ export const determinize = {
     ({ type: types.DETERMINIZATION_REQUEST, payload: data })
   ),
 
-  // Create new type for REGEXP result?
-  success: createAction(types.DETERMINIZATION_SUCCES, (data: DFA) =>
-    ({ type: types.DETERMINIZATION_SUCCES, payload: data })
+  success: createAction(types.DETERMINIZATION_SUCCESS, (data: DFA) =>
+    ({ type: types.DETERMINIZATION_SUCCESS, payload: data })
   ),
 
   cancel: createAction(types.DETERMINIZATION_CANCEL, () =>
