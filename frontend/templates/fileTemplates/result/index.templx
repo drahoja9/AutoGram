@@ -13,9 +13,9 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class {%AlgorithmCapitalized%}Controller extends Controller<{%AlgorithmResponse%}> {
+class {%AlgorithmCamelcase%}Controller extends Controller<{%AlgorithmResponse%}> {
   protected get headline(){
-    return '{%AlgoritmCapitalized%} result';
+    return '{%AlgorithmCamelcase%} result';
   }
   protected get content(){
     return (
@@ -27,4 +27,4 @@ class {%AlgorithmCapitalized%}Controller extends Controller<{%AlgorithmResponse%
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)({%AlgorithmCapitalized%}Controller);
+)({%AlgorithmCamelcase%}Controller);

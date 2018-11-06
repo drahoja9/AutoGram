@@ -2,7 +2,7 @@
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { AutomatonInputValue } from 'components/Forms/Automaton';
+import { ***inputValue*** } from ***;
 import { {%AlgorithmRequest%} } from 'lib/types';
 
 import { routes } from './routes';
@@ -16,12 +16,12 @@ import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
 //#region Component interfaces
-interface {%AlgorithmCapitalized%}State {
+interface {%AlgorithmCamelcase%}State {
   values: ***;
 }
 //#endregion
 
-class {%AlgorithmCapitalized%}Controller extends Controller<{%AlgorithmRequest%}, {%AlgorithmCapitalized%}State>{
+class {%AlgorithmCamelcase%}Controller extends Controller<{%AlgorithmRequest%}, {%AlgorithmCamelcase%}State>{
   public state = {
     values: {
       ***
@@ -51,4 +51,4 @@ class {%AlgorithmCapitalized%}Controller extends Controller<{%AlgorithmRequest%}
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter({%AlgorithmCapitalized%}Controller));
+)(withRouter({%AlgorithmCamelcase%}Controller));

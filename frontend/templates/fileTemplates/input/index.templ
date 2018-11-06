@@ -10,7 +10,7 @@ interface InputState {
 }
 //#endregion
 
-export default class {%AlgorithmCapitalized%}Controller extends Controller<InputState> {
+export default class {%AlgorithmCamelcase%}Controller extends Controller<InputState> {
   constructor(props: InputDefaultProps<InputState>, context: any) {
     super(props, context);
     this.state = this.props.defaultValue || this.defaultInitialState;
@@ -22,8 +22,8 @@ export default class {%AlgorithmCapitalized%}Controller extends Controller<Input
     }, () => this.props.onValueChange(this.state));
   }
 
-  protected get headline() { return '{%AlgorithmCapitalized%}'; }
-  protected get action() { return '{%ActionCapitalized%}' }
+  protected get headline() { return '{%AlgorithmCamelcase%}'; }
+  protected get action() { return '{%ActionCamelcase%}' }
   protected get content() {
     return (
       ***

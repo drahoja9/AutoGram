@@ -18,20 +18,31 @@
     "action" : "determinize",
     "algorithmRequest" : "NFA",
     "algorithmResponse" : "DFA",
-    "backendPath" : "/algorithms/automaton_determinization"
+    "backendPath" : "/algorithms/automaton_determinization",
+    "url" : "det"
   },
   {
     "algorithm" : "minimization",
     "action" : "minimize",
     "algorithmRequest" : "DFA",
     "algorithmResponse" : "DFA",
-    "backendPath" : "/algorithms/automaton_minimization"
+    "backendPath" : "/algorithms/automaton_minimization",
+    "url" : "min"
   },
   {
     "algorithm" : "derivation",
     "action" : "derivate",
     "algorithmRequest" : "DerivationRequest",
     "algorithmResponse" : "DerivationResponse",
-    "backendPath" : "/algorithms/regexp_derivation"
+    "backendPath" : "/algorithms/regexp_derivation",
+    "url" : "der"
+  },
+  {
+    "algorithm" : "epsremoval",
+    "action" : "epsremove",
+    "algorithmRequest" : "ENFA",
+    "algorithmResponse" : "NFA",
+    "backendPath" : "/algorithms/automaton_epsilon",
+    "url" : "eps"
   }
 ]

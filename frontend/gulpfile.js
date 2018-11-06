@@ -40,7 +40,7 @@ function generateAlgorithmFileTemplates(algo){
     .pipe(replace('{%url%}', algo.url))
 
     .pipe(rename(function(path){
-      path.dirname += '/' + algo.algorithm.charAt(0).toUpperCase() + algo.algorithm.slice(1);
+      path.dirname = algo.algorithm.charAt(0).toUpperCase() + algo.algorithm.slice(1) + '/' + path.dirname;
       if (path.extname === '.templ'){
         path.extname = '.ts';
       } else if (path.extname === '.templx'){
