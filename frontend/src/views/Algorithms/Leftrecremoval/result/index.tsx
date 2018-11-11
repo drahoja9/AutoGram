@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import GrammarView from 'components/Results/grammar';
+import RecStepsView from './components/recSteps';
 import { LeftRecRemovalResponse } from 'lib/types';
 
 import {
@@ -19,8 +19,8 @@ class LeftrecremovalController extends Controller<LeftRecRemovalResponse> {
   }
   protected get content(){
     return (
-      <GrammarView
-        value = {this.props.result.result}
+      <RecStepsView
+        value = {this.props.result}
       />
     )
   }

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import GrammarView from 'components/Results/grammar';
+import CnfStepsView from './components/cnfSteps';
 import { CNFResponse } from 'lib/types';
 
 import {
@@ -19,8 +19,8 @@ class CnfController extends Controller<CNFResponse> {
   }
   protected get content(){
     return (
-      <GrammarView
-        value = {this.props.result.result}
+      <CnfStepsView
+        value = {this.props.result}
       />
     )
   }
