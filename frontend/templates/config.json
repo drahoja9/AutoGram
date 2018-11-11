@@ -52,5 +52,21 @@
     "algorithmResponse": "CFGReductionResponse",
     "backendPath": "/algorithms/grammar_reduction",
     "url": "red"
+  },
+  {
+    "algorithm": "CFGEpsRemoval",
+    "action": "CFGEpsRemove",
+    "algorithmRequest": "CFGEpsRemovalRequest",
+    "algorithmResponse": "CFGEpsRemovalResponse",
+    "backendPath": "/algorithms/grammar_epsilon",
+    "url": "cfg_eps"
+  },
+  {
+    "algorithm": "CFGUnitRemoval",
+    "action": "CFGUnitRemove",
+    "algorithmRequest": "CFGUnitRemovalRequest",
+    "algorithmResponse": "CFGUnitRemovalResponse",
+    "backendPath": "/algorithms/grammar_unit",
+    "url": "cfg_unit"
   }
 ]

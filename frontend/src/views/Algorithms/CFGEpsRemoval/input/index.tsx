@@ -10,7 +10,7 @@ interface InputState {
 }
 //#endregion
 
-export default class CFGreductionController extends Controller<InputState> {
+export default class CFGEpsRemovalController extends Controller<InputState> {
   constructor(props: InputDefaultProps<InputState>, context: any) {
     super(props, context);
     this.state = this.props.defaultValue || this.defaultInitialState;
@@ -22,8 +22,8 @@ export default class CFGreductionController extends Controller<InputState> {
     }, () => this.props.onValueChange(this.state));
   }
 
-  protected get headline() { return 'Context-free grammar reduction'; }
-  protected get action() { return 'Reduce' }
+  protected get headline() { return 'Context-free grammar epsilon removal'; }
+  protected get action() { return 'Remove' }
   protected get content() {
     return (
       <GrammarInput

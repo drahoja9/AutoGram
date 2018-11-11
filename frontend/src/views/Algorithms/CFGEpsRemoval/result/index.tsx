@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import GrammarView from 'components/Results/grammar';
-import { CFGReductionResponse } from 'lib/types';
+import { CFGEpsRemovalResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,9 +13,9 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class CFGreductionController extends Controller<CFGReductionResponse> {
+class CFGEpsRemovalController extends Controller<CFGEpsRemovalResponse> {
   protected get headline() {
-    return 'Context-free grammar reduction result';
+    return 'Context-free grammar epsilon removal result';
   }
   protected get content() {
     return (
@@ -29,4 +29,4 @@ class CFGreductionController extends Controller<CFGReductionResponse> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CFGreductionController);
+)(CFGEpsRemovalController);

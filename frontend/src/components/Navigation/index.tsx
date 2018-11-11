@@ -80,6 +80,24 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
           </NavLink>
         </Menu.Item>
 
+        <Menu.Item key="/algo/red">
+          <NavLink to="/algo/red">
+            Context-free grammar reduction
+          </NavLink>
+        </Menu.Item>
+
+        <Menu.Item key="/algo/cfg_eps">
+          <NavLink to="/algo/cfg_eps">
+            Context-free grammar epsilon removal
+          </NavLink>
+        </Menu.Item>
+
+        <Menu.Item key="/algo/cfg_unit">
+          <NavLink to="/algo/cfg_unit">
+            Context-free grammar unit rules removal
+          </NavLink>
+        </Menu.Item>
+
         <Menu.Item key="/algo/cnf">
           <NavLink to="/algo/cnf">
             CNF

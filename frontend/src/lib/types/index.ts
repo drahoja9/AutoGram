@@ -45,9 +45,13 @@ export interface DerivationResponse {
 }
 
 export type CFGReductionRequest = CFG;
-export interface CFGReductionResponse {
-  result: CFG;
-}
+export type CFGReductionResponse = CFG;
+
+export type CFGEpsRemovalRequest = CFG;
+export type CFGEpsRemovalResponse = CFG;
+
+export type CFGUnitRemovalRequest = CFG;
+export type CFGUnitRemovalResponse = CFG;
 
 export type CNFRequest = CFG;
 export interface CNFResponse {
