@@ -11,7 +11,7 @@ services:
     ports:
     - "3000:3000"
     volumes:
-    - ./frontend/src:/srv/frontend/src:ro
+    - ./frontend/src:/home/node/src:ro
 
   backend:
     restart: always

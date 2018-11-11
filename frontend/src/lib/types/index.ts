@@ -44,6 +44,15 @@ export interface DerivationResponse {
   trimmed_steps: RE[];
 }
 
+export type CFGReductionRequest = CFG;
+export type CFGReductionResponse = CFG;
+
+export type CFGEpsRemovalRequest = CFG;
+export type CFGEpsRemovalResponse = CFG;
+
+export type CFGUnitRemovalRequest = CFG;
+export type CFGUnitRemovalResponse = CFG;
+
 export type CNFRequest = CFG;
 export interface CNFResponse {
   after_reduction: CFG;
