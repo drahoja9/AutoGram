@@ -28,7 +28,8 @@ class CykController extends Controller<CYKRequest, CykState>{
         terms: '',
         rules: '',
         startSymbol: '',
-      }
+      },
+      cykString: ''
   };
 
   public get url(){
@@ -40,8 +41,9 @@ class CykController extends Controller<CYKRequest, CykState>{
 
   protected handleSubmit() {
     const values = this.state.values;
+    const cykString = this.state.cykString;
     try {
-      const value = validate({values});
+      const value = validate({values, cykString});
       this.props.onSubmit(value);
     } catch (err) {
       this.handleSubmitError(err);

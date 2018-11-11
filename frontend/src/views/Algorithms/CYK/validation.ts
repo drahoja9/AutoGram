@@ -3,10 +3,12 @@ import { GRType, CNF } from 'lib/types';
 import { Parser as GRParser } from 'lib/parse/grammar/Parser';
 import { validateCNF } from 'lib/validate';
 import { GrammarInputValue } from 'components/Forms/Grammar';
+import { CYKRequest } from 'lib/types';
 //#endregion
 
 interface Data {
-  values: GrammarInputValue
+  values: GrammarInputValue;
+  cykString: string;
 }
 
 /**
@@ -19,7 +21,7 @@ interface Data {
  * @param data A data object that contains input for validation.
  * @return A parsed input, which corresponds to `CFG` object.
  */
-export function validate(data: Data): CNF {
+export function validate(data: Data): CYKRequest {
   const p = new GRParser(data.values.nonTerms);
     // Parse input
     const nonTerm = p.parseIdentList();
@@ -38,6 +40,9 @@ export function validate(data: Data): CNF {
     } as CNF;
 
     validateCNF(grammar);
-    return grammar;
+
+    //validate string!!
+    
+    return {grammar: grammar, cyk_string: data.cykString};
 }
 
