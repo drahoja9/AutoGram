@@ -6,6 +6,7 @@ import { determinizeEpic } from './determinization';
 import { minimizeEpic } from './minimization';
 import { derivateEpic } from './derivation';
 import { epsremoveEpic } from './epsremoval';
+import { CFGreduceEpic } from './CFGreduction';
 
 //#endregion
 
@@ -18,5 +19,6 @@ export const rootEpic = combineEpics(
   determinizeEpic,
   minimizeEpic,
   derivateEpic,
-  epsremoveEpic
+  epsremoveEpic,
+  CFGreduceEpic
 );

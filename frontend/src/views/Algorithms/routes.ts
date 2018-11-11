@@ -41,6 +41,12 @@ export const routes: RouteProps[] = [
     })
   },
   {
+    path: '/algo/red',
+    component: asyncComponent({
+      resolve: () => System.import('./CFGreduction')
+    })
+  },
+  {
     path: '/algo/cnf',
     component: asyncComponent({
       resolve: () => System.import('./CNF')
