@@ -1,40 +1,25 @@
 //#region imports
 import * as React from 'react';
-import { Layout } from 'antd';
-import styled from 'styled-components';
 
-import { TopHeader as Header } from 'components/Layout';
 import RegexpInput, { RegexpInputValue } from 'components/Forms/Regexp'
 import ExtraStringInput, { HeaderStyle } from 'components/Forms/extraString';
-import Controls from './components/controls';
+
+import Controller , {InputDefaultProps} from 'components/AlgorithmView/InputView';
+
 //#endregion
 
-const { Content, Footer } = Layout;
-
-//#region Styled
-const InputContent = styled(Content)`
-  padding: 2em;
-`;
-//#endregion
 
 //#region Component interfaces
 interface InputState {
   values: RegexpInputValue;
   derivationString: string;
 }
-
-export interface InputProps extends InputState {
-  defaultValue?: InputState;
-  onValueChange: (value: InputState) => any;
-  onSubmit: () => any;
-  pending: boolean;
-}
 //#endregion
 
-export default class Controller extends React.Component<InputProps, InputState> {
-  constructor(props: InputProps, context: any) {
+export default class DerivationController extends Controller<InputState> {
+  constructor(props: InputDefaultProps<InputState>, context: any) {
     super(props, context);
-    this.state = this.props.defaultValue || Controller.defaultInitialState;
+    this.state = this.props.defaultValue || this.defaultInitialState;
   }
 
   private handleChangeValue(value: RegexpInputValue) {
@@ -49,37 +34,26 @@ export default class Controller extends React.Component<InputProps, InputState> 
     }, () => this.props.onValueChange(this.state));
   }
 
-  public render() {
-    return (
-      <Layout>
-        <Header><h1>Regexp derivation</h1></Header>
-        <Layout>
-          <InputContent>
-            <HeaderStyle>Regexp to be derived:</HeaderStyle>
-            <RegexpInput
-              value={this.state.values}
-              onChange={this.handleChangeValue.bind(this)}
-            />
-          </InputContent>
-          <InputContent>
-            <ExtraStringInput
-              header={'Derivation string'}
-              value={this.state.derivationString}
-              onChange={this.handleChangeDerivationString.bind(this)}
-            />
-          </InputContent>
-        </Layout>
-        <Footer>
-          <Controls
-            onSubmit={this.props.onSubmit}
-            pending={this.props.pending}
+  protected get headline() { return 'Regexp derivation'; }
+  protected get action() {return 'Derivate'}
+  protected get content(){
+    return(
+      <div>
+        <HeaderStyle>Regexp to be derived:</HeaderStyle>
+          <RegexpInput
+            value={this.state.values}
+            onChange={this.handleChangeValue.bind(this)}
           />
-        </Footer>
-      </Layout>
+          <ExtraStringInput
+            header={'Derivation string'}
+            value={this.state.derivationString}
+            onChange={this.handleChangeDerivationString.bind(this)}
+          />
+      </div>
     )
   }
 
-  static get defaultInitialState(): InputState {
+  public get defaultInitialState(): InputState {
     return {
       values: '',
       derivationString: ''

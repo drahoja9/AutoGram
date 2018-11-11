@@ -6,6 +6,7 @@ import { determinize, State as DeterminizationState } from './determinization';
 import { minimize, State as MinimizationState } from './minimization';
 import { derivate, State as DerivationState } from './derivation';
 import { epsremove, State as EpsremovalState } from './epsremoval';
+
 //#endregion
 
 /**
@@ -18,9 +19,9 @@ export interface RootState {
   compare: ComparisonState,
   transform: TransformationState,
   determinize: DeterminizationState,
-  derivate: DerivationState,
   minimize: MinimizationState,
-  epsremove: EpsremovalState,
+  derivate: DerivationState,
+  epsremove: EpsremovalState
 }
 
 /**
@@ -30,7 +31,7 @@ export const rootReducer = combineReducers<RootState>({
   compare,
   transform,
   determinize,
-  derivate,
   minimize,
-  epsremove,
+  derivate,
+  epsremove
 });

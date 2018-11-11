@@ -11,9 +11,8 @@ export const derivate = {
     ({ type: types.DERIVATION_REQUEST, payload: data })
   ),
 
-  // Create new type for REGEXP result?
-  success: createAction(types.DERIVATION_SUCCES, (data: DerivationResponse) =>
-    ({ type: types.DERIVATION_SUCCES, payload: data })
+  success: createAction(types.DERIVATION_SUCCESS, (data: DerivationResponse) =>
+    ({ type: types.DERIVATION_SUCCESS, payload: data })
   ),
 
   cancel: createAction(types.DERIVATION_CANCEL, () =>

@@ -9,7 +9,7 @@ import LangInput, {
 import View from './view';
 import Controls from './components/controls';
 import { validate } from './validation';
-import { ComparisonRequest } from 'lib/types';
+import { ComparisonRequest, ComparisonResponse } from 'lib/types';
 import { ValidationError } from 'lib/validate';
 import { ParseError } from 'lib/parse';
 import {
@@ -20,7 +20,7 @@ import {
 
 //#region Component interfaces
 export interface ControllerProps {
-  result: boolean;
+  result: ComparisonResponse;
   meta: {
     error: Error | null;
     pending: boolean;
@@ -159,7 +159,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
       <Controls
         onSubmit={this.handleSubmit.bind(this)}
         pending={this.props.meta.pending}
-        result={retrieved && !pending && !error ? this.props.result : undefined}
+        result={retrieved && !pending && !error ? this.props.result.result : undefined}
       />
     );
   }

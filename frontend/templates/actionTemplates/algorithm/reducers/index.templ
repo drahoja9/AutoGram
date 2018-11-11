@@ -1,0 +1,74 @@
+//#region imports
+import { getType } from 'typesafe-actions';
+import {
+  {%action%} as {%action%}Action,
+  {%AlgorithmCamelcase%}Action
+} from 'actions/{%algorithm%}';
+
+import { {%AlgorithmResponse%} } from 'lib/types';
+//#endregion
+
+export interface State {
+  result: {%AlgorithmResponse%} | null;
+  meta: {
+    error: Error | null;
+    pending: boolean;
+    retrieved: boolean;
+  }
+}
+
+const initialState: State = {
+  result: null,
+  meta: {
+    error: null,
+    pending: false,
+    retrieved: false
+  }
+};
+
+/** {%AlgorithmCamelcase%} reducer. */
+export const {%action%} = (state = initialState, action: {%AlgorithmCamelcase%}Action): State => {
+  switch (action.type) {
+    case getType({%action%}Action.request):
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          error: null,
+          pending: true
+        }
+      };
+
+    case getType({%action%}Action.success):
+      return {
+        result: action.payload,
+        meta: {
+          ...state.meta,
+          pending: false,
+          retrieved: true
+        }
+      };
+
+    case getType({%action%}Action.cancel):
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          pending: false
+        }
+      };
+
+    case getType({%action%}Action.fail):
+      return {
+        ...state,
+        meta: {
+          error: action.payload,
+          pending: false,
+          retrieved: true
+        }
+      };
+
+    default:
+      return state;
+  }
+}

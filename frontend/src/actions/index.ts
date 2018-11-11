@@ -5,5 +5,5 @@ import { MinimizationAction } from './minimization';
 import { DerivationAction } from './derivation';
 import { EpsremovalAction } from './epsremoval';
 
-//TODO - add transformation somewhere somehow
-export type RootAction = ComparisonAction | TransformationAction | DeterminizationAction | DerivationAction | MinimizationAction | EpsremovalAction;
+
+export type RootAction = ComparisonAction | TransformationAction | DeterminizationAction | MinimizationAction | DerivationAction | EpsremovalAction;

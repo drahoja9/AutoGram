@@ -1,0 +1,21 @@
+//#region imports
+import 'rxjs';
+import { Observable } from 'rxjs';
+import { isActionOf } from 'typesafe-actions';
+import { Epic } from 'redux-observable';
+
+import { RootAction } from 'actions';
+import { RootState } from 'reducers';
+import * as {%action%}Api from 'API/{%algorithm%}';
+import * as {%action%}Actions from 'actions/{%algorithm%}';
+//#endregion
+
+export const {%action%}Epic: Epic<RootAction, RootState> = (action$) => (
+  action$.filter(isActionOf({%action%}Actions.{%action%}.request))
+    .switchMap(action =>
+      {%action%}Api.{%action%}(action.payload)
+        .takeUntil(action$.filter(isActionOf({%action%}Actions.{%action%}.cancel)))
+        .map(res => {%action%}Actions.{%action%}.success(res.response))
+        .catch(error => Observable.of({%action%}Actions.{%action%}.fail(error)))
+    )
+);

@@ -26,49 +26,49 @@ const initialState: State = {
   }
 };
 
-/** Transformation reducer. */
-export const minimize = (state = initialState, action: MinimizationAction) : State => {
+/** Minimization reducer. */
+export const minimize = (state = initialState, action: MinimizationAction): State => {
   switch (action.type) {
-  case getType(minimizeAction.request):
-    return {
-      ...state,
-      meta: {
-        ...state.meta,
-        error: null,
-        pending: true
-      }
-    };
+    case getType(minimizeAction.request):
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          error: null,
+          pending: true
+        }
+      };
 
-  case getType(minimizeAction.success):
-  return {
-    result: action.payload,
-    meta: {
-      ...state.meta,
-      pending: false,
-      retrieved: true
-    }
-  };
+    case getType(minimizeAction.success):
+      return {
+        result: action.payload,
+        meta: {
+          ...state.meta,
+          pending: false,
+          retrieved: true
+        }
+      };
 
-  case getType(minimizeAction.cancel):
-    return {
-      ...state,
-      meta: {
-        ...state.meta,
-        pending: false
-      }
-    };
+    case getType(minimizeAction.cancel):
+      return {
+        ...state,
+        meta: {
+          ...state.meta,
+          pending: false
+        }
+      };
 
-  case getType(minimizeAction.fail):
-    return {
-      ...state,
-      meta: {
-        error: action.payload,
-        pending: false,
-        retrieved: true
-      }
-    };
+    case getType(minimizeAction.fail):
+      return {
+        ...state,
+        meta: {
+          error: action.payload,
+          pending: false,
+          retrieved: true
+        }
+      };
 
-  default:
-    return state;
+    default:
+      return state;
   }
 }

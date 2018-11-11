@@ -1,16 +1,15 @@
 //#region imports
 import { getType } from 'typesafe-actions';
 import {
-  derivate as deriveAction,
+  derivate as derivateAction,
   DerivationAction
 } from 'actions/derivation';
 
-import { RE } from 'lib/types';
+import { DerivationResponse } from 'lib/types';
 //#endregion
 
 export interface State {
-  steps: RE[];
-  trimmed_steps: RE[];
+  result: DerivationResponse | null;
   meta: {
     error: Error | null;
     pending: boolean;
@@ -19,8 +18,7 @@ export interface State {
 }
 
 const initialState: State = {
-  steps: [],
-  trimmed_steps: [],
+  result: null,
   meta: {
     error: null,
     pending: false,
@@ -31,7 +29,7 @@ const initialState: State = {
 /** Derivation reducer. */
 export const derivate = (state = initialState, action: DerivationAction): State => {
   switch (action.type) {
-    case getType(deriveAction.request):
+    case getType(derivateAction.request):
       return {
         ...state,
         meta: {
@@ -41,10 +39,9 @@ export const derivate = (state = initialState, action: DerivationAction): State 
         }
       };
 
-    case getType(deriveAction.success):
+    case getType(derivateAction.success):
       return {
-        steps: action.payload.steps,
-        trimmed_steps: action.payload.trimmed_steps,
+        result: action.payload,
         meta: {
           ...state.meta,
           pending: false,
@@ -52,7 +49,7 @@ export const derivate = (state = initialState, action: DerivationAction): State 
         }
       };
 
-    case getType(deriveAction.cancel):
+    case getType(derivateAction.cancel):
       return {
         ...state,
         meta: {
@@ -61,7 +58,7 @@ export const derivate = (state = initialState, action: DerivationAction): State 
         }
       };
 
-    case getType(deriveAction.fail):
+    case getType(derivateAction.fail):
       return {
         ...state,
         meta: {
