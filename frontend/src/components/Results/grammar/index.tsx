@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { GR } from 'lib/types';
 import { PullRight } from 'components/Layout'
 import MonoText from '../components/MonoText';
-import { grammarRulesToString } from './stringify';
+import { grammarRulesToString, grammarTermsToString, symbolToString } from './stringify';
 //#endregion
 
 //#region Styled
@@ -41,17 +41,17 @@ const ContentRow: React.SFC<ContentRowProps> = (props) => (
 );
 
 const GrammarView: React.SFC<GrammarViewProps> = (props) => (
-  <>
+  <div>
     <ContentRow label="Non-terminal alphabet">
-      <MonoText>{props.value.nonterminal_alphabet.join(', ')}</MonoText>
+      <MonoText>{grammarTermsToString(props.value.nonterminal_alphabet)}</MonoText>
     </ContentRow>
 
     <ContentRow label="Terminal alphabet">
-      <MonoText>{props.value.terminal_alphabet.join(', ')}</MonoText>
+      <MonoText>{grammarTermsToString(props.value.terminal_alphabet)}</MonoText>
     </ContentRow>
 
     <ContentRow label="Initial symbol">
-      <MonoText>{props.value.initial_symbol}</MonoText>
+      <MonoText>{symbolToString(props.value.initial_symbol)}</MonoText>
     </ContentRow>
 
     <ContentRow label="Rules">
@@ -60,7 +60,7 @@ const GrammarView: React.SFC<GrammarViewProps> = (props) => (
           .map((rules, idx) => <MonoText key={idx}>{rules}</MonoText>)
       }
     </ContentRow>
-  </>
+  </div>
 );
 
 export default GrammarView;

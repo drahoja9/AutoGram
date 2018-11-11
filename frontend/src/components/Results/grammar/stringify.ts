@@ -2,6 +2,32 @@
 import { GR } from 'lib/types';
 //#endregion
 
+export function symbolToString(symbol: string) : string {
+  if (symbol.length == 1){
+    return symbol;
+  } else if (symbol.length == 2 && symbol[1] == "'"){
+    return symbol;
+  } else {
+    return '<' + symbol + '>';
+  }
+}
+
+export function grammarTermsToString (terms: string[]) : string {
+  let res = '';
+  let isFirst = true;
+
+  for (let term of terms){
+    if (isFirst){
+      isFirst = false;
+    } else {
+      res += ', ';
+    }
+    res += symbolToString(term)
+  }
+
+  return res;
+}
+
 export function grammarRulesToString (grammar: GR) : string[] {
   let ruleMap : {[key: string] : Array<string[]|[null]>} = {};
 
@@ -22,7 +48,7 @@ export function grammarRulesToString (grammar: GR) : string[] {
   for (let nonterminal of grammar.nonterminal_alphabet){
     let str : string = "";
     if (ruleMap[nonterminal]){
-      str += nonterminal + " -> ";
+      str += symbolToString(nonterminal) + " -> ";
       ruleFirst = true;
       for (let rule of ruleMap[nonterminal]){
         if (ruleFirst){
@@ -33,8 +59,9 @@ export function grammarRulesToString (grammar: GR) : string[] {
         for (let symbol of rule){
           if (symbol === null){
             str += "ε";
-          } else {
-            str += symbol;
+          } else
+          {
+            str += symbolToString(symbol);
           }
         }
       }

@@ -69,7 +69,10 @@ export interface LeftRecRemovalResponse {
   result: CFG;
 }
 
-export type CYKRequest = CNF;
+export interface CYKRequest {
+  grammar: CNF;
+  cyk_string: string;
+}
 export interface CYKResponse {
   result: boolean;
   step_table: any;

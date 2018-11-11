@@ -9,6 +9,9 @@ import { epsremoveEpic } from './epsremoval';
 import { CFGreduceEpic } from './CFGreduction';
 import { CFGEpsRemoveEpic } from './CFGEpsRemoval';
 import { CFGUnitRemoveEpic } from './CFGUnitRemoval';
+import { cnfactionEpic } from './cnf';
+import { leftrecremoveEpic } from './leftrecremoval';
+import { cykactionEpic } from './cyk';
 
 //#endregion
 
@@ -24,5 +27,8 @@ export const rootEpic = combineEpics(
   epsremoveEpic,
   CFGreduceEpic,
   CFGEpsRemoveEpic,
-  CFGUnitRemoveEpic
+  CFGUnitRemoveEpic,
+  cnfactionEpic,
+  leftrecremoveEpic,
+  cykactionEpic
 );

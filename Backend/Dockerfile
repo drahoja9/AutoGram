@@ -19,6 +19,8 @@ FROM python:3.6.5-alpine AS runtime
 
 WORKDIR /srv/Backend
 
+ENV FLASK_APP=backend/api.py
+
 # Install libraries necessary for application to run
 # These will probably never change, so we leverage the cache
 RUN apk add --no-cache libstdc++ libxml2-dev
@@ -36,4 +38,4 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copying rest of the project (source code mainly ) at last as this will change most frequently
 COPY . /srv/Backend
 
-CMD ["python", "bin/run.py"]
+ENTRYPOINT ["flask", "run"]

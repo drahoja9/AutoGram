@@ -7,6 +7,9 @@ import { EpsremovalAction } from './epsremoval';
 import { CFGreductionAction } from './CFGreduction';
 import { CFGEpsRemovalAction } from './CFGEpsRemoval';
 import { CFGUnitRemovalAction } from './CFGUnitRemoval';
+import { CnfAction } from './cnf';
+import { LeftrecremovalAction } from './leftrecremoval';
+import { CykAction } from './cyk';
 
 
 export type RootAction =
@@ -18,4 +21,7 @@ export type RootAction =
   EpsremovalAction |
   CFGreductionAction |
   CFGEpsRemovalAction |
-  CFGUnitRemovalAction;
+  CFGUnitRemovalAction | 
+  CnfAction | 
+  LeftrecremovalAction | 
+  CykAction;

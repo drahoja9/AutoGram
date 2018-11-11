@@ -9,6 +9,9 @@ import { epsremove, State as EpsremovalState } from './epsremoval';
 import { CFGreduce, State as CFGreductionState } from './CFGreduction';
 import { CFGEpsRemove, State as CFGEpsRemovalState } from './CFGEpsRemoval';
 import { CFGUnitRemove, State as CFGUnitRemovalState } from './CFGUnitRemoval';
+import { cnfaction, State as CnfState } from './cnf';
+import { leftrecremove, State as LeftrecremovalState } from './leftrecremoval';
+import { cykaction, State as CykState } from './cyk';
 
 //#endregion
 
@@ -28,6 +31,9 @@ export interface RootState {
   CFGreduce: CFGreductionState,
   CFGEpsRemove: CFGEpsRemovalState,
   CFGUnitRemove: CFGUnitRemovalState,
+  cnfaction: CnfState,
+  leftrecremove: LeftrecremovalState,
+  cykaction: CykState
 }
 
 /**
@@ -42,5 +48,8 @@ export const rootReducer = combineReducers<RootState>({
   epsremove,
   CFGreduce,
   CFGEpsRemove,
-  CFGUnitRemove
+  CFGUnitRemove,
+  cnfaction,
+  leftrecremove,
+  cykaction
 });
