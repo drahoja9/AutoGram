@@ -540,7 +540,7 @@ class JtXConverter:
 
         """
         res = JtXConverter.simple_json_to_xml(json_dict['grammar'])
-        return json_dict['generated_string'], res
+        return json_dict['cyk_string'], res
 
 
 # ----------------------------------------------------------------------------------------------------------------------

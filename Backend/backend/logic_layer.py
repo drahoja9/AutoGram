@@ -40,6 +40,8 @@ def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
             return _grammar_left_recursion(json_file)
         elif algorithm_name == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
             return _grammar_cnf(json_file)
+        elif algorithm_name == AlgorithmTypes.GRAMMAR_CYK:
+            return _grammar_cyk(json_file)
         else:
             source = Converter.json_to_xml(json_file, algorithm_name)
 
@@ -216,13 +218,11 @@ def _grammar_left_recursion(json_file: dict) -> dict:
 #         raise
 
 
-def grammar_cyk(json_file: dict) -> dict:
+def _grammar_cyk(json_file: dict) -> dict:
     try:
-        generated_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CYK)
-        # call cyk algorithm, when implemented, should return bool result and step table as an xml_string
-        # interface can change when implemented
+        cyk_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CYK)
         with AltInterface() as interface:
-            algorithm_result, _ = interface.algorithm(source, AlgorithmTypes.GRAMMAR_CYK, generated_string)
+            algorithm_result, _ = interface.algorithms(source, AlgorithmTypes.GRAMMAR_CYK, cyk_string)
 
         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CYK, steps=_)
         return result

@@ -6,22 +6,25 @@ services:
     build:
       context: ./frontend
       cache_from:
-        - node:8.12-alpine
+      - node:8.12-alpine
     image: frontend:latest
     ports:
     - "3000:3000"
     volumes:
-    - ./frontend/src:/srv/frontend/src:ro
+    - ./frontend/src:/home/node/src:ro
 
   backend:
     restart: always
     image: backend:latest
+    environment:
+    - FLASK_ENV=development
     ports:
-      - "5000:5000"
+    - "5000:5000"
     volumes:
-      - ./Backend/backend:/srv/Backend/backend:ro
+    - ./Backend/backend:/srv/Backend/backend:ro
     depends_on:
-      - backend_tests
+    - backend_tests
+    command: ["--host=0.0.0.0"]
 
   backend_tests:
     restart: "no"
@@ -31,7 +34,10 @@ services:
       - python:3.6.5-alpine
       - pet3rmatta/alibc
     image: backend:latest
+    environment:
+    - FLASK_ENV=testing
     volumes:
     - ./Backend/backend:/srv/Backend/backend:ro
     - ./Backend/tests:/srv/Backend/tests:ro
-    command: ["pytest"]
+    entrypoint:
+    - pytest
