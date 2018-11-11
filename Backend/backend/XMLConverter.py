@@ -1178,7 +1178,8 @@ def xml_to_json(result, param: str = None, **steps) -> dict:
         elif param == AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL:
             ret = XtJConverter.cnf_leftrec_xml_to_json(result)
         elif param == AlgorithmTypes.GRAMMAR_CYK:
-            ret = XtJConverter.cyk_xml_to_json(result, steps['steps'])
+            # ret = XtJConverter.cyk_xml_to_json(result, steps['steps'])
+            ret = XtJConverter.simple_xml_to_json(result)
         else:
             ret = XtJConverter.simple_xml_to_json(result)
         return ret

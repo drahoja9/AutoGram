@@ -216,15 +216,17 @@ def _grammar_left_recursion(json_file: dict) -> dict:
 #         raise
 
 
-# def grammar_cyk(json_file: str) -> str:
-#     try:
-#         generated_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CYK)
-#         # call cyk algorithm, when implemented, should return bool result and step table as an xml_string
-#         # interface can change when implemented
-#         # algorithm_result, algorithm_steps = Algorithm.algorithm(source, 'grammar_cyk', generated_string)
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CYK, steps=algorithm_steps)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
+def grammar_cyk(json_file: dict) -> dict:
+    try:
+        generated_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CYK)
+        # call cyk algorithm, when implemented, should return bool result and step table as an xml_string
+        # interface can change when implemented
+        with AltInterface() as interface:
+            algorithm_result, _ = interface.algorithm(source, AlgorithmTypes.GRAMMAR_CYK, generated_string)
+
+        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CYK, steps=_)
+        return result
+    except Converter.JSONDecodeError:
+        raise
+    except Converter.XMLDecodeError:
+        raise
