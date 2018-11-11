@@ -44,5 +44,29 @@
     "algorithmResponse" : "NFA",
     "backendPath" : "/algorithms/automaton_epsilon",
     "url" : "eps"
+  },
+  {
+    "algorithm" : "cnf",
+    "action" : "cnfaction",
+    "algorithmRequest" : "CNFRequest",
+    "algorithmResponse" : "CNFResponse",
+    "backendPath" : "/algorithms/grammar_cnf",
+    "url" : "cnf"
+  },
+  {
+    "algorithm" : "leftrecremoval",
+    "action" : "leftrecremove",
+    "algorithmRequest" : "LeftRecRemovalRequest",
+    "algorithmResponse" : "LeftRecRemovalResponse",
+    "backendPath" : "/algorithms/grammar_left_recursion",
+    "url" : "rec"
+  },
+  {
+    "algorithm" : "cyk",
+    "action" : "cykaction",
+    "algorithmRequest" : "CYKRequest",
+    "algorithmResponse" : "CYKResponse",
+    "backendPath" : "/algorithms/grammar_cyk",
+    "url" : "cyk"
   }
 ]

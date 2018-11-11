@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { GrammarInputValue } from 'components/Forms/Grammar';
-import { CNFRequest } from 'lib/types';
+import { LeftRecRemovalRequest } from 'lib/types';
 
 import { routes } from './routes';
 import { validate } from './validation';
@@ -16,12 +16,12 @@ import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
 //#region Component interfaces
-interface CnfState {
+interface LeftrecremovalState {
   values: GrammarInputValue;
 }
 //#endregion
 
-class CnfController extends Controller<CNFRequest, CnfState>{
+class LeftrecremovalController extends Controller<LeftRecRemovalRequest, LeftrecremovalState>{
   public state = {
     values: {
       nonTerms: '',
@@ -32,7 +32,7 @@ class CnfController extends Controller<CNFRequest, CnfState>{
   };
 
   public get url(){
-    return '/algo/cnf'
+    return '/algo/rec'
   }
   public get routes(){
     return routes;
@@ -53,4 +53,4 @@ class CnfController extends Controller<CNFRequest, CnfState>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(CnfController));
+)(withRouter(LeftrecremovalController));

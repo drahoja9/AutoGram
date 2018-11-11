@@ -6,6 +6,9 @@ import { determinizeEpic } from './determinization';
 import { minimizeEpic } from './minimization';
 import { derivateEpic } from './derivation';
 import { epsremoveEpic } from './epsremoval';
+import { cnfactionEpic } from './cnf';
+import { leftrecremoveEpic } from './leftrecremoval';
+import { cykactionEpic } from './cyk';
 
 //#endregion
 
@@ -18,5 +21,8 @@ export const rootEpic = combineEpics(
   determinizeEpic,
   minimizeEpic,
   derivateEpic,
-  epsremoveEpic
+  epsremoveEpic,
+  cnfactionEpic,
+  leftrecremoveEpic,
+  cykactionEpic
 );

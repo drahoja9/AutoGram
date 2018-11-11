@@ -86,6 +86,12 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
           </NavLink>
         </Menu.Item>
 
+        <Menu.Item key="/algo/rec">
+          <NavLink to="/algo/rec">
+            Left Recursion Removal
+          </NavLink>
+        </Menu.Item>
+
         <Menu.Item key="/algo/cyk">
           <NavLink to="/algo/cyk">
             CYK

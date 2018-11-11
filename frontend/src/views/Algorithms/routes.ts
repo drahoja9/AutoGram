@@ -47,6 +47,12 @@ export const routes: RouteProps[] = [
     })
   },
   {
+    path: '/algo/rec',
+    component: asyncComponent({
+      resolve: () => System.import('./Leftrecremoval')
+    })
+  },
+  {
     path: '/algo/cyk',
     component: asyncComponent({
       resolve: () => System.import('./CYK')

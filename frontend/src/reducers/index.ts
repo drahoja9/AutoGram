@@ -6,6 +6,9 @@ import { determinize, State as DeterminizationState } from './determinization';
 import { minimize, State as MinimizationState } from './minimization';
 import { derivate, State as DerivationState } from './derivation';
 import { epsremove, State as EpsremovalState } from './epsremoval';
+import { cnfaction, State as CnfState } from './cnf';
+import { leftrecremove, State as LeftrecremovalState } from './leftrecremoval';
+import { cykaction, State as CykState } from './cyk';
 
 //#endregion
 
@@ -21,7 +24,10 @@ export interface RootState {
   determinize: DeterminizationState,
   minimize: MinimizationState,
   derivate: DerivationState,
-  epsremove: EpsremovalState
+  epsremove: EpsremovalState,
+  cnfaction: CnfState,
+  leftrecremove: LeftrecremovalState,
+  cykaction: CykState
 }
 
 /**
@@ -33,5 +39,8 @@ export const rootReducer = combineReducers<RootState>({
   determinize,
   minimize,
   derivate,
-  epsremove
+  epsremove,
+  cnfaction,
+  leftrecremove,
+  cykaction
 });
