@@ -40,7 +40,7 @@ def create_app(test_config=None) -> Flask:
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.config.from_mapping(
         DEBUG=False,
-        SECRET_KEY='dev',
+        SECRET_KEY='dummy_secret_key',
     )
 
     if test_config is None:
@@ -92,7 +92,7 @@ def _error_response(status_code: int, message: str = None, exc_type: str = None)
     if message:
         payload['message'] = message
     if exc_type:
-        payload['type'] = exc_type
+        payload['type'] = str(exc_type)
     response = jsonify(payload)
     response.status_code = status_code
 
