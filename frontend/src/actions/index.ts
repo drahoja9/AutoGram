@@ -4,7 +4,7 @@ import { DeterminizationAction } from './determinization';
 import { MinimizationAction } from './minimization';
 import { DerivationAction } from './derivation';
 import { EpsremovalAction } from './epsremoval';
-import { CFGreductionAction } from './CFGreduction';
+import { CFGReductionAction } from './CFGReduction';
 import { CFGEpsRemovalAction } from './CFGEpsRemoval';
 import { CFGUnitRemovalAction } from './CFGUnitRemoval';
 import { CnfAction } from './cnf';
@@ -19,9 +19,9 @@ export type RootAction =
   MinimizationAction |
   DerivationAction |
   EpsremovalAction |
-  CFGreductionAction |
+  CFGReductionAction |
   CFGEpsRemovalAction |
-  CFGUnitRemovalAction | 
-  CnfAction | 
-  LeftrecremovalAction | 
+  CFGUnitRemovalAction |
+  CnfAction |
+  LeftrecremovalAction |
   CykAction;

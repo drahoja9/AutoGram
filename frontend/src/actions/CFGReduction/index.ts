@@ -6,7 +6,7 @@ import * as types from './constants';
 import { CFGReductionRequest, CFGReductionResponse } from 'lib/types';
 //#endregion
 
-export const CFGreduce = {
+export const CFGReduce = {
   request: createAction(types.CFGREDUCTION_REQUEST, (data: CFGReductionRequest) =>
     ({ type: types.CFGREDUCTION_REQUEST, payload: data })
   ),
@@ -24,4 +24,4 @@ export const CFGreduce = {
   )
 };
 
-export type CFGreductionAction = $Call<$Values<typeof CFGreduce>>;
+export type CFGReductionAction = $Call<$Values<typeof CFGReduce>>;

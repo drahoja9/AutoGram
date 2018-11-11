@@ -41,9 +41,9 @@ export const routes: RouteProps[] = [
     })
   },
   {
-    path: '/algo/red',
+    path: '/algo/cfg_red',
     component: asyncComponent({
-      resolve: () => System.import('./CFGreduction')
+      resolve: () => System.import('./CFGReduction')
     })
   },
   {

@@ -13,7 +13,7 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class CFGreductionController extends Controller<CFGReductionResponse> {
+class CFGReductionController extends Controller<CFGReductionResponse> {
   protected get headline() {
     return 'Context-free grammar reduction result';
   }
@@ -29,4 +29,4 @@ class CFGreductionController extends Controller<CFGReductionResponse> {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CFGreductionController);
+)(CFGReductionController);

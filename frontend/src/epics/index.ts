@@ -6,7 +6,7 @@ import { determinizeEpic } from './determinization';
 import { minimizeEpic } from './minimization';
 import { derivateEpic } from './derivation';
 import { epsremoveEpic } from './epsremoval';
-import { CFGreduceEpic } from './CFGreduction';
+import { CFGReduceEpic } from './CFGReduction';
 import { CFGEpsRemoveEpic } from './CFGEpsRemoval';
 import { CFGUnitRemoveEpic } from './CFGUnitRemoval';
 import { cnfactionEpic } from './cnf';
@@ -25,7 +25,7 @@ export const rootEpic = combineEpics(
   minimizeEpic,
   derivateEpic,
   epsremoveEpic,
-  CFGreduceEpic,
+  CFGReduceEpic,
   CFGEpsRemoveEpic,
   CFGUnitRemoveEpic,
   cnfactionEpic,

@@ -6,7 +6,7 @@ import { determinize, State as DeterminizationState } from './determinization';
 import { minimize, State as MinimizationState } from './minimization';
 import { derivate, State as DerivationState } from './derivation';
 import { epsremove, State as EpsremovalState } from './epsremoval';
-import { CFGreduce, State as CFGreductionState } from './CFGreduction';
+import { CFGReduce, State as CFGReductionState } from './CFGReduction';
 import { CFGEpsRemove, State as CFGEpsRemovalState } from './CFGEpsRemoval';
 import { CFGUnitRemove, State as CFGUnitRemovalState } from './CFGUnitRemoval';
 import { cnfaction, State as CnfState } from './cnf';
@@ -28,7 +28,7 @@ export interface RootState {
   minimize: MinimizationState,
   derivate: DerivationState,
   epsremove: EpsremovalState,
-  CFGreduce: CFGreductionState,
+  CFGReduce: CFGReductionState,
   CFGEpsRemove: CFGEpsRemovalState,
   CFGUnitRemove: CFGUnitRemovalState,
   cnfaction: CnfState,
@@ -46,7 +46,7 @@ export const rootReducer = combineReducers<RootState>({
   minimize,
   derivate,
   epsremove,
-  CFGreduce,
+  CFGReduce,
   CFGEpsRemove,
   CFGUnitRemove,
   cnfaction,

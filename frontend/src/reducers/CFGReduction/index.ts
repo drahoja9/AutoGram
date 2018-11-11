@@ -1,9 +1,9 @@
 //#region imports
 import { getType } from 'typesafe-actions';
 import {
-  CFGreduce as CFGreduceAction,
-  CFGreductionAction
-} from 'actions/CFGreduction';
+  CFGReduce as CFGReduceAction,
+  CFGReductionAction
+} from 'actions/CFGReduction';
 
 import { CFGReductionResponse } from 'lib/types';
 //#endregion
@@ -26,10 +26,10 @@ const initialState: State = {
   }
 };
 
-/** CFGreduction reducer. */
-export const CFGreduce = (state = initialState, action: CFGreductionAction): State => {
+/** CFGReduction reducer. */
+export const CFGReduce = (state = initialState, action: CFGReductionAction): State => {
   switch (action.type) {
-    case getType(CFGreduceAction.request):
+    case getType(CFGReduceAction.request):
       return {
         ...state,
         meta: {
@@ -39,7 +39,7 @@ export const CFGreduce = (state = initialState, action: CFGreductionAction): Sta
         }
       };
 
-    case getType(CFGreduceAction.success):
+    case getType(CFGReduceAction.success):
       return {
         result: action.payload,
         meta: {
@@ -49,7 +49,7 @@ export const CFGreduce = (state = initialState, action: CFGreductionAction): Sta
         }
       };
 
-    case getType(CFGreduceAction.cancel):
+    case getType(CFGReduceAction.cancel):
       return {
         ...state,
         meta: {
@@ -58,7 +58,7 @@ export const CFGreduce = (state = initialState, action: CFGreductionAction): Sta
         }
       };
 
-    case getType(CFGreduceAction.fail):
+    case getType(CFGReduceAction.fail):
       return {
         ...state,
         meta: {

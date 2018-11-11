@@ -80,8 +80,8 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
           </NavLink>
         </Menu.Item>
 
-        <Menu.Item key="/algo/red">
-          <NavLink to="/algo/red">
+        <Menu.Item key="/algo/cfg_red">
+          <NavLink to="/algo/cfg_red">
             Context-free grammar reduction
           </NavLink>
         </Menu.Item>

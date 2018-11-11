@@ -4,13 +4,13 @@ import getRoutes from 'components/AlgorithmView/Routes';
 //#endregion
 
 /**
- * Top level routing for `/algo/red/*` paths.
+ * Top level routing for `/algo/cfg_red/*` paths.
  *
- * Redirects all users from `/algo/red` to `/algo/red/input`.
+ * Redirects all users from `/algo/cfg_red` to `/algo/cfg_red/input`.
  */
 export const routes = getRoutes(
-  '/algo/red', 
-  System.import('./input'), 
+  '/algo/cfg_red',
+  System.import('./input'),
   System.import('./result')
 );
 

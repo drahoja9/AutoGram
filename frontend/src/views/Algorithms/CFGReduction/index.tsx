@@ -16,12 +16,12 @@ import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
 //#region Component interfaces
-interface CFGreductionState {
+interface CFGReductionState {
   values: GrammarInputValue;
 }
 //#endregion
 
-class CFGreductionController extends Controller<CFG, CFGreductionState>{
+class CFGReductionController extends Controller<CFG, CFGReductionState>{
   public state = {
     values: {
       nonTerms: '',
@@ -32,7 +32,7 @@ class CFGreductionController extends Controller<CFG, CFGreductionState>{
   };
 
   public get url() {
-    return '/algo/red'
+    return '/algo/cfg_red'
   }
   public get routes() {
     return routes;
@@ -53,4 +53,4 @@ class CFGreductionController extends Controller<CFG, CFGreductionState>{
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(CFGreductionController));
+)(withRouter(CFGReductionController));

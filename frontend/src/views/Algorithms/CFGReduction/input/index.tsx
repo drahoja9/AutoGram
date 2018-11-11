@@ -10,7 +10,7 @@ interface InputState {
 }
 //#endregion
 
-export default class CFGreductionController extends Controller<InputState> {
+export default class CFGReductionController extends Controller<InputState> {
   constructor(props: InputDefaultProps<InputState>, context: any) {
     super(props, context);
     this.state = this.props.defaultValue || this.defaultInitialState;
