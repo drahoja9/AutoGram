@@ -11,7 +11,7 @@ and algorithms associated with them.
 
 
 Each, frontend and backend, have their own build tools with instructions in their own folders.
-They are built separately and do not depend on each other.
+They can be built separately, but it is preferred (and easier) to built them together with `docker-compose`.
 
 To learn more, please read `README`s in `frontend` and `backend` folders.
 
@@ -25,3 +25,4 @@ docker --version; docker-compose --version
 ```
 docker-compose up
 ```
+(You will see that there are also tests running with each start. If they do not pass for some reason, please, let us know.)
