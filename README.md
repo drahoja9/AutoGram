@@ -21,6 +21,8 @@ To learn more, please read `README`s in `frontend` and `backend` folders.
 ```
 docker --version; docker-compose --version
 ```
+(We use Compose file version 3.2, so make sure you have Docker Engine release 17.04.0+)
+
 2. Build the Docker images for frontend and backend and run them simultaneously:
 ```
 docker-compose up
