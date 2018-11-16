@@ -211,7 +211,7 @@ class AltInterface:
 
         if res_code != 0:
             raise AltInterfaceException(res)
-
+        
         return res
 
     def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> bool:

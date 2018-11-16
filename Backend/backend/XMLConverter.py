@@ -603,7 +603,7 @@ class XtJConverter:
             text = child.text
         elif child.tag == "Character":
             text = chr(int(child.text))
-        elif child.tag == "Integer":
+        elif child.tag == "Integer" or child.tag == "Unsigned":
             if allow_name_change:
                 if integer_in_string:
                     text = "_" + child.text
@@ -613,11 +613,11 @@ class XtJConverter:
                 text = child.text
         elif child.tag == "epsilon":
             text = None
-        elif child.tag == "Set" or child.tag == "Pair":
+        elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector":
             text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
-        elif child.tag == "InitialSymbol":
+        elif child.tag == "InitialStateLabel":
             text = "Start"
         else:
             raise TypeError
