@@ -82,7 +82,7 @@ void ALT_Interface::prepareAndRun(std::string input, std::string algorithm) {
 	cli::Parser parser ( cli::Lexer ("") );
 	std::string query = "execute sax::SaxParseInterface $input | xml::Parse ^ - | " +
 	                    algorithm +
-	                    "| xml::Compose - | sax::SaxComposeInterface - > $output";
+	                    " | xml::Compose - | sax::SaxComposeInterface - > $output";
 	parser = cli::Parser ( cli::Lexer ( query ) );
 	parser.parse ( )->run ( environment );
 
@@ -103,7 +103,7 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
             this->algorithms(input, AUTOMATON_TRIM, nullptr);
 
             input = this->m_ResultStruct->t_Result;
-            algorithm = "automaton::simplify::Minimize";
+            algorithm = "automaton::simplify::MinimizeVerbose";
         }
         else if (algorithm == AUTOMATON_EPSILON_REMOVAL)
             algorithm = "automaton::simplify::EpsilonRemoverIncoming";
@@ -131,7 +131,7 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
                 this->setResultStruct(1, "No string for CYK was given!");
                 return;
             }
-            algorithm = "grammar::generate::CockeYoungerKasami";
+            algorithm = "grammar::generate::CockeYoungerKasamiVerbose";
         }
         else {
             this->setResultStruct(1, "Unknown algorithm passed as parameter!");

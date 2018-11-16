@@ -174,6 +174,9 @@ class AltInterface:
         result_struct = self.lib.algorithms(self.interface, *params)
         res_code, res = self._parse_result(result_struct)
 
+        if algorithm == 'automaton_minimization' or algorithm == 'grammar_cyk':
+            print(res)
+
         if res_code != 0:
             raise AltInterfaceException(res)
 
@@ -211,7 +214,7 @@ class AltInterface:
 
         if res_code != 0:
             raise AltInterfaceException(res)
-        
+
         return res
 
     def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> bool:
