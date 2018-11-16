@@ -19,7 +19,7 @@ docker build -t frontend .
 ```
 3. Run the previously built image in container and map container's port 3000 to your host machine's port 3000: 
 ```
-run -p 3000:3000 frontend
+docker run -p 3000:3000 frontend
 ```
  
 Depending on your Docker settings, all commands above may need to be run as root (with `sudo`). 

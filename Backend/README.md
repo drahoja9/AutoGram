@@ -22,7 +22,7 @@ docker build -t backend .
 ```
 3. Run the previously built image in container and map container's port 5000 to your host machine's port 5000: 
 ```
-run -p 5000:5000 backend
+docker run -p 5000:5000 backend
 ```
  
 Depending on your Docker settings, all commands above may need to be run as root (with `sudo`). 
@@ -46,7 +46,7 @@ pip install -r requirements.txt
 ```
 make interface
 ```
-5. Run the app ether via:
+5. Run the app via:
 ```
 python bin/run.py
 ```
