@@ -12,9 +12,50 @@ import HeaderCell from './components/HeaderCell';
 
 //#region Styled
 const Table = styled.table`
-  border: 1px solid black;
+  border-collapse: separate;
+  border-spacing: 0;
   td {
-    border: 1px solid black;
+    border: solid black;
+    border-width: 1px;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+  }
+  tr:first-child td {
+    background-color: #DDDDDD;
+  }
+  tr:first-child td:first-child {
+    border-top-left-radius: 10px;
+  }
+  tr:first-child td:last-child {
+    background-color: inherit;
+    border-top-right-radius: 10px;
+    border-width: 1px 1px 0px 1px;
+  }
+  tbody td:first-child {
+    background-color: #DDDDDD;
+  }
+  tbody td:last-child{
+    border-width: 0px 1px 0px 1px;
+  }
+  tbody tr:nth-last-child(2) td:last-child{
+    border-bottom-width: 1px;
+    border-bottom-right-radius: 5px;
+  }
+  tbody tr:last-child td {
+    border-width: 1px 0px 1px 0px;
+  }
+  tbody tr:last-child td:last-child{
+    border-width: 1px 1px 1px 0px;
+    border-radius: 0px 0px 5px 0px;
+  }
+  tbody tr:last-child td:first-child{
+    border-width: 1px 0px 1px 1px;
+    background-color: inherit;
+    border-bottom-left-radius: 10px; 
+  }
+  tbody tr:last-child td:only-child{
+    border-width: 1px 1px 1px 1px;
   }
 `;
 //#endregion
@@ -131,7 +172,7 @@ function inputValueChange(props: AutomatonInputProps, ridx: number, vidx: number
 const AutomatonInput: React.SFC<AutomatonInputProps> = (props) => (
   <div>
     <Table>
-      <thead>
+      <tbody>
         <HeaderRow
           onAddCol={() => addCol(props)}
           isEpsilon={props.isEpsilon && !props.value.isEpsilonOn}
@@ -149,8 +190,6 @@ const AutomatonInput: React.SFC<AutomatonInputProps> = (props) => (
             ))
           }
         </HeaderRow>
-      </thead>
-      <tbody>
         {
           props.value.body.map((row: any, idx: number) => (
             <InputRow
