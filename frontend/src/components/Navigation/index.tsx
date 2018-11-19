@@ -29,14 +29,11 @@ const LogoSection = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 `
-const NavStyle = styled.div`
-  height: 100vh;
-  .ant-layout-sider{
-    width: 300px !important;
-    min-width: 300px !important;
-    max-width: 300px !important;
-    min-height: 100%;
-  }
+const Sider = styled(Layout.Sider) `
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  min-height: 100%;
   .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
     font-size: 17px;
     text-align: center;
@@ -84,101 +81,99 @@ function getSelectedKeys(pathname: string) {
  * Each menu-submenu item has a link to a app view e.g. "Visualization".
  */
 const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentProps<{}>) => (
-  <NavStyle>
-    <Layout.Sider style={{ width: '300px !important' }}>
-      <div>
-        <LogoHeadline>Autogram</LogoHeadline>
-        <LogoSection>
-          <Logo />
-        </LogoSection>
-      </div>
-      <Menu
-        mode="inline" theme="dark"
-        defaultSelectedKeys={['/vis']}
-        selectedKeys={[getSelectedKeys(props.location.pathname)]}
-      >
-        <Menu.Item key="/vis">
-          <NavLink to="/vis">
-            Visualization
+  <Sider style={{ width: '300px !important' }}>
+    <div>
+      <LogoHeadline>Autogram</LogoHeadline>
+      <LogoSection>
+        <Logo />
+      </LogoSection>
+    </div>
+    <Menu
+      mode="inline" theme="dark"
+      defaultSelectedKeys={['/vis']}
+      selectedKeys={[getSelectedKeys(props.location.pathname)]}
+    >
+      <Menu.Item key="/vis">
+        <NavLink to="/vis">
+          Visualization
         </NavLink>
+      </Menu.Item>
+
+      <Menu.Item key="/cmp">
+        <NavLink to="/cmp">
+          Comparison
+        </NavLink>
+      </Menu.Item>
+
+      <Menu.Item key="/tran">
+        <NavLink to="/tran">
+          Transformation
+        </NavLink>
+      </Menu.Item>
+
+      <Menu.SubMenu key="/algo" title="Algorithms">
+        <Menu.Item key="/algo/det">
+          <NavLink to="/algo/det">
+            Determinization
+          </NavLink>
         </Menu.Item>
 
-        <Menu.Item key="/cmp">
-          <NavLink to="/cmp">
-            Comparison
-        </NavLink>
+        <Menu.Item key="/algo/min">
+          <NavLink to="/algo/min">
+            Minimization
+          </NavLink>
         </Menu.Item>
 
-        <Menu.Item key="/tran">
-          <NavLink to="/tran">
-            Transformation
-        </NavLink>
+        <Menu.Item key="/algo/eps">
+          <NavLink to="/algo/eps">
+            Elimination of ε-transitions
+          </NavLink>
         </Menu.Item>
 
-        <Menu.SubMenu key="/algo" title="Algorithms">
-          <Menu.Item key="/algo/det">
-            <NavLink to="/algo/det">
-              Determinization
+        <Menu.Item key="/algo/der">
+          <NavLink to="/algo/der">
+            Derivation
           </NavLink>
-          </Menu.Item>
+        </Menu.Item>
 
-          <Menu.Item key="/algo/min">
-            <NavLink to="/algo/min">
-              Minimization
+        <Menu.Item key="/algo/cfg_red">
+          <NavLink to="/algo/cfg_red">
+            CFG reduction
           </NavLink>
-          </Menu.Item>
+        </Menu.Item>
 
-          <Menu.Item key="/algo/eps">
-            <NavLink to="/algo/eps">
-              Elimination of ε-transitions
+        <Menu.Item key="/algo/cfg_eps">
+          <NavLink to="/algo/cfg_eps">
+            CFG epsilon removal
           </NavLink>
-          </Menu.Item>
+        </Menu.Item>
 
-          <Menu.Item key="/algo/der">
-            <NavLink to="/algo/der">
-              Derivation
+        <Menu.Item key="/algo/cfg_unit">
+          <NavLink to="/algo/cfg_unit">
+            CFG unit rules removal
           </NavLink>
-          </Menu.Item>
+        </Menu.Item>
 
-          <Menu.Item key="/algo/cfg_red">
-            <NavLink to="/algo/cfg_red">
-              CFG reduction
+        <Menu.Item key="/algo/cnf">
+          <NavLink to="/algo/cnf">
+            CNF
           </NavLink>
-          </Menu.Item>
+        </Menu.Item>
 
-          <Menu.Item key="/algo/cfg_eps">
-            <NavLink to="/algo/cfg_eps">
-              CFG epsilon removal
+        <Menu.Item key="/algo/rec">
+          <NavLink to="/algo/rec">
+            Left Recursion Removal
           </NavLink>
-          </Menu.Item>
+        </Menu.Item>
 
-          <Menu.Item key="/algo/cfg_unit">
-            <NavLink to="/algo/cfg_unit">
-              CFG unit rules removal
+        <Menu.Item key="/algo/cyk">
+          <NavLink to="/algo/cyk">
+            CYK
           </NavLink>
-          </Menu.Item>
-
-          <Menu.Item key="/algo/cnf">
-            <NavLink to="/algo/cnf">
-              CNF
-          </NavLink>
-          </Menu.Item>
-
-          <Menu.Item key="/algo/rec">
-            <NavLink to="/algo/rec">
-              Left Recursion Removal
-          </NavLink>
-          </Menu.Item>
-
-          <Menu.Item key="/algo/cyk">
-            <NavLink to="/algo/cyk">
-              CYK
-          </NavLink>
-          </Menu.Item>
-        </Menu.SubMenu>
-      </Menu>
-    </Layout.Sider>
-  </NavStyle>
+        </Menu.Item>
+      </Menu.SubMenu>
+    </Menu>
+  </Sider>
 );
 
 export default withRouter(Navigation);
