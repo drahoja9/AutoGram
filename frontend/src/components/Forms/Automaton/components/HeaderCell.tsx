@@ -65,13 +65,18 @@ class HeaderCell extends React.Component<HeaderCellProps> {
       <Content>
         <Anchor>
           <ControlWrapper>
-            <Button
-              icon="close"
-              type="danger"
-              shape="circle"
-              size="small"
-              onClick={props.onRemove}
-            />
+            {
+              props.isEpsilonOn ?
+                null
+                :
+                <Button
+                  icon="close"
+                  type="danger"
+                  shape="circle"
+                  size="small"
+                  onClick={props.onRemove}
+                />
+            }
           </ControlWrapper>
         </Anchor>
         <Input
