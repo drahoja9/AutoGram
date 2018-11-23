@@ -613,12 +613,14 @@ class XtJConverter:
                 text = child.text
         elif child.tag == "epsilon":
             text = None
-        elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector":
+        elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector" or child.tag == "UniqueObject":
             text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
         elif child.tag == "InitialStateLabel":
             text = "Start"
+        elif child.tag == "id":
+            return ''
         else:
             raise TypeError
 
