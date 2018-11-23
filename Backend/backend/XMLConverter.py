@@ -1109,7 +1109,8 @@ class XtJConverter:
     @staticmethod
     def cyk_xml_to_json(xml_file: str, steps: str) -> dict:
         root = ET.fromstring(xml_file)
-        result = {'result': root.text}
+        bool_res = True if root.text == 'true' else False
+        result = {'result': bool_res}
         return result
 
 
