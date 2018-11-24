@@ -1,3 +1,0 @@
-[submodule "automata-library"]
-	path = automata-library
-	url = git@gitlab.fit.cvut.cz:algorithms-library-toolkit/automata-library.git
