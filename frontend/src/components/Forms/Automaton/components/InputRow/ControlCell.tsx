@@ -37,14 +37,21 @@ const StateWrapper = styled.div`
 `
 
 const ControlButton = styled(Button)`
-  font-size: 10px;
+  font-size: 18px;
+  line-height: 0px;
   width: 28px;
   height: 16px;
   margin: 0;
   padding: 0;
+  padding-bottom: 2px;
+  padding-left: 1px;
   border-radius: 8px 0px 0px 8px;
   display: block;
   &.ant-btn-danger{
+    font-size: 11px;
+    line-height: 0px;
+    padding-left: 0px;
+    padding-bottom: 2px;
     background-color: white;
     &:hover{
       background-color: red;
@@ -92,8 +99,8 @@ interface ControlProps {
 /** Actual control buttons. */
 const Controls: React.SFC<ControlProps> = (props) => (
   <div>
-    <ControlButton type={props.isInitial ? "primary" : undefined} onClick={props.onInitialToggle}>I</ControlButton>
-    <ControlButton type={props.isFinal ? "primary" : undefined} onClick={props.onFinalToggle}>F</ControlButton>
+    <ControlButton type={props.isInitial ? "primary" : undefined} onClick={props.onInitialToggle}>{"\u2192"}</ControlButton>
+    <ControlButton type={props.isFinal ? "primary" : undefined} onClick={props.onFinalToggle}>{"\u2190"}</ControlButton>
     <ControlButton icon="close" type="danger" onClick={props.onRemove} />
   </div>
 );

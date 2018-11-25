@@ -96,30 +96,17 @@ export interface AutomatonInputProps {
 //#endregion
 
 //#region Change handling functions
-function initialize(props: AutomatonInputProps) {
+function initialize(props: AutomatonInputProps, isEpsilon: boolean | undefined) {
   const value = cloneDeep(props.value);
   value.header.push('');
   for (const row of value.body) {
     row.values.push('');
   }
-  value.body = value.body.concat({
-    value: '',
-    values: value.header.map((_: string) => ''),
-    isInitial: false,
-    isFinal: false
-  });
-  props.onChange(value);
-}
-
-function initializeWithEpsilon(props: AutomatonInputProps) {
-  const value = cloneDeep(props.value);
-  value.header.push('');
-  for (const row of value.body) {
-    row.values.push('');
-  }
-  value.header.push('ε');
-  for (const row of value.body) {
-    row.values.push('');
+  if(isEpsilon){
+    value.header.push('ε');
+    for (const row of value.body) {
+      row.values.push('');
+    }
   }
   value.body = value.body.concat({
     value: '',
@@ -209,11 +196,8 @@ class AutomatonInput extends React.Component<AutomatonInputProps> {
    * Adding epsilon column at the beginning for every epsilon-available automata.
    */
   public componentWillMount() {
-    if (this.props.isEpsilon && this.props.value.header.length === 0){
-      initializeWithEpsilon(this.props);
-    }
-    else if (this.props.value.body.length === 0){
-      initialize(this.props);
+    if (this.props.value.header.length === 0){
+      initialize(this.props, this.props.isEpsilon);
     }
   }
 
