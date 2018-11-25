@@ -125,7 +125,7 @@ class ControlCell extends React.Component<ControlCellProps> {
           <Col span={16}>
             <CellInput>
               <Input
-                placeholder="a"
+                placeholder="state"
                 value={props.value}
                 onChange={(e) => props.onValueChange(e.currentTarget.value)}
               />
