@@ -17,7 +17,8 @@ const Table = styled.table`
   margin-left: 28px;
   color: #666666;
   td {
-    border: solid #666666;
+    border-style: solid;
+    border-color: #666666;
     border-width: 0px 2px 2px 0px;
     height: 48px;
     width: 100px;
@@ -37,6 +38,7 @@ const Table = styled.table`
     border-top-right-radius: 10px;
     border-width: 1px 1px 0px 0px;
     border-color: #999999;
+    border-style: dashed;
     color: #999999;
   }
   tbody td:first-child {
@@ -47,6 +49,7 @@ const Table = styled.table`
   tbody td:last-child{
     border-width: 0px 1px 0px 0px;
     border-color: #999999;
+    border-style: dashed;
   }
   tbody tr:nth-last-child(2) td:last-child{
     border-bottom-width: 1px;
@@ -55,6 +58,7 @@ const Table = styled.table`
   tbody tr:last-child td {
     border-width: 0px 0px 1px 0px;
     border-color: #999999;
+    border-style: dashed;
   }
   tbody tr:last-child td:last-child{
     border-width: 0px 1px 1px 0px;
@@ -92,8 +96,12 @@ export interface AutomatonInputProps {
 //#endregion
 
 //#region Change handling functions
-function addRow(props: AutomatonInputProps) {
+function initialize(props: AutomatonInputProps) {
   const value = cloneDeep(props.value);
+  value.header.push('');
+  for (const row of value.body) {
+    row.values.push('');
+  }
   value.body = value.body.concat({
     value: '',
     values: value.header.map((_: string) => ''),
@@ -103,12 +111,27 @@ function addRow(props: AutomatonInputProps) {
   props.onChange(value);
 }
 
-function addRowAndEpsilon(props: AutomatonInputProps) {
+function initializeWithEpsilon(props: AutomatonInputProps) {
   const value = cloneDeep(props.value);
+  value.header.push('');
+  for (const row of value.body) {
+    row.values.push('');
+  }
   value.header.push('ε');
   for (const row of value.body) {
     row.values.push('');
   }
+  value.body = value.body.concat({
+    value: '',
+    values: value.header.map((_: string) => ''),
+    isInitial: false,
+    isFinal: false
+  });
+  props.onChange(value);
+}
+
+function addRow(props: AutomatonInputProps) {
+  const value = cloneDeep(props.value);
   value.body = value.body.concat({
     value: '',
     values: value.header.map((_: string) => ''),
@@ -187,10 +210,10 @@ class AutomatonInput extends React.Component<AutomatonInputProps> {
    */
   public componentWillMount() {
     if (this.props.isEpsilon && this.props.value.header.length === 0){
-      addRowAndEpsilon(this.props);
+      initializeWithEpsilon(this.props);
     }
     else if (this.props.value.body.length === 0){
-      addRow(this.props);
+      initialize(this.props);
     }
   }
 

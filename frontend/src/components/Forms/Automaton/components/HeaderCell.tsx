@@ -90,6 +90,7 @@ class HeaderCell extends React.Component<HeaderCellProps> {
         </ControlWrapper>
         <CellInput>
           <Input
+            placeholder="symbol"
             disabled={props.isEpsilonOn ? true : false}
             onChange={(e) => props.onChange(e.currentTarget.value)}
             value={props.value}

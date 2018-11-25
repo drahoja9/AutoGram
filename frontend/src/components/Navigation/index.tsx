@@ -20,7 +20,7 @@ const LogoHeadline = styled.h1`
   width: 60px;
   display: inline-block;
   padding-top: 10px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(248, 250, 253, 0.8);
 `;
 const LogoSection = styled.div`
   width: calc(100% - 75px);

@@ -50,6 +50,21 @@ const ControlButton = styled(Button)`
       background-color: red;
     }
   }
+  &.ant-btn-primary{
+    background-color: #468F83;
+    color: white;
+    border-color: #d9d9d9;
+    &.ant-btn:focus{
+      border-color: white;
+      color: white;
+      background-color: #367F73;
+    }
+    &.ant-btn:hover{
+      border-color: white;
+      color: white;
+      background-color: #367F73;
+    }
+  }
 `
 //#endregion
 
@@ -65,6 +80,8 @@ export interface ControlCellProps {
 }
 
 interface ControlProps {
+  isInitial: boolean;
+  isFinal: boolean;
   onInitialToggle: () => any;
   onFinalToggle: () => any;
   onRemove: () => any;
@@ -75,8 +92,8 @@ interface ControlProps {
 /** Actual control buttons. */
 const Controls: React.SFC<ControlProps> = (props) => (
   <div>
-    <ControlButton onClick={props.onInitialToggle}>I</ControlButton>
-    <ControlButton onClick={props.onFinalToggle}>F</ControlButton>
+    <ControlButton type={props.isInitial ? "primary" : undefined} onClick={props.onInitialToggle}>I</ControlButton>
+    <ControlButton type={props.isFinal ? "primary" : undefined} onClick={props.onFinalToggle}>F</ControlButton>
     <ControlButton icon="close" type="danger" onClick={props.onRemove} />
   </div>
 );
@@ -111,6 +128,8 @@ class ControlCell extends React.Component<ControlCellProps> {
               onInitialToggle={props.onInitialToggle}
               onFinalToggle={props.onFinalToggle}
               onRemove={props.onRemove}
+              isInitial={props.isInitial}
+              isFinal={props.isFinal}
             />
           </ControlWrapper>
         <Row>
