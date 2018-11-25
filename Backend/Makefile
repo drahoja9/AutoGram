@@ -22,13 +22,13 @@ clean_docs:
 
 
 ################################ C++ ALT library part ################################
-ALT_PATH = /usr/include
+ALT_PATH = /usr/include/algorithms-library
 
 
 interface:
 	mkdir -p build
-	$(CXX) -pipe -std=c++14 -O3 -DNDEBUG -DRELEASE   -Wall -pedantic -Wextra -Werror -Wshadow -Wpointer-arith -Wcast-qual -Wdelete-non-virtual-dtor -Wredundant-decls -I$(ALT_PATH)/alib2aux/src -I$(ALT_PATH)/alib2cli/src -I$(ALT_PATH)/alib2elgo/src -I$(ALT_PATH)/alib2algo/src -I$(ALT_PATH)/alib2str/src -I$(ALT_PATH)/alib2data/src -I$(ALT_PATH)/alib2xml/src -I$(ALT_PATH)/alib2common/src -I$(ALT_PATH)/alib2abstraction/src -I$(ALT_PATH)/alib2std/src -I/usr/include/libxml2 -c -fPIC backend/cpp_interface.cpp -o build/cpp_interface.o
-	$(CXX) build/cpp_interface.o -o build/cpp_interface.so -shared -Wl,-soname,test.so,--no-as-needed -lalib2aux -lalib2cli -lalib2elgo -lalib2algo -lalib2str -lalib2data -lalib2xml -lalib2common -lalib2abstraction -lalib2std -rdynamic
+	$(CXX) -pipe -std=c++14 -O3 -DNDEBUG -DRELEASE   -Wall -pedantic -Wextra -Werror -Wshadow -Wpointer-arith -Wcast-qual -Wdelete-non-virtual-dtor -Wredundant-decls -I$(ALT_PATH) -c -fPIC backend/cpp_interface.cpp -o build/cpp_interface.o
+	$(CXX) build/cpp_interface.o -o build/cpp_interface.so -shared  -lalib2aux -lalib2cli -lalib2elgo -lalib2algo -lalib2str -lalib2data -lalib2xml -lalib2common -lalib2abstraction -lalib2std -rdynamic
 
 clean_interface:
 	rm -rf build
