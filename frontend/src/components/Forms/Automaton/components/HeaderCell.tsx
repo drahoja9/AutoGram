@@ -29,7 +29,7 @@ const getContent = (ControlWrapper: StyledComponentClass<any, any, any>) => (
   `
 );
 
-const ControlButton = styled(Button)`
+const ControlButton = styled(Button) `
   width: 20px;
   height: 20px;
   border-radius: 10px 10px 0px 0px;
@@ -76,13 +76,18 @@ class HeaderCell extends React.Component<HeaderCellProps> {
     const { ControlWrapper, Content, props } = this;
     return (
       <Content>
-          <ControlWrapper>
-            <ControlButton
-              icon="close"
-              type="danger"
-              onClick={props.onRemove}
-            />
-          </ControlWrapper>
+        <ControlWrapper>
+          {
+            props.isEpsilonOn ?
+              null
+              :
+              <ControlButton
+                icon="close"
+                type="danger"
+                onClick={props.onRemove}
+              />
+          }
+        </ControlWrapper>
         <CellInput>
           <Input
             disabled={props.isEpsilonOn ? true : false}

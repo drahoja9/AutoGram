@@ -38,8 +38,7 @@ export default class EpsremovalController extends Controller<InputState> {
     return {
       values: {
         header: [],
-        body: [],
-        isEpsilonOn: false,
+        body: []
       }
     }
   }

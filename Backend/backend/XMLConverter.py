@@ -14,7 +14,6 @@ converting this XML back to JSON for :mod:`REST API <backend.api>`.
 
 """
 
-
 import json
 import xml.etree.ElementTree as ET
 from backend import ObjectTypes
@@ -613,12 +612,14 @@ class XtJConverter:
                 text = child.text
         elif child.tag == "epsilon":
             text = None
-        elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector":
+        elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector" or child.tag == "UniqueObject":
             text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
         elif child.tag == "InitialStateLabel":
             text = "Start"
+        elif child.tag == "id":
+            return ''
         else:
             raise TypeError
 
@@ -1106,8 +1107,11 @@ class XtJConverter:
         raise NotImplementedError
 
     @staticmethod
-    def cyk_xml_to_json(result: bool, steps: str) -> dict:
-        raise NotImplementedError
+    def cyk_xml_to_json(xml_file: str, steps: str) -> dict:
+        root = ET.fromstring(xml_file)
+        bool_res = True if root.text == 'true' else False
+        result = {'result': bool_res}
+        return result
 
 
 def json_to_xml(json_file: dict, param: str = None):
@@ -1178,8 +1182,7 @@ def xml_to_json(result, param: str = None, **steps) -> dict:
         elif param == AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL:
             ret = XtJConverter.cnf_leftrec_xml_to_json(result)
         elif param == AlgorithmTypes.GRAMMAR_CYK:
-            # ret = XtJConverter.cyk_xml_to_json(result, steps['steps'])
-            ret = XtJConverter.simple_xml_to_json(result)
+            ret = XtJConverter.cyk_xml_to_json(result, steps['steps'])
         else:
             ret = XtJConverter.simple_xml_to_json(result)
         return ret
