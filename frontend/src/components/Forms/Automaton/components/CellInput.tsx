@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 //#region styled
 const CellInput = styled.div`
+  width: 100%;
+  height: 100%;
   .ant-input{
     background-color: rgba(0, 0, 0, 0);
     border: none;
@@ -13,6 +15,7 @@ const CellInput = styled.div`
     width: calc(100% - 4px);
     height: calc(100% - 4px);
     font-weight: inherit;
+    color: inherit;
   }
   .ant-input:focus{
     border-width: 1px;

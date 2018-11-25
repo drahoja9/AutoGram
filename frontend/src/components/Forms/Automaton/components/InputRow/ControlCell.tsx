@@ -8,21 +8,20 @@ import CellInput from '../CellInput';
 
 //#region Styled
 /** Creates a control wrapper styped component */
-const getControlWrapper = (Anchor: StyledComponentClass<any, any, any>) => (
+const getControlWrapper = () => (
   styled.div`
     position: absolute;
-    top: ${Anchor};
-    left: ${Anchor};
+    top: -1px;
+    left: -29px;
     display: none;
     z-index: 5;
-    margin-top: -15px;
-    margin-left: -10px;
   `
 );
 
 /** Creates a cell content styped component */
 const getContent = (ControlWrapper: StyledComponentClass<any, any, any>) => (
   styled.td`
+    position: relative;
     &:hover {
       ${ControlWrapper} {
         display: inline-block;
@@ -30,6 +29,28 @@ const getContent = (ControlWrapper: StyledComponentClass<any, any, any>) => (
     }
   `
 );
+
+const StateWrapper = styled.div`
+  margin-top: 7px;
+  padding-left: 5px;
+  padding-right: 2px;
+`
+
+const ControlButton = styled(Button)`
+  font-size: 10px;
+  width: 28px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border-radius: 8px 0px 0px 8px;
+  display: block;
+  &.ant-btn-danger{
+    background-color: white;
+    &:hover{
+      background-color: red;
+    }
+  }
+`
 //#endregion
 
 //#region Component interfaces
@@ -54,15 +75,9 @@ interface ControlProps {
 /** Actual control buttons. */
 const Controls: React.SFC<ControlProps> = (props) => (
   <div>
-    <Row>
-      <Button shape="circle" size="small" onClick={props.onInitialToggle}>I</Button>
-    </Row>
-    <Row>
-      <Button shape="circle" size="small" onClick={props.onFinalToggle}>F</Button>
-    </Row>
-    <Row>
-      <Button icon="close" type="danger" shape="circle" size="small" onClick={props.onRemove} />
-    </Row>
+    <ControlButton onClick={props.onInitialToggle}>I</ControlButton>
+    <ControlButton onClick={props.onFinalToggle}>F</ControlButton>
+    <ControlButton icon="close" type="danger" onClick={props.onRemove} />
   </div>
 );
 
@@ -70,7 +85,6 @@ const Controls: React.SFC<ControlProps> = (props) => (
  * A control cell component
  */
 class ControlCell extends React.Component<ControlCellProps> {
-  private Anchor: StyledComponentClass<any, any, any>;
   private ControlWrapper: StyledComponentClass<any, any, any>;
   private Content: StyledComponentClass<any, any, any>;
 
@@ -84,16 +98,14 @@ class ControlCell extends React.Component<ControlCellProps> {
     // component only once for every component. Making a style component per each render
     // would cause in re-rendering of the actual HTML elements, which would not only be
     // less performent, but also cause input to lose focus.
-    this.Anchor = styled.div``;
-    this.ControlWrapper = getControlWrapper(this.Anchor);
+    this.ControlWrapper = getControlWrapper();
     this.Content = getContent(this.ControlWrapper);
   }
 
   public render() {
-    const { Anchor, ControlWrapper, Content, props } = this;
+    const { ControlWrapper, Content, props } = this;
     return (
       <Content>
-        <Anchor>
           <ControlWrapper>
             <Controls
               onInitialToggle={props.onInitialToggle}
@@ -101,13 +113,14 @@ class ControlCell extends React.Component<ControlCellProps> {
               onRemove={props.onRemove}
             />
           </ControlWrapper>
-        </Anchor>
         <Row>
           <Col span={8}>
-            <StateIndicator
-              isFinal={props.isFinal}
-              isInitial={props.isInitial}
-            />
+            <StateWrapper>
+              <StateIndicator
+                isFinal={props.isFinal}
+                isInitial={props.isInitial}
+              />
+            </StateWrapper>
           </Col>
           <Col span={16}>
             <CellInput>

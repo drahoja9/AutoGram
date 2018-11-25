@@ -14,16 +14,19 @@ import HeaderCell from './components/HeaderCell';
 const Table = styled.table`
   border-collapse: separate;
   border-spacing: 0;
+  margin-left: 28px;
+  color: #666666;
   td {
-    border: solid black;
-    border-width: 1px;
-    height: 40px;
+    border: solid #666666;
+    border-width: 0px 2px 2px 0px;
+    height: 48px;
     width: 100px;
     text-align: center;
   }
   tr:first-child td {
     background-color: #DDDDDD;
     font-weight: bold;
+    border-top-width: 1px;
   }
   tr:first-child td:first-child {
     border-top-left-radius: 10px;
@@ -32,34 +35,40 @@ const Table = styled.table`
     background-color: inherit;
     font-weight: inherit;
     border-top-right-radius: 10px;
-    border-width: 1px 1px 0px 1px;
+    border-width: 1px 1px 0px 0px;
+    border-color: #999999;
+    color: #999999;
   }
   tbody td:first-child {
     background-color: #DDDDDD;
     font-weight: bold;
+    border-left-width: 1px;
   }
   tbody td:last-child{
-    border-width: 0px 1px 0px 1px;
+    border-width: 0px 1px 0px 0px;
+    border-color: #999999;
   }
   tbody tr:nth-last-child(2) td:last-child{
     border-bottom-width: 1px;
     border-bottom-right-radius: 5px;
   }
   tbody tr:last-child td {
-    border-width: 1px 0px 1px 0px;
+    border-width: 0px 0px 1px 0px;
+    border-color: #999999;
   }
   tbody tr:last-child td:last-child{
-    border-width: 1px 1px 1px 0px;
+    border-width: 0px 1px 1px 0px;
     border-radius: 0px 0px 5px 0px;
   }
   tbody tr:last-child td:first-child{
-    border-width: 1px 0px 1px 1px;
+    border-width: 0px 0px 1px 1px;
     background-color: inherit;
     font-weight: inherit;
     border-bottom-left-radius: 10px; 
+    color: #999999;
   }
   tbody tr:last-child td:only-child{
-    border-width: 1px 1px 1px 1px;
+    border-width: 0px 1px 1px 1px;
   }
 `;
 //#endregion
