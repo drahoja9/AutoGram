@@ -1,7 +1,9 @@
 //#region imports
 import * as React from 'react';
 import { Input } from 'antd';
+import CellInput from '../CellInput';
 //#endregion
+
 
 //#region Component interfaces
 export interface InputCellProps {
@@ -16,10 +18,12 @@ export interface InputCellProps {
  */
 const InputCell: React.SFC<InputCellProps> = (props) => (
   <td>
-    <Input
-      onChange={(e) => props.onChange(e.currentTarget.value)}
-      value={props.value}
-    />
+    <CellInput>
+      <Input
+        onChange={(e) => props.onChange(e.currentTarget.value)}
+        value={props.value}
+      />
+    </CellInput>
   </td>
 )
 

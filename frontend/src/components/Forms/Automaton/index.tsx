@@ -23,17 +23,20 @@ const Table = styled.table`
   }
   tr:first-child td {
     background-color: #DDDDDD;
+    font-weight: bold;
   }
   tr:first-child td:first-child {
     border-top-left-radius: 10px;
   }
   tr:first-child td:last-child {
     background-color: inherit;
+    font-weight: inherit;
     border-top-right-radius: 10px;
     border-width: 1px 1px 0px 1px;
   }
   tbody td:first-child {
     background-color: #DDDDDD;
+    font-weight: bold;
   }
   tbody td:last-child{
     border-width: 0px 1px 0px 1px;
@@ -52,6 +55,7 @@ const Table = styled.table`
   tbody tr:last-child td:first-child{
     border-width: 1px 0px 1px 1px;
     background-color: inherit;
+    font-weight: inherit;
     border-bottom-left-radius: 10px; 
   }
   tbody tr:last-child td:only-child{

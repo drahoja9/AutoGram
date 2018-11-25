@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Button, Input } from 'antd';
 import styled, { StyledComponentClass } from 'styled-components';
+import CellInput from './CellInput'
 //#endregion
 
 //#region Styled
@@ -74,11 +75,13 @@ class HeaderCell extends React.Component<HeaderCellProps> {
             />
           </ControlWrapper>
         </Anchor>
-        <Input
-          disabled={props.isEpsilonOn ? true : false}
-          onChange={(e) => props.onChange(e.currentTarget.value)}
-          value={props.value}
-        />
+        <CellInput>
+          <Input
+            disabled={props.isEpsilonOn ? true : false}
+            onChange={(e) => props.onChange(e.currentTarget.value)}
+            value={props.value}
+          />
+        </CellInput>
       </Content>
     );
   }

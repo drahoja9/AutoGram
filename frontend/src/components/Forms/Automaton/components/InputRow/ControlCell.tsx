@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Row, Col, Input, Button } from 'antd';
 import styled, { StyledComponentClass } from 'styled-components';
 import StateIndicator from './StateIndicator';
+import CellInput from '../CellInput';
 //#endregion
 
 //#region Styled
@@ -52,7 +53,7 @@ interface ControlProps {
 
 /** Actual control buttons. */
 const Controls: React.SFC<ControlProps> = (props) => (
-  <>
+  <div>
     <Row>
       <Button shape="circle" size="small" onClick={props.onInitialToggle}>I</Button>
     </Row>
@@ -62,7 +63,7 @@ const Controls: React.SFC<ControlProps> = (props) => (
     <Row>
       <Button icon="close" type="danger" shape="circle" size="small" onClick={props.onRemove} />
     </Row>
-  </>
+  </div>
 );
 
 /**
@@ -102,18 +103,20 @@ class ControlCell extends React.Component<ControlCellProps> {
           </ControlWrapper>
         </Anchor>
         <Row>
-          <Col span={12}>
+          <Col span={8}>
             <StateIndicator
               isFinal={props.isFinal}
               isInitial={props.isInitial}
             />
           </Col>
-          <Col span={12}>
-            <Input
-              placeholder="a"
-              value={props.value}
-              onChange={(e) => props.onValueChange(e.currentTarget.value)}
-            />
+          <Col span={16}>
+            <CellInput>
+              <Input
+                placeholder="a"
+                value={props.value}
+                onChange={(e) => props.onValueChange(e.currentTarget.value)}
+              />
+            </CellInput>
           </Col>
         </Row>
       </Content>
