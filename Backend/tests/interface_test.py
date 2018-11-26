@@ -78,8 +78,8 @@ def read_input(input_file: str) -> str:
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, '</EpsilonFreeCFG>', None),
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, '</CFG>', None),
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>', None),
-    (GRAMMARS + '/epsilonFreeCFG.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>', None),
     (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>', None),
+    (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>', None),
     (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '1'),
     (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '0'),
     (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '011'),
@@ -123,7 +123,8 @@ def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str,
     # (GRAMMARS + '/CFG2.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG2.EPSILON_RES.xml', None),
     # (GRAMMARS + '/CFG1.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG1.UNIT_RES.xml', None),
     # (GRAMMARS + '/CFG2.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG2.UNIT_RES.xml', None),
-    (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, GRAMMARS + '/CFG1.RECURSION_RES.xml', None),
+    # (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, GRAMMARS + '/CFG1.RECURSION_RES.xml', None),
+    (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, GRAMMARS + '/CFG2.RECURSION_RES.xml', None),
     (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE1.DERIVATION_RES.xml', '1'),
     (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE2.DERIVATION_RES.xml', '0'),
     (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE3.DERIVATION_RES.xml', '011'),
@@ -152,7 +153,6 @@ def test_algorithm_result(interface: AltInterface, input_file: str,
     expected_output = read_input(expected_file)
 
     res = interface.algorithms(xml_input, algorithm, optional_param)
-    print(res)
 
     if 'automaton' in algorithm:
         input_type = 'fa'
