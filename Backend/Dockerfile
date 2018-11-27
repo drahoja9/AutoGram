@@ -24,7 +24,9 @@ ENV FLASK_APP=backend/api.py
 
 # Install libraries necessary for application to run
 # These will probably never change, so we leverage the cache
-RUN apk add --no-cache libstdc++ libxml2-dev
+RUN apk add --no-cache \
+                        libstdc++ \
+                        libxml2-dev
 
 # Copying from previous stage (build) the built interface and the whole ALT library
 # This won't probably change either, so same as above
@@ -43,7 +45,7 @@ WORKDIR /srv/Backend
 COPY ./requirements.txt /srv/Backend/requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt 
 
-# Copying rest of the project (source code mainly ) at last as this will change most frequently
+# Copying rest of the project (source code mainly) at last as this will change most frequently
 COPY . /srv/Backend
 
 ENTRYPOINT ["flask", "run"]
