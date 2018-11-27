@@ -150,7 +150,7 @@ def test_simple_algorithm_result(input_file: str, algorithm: str, expected_file:
             'regexp': json_input,
             'derivation_string': optional_param
         }
-        result = logic_layer._regexp_derivation(json_input)
+        result = logic_layer.simple_algorithm(json_input, algorithm)
         result = result['steps'][-1]
     else:
         result = logic_layer.simple_algorithm(json_input, algorithm)
@@ -191,7 +191,7 @@ def test_epsilon_trim_det_min(automaton: str):
         (AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, 'NFA'),
         (AlgorithmTypes.AUTOMATON_TRIM, 'NFA'),
         (AlgorithmTypes.AUTOMATON_DETERMINIZATION, 'DFA'),
-        # (AlgorithmTypes.AUTOMATON_MINIMIZATION, 'DFA')         <--- Uncomment when minimization is ready
+        (AlgorithmTypes.AUTOMATON_MINIMIZATION_NO_VERBOSE, 'DFA')
     ]:
         res = logic_layer.simple_algorithm(res, algorithm)
         assert result_type == res['type']
