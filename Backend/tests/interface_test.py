@@ -57,8 +57,8 @@ def read_input(input_file: str) -> str:
 
 
 @pytest.mark.parametrize('input_file, algorithm, result_type, optional_param', [
-    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
-    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
+    # (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
+    # (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
     (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
     (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
     (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
@@ -101,6 +101,7 @@ def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str,
     """
     xml_input = read_input(input_file)
     res = interface.algorithms(xml_input, algorithm, optional_param)
+    print(res)
     assert res.endswith(result_type + '\n')
 
 
@@ -287,7 +288,7 @@ def test_epsilon_trim_det_min(interface: AltInterface, automaton: str):
         (AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, '</NFA>'),
         (AlgorithmTypes.AUTOMATON_TRIM, '</NFA>'),
         (AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>'),
-        (AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>')
+        (AlgorithmTypes.AUTOMATON_MINIMIZATION_NO_VERBOSE, '</DFA>')
     ]:
         res = interface.algorithms(res, algorithm)
         assert res.endswith(result_type + '\n')
