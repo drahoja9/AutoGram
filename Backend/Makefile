@@ -28,7 +28,7 @@ ALT_PATH = /usr/include/algorithms-library
 interface:
 	mkdir -p build
 	$(CXX) -pipe -std=c++14 -O3 -DNDEBUG -DRELEASE   -Wall -pedantic -Wextra -Werror -Wshadow -Wpointer-arith -Wcast-qual -Wdelete-non-virtual-dtor -Wredundant-decls -I$(ALT_PATH) -c -fPIC backend/cpp_interface.cpp -o build/cpp_interface.o
-	$(CXX) build/cpp_interface.o -o build/cpp_interface.so -shared  -lalib2aux -lalib2cli -lalib2elgo -lalib2algo -lalib2str -lalib2data -lalib2xml -lalib2common -lalib2abstraction -lalib2std -rdynamic
+	$(CXX) build/cpp_interface.o -o build/cpp_interface.so -shared -Wl,--no-as-needed  -lalib2aux -lalib2cli -lalib2elgo -lalib2algo -lalib2str -lalib2data -lalib2xml -lalib2common -lalib2abstraction -lalib2std -rdynamic
 
 clean_interface:
 	rm -rf build

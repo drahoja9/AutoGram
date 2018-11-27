@@ -31,6 +31,7 @@ class AlgorithmTypes:
     AUTOMATON_EPSILON_REMOVAL = 'automaton_epsilon'
     AUTOMATON_DETERMINIZATION = 'automaton_determinization'
     AUTOMATON_MINIMIZATION = 'automaton_minimization'
+    AUTOMATON_MINIMIZATION_NO_VERBOSE = 'automaton_minimization_no_verbose'
     AUTOMATON_TRIM = 'automaton_trim'
     AUTOMATON_NORMALIZATION = 'automaton_normalization'
     REGEXP_DERIVATION = 'regexp_derivation'
