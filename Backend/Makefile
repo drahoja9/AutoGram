@@ -22,7 +22,7 @@ clean_docs:
 
 
 ################################ C++ ALT library part ################################
-ALT_PATH = /usr/include
+ALT_PATH = /usr/include/algorithms-library
 
 
 interface:
