@@ -1,6 +1,5 @@
 # Build stage
-#FROM gitlab.fit.cvut.cz:5000/algorithms-library-toolkit/automata-library:v0.0.1 AS build
-FROM pet3rmatta/alibc AS build
+FROM gitlab.fit.cvut.cz:5000/algorithms-library-toolkit/automata-library:v0.0.1 AS build
 
 WORKDIR /srv/Backend
 
