@@ -1,0 +1,1302 @@
+{
+    "steps": [
+        {
+            "alphabet": [
+                "a",
+                "c",
+                "g",
+                "u"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "alternation",
+                "value": [
+                    {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "alternation",
+                                "value": [
+                                    {
+                                        "type": "alternation",
+                                        "value": [
+                                            {
+                                                "type": "concatenation",
+                                                "value": [
+                                                    {
+                                                        "type": "epsilon"
+                                                    },
+                                                    {
+                                                        "type": "iteration",
+                                                        "value": {
+                                                            "type": "term",
+                                                            "value": "u"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "alternation",
+                                        "value": [
+                                            {
+                                                "type": "concatenation",
+                                                "value": [
+                                                    {
+                                                        "type": "concatenation",
+                                                        "value": [
+                                                            {
+                                                                "type": "empty_symbol"
+                                                            },
+                                                            {
+                                                                "type": "iteration",
+                                                                "value": {
+                                                                    "type": "term",
+                                                                    "value": "g"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "term",
+                                                        "value": "g"
+                                                    },
+                                                    {
+                                                        "type": "iteration",
+                                                        "value": {
+                                                            "type": "empty_symbol"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "concatenation",
+                                                "value": [
+                                                    {
+                                                        "type": "empty_symbol"
+                                                    },
+                                                    {
+                                                        "type": "iteration",
+                                                        "value": {
+                                                            "type": "empty_symbol"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "alternation",
+                                    "value": [
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "term",
+                                                    "value": "u"
+                                                },
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "u"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "g"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "term",
+                                                    "value": "g"
+                                                },
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "empty_symbol"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "concatenation",
+                                "value": [
+                                    {
+                                        "type": "empty_symbol"
+                                    },
+                                    {
+                                        "type": "term",
+                                        "value": "u"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "alternation",
+                                "value": [
+                                    {
+                                        "type": "alternation",
+                                        "value": [
+                                            {
+                                                "type": "concatenation",
+                                                "value": [
+                                                    {
+                                                        "type": "epsilon"
+                                                    },
+                                                    {
+                                                        "type": "iteration",
+                                                        "value": {
+                                                            "type": "term",
+                                                            "value": "c"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "alternation",
+                                        "value": [
+                                            {
+                                                "type": "concatenation",
+                                                "value": [
+                                                    {
+                                                        "type": "concatenation",
+                                                        "value": [
+                                                            {
+                                                                "type": "epsilon"
+                                                            },
+                                                            {
+                                                                "type": "iteration",
+                                                                "value": {
+                                                                    "type": "term",
+                                                                    "value": "u"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "alternation",
+                                                        "value": [
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "term",
+                                                                        "value": "a"
+                                                                    },
+                                                                    {
+                                                                        "type": "iteration",
+                                                                        "value": {
+                                                                            "type": "term",
+                                                                            "value": "g"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "term",
+                                                                        "value": "c"
+                                                                    },
+                                                                    {
+                                                                        "type": "iteration",
+                                                                        "value": {
+                                                                            "type": "term",
+                                                                            "value": "c"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "concatenation",
+                                                "value": [
+                                                    {
+                                                        "type": "alternation",
+                                                        "value": [
+                                                            {
+                                                                "type": "alternation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "concatenation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "empty_symbol"
+                                                                            },
+                                                                            {
+                                                                                "type": "iteration",
+                                                                                "value": {
+                                                                                    "type": "term",
+                                                                                    "value": "g"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "alternation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "concatenation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "empty_symbol"
+                                                                            },
+                                                                            {
+                                                                                "type": "iteration",
+                                                                                "value": {
+                                                                                    "type": "term",
+                                                                                    "value": "c"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "alternation",
+                                    "value": [
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "term",
+                                                    "value": "u"
+                                                },
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "c"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "u"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "alternation",
+                                                    "value": [
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "term",
+                                                                    "value": "a"
+                                                                },
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "g"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "term",
+                                                                    "value": "c"
+                                                                },
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "c"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "alphabet": [
+                "a",
+                "c",
+                "g",
+                "u"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "alternation",
+                "value": [
+                    {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "concatenation",
+                                "value": [
+                                    {
+                                        "type": "concatenation",
+                                        "value": [
+                                            {
+                                                "type": "empty_symbol"
+                                            },
+                                            {
+                                                "type": "iteration",
+                                                "value": {
+                                                    "type": "term",
+                                                    "value": "u"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "iteration",
+                                        "value": {
+                                            "type": "alternation",
+                                            "value": [
+                                                {
+                                                    "type": "concatenation",
+                                                    "value": [
+                                                        {
+                                                            "type": "term",
+                                                            "value": "u"
+                                                        },
+                                                        {
+                                                            "type": "iteration",
+                                                            "value": {
+                                                                "type": "term",
+                                                                "value": "u"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "concatenation",
+                                                    "value": [
+                                                        {
+                                                            "type": "iteration",
+                                                            "value": {
+                                                                "type": "term",
+                                                                "value": "g"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "term",
+                                                            "value": "g"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "concatenation",
+                                "value": [
+                                    {
+                                        "type": "concatenation",
+                                        "value": [
+                                            {
+                                                "type": "alternation",
+                                                "value": [
+                                                    {
+                                                        "type": "alternation",
+                                                        "value": [
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "empty_symbol"
+                                                                    },
+                                                                    {
+                                                                        "type": "iteration",
+                                                                        "value": {
+                                                                            "type": "term",
+                                                                            "value": "u"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "alternation",
+                                                        "value": [
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "concatenation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "empty_symbol"
+                                                                            },
+                                                                            {
+                                                                                "type": "iteration",
+                                                                                "value": {
+                                                                                    "type": "term",
+                                                                                    "value": "g"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "term",
+                                                                        "value": "g"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "empty_symbol"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "iteration",
+                                                "value": {
+                                                    "type": "alternation",
+                                                    "value": [
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "term",
+                                                                    "value": "u"
+                                                                },
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "u"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "g"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "term",
+                                                                    "value": "g"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "concatenation",
+                                "value": [
+                                    {
+                                        "type": "alternation",
+                                        "value": [
+                                            {
+                                                "type": "concatenation",
+                                                "value": [
+                                                    {
+                                                        "type": "epsilon"
+                                                    },
+                                                    {
+                                                        "type": "iteration",
+                                                        "value": {
+                                                            "type": "term",
+                                                            "value": "c"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "alternation",
+                                                "value": [
+                                                    {
+                                                        "type": "concatenation",
+                                                        "value": [
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "empty_symbol"
+                                                                    },
+                                                                    {
+                                                                        "type": "iteration",
+                                                                        "value": {
+                                                                            "type": "term",
+                                                                            "value": "u"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "alternation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "concatenation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "term",
+                                                                                "value": "a"
+                                                                            },
+                                                                            {
+                                                                                "type": "iteration",
+                                                                                "value": {
+                                                                                    "type": "term",
+                                                                                    "value": "g"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "concatenation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "term",
+                                                                                "value": "c"
+                                                                            },
+                                                                            {
+                                                                                "type": "iteration",
+                                                                                "value": {
+                                                                                    "type": "term",
+                                                                                    "value": "c"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "concatenation",
+                                                        "value": [
+                                                            {
+                                                                "type": "alternation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "alternation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "concatenation",
+                                                                                "value": [
+                                                                                    {
+                                                                                        "type": "empty_symbol"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "iteration",
+                                                                                        "value": {
+                                                                                            "type": "term",
+                                                                                            "value": "g"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "alternation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "concatenation",
+                                                                                "value": [
+                                                                                    {
+                                                                                        "type": "epsilon"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "iteration",
+                                                                                        "value": {
+                                                                                            "type": "term",
+                                                                                            "value": "c"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "iteration",
+                                        "value": {
+                                            "type": "alternation",
+                                            "value": [
+                                                {
+                                                    "type": "concatenation",
+                                                    "value": [
+                                                        {
+                                                            "type": "term",
+                                                            "value": "u"
+                                                        },
+                                                        {
+                                                            "type": "iteration",
+                                                            "value": {
+                                                                "type": "term",
+                                                                "value": "c"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "concatenation",
+                                                    "value": [
+                                                        {
+                                                            "type": "iteration",
+                                                            "value": {
+                                                                "type": "term",
+                                                                "value": "u"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "alternation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "concatenation",
+                                                                    "value": [
+                                                                        {
+                                                                            "type": "term",
+                                                                            "value": "a"
+                                                                        },
+                                                                        {
+                                                                            "type": "iteration",
+                                                                            "value": {
+                                                                                "type": "term",
+                                                                                "value": "g"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "type": "concatenation",
+                                                                    "value": [
+                                                                        {
+                                                                            "type": "term",
+                                                                            "value": "c"
+                                                                        },
+                                                                        {
+                                                                            "type": "iteration",
+                                                                            "value": {
+                                                                                "type": "term",
+                                                                                "value": "c"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "concatenation",
+                                "value": [
+                                    {
+                                        "type": "concatenation",
+                                        "value": [
+                                            {
+                                                "type": "alternation",
+                                                "value": [
+                                                    {
+                                                        "type": "alternation",
+                                                        "value": [
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "empty_symbol"
+                                                                    },
+                                                                    {
+                                                                        "type": "iteration",
+                                                                        "value": {
+                                                                            "type": "term",
+                                                                            "value": "c"
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "alternation",
+                                                        "value": [
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "concatenation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "empty_symbol"
+                                                                            },
+                                                                            {
+                                                                                "type": "iteration",
+                                                                                "value": {
+                                                                                    "type": "term",
+                                                                                    "value": "u"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "alternation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "concatenation",
+                                                                                "value": [
+                                                                                    {
+                                                                                        "type": "term",
+                                                                                        "value": "a"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "iteration",
+                                                                                        "value": {
+                                                                                            "type": "term",
+                                                                                            "value": "g"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "concatenation",
+                                                                                "value": [
+                                                                                    {
+                                                                                        "type": "term",
+                                                                                        "value": "c"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "iteration",
+                                                                                        "value": {
+                                                                                            "type": "term",
+                                                                                            "value": "c"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "concatenation",
+                                                                "value": [
+                                                                    {
+                                                                        "type": "alternation",
+                                                                        "value": [
+                                                                            {
+                                                                                "type": "alternation",
+                                                                                "value": [
+                                                                                    {
+                                                                                        "type": "concatenation",
+                                                                                        "value": [
+                                                                                            {
+                                                                                                "type": "empty_symbol"
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "iteration",
+                                                                                                "value": {
+                                                                                                    "type": "term",
+                                                                                                    "value": "g"
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "alternation",
+                                                                                "value": [
+                                                                                    {
+                                                                                        "type": "concatenation",
+                                                                                        "value": [
+                                                                                            {
+                                                                                                "type": "epsilon"
+                                                                                            },
+                                                                                            {
+                                                                                                "type": "iteration",
+                                                                                                "value": {
+                                                                                                    "type": "term",
+                                                                                                    "value": "c"
+                                                                                                }
+                                                                                            }
+                                                                                        ]
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "iteration",
+                                                "value": {
+                                                    "type": "alternation",
+                                                    "value": [
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "term",
+                                                                    "value": "u"
+                                                                },
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "c"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "u"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "alternation",
+                                                                    "value": [
+                                                                        {
+                                                                            "type": "concatenation",
+                                                                            "value": [
+                                                                                {
+                                                                                    "type": "term",
+                                                                                    "value": "a"
+                                                                                },
+                                                                                {
+                                                                                    "type": "iteration",
+                                                                                    "value": {
+                                                                                        "type": "term",
+                                                                                        "value": "g"
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "type": "concatenation",
+                                                                            "value": [
+                                                                                {
+                                                                                    "type": "term",
+                                                                                    "value": "c"
+                                                                                },
+                                                                                {
+                                                                                    "type": "iteration",
+                                                                                    "value": {
+                                                                                        "type": "term",
+                                                                                        "value": "c"
+                                                                                    }
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "trimmed_steps": [
+        {
+            "alphabet": [
+                "a",
+                "c",
+                "g",
+                "u"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "alternation",
+                "value": [
+                    {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "term",
+                                    "value": "u"
+                                }
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "alternation",
+                                    "value": [
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "term",
+                                                    "value": "u"
+                                                },
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "u"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "g"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "term",
+                                                    "value": "g"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "alternation",
+                                "value": [
+                                    {
+                                        "type": "iteration",
+                                        "value": {
+                                            "type": "term",
+                                            "value": "c"
+                                        }
+                                    },
+                                    {
+                                        "type": "concatenation",
+                                        "value": [
+                                            {
+                                                "type": "iteration",
+                                                "value": {
+                                                    "type": "term",
+                                                    "value": "u"
+                                                }
+                                            },
+                                            {
+                                                "type": "alternation",
+                                                "value": [
+                                                    {
+                                                        "type": "concatenation",
+                                                        "value": [
+                                                            {
+                                                                "type": "term",
+                                                                "value": "a"
+                                                            },
+                                                            {
+                                                                "type": "iteration",
+                                                                "value": {
+                                                                    "type": "term",
+                                                                    "value": "g"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "concatenation",
+                                                        "value": [
+                                                            {
+                                                                "type": "term",
+                                                                "value": "c"
+                                                            },
+                                                            {
+                                                                "type": "iteration",
+                                                                "value": {
+                                                                    "type": "term",
+                                                                    "value": "c"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "alternation",
+                                    "value": [
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "term",
+                                                    "value": "u"
+                                                },
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "c"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "iteration",
+                                                    "value": {
+                                                        "type": "term",
+                                                        "value": "u"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "alternation",
+                                                    "value": [
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "term",
+                                                                    "value": "a"
+                                                                },
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "g"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "concatenation",
+                                                            "value": [
+                                                                {
+                                                                    "type": "term",
+                                                                    "value": "c"
+                                                                },
+                                                                {
+                                                                    "type": "iteration",
+                                                                    "value": {
+                                                                        "type": "term",
+                                                                        "value": "c"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "alphabet": [
+                "a",
+                "c",
+                "g",
+                "u"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "concatenation",
+                "value": [
+                    {
+                        "type": "iteration",
+                        "value": {
+                            "type": "term",
+                            "value": "c"
+                        }
+                    },
+                    {
+                        "type": "iteration",
+                        "value": {
+                            "type": "alternation",
+                            "value": [
+                                {
+                                    "type": "concatenation",
+                                    "value": [
+                                        {
+                                            "type": "term",
+                                            "value": "u"
+                                        },
+                                        {
+                                            "type": "iteration",
+                                            "value": {
+                                                "type": "term",
+                                                "value": "c"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "concatenation",
+                                    "value": [
+                                        {
+                                            "type": "iteration",
+                                            "value": {
+                                                "type": "term",
+                                                "value": "u"
+                                            }
+                                        },
+                                        {
+                                            "type": "alternation",
+                                            "value": [
+                                                {
+                                                    "type": "concatenation",
+                                                    "value": [
+                                                        {
+                                                            "type": "term",
+                                                            "value": "a"
+                                                        },
+                                                        {
+                                                            "type": "iteration",
+                                                            "value": {
+                                                                "type": "term",
+                                                                "value": "g"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "concatenation",
+                                                    "value": [
+                                                        {
+                                                            "type": "term",
+                                                            "value": "c"
+                                                        },
+                                                        {
+                                                            "type": "iteration",
+                                                            "value": {
+                                                                "type": "term",
+                                                                "value": "c"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

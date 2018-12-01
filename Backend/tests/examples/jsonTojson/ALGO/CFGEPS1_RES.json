@@ -1,0 +1,95 @@
+{
+    "initial_symbol": "S",
+    "nonterminal_alphabet": [
+        "A",
+        "B",
+        "C",
+        "S"
+    ],
+    "rules": [
+        {
+            "from": "A",
+            "to": [
+                "a"
+            ]
+        },
+        {
+            "from": "A",
+            "to": [
+                "a",
+                "A"
+            ]
+        },
+        {
+            "from": "B",
+            "to": [
+                "A"
+            ]
+        },
+        {
+            "from": "B",
+            "to": [
+                "b",
+                "b"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "A"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "A",
+                "B"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "A",
+                "B",
+                "C"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "A",
+                "C"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "B"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "B",
+                "C"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "C"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                null
+            ]
+        }
+    ],
+    "terminal_alphabet": [
+        "a",
+        "b"
+    ],
+    "type": "CFG"
+}

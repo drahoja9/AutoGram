@@ -1,0 +1,159 @@
+{
+    "final_states": [
+        "Start_0",
+        "a_4",
+        "b_7",
+        "c_6"
+    ],
+    "initial_states": [
+        "Start_0"
+    ],
+    "input_alphabet": [
+        "a",
+        "b",
+        "c"
+    ],
+    "states": [
+        "Start_0",
+        "a_1",
+        "a_4",
+        "b_2",
+        "b_5",
+        "b_7",
+        "c_3",
+        "c_6"
+    ],
+    "transitions": [
+        {
+            "from": "Start_0",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "Start_0",
+            "input": "a",
+            "to": "a_4"
+        },
+        {
+            "from": "Start_0",
+            "input": "b",
+            "to": "b_7"
+        },
+        {
+            "from": "Start_0",
+            "input": "c",
+            "to": "c_3"
+        },
+        {
+            "from": "a_1",
+            "input": "b",
+            "to": "b_2"
+        },
+        {
+            "from": "a_4",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "a_4",
+            "input": "a",
+            "to": "a_4"
+        },
+        {
+            "from": "a_4",
+            "input": "b",
+            "to": "b_5"
+        },
+        {
+            "from": "a_4",
+            "input": "b",
+            "to": "b_7"
+        },
+        {
+            "from": "a_4",
+            "input": "c",
+            "to": "c_3"
+        },
+        {
+            "from": "b_2",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "b_2",
+            "input": "a",
+            "to": "a_4"
+        },
+        {
+            "from": "b_2",
+            "input": "c",
+            "to": "c_3"
+        },
+        {
+            "from": "b_5",
+            "input": "c",
+            "to": "c_6"
+        },
+        {
+            "from": "b_7",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "b_7",
+            "input": "a",
+            "to": "a_4"
+        },
+        {
+            "from": "b_7",
+            "input": "b",
+            "to": "b_7"
+        },
+        {
+            "from": "b_7",
+            "input": "c",
+            "to": "c_3"
+        },
+        {
+            "from": "c_3",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "c_3",
+            "input": "a",
+            "to": "a_4"
+        },
+        {
+            "from": "c_3",
+            "input": "c",
+            "to": "c_3"
+        },
+        {
+            "from": "c_6",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "c_6",
+            "input": "a",
+            "to": "a_4"
+        },
+        {
+            "from": "c_6",
+            "input": "b",
+            "to": "b_5"
+        },
+        {
+            "from": "c_6",
+            "input": "b",
+            "to": "b_7"
+        },
+        {
+            "from": "c_6",
+            "input": "c",
+            "to": "c_3"
+        }
+    ],
+    "type": "NFA"
+}

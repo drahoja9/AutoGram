@@ -1,0 +1,82 @@
+{
+    "lhs": {
+        "type": "NFA",
+        "initial_states": [
+            "A"
+        ],
+        "final_states": [
+            "A",
+            "B",
+            "C"
+        ],
+        "input_alphabet": [
+            "a",
+            "b"
+        ],
+        "states": [
+            "A",
+            "B",
+            "C"
+        ],
+        "transitions": [
+            {
+                "from": "A",
+                "input": "a",
+                "to": "B"
+            },
+            {
+                "from": "A",
+                "input": "b",
+                "to": "C"
+            },
+            {
+                "from": "B",
+                "input": "a",
+                "to": "B"
+            },
+            {
+                "from": "B",
+                "input": "b",
+                "to": "C"
+            },
+            {
+                "from": "C",
+                "input": "a",
+                "to": "B"
+            },
+            {
+                "from": "C",
+                "input": "b",
+                "to": "C"
+            }
+        ]
+    },
+    "rhs": {
+        "type": "NFA",
+        "initial_states": [
+            "0"
+        ],
+        "final_states": [
+            "0"
+        ],
+        "input_alphabet": [
+            "b",
+            "a"
+        ],
+        "states": [
+            "0"
+        ],
+        "transitions": [
+            {
+                "from": "0",
+                "input": "b",
+                "to": "0"
+            },
+            {
+                "from": "0",
+                "input": "a",
+                "to": "0"
+            }
+        ]
+    }
+}

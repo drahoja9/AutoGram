@@ -1,0 +1,44 @@
+{
+    "final_states": [
+        "Start_0",
+        "a_4",
+        "b_2"
+    ],
+    "initial_states": [
+        "Start_0"
+    ],
+    "input_alphabet": [
+        "a",
+        "b"
+    ],
+    "states": [
+        "Start_0",
+        "a_1",
+        "a_4",
+        "b_2",
+        "b_3"
+    ],
+    "transitions": [
+        {
+            "from": "Start_0",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "Start_0",
+            "input": "b",
+            "to": "b_3"
+        },
+        {
+            "from": "a_1",
+            "input": "b",
+            "to": "b_2"
+        },
+        {
+            "from": "b_3",
+            "input": "a",
+            "to": "a_4"
+        }
+    ],
+    "type": "NFA"
+}

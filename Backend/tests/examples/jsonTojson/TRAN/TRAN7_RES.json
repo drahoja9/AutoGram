@@ -1,0 +1,23 @@
+{
+    "alphabet": [
+        "a",
+        "b"
+    ],
+    "type": "UnboundedRegExp",
+    "value": {
+        "type": "alternation",
+        "value": [
+            {
+                "type": "term",
+                "value": "a"
+            },
+            {
+                "type": "iteration",
+                "value": {
+                    "type": "term",
+                    "value": "b"
+                }
+            }
+        ]
+    }
+}

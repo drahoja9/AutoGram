@@ -1,0 +1,50 @@
+{
+    "target": "re",
+    "source": {
+        "type": "NFA",
+        "initial_states": [
+            "S"
+        ],
+        "final_states": [
+            "A",
+            "B"
+        ],
+        "input_alphabet": [
+            "0",
+            "1",
+            "2"
+        ],
+        "states": [
+            "S",
+            "A",
+            "B"
+        ],
+        "transitions": [
+            {
+                "from": "S",
+                "input": "0",
+                "to": "A"
+            },
+            {
+                "from": "S",
+                "input": "1",
+                "to": "S"
+            },
+            {
+                "from": "A",
+                "input": "0",
+                "to": "A"
+            },
+            {
+                "from": "A",
+                "input": "2",
+                "to": "B"
+            },
+            {
+                "from": "B",
+                "input": "1",
+                "to": "S"
+            }
+        ]
+    }
+}

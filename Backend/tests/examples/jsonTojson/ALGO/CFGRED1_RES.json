@@ -1,0 +1,25 @@
+{
+    "initial_symbol": "S",
+    "nonterminal_alphabet": [
+        "C",
+        "S"
+    ],
+    "rules": [
+        {
+            "from": "C",
+            "to": [
+                "c"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "C"
+            ]
+        }
+    ],
+    "terminal_alphabet": [
+        "c"
+    ],
+    "type": "CFG"
+}

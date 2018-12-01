@@ -1,0 +1,69 @@
+{
+    "initial_symbol": "S",
+    "nonterminal_alphabet": [
+        "S",
+        "A",
+        "B"
+    ],
+    "rules": [
+        {
+            "from": "S",
+            "to": [
+                "a",
+                "A"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "b",
+                "B"
+            ]
+        },
+        {
+            "from": "A",
+            "to": [
+                "a",
+                "A"
+            ]
+        },
+        {
+            "from": "A",
+            "to": [
+                "a",
+                "B"
+            ]
+        },
+        {
+            "from": "A",
+            "to": [
+                "c"
+            ]
+        },
+        {
+            "from": "B",
+            "to": [
+                "c",
+                "A"
+            ]
+        },
+        {
+            "from": "B",
+            "to": [
+                "b"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                null
+            ]
+        }
+    ],
+    "terminal_alphabet": [
+        "a",
+        "b",
+        "c"
+    ],
+    "type": "RightRG"
+}

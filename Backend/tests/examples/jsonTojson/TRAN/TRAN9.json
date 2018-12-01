@@ -1,0 +1,44 @@
+{
+    "target": "fa",
+    "source": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "a",
+            "b"
+        ],
+        "value": {
+            "type": "alternation",
+            "value": [
+                {
+                    "type": "concatenation",
+                    "value": [
+                        {
+                            "type": "term",
+                            "value": "a"
+                        },
+                        {
+                            "type": "term",
+                            "value": "b"
+                        }
+                    ]
+                },
+                {
+                    "type": "concatenation",
+                    "value": [
+                        {
+                            "type": "term",
+                            "value": "b"
+                        },
+                        {
+                            "type": "term",
+                            "value": "a"
+                        }
+                    ]
+                },
+                {
+                    "type": "epsilon"
+                }
+            ]
+        }
+    }
+}

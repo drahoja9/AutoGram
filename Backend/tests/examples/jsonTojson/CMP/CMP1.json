@@ -1,0 +1,52 @@
+{
+    "lhs": {
+        "type": "RightRG",
+        "nonterminal_alphabet": [
+            "A"
+        ],
+        "terminal_alphabet": [
+            "a"
+        ],
+        "initial_symbol": "A",
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "A"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a"
+                ]
+            }
+        ]
+    },
+    "rhs": {
+        "type": "RightRG",
+        "nonterminal_alphabet": [
+            "A"
+        ],
+        "terminal_alphabet": [
+            "a"
+        ],
+        "initial_symbol": "A",
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "A"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a"
+                ]
+            }
+        ]
+    }
+}

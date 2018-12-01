@@ -1,0 +1,419 @@
+{
+    "after_epsilon": {
+        "initial_symbol": "1aS",
+        "nonterminal_alphabet": [
+            "1aS",
+            "2aA",
+            "3aD",
+            "4aB",
+            "5aC"
+        ],
+        "rules": [
+            {
+                "from": "1aS",
+                "to": [
+                    "2aA"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "2aA",
+                    "a"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "4aB",
+                    "c"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "4aB",
+                    "b"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "3aD"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "4aB",
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "5aC",
+                    "3aD"
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    "5aC",
+                    "b"
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    "b"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    },
+    "after_reduction": {
+        "initial_symbol": "1aS",
+        "nonterminal_alphabet": [
+            "1aS",
+            "2aA",
+            "3aD",
+            "4aB",
+            "5aC"
+        ],
+        "rules": [
+            {
+                "from": "1aS",
+                "to": [
+                    "2aA"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "2aA",
+                    "a"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "4aB",
+                    "c"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "4aB",
+                    "b"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "4aB",
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "5aC",
+                    "3aD"
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    null
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    "5aC",
+                    "b"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    },
+    "after_unit_rules": {
+        "initial_symbol": "1aS",
+        "nonterminal_alphabet": [
+            "1aS",
+            "2aA",
+            "3aD",
+            "4aB",
+            "5aC"
+        ],
+        "rules": [
+            {
+                "from": "1aS",
+                "to": [
+                    "2aA",
+                    "a"
+                ]
+            },
+            {
+                "from": "1aS",
+                "to": [
+                    "4aB",
+                    "c"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "2aA",
+                    "a"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "4aB",
+                    "c"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "4aB",
+                    "b"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "4aB",
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "4aB",
+                    "b"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "5aC",
+                    "3aD"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    "5aC",
+                    "b"
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    "b"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    },
+    "result": {
+        "initial_symbol": "1aS",
+        "nonterminal_alphabet": [
+            "1aS",
+            "2aA",
+            "2aA'",
+            "3aD",
+            "4aB",
+            "4aB'",
+            "5aC",
+            "5aC'"
+        ],
+        "rules": [
+            {
+                "from": "1aS",
+                "to": [
+                    "2aA",
+                    "a"
+                ]
+            },
+            {
+                "from": "1aS",
+                "to": [
+                    "4aB",
+                    "c"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "4aB",
+                    "c"
+                ]
+            },
+            {
+                "from": "2aA",
+                "to": [
+                    "4aB",
+                    "c",
+                    "2aA'"
+                ]
+            },
+            {
+                "from": "2aA'",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "2aA'",
+                "to": [
+                    "a",
+                    "2aA'"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "4aB",
+                    "b"
+                ]
+            },
+            {
+                "from": "3aD",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "5aC",
+                    "3aD"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "5aC",
+                    "3aD",
+                    "4aB'"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB",
+                "to": [
+                    "a",
+                    "4aB'"
+                ]
+            },
+            {
+                "from": "4aB'",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "4aB'",
+                "to": [
+                    "a",
+                    "4aB'"
+                ]
+            },
+            {
+                "from": "4aB'",
+                "to": [
+                    "b"
+                ]
+            },
+            {
+                "from": "4aB'",
+                "to": [
+                    "b",
+                    "4aB'"
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    "b"
+                ]
+            },
+            {
+                "from": "5aC",
+                "to": [
+                    "b",
+                    "5aC'"
+                ]
+            },
+            {
+                "from": "5aC'",
+                "to": [
+                    "b"
+                ]
+            },
+            {
+                "from": "5aC'",
+                "to": [
+                    "b",
+                    "5aC'"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    }
+}

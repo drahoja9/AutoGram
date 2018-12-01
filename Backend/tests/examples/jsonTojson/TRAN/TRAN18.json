@@ -1,0 +1,54 @@
+{
+    "target": "rg",
+    "source": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "0",
+            "1"
+        ],
+        "value": {
+            "type": "alternation",
+            "value": [
+                {
+                    "type": "concatenation",
+                    "value": [
+                        {
+                            "type": "iteration",
+                            "value": {
+                                "type": "alternation",
+                                "value": [
+                                    {
+                                        "type": "term",
+                                        "value": "0"
+                                    },
+                                    {
+                                        "type": "term",
+                                        "value": "1"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "term",
+                            "value": "1"
+                        },
+                        {
+                            "type": "term",
+                            "value": "0"
+                        },
+                        {
+                            "type": "iteration",
+                            "value": {
+                                "type": "term",
+                                "value": "1"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "epsilon"
+                }
+            ]
+        }
+    }
+}

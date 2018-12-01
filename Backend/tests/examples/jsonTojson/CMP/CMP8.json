@@ -1,0 +1,84 @@
+{
+    "lhs": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "value": {
+            "type": "concatenation",
+            "value": [
+                {
+                    "type": "term",
+                    "value": "a"
+                },
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "term",
+                        "value": "b"
+                    }
+                },
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "term",
+                                "value": "c"
+                            },
+                            {
+                                "type": "term",
+                                "value": "d"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "rhs": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "a",
+            "b",
+            "c",
+            "d"
+        ],
+        "value": {
+            "type": "concatenation",
+            "value": [
+                {
+                    "type": "term",
+                    "value": "a"
+                },
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "term",
+                        "value": "b"
+                    }
+                },
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "term",
+                                "value": "c"
+                            },
+                            {
+                                "type": "term",
+                                "value": "d"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
