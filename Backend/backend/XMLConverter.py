@@ -1200,7 +1200,7 @@ class XtJConverter:
     @staticmethod
     def cyk_xml_to_json(result: str, steps: str) -> dict:
         ret_steps = XtJConverter._xml_to_json_cyk_steps(steps)
-        return {'result': result, 'step_table': ret_steps}
+        return {'result': ET.fromstring(result).text, 'step_table': ret_steps}
 
 
 # ----------------------------------------------------------------------------------------------------------------------
