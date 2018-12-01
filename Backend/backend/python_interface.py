@@ -146,6 +146,7 @@ class AltInterface:
 
         * ``'automaton_determinization'``
         * ``'automaton_minimization'``
+        * ``'automaton_minimization_no_verbose'``
         * ``'automaton_trim'``
         * ``'automaton_normalization'``
         * ``'automaton_epsilon'``
@@ -155,6 +156,7 @@ class AltInterface:
         * ``'grammar_cnf'``
         * ``'grammar_left_recursion'``
         * ``'grammar_cyk'``
+        * ``'grammar_cyk_no_verbose'``
         * ``'regexp_trim'``
         * ``'regexp_derivation'``
 
@@ -173,9 +175,6 @@ class AltInterface:
         params = self._prepare_strings(xml_input, algorithm, optional_param)
         result_struct = self.lib.algorithms(self.interface, *params)
         res_code, res = self._parse_result(result_struct)
-
-        if algorithm == 'automaton_minimization' or algorithm == 'grammar_cyk':
-            print(res)
 
         if res_code != 0:
             raise AltInterfaceException(res)
