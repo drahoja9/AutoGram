@@ -8,6 +8,7 @@
 #define AUTOMATON_EPSILON_REMOVAL "automaton_epsilon"
 #define AUTOMATON_DETERMINIZATION "automaton_determinization"
 #define AUTOMATON_MINIMIZATION "automaton_minimization"
+#define AUTOMATON_MINIMIZATION_NO_VERBOSE "automaton_minimization_no_verbose"
 #define AUTOMATON_TRIM "automaton_trim"
 #define AUTOMATON_NORMALIZATION "automaton_normalization"
 #define GRAMMAR_REDUCTION "grammar_reduction"
@@ -103,6 +104,13 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
             this->algorithms(input, AUTOMATON_TRIM, nullptr);
 
             input = this->m_ResultStruct->t_Result;
+            algorithm = "automaton::simplify::MinimizeVerbose";
+        }
+        else if (algorithm == AUTOMATON_MINIMIZATION_NO_VERBOSE) {
+            // First we need to eliminate unreachable and pointless states (following the BI-AAG practice)
+            this->algorithms(input, AUTOMATON_TRIM, nullptr);
+
+            input = this->m_ResultStruct->t_Result;
             algorithm = "automaton::simplify::Minimize";
         }
         else if (algorithm == AUTOMATON_EPSILON_REMOVAL)
@@ -131,7 +139,7 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
                 this->setResultStruct(1, "No string for CYK was given!");
                 return;
             }
-            algorithm = "grammar::generate::CockeYoungerKasami";
+            algorithm = "grammar::generate::CockeYoungerKasamiVerbose";
         }
         else {
             this->setResultStruct(1, "Unknown algorithm passed as parameter!");
@@ -232,7 +240,7 @@ std::string ALT_Interface::prepareForCompare(std::string input) {
     this->algorithms(inter_res, AUTOMATON_DETERMINIZATION, nullptr);
     inter_res = this->m_ResultStruct->t_Result;
 
-    this->algorithms(inter_res, AUTOMATON_MINIMIZATION, nullptr);
+    this->algorithms(inter_res, AUTOMATON_MINIMIZATION_NO_VERBOSE, nullptr);
     inter_res = this->m_ResultStruct->t_Result;
 
     this->algorithms(inter_res, AUTOMATON_TRIM, nullptr);
