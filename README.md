@@ -17,19 +17,25 @@ To learn more, please read `README`s in `frontend` and `backend` folders.
 
 ## How to run
 
-1. Make sure you have Docker and Docker-compose installed on your machine:
+1. Make sure you have Docker and Docker-compose installed on your machine
+(we use Compose file version 3.2, so make sure you have Docker Engine release 
+17.04.0+):
 ```
 docker --version; docker-compose --version
 ```
-(We use Compose file version 3.2, so make sure you have Docker Engine release 17.04.0+)
 
-2. Build the Docker images for frontend and backend and run them simultaneously:
+2. Login to FIT CTU GitLab with Docker. This is because we use 
+Docker image from another FIT CTU GitLab Registry, so this application is
+available only to students/employees of our faculty for now. (Your credentials 
+will be saved, so you have to login only for the first itme. For more information 
+see [Docker documentation](https://docs.docker.com/engine/reference/commandline/login/#credentials-store)).:
+```
+docker login gitlab.fit.cvut.cz:5000
+```
+
+3. Build the Docker images for frontend and backend and run them simultaneously:
 ```
 docker-compose up
 ```
-3. You will be promted to login to your school account. This is because we use 
-Docker image from another FIT CTU GitLab Registry, so for now this application is
-available only to students/employees of our faculty. (Your credentials will be
-saved, so you have to login only for the first itme. For more information see
-[Docker documentation](https://docs.docker.com/engine/reference/commandline/login/#credentials-store)).
+
 4. After successful login the application should be up and running (you will see that there are also tests running with each start. If they do not pass for some reason, please, let us know).
