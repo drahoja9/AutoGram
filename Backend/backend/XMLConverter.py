@@ -14,13 +14,12 @@ converting this XML back to JSON for :mod:`REST API <backend.api>`.
 
 """
 
-
 import json
 import xml.etree.ElementTree as ET
-#from backend import ObjectTypes
-#from backend import AlgorithmTypes
-from __init__ import ObjectTypes
-from __init__ import AlgorithmTypes
+from backend import ObjectTypes
+from backend import AlgorithmTypes
+#from __init__ import ObjectTypes
+#from __init__ import AlgorithmTypes
 
 
 XML_VERSION = '<?xml version="1.0"?>'
@@ -641,12 +640,14 @@ class XtJConverter:
                 text = child.text
         elif child.tag == "epsilon":
             text = None
-        elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector":
+        elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector" or child.tag == "UniqueObject":
             text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
         elif child.tag == "InitialStateLabel":
             text = "Start"
+        elif child.tag == "id":
+            return ''
         else:
             raise TypeError
 
@@ -1160,6 +1161,7 @@ class XtJConverter:
         return {'result': result, 'step_table': ret_steps}
 
 
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 def json_to_xml(json_file: dict, param: str = None):
@@ -1275,5 +1277,5 @@ xml_cyk = """
 	</vector>
 </vector>
 """
-print(xml_to_json(True, 'grammar_cyk', steps=xml_cyk))
+#print(xml_to_json(True, 'grammar_cyk', steps=xml_cyk))
 

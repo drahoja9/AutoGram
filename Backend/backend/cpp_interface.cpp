@@ -8,6 +8,7 @@
 #define AUTOMATON_EPSILON_REMOVAL "automaton_epsilon"
 #define AUTOMATON_DETERMINIZATION "automaton_determinization"
 #define AUTOMATON_MINIMIZATION "automaton_minimization"
+#define AUTOMATON_MINIMIZATION_NO_VERBOSE "automaton_minimization_no_verbose"
 #define AUTOMATON_TRIM "automaton_trim"
 #define AUTOMATON_NORMALIZATION "automaton_normalization"
 #define GRAMMAR_REDUCTION "grammar_reduction"
@@ -37,7 +38,7 @@ public:
 	void compare(std::string input1, std::string input2, bool regular);
 
 	ResultStruct * m_ResultStruct;
-	
+
 private:
 	void setResultStruct(int resCode, const char * char_result);
 	void setResultStruct(int resCode, bool result);
@@ -82,7 +83,7 @@ void ALT_Interface::prepareAndRun(std::string input, std::string algorithm) {
 	cli::Parser parser ( cli::Lexer ("") );
 	std::string query = "execute sax::SaxParseInterface $input | xml::Parse ^ - | " +
 	                    algorithm +
-	                    " | xml::Compose - | sax::SaxComposeInterface - > $output";
+	                    "| xml::Compose - | sax::SaxComposeInterface - > $output";
 	parser = cli::Parser ( cli::Lexer ( query ) );
 	parser.parse ( )->run ( environment );
 
@@ -104,6 +105,13 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
 
             input = this->m_ResultStruct->t_Result;
             algorithm = "automaton::simplify::MinimizeVerbose";
+        }
+        else if (algorithm == AUTOMATON_MINIMIZATION_NO_VERBOSE) {
+            // First we need to eliminate unreachable and pointless states (following the BI-AAG practice)
+            this->algorithms(input, AUTOMATON_TRIM, nullptr);
+
+            input = this->m_ResultStruct->t_Result;
+            algorithm = "automaton::simplify::Minimize";
         }
         else if (algorithm == AUTOMATON_EPSILON_REMOVAL)
             algorithm = "automaton::simplify::EpsilonRemoverIncoming";
@@ -232,7 +240,7 @@ std::string ALT_Interface::prepareForCompare(std::string input) {
     this->algorithms(inter_res, AUTOMATON_DETERMINIZATION, nullptr);
     inter_res = this->m_ResultStruct->t_Result;
 
-    this->algorithms(inter_res, AUTOMATON_MINIMIZATION, nullptr);
+    this->algorithms(inter_res, AUTOMATON_MINIMIZATION_NO_VERBOSE, nullptr);
     inter_res = this->m_ResultStruct->t_Result;
 
     this->algorithms(inter_res, AUTOMATON_TRIM, nullptr);
@@ -286,7 +294,7 @@ extern "C" {
 	// Class ALT_Interface wrapper
 	void * createInterface() { return new(std::nothrow) ALT_Interface; }
 	void deleteInterface(ALT_Interface * interface) { delete interface; }
-	
+
 	ResultStruct * algorithms(ALT_Interface * interface, const char * input, const char * algorithm, const char * optionalParam) {
 		interface->algorithms(input, algorithm, optionalParam);
 		return interface->m_ResultStruct;
@@ -301,7 +309,7 @@ extern "C" {
 	    interface->compare(input1, input2, regular);
 	    return interface->m_ResultStruct;
 	}
-	
+
 	// Struct ResultStruct wrapper
 	int getResultCode(ResultStruct * rs) { return rs->t_ResCode; }
 	const char * getResult(ResultStruct * rs) { return rs->t_Result; }
