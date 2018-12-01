@@ -1044,7 +1044,33 @@ class XtJConverter:
 
     @staticmethod
     def _xml_to_json_minimization_steps(xml_file: str):
-        raise NotImplementedError
+        root = ET.fromstring(xml_file)
+        result = []
+        referenced_values = {}
+
+        for result_map in root.findall("Map"):
+            map_result = []
+            for map_state in result_map.findall("Pair"):
+                state_object = {}
+
+                def_pair = map_state.findall("Pair")[0]
+                state_object['state'] = XtJConverter._get_child_text(def_pair[0], referenced_values, False)
+                state_object['group'] = XtJConverter._get_child_text(def_pair[1], referenced_values, False)
+
+                transitions_map = map_state.findall("Map")[0]
+                result_transitions = []
+                for transtition_pair in transitions_map.findall("Pair"):
+                    transition = {}
+                    transition['input'] = XtJConverter._get_child_text(transtition_pair[0], referenced_values, False)
+                    transition['to'] = XtJConverter._get_child_text(transtition_pair[1], referenced_values, False)
+                    result_transitions.append(transition)
+                state_object['transitions'] = result_transitions
+
+                map_result.append(state_object)
+            result.append(map_result)
+
+        return result
+
 
     @staticmethod
     def _xml_to_json_cyk_steps(xml_file: str):
@@ -1052,9 +1078,9 @@ class XtJConverter:
         result = []
         referenced_values = {}
 
-        for result_vector in root.findall('vector'):
+        for result_vector in root.findall('Vector'):
             vector_result = []
-            for result_set in result_vector.findall('set'):
+            for result_set in result_vector.findall('Set'):
                 vector_result.append(XtJConverter._flatten_child_text_with_commas(result_set, referenced_values))
             result.append(vector_result)
 
@@ -1150,15 +1176,38 @@ class XtJConverter:
 
     @staticmethod
     def minimization_xml_to_json(result: str, steps: str) -> dict:
-        ret_automaton = XtJConverter.simple_xml_to_json(result)
-        ret_steps = XtJConverter._xml_to_json_minimization_steps(steps)
+
+        #print(result)
+        #print("---")
+
+        # ret_automaton = XtJConverter.simple_xml_to_json(result)
+        # ret_steps = XtJConverter._xml_to_json_minimization_steps(steps)
+        # return {'result': ret_automaton, 'steps': ret_steps
+
+        ret_automaton = {
+                'type': 'DFA',
+                'states': ['S'],
+                'input_alphabet': [],
+                'initial_states': ['S'],
+                'final_states': [],
+                'transitions': []
+            }
+        ret_steps = XtJConverter._xml_to_json_minimization_steps(result)
+
         return {'result': ret_automaton, 'steps': ret_steps}
 
 
     @staticmethod
-    def cyk_xml_to_json(result: bool, steps: str) -> dict:
-        ret_steps = XtJConverter._xml_to_json_cyk_steps(steps)
-        return {'result': result, 'step_table': ret_steps}
+    def cyk_xml_to_json(result: str, steps: str) -> dict:
+        # !!! result must be given in other way
+        # in result give boolean result, in steps give step tabe
+        # when accomplished uncomment this part and remove the next
+
+        # ret_steps = XtJConverter._xml_to_json_cyk_steps(steps)
+        # return {'result': result, 'step_table': ret_steps}
+
+        ret_steps = XtJConverter._xml_to_json_cyk_steps(result)
+        return {'result': True, 'step_table': ret_steps}
 
 
 
@@ -1223,7 +1272,8 @@ def xml_to_json(result, param: str = None, **steps) -> dict:
         if param == AlgorithmTypes.COMPARISON:
             ret = XtJConverter.comparison_xml_to_json(result)
         elif param == AlgorithmTypes.AUTOMATON_MINIMIZATION:
-            ret = XtJConverter.minimization_xml_to_json(result, steps['steps'])
+            ret = XtJConverter.minimization_xml_to_json(result, {})
+            #ret = XtJConverter.minimization_xml_to_json(result, steps['steps'])
         elif param == AlgorithmTypes.REGEXP_DERIVATION:
             ret = XtJConverter.derivation_xml_to_json(steps['steps'], steps['trimmed_steps'])
         elif param == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
@@ -1241,41 +1291,3 @@ def xml_to_json(result, param: str = None, **steps) -> dict:
         raise XMLDecodeError("Invalid XML structure")
     except:
         raise XMLDecodeError("Unexpected exception occurred")
-
-
-xml_cyk = """
-<vector>
-	<vector>
-		<set>
-			<Character ref="0">48</Character>
-			<Character ref="1">49</Character>
-		</set>
-		<set>
-			<Ref id="0"/>
-			<Ref id="1"/>
-		</set>
-	</vector>
-	<vector>
-		<set>
-			<Ref id="0"/>
-			<Ref id="1"/>
-		</set>
-		<set>
-			<Ref id="0"/>
-			<Ref id="1"/>
-		</set>
-	</vector>
-	<vector>
-		<set>
-			<Ref id="0"/>
-			<Ref id="1"/>
-		</set>
-		<set>
-			<Ref id="0"/>
-			<Ref id="1"/>
-		</set>
-	</vector>
-</vector>
-"""
-#print(xml_to_json(True, 'grammar_cyk', steps=xml_cyk))
-

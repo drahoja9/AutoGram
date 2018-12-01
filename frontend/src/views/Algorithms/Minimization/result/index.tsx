@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import AutomatonView from 'components/Results/automaton';
-import { DFA } from 'lib/types';
+import { MinimizationResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,14 +13,14 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class MinimizationController extends Controller<DFA> {
+class MinimizationController extends Controller<MinimizationResponse> {
   protected get headline(){
     return 'Minimization result';
   }
   protected get content(){
     return (
       <AutomatonView 
-        value={this.props.result}
+        value={this.props.result.result}
       />
     )
   }
