@@ -17,6 +17,7 @@
 #define GRAMMAR_CNF_CONVERSION "grammar_cnf"
 #define GRAMMAR_LEFT_RECURSION_REMOVAL "grammar_left_recursion"
 #define GRAMMAR_CYK "grammar_cyk"
+#define GRAMMAR_CYK_NO_VERBOSE "grammar_cyk_no_verbose"
 #define REGEXP_TRIM "regexp_trim"
 #define REGEXP_DERIVATION "regexp_derivation"
 
@@ -133,15 +134,19 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
                 return;
             }
             algorithm = "regexp::RegExpDerivation";
-        }
-        else if (algorithm == GRAMMAR_CYK) {
+        } else if (algorithm == GRAMMAR_CYK) {
             if (! optionalParam) {
                 this->setResultStruct(1, "No string for CYK was given!");
                 return;
             }
             algorithm = "grammar::generate::CockeYoungerKasamiVerbose";
-        }
-        else {
+        } else if (algorithm == GRAMMAR_CYK_NO_VERBOSE) {
+            if (! optionalParam) {
+                this->setResultStruct(1, "No string for CYK was given!");
+                return;
+            }
+            algorithm = "grammar::generate::CockeYoungerKasami";
+        } else {
             this->setResultStruct(1, "Unknown algorithm passed as parameter!");
             return;
         }
