@@ -623,6 +623,8 @@ class XtJConverter:
         :raises TypeError: when unknown tag occurs
 
         """
+        force_stop_name_change = False
+
         if child.tag == "Ref":
             child_id = child.attrib['id']
             text = referenced_values[child_id]
@@ -641,6 +643,8 @@ class XtJConverter:
         elif child.tag == "epsilon":
             text = None
         elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector" or child.tag == "UniqueObject":
+            if len(child) == 1 and child[0].tag == "String":
+                force_stop_name_change = True
             text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
@@ -652,7 +656,7 @@ class XtJConverter:
             raise TypeError
 
         if 'ref' in child.attrib:
-            if allow_name_change:
+            if allow_name_change and not force_stop_name_change:
                 while text in referenced_values.values():
                     text += '\''
             referenced_values[child.attrib['ref']] = text
