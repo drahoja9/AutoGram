@@ -17,6 +17,7 @@
 #define GRAMMAR_CNF_CONVERSION "grammar_cnf"
 #define GRAMMAR_LEFT_RECURSION_REMOVAL "grammar_left_recursion"
 #define GRAMMAR_CYK "grammar_cyk"
+#define GRAMMAR_CYK_NO_VERBOSE "grammar_cyk_no_verbose"
 #define REGEXP_TRIM "regexp_trim"
 #define REGEXP_DERIVATION "regexp_derivation"
 
@@ -38,7 +39,7 @@ public:
 	void compare(std::string input1, std::string input2, bool regular);
 
 	ResultStruct * m_ResultStruct;
-	
+
 private:
 	void setResultStruct(int resCode, const char * char_result);
 	void setResultStruct(int resCode, bool result);
@@ -133,15 +134,19 @@ void ALT_Interface::algorithms ( std::string input, std::string algorithm, const
                 return;
             }
             algorithm = "regexp::RegExpDerivation";
-        }
-        else if (algorithm == GRAMMAR_CYK) {
+        } else if (algorithm == GRAMMAR_CYK) {
             if (! optionalParam) {
                 this->setResultStruct(1, "No string for CYK was given!");
                 return;
             }
             algorithm = "grammar::generate::CockeYoungerKasamiVerbose";
-        }
-        else {
+        } else if (algorithm == GRAMMAR_CYK_NO_VERBOSE) {
+            if (! optionalParam) {
+                this->setResultStruct(1, "No string for CYK was given!");
+                return;
+            }
+            algorithm = "grammar::generate::CockeYoungerKasami";
+        } else {
             this->setResultStruct(1, "Unknown algorithm passed as parameter!");
             return;
         }
@@ -294,7 +299,7 @@ extern "C" {
 	// Class ALT_Interface wrapper
 	void * createInterface() { return new(std::nothrow) ALT_Interface; }
 	void deleteInterface(ALT_Interface * interface) { delete interface; }
-	
+
 	ResultStruct * algorithms(ALT_Interface * interface, const char * input, const char * algorithm, const char * optionalParam) {
 		interface->algorithms(input, algorithm, optionalParam);
 		return interface->m_ResultStruct;
@@ -309,7 +314,7 @@ extern "C" {
 	    interface->compare(input1, input2, regular);
 	    return interface->m_ResultStruct;
 	}
-	
+
 	// Struct ResultStruct wrapper
 	int getResultCode(ResultStruct * rs) { return rs->t_ResCode; }
 	const char * getResult(ResultStruct * rs) { return rs->t_Result; }
