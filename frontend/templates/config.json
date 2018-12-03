@@ -25,7 +25,7 @@
     "algorithm": "minimization",
     "action": "minimize",
     "algorithmRequest": "DFA",
-    "algorithmResponse": "DFA",
+    "algorithmResponse": "MinimizationResponse",
     "backendPath": "/algorithms/automaton_minimization",
     "url": "min"
   },

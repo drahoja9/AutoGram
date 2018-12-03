@@ -100,7 +100,6 @@ def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str,
     """
     xml_input = read_input(input_file)
     res = interface.algorithms(xml_input, algorithm, optional_param)
-    print(res)
     assert res.endswith(result_type + '\n')
 
 

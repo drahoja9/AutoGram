@@ -146,6 +146,7 @@ class AltInterface:
 
         * ``'automaton_determinization'``
         * ``'automaton_minimization'``
+        * ``'automaton_minimization_no_verbose'``
         * ``'automaton_trim'``
         * ``'automaton_normalization'``
         * ``'automaton_epsilon'``
@@ -155,6 +156,7 @@ class AltInterface:
         * ``'grammar_cnf'``
         * ``'grammar_left_recursion'``
         * ``'grammar_cyk'``
+        * ``'grammar_cyk_no_verbose'``
         * ``'regexp_trim'``
         * ``'regexp_derivation'``
 
@@ -211,7 +213,7 @@ class AltInterface:
 
         if res_code != 0:
             raise AltInterfaceException(res)
-        
+
         return res
 
     def comparison(self, input1: str, input1_type: str, input2: str, input2_type: str) -> bool:

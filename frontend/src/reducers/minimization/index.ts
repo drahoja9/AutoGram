@@ -5,11 +5,11 @@ import {
   MinimizationAction
 } from 'actions/minimization';
 
-import { DFA } from 'lib/types';
+import { MinimizationResponse } from 'lib/types';
 //#endregion
 
 export interface State {
-  result: DFA | null;
+  result: MinimizationResponse | null;
   meta: {
     error: Error | null;
     pending: boolean;
