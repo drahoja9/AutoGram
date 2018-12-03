@@ -1044,6 +1044,18 @@ class XtJConverter:
 
     @staticmethod
     def _xml_to_json_minimization_steps(xml_file: str):
+        """
+
+        Converts given xml file representing steps of a minimization algorithm to a `dictionary`,
+        that can be turned to a JSON file.
+
+        :param xml_file: `string` with representation of minimization steps
+
+        :return: `dictionary` with representation of minimization steps
+
+        :raises: IndexError: when there s unspecified xml structure
+
+        """
         root = ET.fromstring(xml_file)
         result = []
         referenced_values = {}
@@ -1074,6 +1086,18 @@ class XtJConverter:
 
     @staticmethod
     def _xml_to_json_cyk_steps(xml_file: str):
+        """
+
+        Converts given xml file representing steps of a cyk algorithm to a `dictionary`,
+        that can be turned to a JSON file.
+
+        :param xml_file: `string` with representation of cyk steps
+
+        :return: `dictionary` with representation of cyk steps
+
+        :raises: IndexError: when there s unspecified xml structure
+
+        """
         root = ET.fromstring(xml_file)
         result = []
         referenced_values = {}
@@ -1177,30 +1201,36 @@ class XtJConverter:
 
     @staticmethod
     def minimization_xml_to_json(result: str, steps: str) -> dict:
+        """
 
-        #print(result)
-        #print("---")
+        Converts giver result of a minimization and its steps to a `dictionary`,
+        that can be converted to JSON
 
-        # ret_automaton = XtJConverter.simple_xml_to_json(result)
-        # ret_steps = XtJConverter._xml_to_json_minimization_steps(steps)
-        # return {'result': ret_automaton, 'steps': ret_steps
+        :param result: `string` with xml representation of resulting automaton
+        :param steps:  `string` with xml representation of algorithm steps
 
-        ret_automaton = {
-                'type': 'DFA',
-                'states': ['S'],
-                'input_alphabet': [],
-                'initial_states': ['S'],
-                'final_states': [],
-                'transitions': []
-            }
-        ret_steps = XtJConverter._xml_to_json_minimization_steps(result)
+        :return: `dictionary` representation of the result and the steps, can be converted to JSON
 
-        return {'result': ret_automaton, 'steps': ret_steps}
+        """
+        ret_automaton = XtJConverter.simple_xml_to_json(result)
+        ret_steps = XtJConverter._xml_to_json_minimization_steps(steps)
+        return {'result': ret_automaton, 'steps': ret_steps }
 
     @staticmethod
     def cyk_xml_to_json(result: str, steps: str) -> dict:
+        """
+
+        Converts giver result of a cyk algorithm and its steps to a `dictionary`,
+        that can be converted to JSON
+
+        :param result: `string` with xml representation of algorithm result
+        :param steps:  `string` with xml representation of algorithm steps
+
+        :return: `dictionary` representation of the result and the steps, can be converted to JSON
+
+        """
         ret_steps = XtJConverter._xml_to_json_cyk_steps(steps)
-        return {'result': ET.fromstring(result).text, 'step_table': ret_steps}
+        return {'result': ET.fromstring(result).text == 'true', 'step_table': ret_steps}
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -1265,8 +1295,7 @@ def xml_to_json(result, param: str = None, **extra) -> dict:
         if param == AlgorithmTypes.COMPARISON:
             ret = XtJConverter.comparison_xml_to_json(result)
         elif param == AlgorithmTypes.AUTOMATON_MINIMIZATION:
-            ret = XtJConverter.minimization_xml_to_json(result, {})
-            #ret = XtJConverter.minimization_xml_to_json(result, steps['steps'])
+            ret = XtJConverter.minimization_xml_to_json(result, extra['steps'])
         elif param == AlgorithmTypes.REGEXP_DERIVATION:
             ret = XtJConverter.derivation_xml_to_json(extra['steps'], extra['trimmed_steps'])
         elif param == AlgorithmTypes.GRAMMAR_CNF_CONVERSION:
