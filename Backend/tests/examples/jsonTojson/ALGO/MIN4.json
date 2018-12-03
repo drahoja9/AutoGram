@@ -1,0 +1,117 @@
+{
+    "type": "DFA",
+    "initial_states": [
+        "1"
+    ],
+    "final_states": [
+        "1",
+        "2",
+        "3",
+        "5",
+        "6",
+        "8",
+        "9"
+    ],
+    "input_alphabet": [
+        "a",
+        "b"
+    ],
+    "states": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+    ],
+    "transitions": [
+        {
+            "from": "1",
+            "input": "a",
+            "to": "2"
+        },
+        {
+            "from": "1",
+            "input": "b",
+            "to": "3"
+        },
+        {
+            "from": "2",
+            "input": "a",
+            "to": "2"
+        },
+        {
+            "from": "2",
+            "input": "b",
+            "to": "4"
+        },
+        {
+            "from": "3",
+            "input": "a",
+            "to": "5"
+        },
+        {
+            "from": "3",
+            "input": "b",
+            "to": "6"
+        },
+        {
+            "from": "4",
+            "input": "a",
+            "to": "7"
+        },
+        {
+            "from": "5",
+            "input": "a",
+            "to": "8"
+        },
+        {
+            "from": "5",
+            "input": "b",
+            "to": "3"
+        },
+        {
+            "from": "6",
+            "input": "a",
+            "to": "9"
+        },
+        {
+            "from": "6",
+            "input": "b",
+            "to": "6"
+        },
+        {
+            "from": "7",
+            "input": "a",
+            "to": "5"
+        },
+        {
+            "from": "7",
+            "input": "b",
+            "to": "6"
+        },
+        {
+            "from": "8",
+            "input": "a",
+            "to": "8"
+        },
+        {
+            "from": "8",
+            "input": "b",
+            "to": "3"
+        },
+        {
+            "from": "9",
+            "input": "a",
+            "to": "2"
+        },
+        {
+            "from": "9",
+            "input": "b",
+            "to": "4"
+        }
+    ]
+}
