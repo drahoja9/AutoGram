@@ -12,9 +12,67 @@ import HeaderCell from './components/HeaderCell';
 
 //#region Styled
 const Table = styled.table`
-  border: 1px solid black;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-left: 28px;
+  color: #666666;
   td {
-    border: 1px solid black;
+    border-style: solid;
+    border-color: #666666;
+    border-width: 0px 2px 2px 0px;
+    height: 48px;
+    width: 100px;
+    text-align: center;
+  }
+  tr:first-child td {
+    background-color: #DDDDDD;
+    font-weight: bold;
+    border-top-width: 1px;
+  }
+  tr:first-child td:first-child {
+    border-top-left-radius: 10px;
+  }
+  tr:first-child td:last-child {
+    background-color: inherit;
+    font-weight: inherit;
+    border-top-right-radius: 10px;
+    border-width: 1px 1px 0px 0px;
+    border-color: #999999;
+    border-style: dashed;
+    color: #999999;
+  }
+  tbody td:first-child {
+    background-color: #DDDDDD;
+    font-weight: bold;
+    border-left-width: 1px;
+  }
+  tbody td:last-child{
+    border-width: 0px 1px 0px 0px;
+    border-color: #999999;
+    border-style: dashed;
+  }
+  tbody tr:nth-last-child(2) td:last-child{
+    border-bottom-width: 1px;
+    border-bottom-right-radius: 5px;
+  }
+  tbody tr:last-child td {
+    border-width: 0px 0px 1px 0px;
+    border-color: #999999;
+    border-style: dashed;
+  }
+  tbody tr:last-child td:last-child{
+    border-width: 0px 1px 1px 0px;
+    border-radius: 0px 0px 5px 0px;
+  }
+  tbody tr:last-child td:first-child{
+    border-width: 0px 0px 1px 1px;
+    background-color: inherit;
+    font-weight: inherit;
+    border-bottom-left-radius: 10px; 
+    color: #999999;
+  }
+  tbody tr:last-child td:only-child{
+    border-width: 0px 1px 1px 1px;
   }
 `;
 //#endregion
@@ -38,6 +96,27 @@ export interface AutomatonInputProps {
 //#endregion
 
 //#region Change handling functions
+function initialize(props: AutomatonInputProps, isEpsilon: boolean | undefined) {
+  const value = cloneDeep(props.value);
+  value.header.push('');
+  for (const row of value.body) {
+    row.values.push('');
+  }
+  if(isEpsilon){
+    value.header.push('ε');
+    for (const row of value.body) {
+      row.values.push('');
+    }
+  }
+  value.body = value.body.concat({
+    value: '',
+    values: value.header.map((_: string) => ''),
+    isInitial: false,
+    isFinal: false
+  });
+  props.onChange(value);
+}
+
 function addRow(props: AutomatonInputProps) {
   const value = cloneDeep(props.value);
   value.body = value.body.concat({
@@ -56,15 +135,6 @@ function addCol(props: AutomatonInputProps) {
   value.header.splice(-1, 0, '');
   for (const row of value.body) {
     row.values.splice(-1, 0, '');
-  }
-  props.onChange(value);
-}
-
-function addEpsilonCol(props: AutomatonInputProps) {
-  const value = cloneDeep(props.value);
-  value.header.push('ε');
-  for (const row of value.body) {
-    row.values.push('');
   }
   props.onChange(value);
 }
@@ -126,8 +196,8 @@ class AutomatonInput extends React.Component<AutomatonInputProps> {
    * Adding epsilon column at the beginning for every epsilon-available automata.
    */
   public componentWillMount() {
-    if (this.props.isEpsilon && this.props.value.header.length === 0) {
-      addEpsilonCol(this.props);
+    if (this.props.value.header.length === 0){
+      initialize(this.props, this.props.isEpsilon);
     }
   }
 
@@ -136,7 +206,7 @@ class AutomatonInput extends React.Component<AutomatonInputProps> {
     return (
       <div>
         <Table>
-          <thead>
+          <tbody>
             <HeaderRow
               onAddCol={() => addCol(props)}
             >
@@ -152,8 +222,6 @@ class AutomatonInput extends React.Component<AutomatonInputProps> {
                 ))
               }
             </HeaderRow>
-          </thead>
-          <tbody>
             {
               props.value.body.map((row: any, idx: number) => (
                 <InputRow

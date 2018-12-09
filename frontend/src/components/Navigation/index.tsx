@@ -1,5 +1,6 @@
 //#region imports
 import * as React from 'react';
+import styled from 'styled-components';
 import Logo from 'components/Logo.svg';
 import { Layout, Menu } from 'antd';
 import {
@@ -9,6 +10,56 @@ import {
 } from 'react-router-dom';
 //#endregion
 
+//#region Styled
+const LogoHeadline = styled.h1`
+  text-transform: uppercase;
+  font-size: 2.5em;
+  font-weight: bold;
+  transform: rotate(-90deg);
+  //transform-origin: 0% 0%;
+  width: 60px;
+  display: inline-block;
+  padding-top: 10px;
+  color: rgba(248, 250, 253, 0.8);
+`;
+const LogoSection = styled.div`
+  width: calc(100% - 75px);
+  display: inline-block;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`
+const Sider = styled(Layout.Sider) `
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  min-height: 100%;
+  .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
+    font-size: 17px;
+    text-align: center;
+    padding-right: 34px;
+    padding-left: 34px !important;
+  }
+  .ant-menu-submenu .ant-menu-item{
+    font-size: 15px;
+    padding-left: 34px !important;
+  }
+  .ant-menu-submenu-arrow{
+    right: inherit;
+    left: 16px;
+  }
+  .ant-menu-dark .ant-menu-submenu-title .ant-menu-submenu-arrow{
+    opacity: 1;
+  }
+  .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::before{
+    width: 10px;
+    right: -8px;
+  }
+  .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::after{
+    width: 10px;
+  }
+`
+//#endregion
 
 function getSelectedKeys(pathname: string) {
   let result: string = pathname;
@@ -30,8 +81,13 @@ function getSelectedKeys(pathname: string) {
  * Each menu-submenu item has a link to a app view e.g. "Visualization".
  */
 const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentProps<{}>) => (
-  <Layout.Sider>
-    <Logo />
+  <Sider style={{ width: '300px !important' }}>
+    <div>
+      <LogoHeadline>Autogram</LogoHeadline>
+      <LogoSection>
+        <Logo />
+      </LogoSection>
+    </div>
     <Menu
       mode="inline" theme="dark"
       defaultSelectedKeys={['/vis']}
@@ -82,19 +138,19 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
 
         <Menu.Item key="/algo/cfg_red">
           <NavLink to="/algo/cfg_red">
-            Context-free grammar reduction
+            CFG reduction
           </NavLink>
         </Menu.Item>
 
         <Menu.Item key="/algo/cfg_eps">
           <NavLink to="/algo/cfg_eps">
-            Context-free grammar epsilon removal
+            CFG epsilon removal
           </NavLink>
         </Menu.Item>
 
         <Menu.Item key="/algo/cfg_unit">
           <NavLink to="/algo/cfg_unit">
-            Context-free grammar unit rules removal
+            CFG unit rules removal
           </NavLink>
         </Menu.Item>
 
@@ -117,7 +173,7 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
         </Menu.Item>
       </Menu.SubMenu>
     </Menu>
-  </Layout.Sider>
+  </Sider>
 );
 
 export default withRouter(Navigation);
