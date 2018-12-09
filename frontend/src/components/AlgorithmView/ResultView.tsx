@@ -10,6 +10,7 @@ import {
 
 //#region Component interfaces
 export interface ResultProps<ResultType> {
+  defaultValue: any;
   onBack: () => any;
   result: ResultType;
 }
