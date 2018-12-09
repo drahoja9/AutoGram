@@ -39,6 +39,10 @@ const HighlightDiv = styled.div`
   line-height: 36px;
 `
 
+const Wrapper = styled.div`
+  padding-top: 10px;
+`
+
 const Result: React.SFC<{ result?: boolean }> = (props) => (
   props.result === true ?
     <Check type="check-circle" /> : props.result === false ?
@@ -51,7 +55,7 @@ class CykController extends Controller<CYKResponse> {
   }
   protected get content() {
     return (
-      <div>
+      <Wrapper>
       <Centered>
         <StepTable>
           <thead>
@@ -76,7 +80,7 @@ class CykController extends Controller<CYKResponse> {
                           (ridx === 0 && cidx === this.props.result.step_table.length - 1) ?
                           <HighlightDiv> {this.props.result.step_table[cidx][ridx]} </HighlightDiv>
                           :
-                          this.props.result.step_table[cidx].length < ridx + 1 ? "" : this.props.result.step_table[cidx][ridx]
+                          this.props.result.step_table[cidx].length < ridx + 1 ? "---" : this.props.result.step_table[cidx][ridx]
                         }
                       </td>
                     )
@@ -92,7 +96,7 @@ class CykController extends Controller<CYKResponse> {
           <Result result={this.props.result.result} />
         </ResultContainer>
       </Centered>
-      </div>
+      </Wrapper>
     )
   }
 }

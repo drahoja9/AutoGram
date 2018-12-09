@@ -12,7 +12,7 @@ const StepTable = styled.table`
   color: #666666;
   td,th {
     border: solid #666666;
-    border-width: 0px 2px 2px 0px;
+    border-width: 2px 0px 0px 2px;
     height: 48px;
     width: 100px;
     text-align: center;
