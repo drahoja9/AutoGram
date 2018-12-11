@@ -41,4 +41,4 @@ services:
     - ./Backend/tests:/srv/Backend/tests:ro
     entrypoint:
     - pytest
-    command: ["-xs", "--pdb", "tests/interface_test.py::test_algorithm_result"]
+    command: ["-xs"]

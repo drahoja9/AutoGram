@@ -57,8 +57,10 @@ def read_input(input_file: str) -> str:
 
 
 @pytest.mark.parametrize('input_file, algorithm, result_type, optional_param', [
-    # (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
-    # (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</DFA>', None),
+    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</Vector>', None),
+    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, '</Vector>', None),
+    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION_NO_VERBOSE, '</DFA>', None),
+    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION_NO_VERBOSE, '</DFA>', None),
     (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
     (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
     (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, '</DFA>', None),
@@ -80,6 +82,8 @@ def read_input(input_file: str) -> str:
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, '</CNF>', None),
     (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>', None),
     (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, '</EpsilonFreeCFG>', None),
+    (GRAMMARS + '/CFG1.CYK.xml', AlgorithmTypes.GRAMMAR_CYK, '</Vector>', 'abc'),
+    (GRAMMARS + '/CFG1.CYK.xml', AlgorithmTypes.GRAMMAR_CYK_NO_VERBOSE, '</Bool>', 'abc'),
     (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '1'),
     (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '0'),
     (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, '</UnboundedRegExp>', '011'),
@@ -106,25 +110,32 @@ def test_algorithm_run(interface: AltInterface, input_file: str, algorithm: str,
 
 # TODO: Add CNF transformation and left recursion removal test inputs/outputs
 @pytest.mark.parametrize('input_file, algorithm, expected_file, optional_param', [
-    # (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA1.MIN_RES.xml', None),
-    # (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA2.MIN_RES.xml', None),
-    # (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM1.DET.xml', None),
-    # (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM2.DET.xml', None),
-    # (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM3.DET.xml', None),
-    # (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM4.DET.xml', None),
-    # (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM5.DET.xml', None),
-    # (AUTOMATA + '/DFA1.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA1.TRIM_RES.xml', None),
-    # (AUTOMATA + '/DFA2.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA2.TRIM_RES.xml', None),
-    # (AUTOMATA + '/ENFA1.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA1.EPSILON_RES.xml', None),
-    # (AUTOMATA + '/ENFA2.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA2.EPSILON_RES.xml', None),
-    # (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG1.REDUCTION_RES.xml', None),
-    # (GRAMMARS + '/CFG2.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG2.REDUCTION_RES.xml', None),
-    # (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG1.EPSILON_RES.xml', None),
-    # (GRAMMARS + '/CFG2.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG2.EPSILON_RES.xml', None),
-    # (GRAMMARS + '/CFG1.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG1.UNIT_RES.xml', None),
-    # (GRAMMARS + '/CFG2.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG2.UNIT_RES.xml', None),
-    # (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, GRAMMARS + '/CFG1.RECURSION_RES.xml', None),
+    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA1.MIN_VERBOSE_RES.xml', None),
+    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION_NO_VERBOSE, AUTOMATA + '/DFA1.MIN_RES.xml', None),
+    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA2.MIN_VERBOSE_RES.xml', None),
+    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION_NO_VERBOSE, AUTOMATA + '/DFA2.MIN_RES.xml', None),
+    (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM1.DET.xml', None),
+    (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM2.DET.xml', None),
+    (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM3.DET.xml', None),
+    (AUTOMATA + '/NFSM4.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM4.DET.xml', None),
+    (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM5.DET.xml', None),
+    (AUTOMATA + '/DFA1.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA1.TRIM_RES.xml', None),
+    (AUTOMATA + '/DFA2.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA2.TRIM_RES.xml', None),
+    (AUTOMATA + '/ENFA1.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA1.EPSILON_RES.xml', None),
+    (AUTOMATA + '/ENFA2.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA2.EPSILON_RES.xml', None),
+    (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG1.REDUCTION_RES.xml', None),
+    (GRAMMARS + '/CFG2.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG2.REDUCTION_RES.xml', None),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG1.EPSILON_RES.xml', None),
+    (GRAMMARS + '/CFG2.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG2.EPSILON_RES.xml', None),
+    (GRAMMARS + '/CFG1.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG1.UNIT_RES.xml', None),
+    (GRAMMARS + '/CFG2.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG2.UNIT_RES.xml', None),
+    # (GRAMMARS + '/CFG1.CNF.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, GRAMMARS + '/CFG1.CNF.xml', None),
+    (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, GRAMMARS + '/CFG1.RECURSION_RES.xml', None),
     (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, GRAMMARS + '/CFG2.RECURSION_RES.xml', None),
+    (GRAMMARS + '/CFG1.CYK.xml', AlgorithmTypes.GRAMMAR_CYK, GRAMMARS + '/CFG1.CYK_VERBOSE_RES.xml', 'bbabaa'),
+    (GRAMMARS + '/CFG1.CYK.xml', AlgorithmTypes.GRAMMAR_CYK_NO_VERBOSE, GRAMMARS + '/CFG1.CYK_RES.xml', 'bbabaa'),
+    (GRAMMARS + '/CFG2.CYK.xml', AlgorithmTypes.GRAMMAR_CYK, GRAMMARS + '/CFG2.CYK_VERBOSE_RES.xml', 'aacbbdcc'),
+    (GRAMMARS + '/CFG2.CYK.xml', AlgorithmTypes.GRAMMAR_CYK_NO_VERBOSE, GRAMMARS + '/CFG2.CYK_RES.xml', 'aacbbdcc'),
     (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE1.DERIVATION_RES.xml', '1'),
     (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE2.DERIVATION_RES.xml', '0'),
     (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE3.DERIVATION_RES.xml', '011'),
@@ -164,9 +175,15 @@ def test_algorithm_result(interface: AltInterface, input_file: str,
         pytest.fail('Invalid algorithm passed as argument!!')
         return
 
-    # Also testing comparison. If this test fails, don't forget to check also that!
-    res = interface.comparison(res, input_type, expected_output, input_type)
-    assert res is True
+    # When comparing step tables of minimization, just compare two strings
+    if (algorithm == AlgorithmTypes.AUTOMATON_MINIMIZATION or
+            algorithm == AlgorithmTypes.GRAMMAR_CYK or
+            algorithm == AlgorithmTypes.GRAMMAR_CYK_NO_VERBOSE):
+        assert res == expected_output
+    else:
+        # Also testing comparison. If this test fails, don't forget to check also that!
+        res = interface.comparison(res, input_type, expected_output, input_type)
+        assert res is True
 
 
 # ------------------------------------------------ Conversion Tests ---------------------------------------------------

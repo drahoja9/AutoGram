@@ -1,201 +1,453 @@
 <?xml version="1.0"?>
 <EpsilonFreeCFG>
-    <nonterminalAlphabet>
-        <String>83</String>
-        <String>65</String>
-        <String>65 49</String>
-        <String>66</String>
-        <String>66 49</String>
-        <String>67</String>
-        <String>67 49</String>
-        <String>68</String>
-    </nonterminalAlphabet>
-    <terminalAlphabet>
-        <Character>97</Character>
-        <Character>98</Character>
-        <Character>99</Character>
-    </terminalAlphabet>
-    <initialSymbol>
-        <String>83</String>
-    </initialSymbol>
-    <rules>
-        <rule>
-            <lhs>
-                <String>83</String>
-            </lhs>
-            <rhs>
-                <String>65</String>
-                <Character>97</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>83</String>
-            </lhs>
-            <rhs>
-                <String>66</String>
-                <Character>99</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>65</String>
-            </lhs>
-            <rhs>
-                <String>66</String>
-                <Character>99</Character>
-                <String>65 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>65</String>
-            </lhs>
-            <rhs>
-                <String>66</String>
-                <Character>99</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>65 49</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-                <String>65 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>65 49</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66</String>
-            </lhs>
-            <rhs>
-                <String>67</String>
-                <String>68</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-                <String>66 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66</String>
-            </lhs>
-            <rhs>
-                <String>67</String>
-                <String>68</String>
-                <String>66 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66 49</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-                <String>66 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66 49</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-                <String>66 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66 49</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>66 49</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>67</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-                <String>67 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>67</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>67 49</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-                <String>67 49</String>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>67 49</String>
-            </lhs>
-            <rhs>
-                <Character>98</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>68</String>
-            </lhs>
-            <rhs>
-                <String>66</String>
-                <Character>98</Character>
-            </rhs>
-        </rule>
-        <rule>
-            <lhs>
-                <String>68</String>
-            </lhs>
-            <rhs>
-                <Character>97</Character>
-            </rhs>
-        </rule>
-    </rules>
-    <generatesEpsilon>
-        <false/>
-    </generatesEpsilon>
+  <nonterminalAlphabet>
+    <String ref="0">65</String>
+    <UniqueObject ref="1">
+      <String>65</String>
+      <id>1</id>
+    </UniqueObject>
+    <String ref="2">66</String>
+    <UniqueObject ref="3">
+      <String>66</String>
+      <id>1</id>
+    </UniqueObject>
+    <String ref="4">67</String>
+    <UniqueObject ref="5">
+      <String>67</String>
+      <id>1</id>
+    </UniqueObject>
+    <String ref="6">68</String>
+    <String ref="7">83</String>
+  </nonterminalAlphabet>
+  <terminalAlphabet>
+    <Character ref="8">97</Character>
+    <Character ref="9">98</Character>
+    <Character ref="10">99</Character>
+  </terminalAlphabet>
+  <initialSymbol>
+    <Ref id="7"/>
+  </initialSymbol>
+  <rules>
+    <rule>
+      <lhs>
+        <Ref id="0"/>
+      </lhs>
+      <rhs>
+        <Ref id="2"/>
+        <Ref id="10"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="0"/>
+      </lhs>
+      <rhs>
+        <Ref id="2"/>
+        <Ref id="10"/>
+        <Ref id="1"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="1"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="1"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="1"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="2"/>
+      </lhs>
+      <rhs>
+        <Ref id="4"/>
+        <Ref id="6"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="2"/>
+      </lhs>
+      <rhs>
+        <Ref id="4"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="2"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="2"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="3"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="3"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="3"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="3"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="3"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="3"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="3"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="4"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="4"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="5"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="5"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="6"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="6"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="3"/>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="6"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="6"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="6"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="6"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="6"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="9"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+        <Ref id="1"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="10"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="10"/>
+        <Ref id="1"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="8"/>
+        <Ref id="10"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+        <Ref id="1"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="10"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="10"/>
+        <Ref id="1"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="5"/>
+        <Ref id="6"/>
+        <Ref id="10"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+        <Ref id="1"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="3"/>
+        <Ref id="10"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="10"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="10"/>
+        <Ref id="1"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+    <rule>
+      <lhs>
+        <Ref id="7"/>
+      </lhs>
+      <rhs>
+        <Ref id="9"/>
+        <Ref id="6"/>
+        <Ref id="10"/>
+        <Ref id="8"/>
+      </rhs>
+    </rule>
+  </rules>
+  <generatesEpsilon>
+    <false/>
+  </generatesEpsilon>
 </EpsilonFreeCFG>

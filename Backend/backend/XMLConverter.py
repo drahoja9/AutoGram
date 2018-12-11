@@ -1218,7 +1218,7 @@ class XtJConverter:
         """
         ret_automaton = XtJConverter.simple_xml_to_json(result)
         ret_steps = XtJConverter._xml_to_json_minimization_steps(steps)
-        return {'result': ret_automaton, 'steps': ret_steps }
+        return {'result': ret_automaton, 'steps': ret_steps}
 
     @staticmethod
     def cyk_xml_to_json(result: str, steps: str) -> dict:
