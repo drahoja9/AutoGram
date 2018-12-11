@@ -34,7 +34,9 @@ def simple_algorithm(json_file: dict, algorithm_name: str) -> dict:
 
     """
     try:
-        if algorithm_name == AlgorithmTypes.REGEXP_DERIVATION:
+        if algorithm_name == AlgorithmTypes.AUTOMATON_MINIMIZATION:
+            return _automaton_minimization(json_file)
+        elif algorithm_name == AlgorithmTypes.REGEXP_DERIVATION:
             return _regexp_derivation(json_file)
         elif algorithm_name == AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL:
             return _grammar_left_recursion(json_file)
@@ -160,10 +162,9 @@ def _grammar_cnf(json_file: dict) -> dict:
             'after_reduction': after_reduction,
             'after_epsilon': after_epsilon,
             'after_unit': after_unit,
-            'result': after_cnf
         }
 
-        result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_CNF_CONVERSION)
+        result = Converter.xml_to_json(after_cnf, AlgorithmTypes.GRAMMAR_CNF_CONVERSION, steps=algorithm_steps)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
         return {'exception': e.msg, 'type': e.exc_type}
@@ -194,28 +195,28 @@ def _grammar_left_recursion(json_file: dict) -> dict:
         algorithm_steps = {
             'after_reduction': after_reduction,
             'after_epsilon': after_epsilon,
-            'after_unit': after_unit,
-            'result': after_recursion
+            'after_unit': after_unit
         }
 
-        result = Converter.xml_to_json(algorithm_steps, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL)
+        result = Converter.xml_to_json(after_recursion, AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL,
+                                       steps=algorithm_steps)
         return result
     except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
         return {'exception': e.msg, 'type': e.exc_type}
 
-# def automaton_minimization(json_file: str) -> str:
-#     try:
-#         source = Converter.json_to_xml(json_file, AlgorithmTypes.AUTOMATON_MINIMIZATION)
-#
-#         with AltInterface() as interface:
-#             algorithm_result = interface.algorithms(source, AlgorithmTypes.AUTOMATON_MINIMIZATION)
-#
-#         result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.AUTOMATON_MINIMIZATION, steps=algorithm_steps)
-#         return result
-#     except Converter.JSONDecodeError:
-#         raise
-#     except Converter.XMLDecodeError:
-#         raise
+
+def _automaton_minimization(json_file: dict) -> dict:
+    try:
+        source = Converter.json_to_xml(json_file, AlgorithmTypes.AUTOMATON_MINIMIZATION)
+
+        with AltInterface() as interface:
+            algorithm_steps = interface.algorithms(source, AlgorithmTypes.AUTOMATON_MINIMIZATION)
+            algorithm_result = interface.algorithms(source, AlgorithmTypes.AUTOMATON_MINIMIZATION_NO_VERBOSE)
+
+        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.AUTOMATON_MINIMIZATION, steps=algorithm_steps)
+        return result
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': e.exc_type}
 
 
 def _grammar_cyk(json_file: dict) -> dict:
@@ -223,11 +224,10 @@ def _grammar_cyk(json_file: dict) -> dict:
         cyk_string, source = Converter.json_to_xml(json_file, AlgorithmTypes.GRAMMAR_CYK)
 
         with AltInterface() as interface:
-            algorithm_result = interface.algorithms(source, AlgorithmTypes.GRAMMAR_CYK, cyk_string)
+            algorithm_steps = interface.algorithms(source, AlgorithmTypes.GRAMMAR_CYK, cyk_string)
+            algorithm_result = interface.algorithms(source, AlgorithmTypes.GRAMMAR_CYK_NO_VERBOSE, cyk_string)
 
-        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CYK, steps={'steps': None})
+        result = Converter.xml_to_json(algorithm_result, AlgorithmTypes.GRAMMAR_CYK, steps=algorithm_steps)
         return result
-    except Converter.JSONDecodeError:
-        raise
-    except Converter.XMLDecodeError:
-        raise
+    except (AltInterfaceException, Converter.JSONDecodeError, Converter.XMLDecodeError) as e:
+        return {'exception': e.msg, 'type': e.exc_type}

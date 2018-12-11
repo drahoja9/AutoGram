@@ -11,7 +11,9 @@ const Header = styled(Layout.Header)`
   background-color: transparent;
   border-bottom: 1px solid #ccc;
   h1 {
-    color: #443344;
+    color: #6D5F6F;
+    font-size: 2.2em;
+    text-align: right;
   }
 `;
 

@@ -1,0 +1,312 @@
+{
+    "after_epsilon": {
+        "initial_symbol": "S",
+        "nonterminal_alphabet": [
+            "A",
+            "B",
+            "S"
+        ],
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "S"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "b",
+                    "A",
+                    "A"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "A",
+                    "A"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "B",
+                    "B",
+                    "a",
+                    "A"
+                ]
+            },
+            {
+                "from": "S",
+                "to": [
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "S",
+                "to": [
+                    "b",
+                    "A"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b"
+        ],
+        "type": "CFG"
+    },
+    "after_reduction": {
+        "initial_symbol": "S",
+        "nonterminal_alphabet": [
+            "A",
+            "B",
+            "S"
+        ],
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "S"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "b",
+                    "A",
+                    "A"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "A",
+                    "A"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "B",
+                    "B",
+                    "a",
+                    "A"
+                ]
+            },
+            {
+                "from": "S",
+                "to": [
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "S",
+                "to": [
+                    "b",
+                    "A"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b"
+        ],
+        "type": "CFG"
+    },
+    "after_unit_rules": {
+        "initial_symbol": "S",
+        "nonterminal_alphabet": [
+            "A",
+            "B",
+            "S"
+        ],
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "S"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "b",
+                    "A",
+                    "A"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "A",
+                    "A"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "B",
+                    "B",
+                    "a",
+                    "A"
+                ]
+            },
+            {
+                "from": "S",
+                "to": [
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "S",
+                "to": [
+                    "b",
+                    "A"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b"
+        ],
+        "type": "CFG"
+    },
+    "result": {
+        "initial_symbol": "S'",
+        "nonterminal_alphabet": [
+            "A'",
+            "B'",
+            "S'",
+            "a'",
+            "b'",
+            "AA",
+            "aA",
+            "aB",
+            "BaA"
+        ],
+        "rules": [
+            {
+                "from": "A'",
+                "to": [
+                    "a'",
+                    "S'"
+                ]
+            },
+            {
+                "from": "A'",
+                "to": [
+                    "b'",
+                    "AA"
+                ]
+            },
+            {
+                "from": "A'",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "B'",
+                "to": [
+                    "A'",
+                    "A'"
+                ]
+            },
+            {
+                "from": "B'",
+                "to": [
+                    "aB",
+                    "BaA"
+                ]
+            },
+            {
+                "from": "S'",
+                "to": [
+                    "a'",
+                    "B'"
+                ]
+            },
+            {
+                "from": "S'",
+                "to": [
+                    "b'",
+                    "A'"
+                ]
+            },
+            {
+                "from": "a'",
+                "to": [
+                    "a"
+                ]
+            },
+            {
+                "from": "b'",
+                "to": [
+                    "b"
+                ]
+            },
+            {
+                "from": "AA",
+                "to": [
+                    "A'",
+                    "A'"
+                ]
+            },
+            {
+                "from": "aA",
+                "to": [
+                    "a'",
+                    "A'"
+                ]
+            },
+            {
+                "from": "aB",
+                "to": [
+                    "a'",
+                    "B'"
+                ]
+            },
+            {
+                "from": "BaA",
+                "to": [
+                    "B'",
+                    "aA"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b"
+        ],
+        "type": "CNF"
+    }
+}

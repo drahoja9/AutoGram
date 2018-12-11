@@ -1,0 +1,81 @@
+{
+    "regexp": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "0",
+            "1"
+        ],
+        "value": {
+            "type": "alternation",
+            "value": [
+                {
+                    "type": "concatenation",
+                    "value": [
+                        {
+                            "type": "term",
+                            "value": "0"
+                        },
+                        {
+                            "type": "term",
+                            "value": "1"
+                        },
+                        {
+                            "type": "term",
+                            "value": "0"
+                        }
+                    ]
+                },
+                {
+                    "type": "concatenation",
+                    "value": [
+                        {
+                            "type": "term",
+                            "value": "1"
+                        },
+                        {
+                            "type": "term",
+                            "value": "0"
+                        },
+                        {
+                            "type": "term",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "type": "concatenation",
+                    "value": [
+                        {
+                            "type": "iteration",
+                            "value": {
+                                "type": "term",
+                                "value": "0"
+                            }
+                        },
+                        {
+                            "type": "term",
+                            "value": "1"
+                        }
+                    ]
+                },
+                {
+                    "type": "concatenation",
+                    "value": [
+                        {
+                            "type": "iteration",
+                            "value": {
+                                "type": "term",
+                                "value": "1"
+                            }
+                        },
+                        {
+                            "type": "term",
+                            "value": "0"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "derivation_string": "0"
+}

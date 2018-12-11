@@ -1,0 +1,30 @@
+{
+    "regexp": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "1",
+            "0"
+        ],
+        "value": {
+            "type": "concatenation",
+            "value": [
+                {
+                    "type": "term",
+                    "value": "1"
+                },
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "term",
+                        "value": "0"
+                    }
+                },
+                {
+                    "type": "term",
+                    "value": "1"
+                }
+            ]
+        }
+    },
+    "derivation_string": "1"
+}

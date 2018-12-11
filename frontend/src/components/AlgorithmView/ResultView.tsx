@@ -1,16 +1,16 @@
 //#region imports
 import * as React from 'react';
-import { Layout, Row, Col, Button } from 'antd';
+import { Layout } from 'antd';
 
 import {
-  TopHeader as Header,
-  PullRight
+  ResultHeader as Header
 } from 'components/Layout';
 
 //#endregion
 
 //#region Component interfaces
 export interface ResultProps<ResultType> {
+  defaultValue: any;
   onBack: () => any;
   result: ResultType;
 }
@@ -23,23 +23,10 @@ export default abstract class Controller<ResultType> extends React.Component<Res
   public render() {
     return (
       <Layout>
-        <Header>
-          <Row>
-            <Col span={12}>
-              <h1>{this.headline}</h1>
-            </Col>
-            <Col span={12}>
-              <PullRight>
-                <Button
-                  icon="left"
-                  size="large"
-                  onClick={this.props.onBack}
-                  shape="circle-outline"
-                />
-              </PullRight>
-            </Col>
-          </Row>
-        </Header>
+        <Header 
+          header={this.headline} 
+          onBack={this.props.onBack} 
+        />
         <Layout>
           {this.content}
         </Layout>

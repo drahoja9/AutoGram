@@ -1,12 +1,11 @@
 //#region imports
 import * as React from 'react';
-import { Layout, Row, Col, Button } from 'antd';
+import { Layout} from 'antd';
 import { connect } from 'react-redux';
 
 import { InputType } from 'components/LangInput';
 import {
-  TopHeader as Header,
-  PullRight
+  ResultHeader as Header,
 } from 'components/Layout';
 import { NFA, RRG, RE } from 'lib/types';
 import AutomatonView from 'components/Results/automaton';
@@ -30,23 +29,9 @@ export interface TransformationResultProps {
 
 const TransformationResult: React.SFC<TransformationResultProps> = (props) => (
   <Layout>
-    <Header>
-      <Row>
-        <Col span={12}>
-          <h1>Transformation Result</h1>
-        </Col>
-        <Col span={12}>
-          <PullRight>
-            <Button
-              icon="left"
-              size="large"
-              onClick={props.onBack}
-              shape="circle-outline"
-            />
-          </PullRight>
-        </Col>
-      </Row>
-    </Header>
+    <Header 
+      header={'Transformation Result'} 
+      onBack = {props.onBack} />
     <Layout>
       { renderResult(props) }
     </Layout>

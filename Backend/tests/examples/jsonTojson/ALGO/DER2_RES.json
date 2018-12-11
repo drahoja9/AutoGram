@@ -1,0 +1,141 @@
+{
+    "steps": [
+        {
+            "alphabet": [
+                "0",
+                "1"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "concatenation",
+                "value": [
+                    {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "alternation",
+                                "value": [
+                                    {
+                                        "type": "concatenation",
+                                        "value": [
+                                            {
+                                                "type": "epsilon"
+                                            },
+                                            {
+                                                "type": "term",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "alternation",
+                                "value": [
+                                    {
+                                        "type": "concatenation",
+                                        "value": [
+                                            {
+                                                "type": "empty_symbol"
+                                            },
+                                            {
+                                                "type": "term",
+                                                "value": "0"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "iteration",
+                        "value": {
+                            "type": "alternation",
+                            "value": [
+                                {
+                                    "type": "concatenation",
+                                    "value": [
+                                        {
+                                            "type": "term",
+                                            "value": "0"
+                                        },
+                                        {
+                                            "type": "term",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "concatenation",
+                                    "value": [
+                                        {
+                                            "type": "term",
+                                            "value": "1"
+                                        },
+                                        {
+                                            "type": "term",
+                                            "value": "0"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "trimmed_steps": [
+        {
+            "alphabet": [
+                "0",
+                "1"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "concatenation",
+                "value": [
+                    {
+                        "type": "term",
+                        "value": "1"
+                    },
+                    {
+                        "type": "iteration",
+                        "value": {
+                            "type": "alternation",
+                            "value": [
+                                {
+                                    "type": "concatenation",
+                                    "value": [
+                                        {
+                                            "type": "term",
+                                            "value": "0"
+                                        },
+                                        {
+                                            "type": "term",
+                                            "value": "1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "concatenation",
+                                    "value": [
+                                        {
+                                            "type": "term",
+                                            "value": "1"
+                                        },
+                                        {
+                                            "type": "term",
+                                            "value": "0"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

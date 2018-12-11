@@ -42,6 +42,7 @@ class AlgorithmTypes:
     GRAMMAR_CNF_CONVERSION = 'grammar_cnf'
     GRAMMAR_LEFT_RECURSION_REMOVAL = "grammar_left_recursion"
     GRAMMAR_CYK = 'grammar_cyk'
+    GRAMMAR_CYK_NO_VERBOSE = 'grammar_cyk_no_verbose'
 
     def __init__(self):
         self._all = [

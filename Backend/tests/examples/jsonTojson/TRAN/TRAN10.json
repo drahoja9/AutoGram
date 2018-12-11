@@ -1,0 +1,55 @@
+{
+    "target": "fa",
+    "source": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "a",
+            "b"
+        ],
+        "value": {
+            "type": "concatenation",
+            "value": [
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "term",
+                                "value": "a"
+                            },
+                            {
+                                "type": "term",
+                                "value": "b"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "term",
+                    "value": "a"
+                },
+                {
+                    "type": "term",
+                    "value": "b"
+                },
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "term",
+                                "value": "a"
+                            },
+                            {
+                                "type": "term",
+                                "value": "b"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}

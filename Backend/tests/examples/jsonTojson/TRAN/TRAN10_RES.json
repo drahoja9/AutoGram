@@ -1,0 +1,106 @@
+{
+    "final_states": [
+        "a_5",
+        "b_4",
+        "b_6"
+    ],
+    "initial_states": [
+        "Start_0"
+    ],
+    "input_alphabet": [
+        "a",
+        "b"
+    ],
+    "states": [
+        "Start_0",
+        "a_1",
+        "a_3",
+        "a_5",
+        "b_2",
+        "b_4",
+        "b_6"
+    ],
+    "transitions": [
+        {
+            "from": "Start_0",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "Start_0",
+            "input": "a",
+            "to": "a_3"
+        },
+        {
+            "from": "Start_0",
+            "input": "b",
+            "to": "b_2"
+        },
+        {
+            "from": "a_1",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "a_1",
+            "input": "a",
+            "to": "a_3"
+        },
+        {
+            "from": "a_1",
+            "input": "b",
+            "to": "b_2"
+        },
+        {
+            "from": "a_3",
+            "input": "b",
+            "to": "b_4"
+        },
+        {
+            "from": "a_5",
+            "input": "a",
+            "to": "a_5"
+        },
+        {
+            "from": "a_5",
+            "input": "b",
+            "to": "b_6"
+        },
+        {
+            "from": "b_2",
+            "input": "a",
+            "to": "a_1"
+        },
+        {
+            "from": "b_2",
+            "input": "a",
+            "to": "a_3"
+        },
+        {
+            "from": "b_2",
+            "input": "b",
+            "to": "b_2"
+        },
+        {
+            "from": "b_4",
+            "input": "a",
+            "to": "a_5"
+        },
+        {
+            "from": "b_4",
+            "input": "b",
+            "to": "b_6"
+        },
+        {
+            "from": "b_6",
+            "input": "a",
+            "to": "a_5"
+        },
+        {
+            "from": "b_6",
+            "input": "b",
+            "to": "b_6"
+        }
+    ],
+    "type": "NFA"
+}

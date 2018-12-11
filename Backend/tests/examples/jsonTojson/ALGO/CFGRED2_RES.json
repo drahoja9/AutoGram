@@ -1,0 +1,56 @@
+{
+    "initial_symbol": "S",
+    "nonterminal_alphabet": [
+        "D",
+        "S"
+    ],
+    "rules": [
+        {
+            "from": "D",
+            "to": [
+                null
+            ]
+        },
+        {
+            "from": "D",
+            "to": [
+                "0",
+                "D",
+                "0",
+                "0"
+            ]
+        },
+        {
+            "from": "D",
+            "to": [
+                "1",
+                "S"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                null
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "0",
+                "S"
+            ]
+        },
+        {
+            "from": "S",
+            "to": [
+                "1",
+                "D"
+            ]
+        }
+    ],
+    "terminal_alphabet": [
+        "0",
+        "1"
+    ],
+    "type": "CFG"
+}

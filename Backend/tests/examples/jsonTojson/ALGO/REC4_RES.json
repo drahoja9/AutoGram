@@ -1,0 +1,343 @@
+{
+    "after_epsilon": {
+        "initial_symbol": "A",
+        "nonterminal_alphabet": [
+            "A",
+            "B",
+            "C"
+        ],
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "B",
+                    "C"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "A",
+                    "c"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "b",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "b",
+                    "b"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "b",
+                    "b",
+                    "C"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c",
+                    "C"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    },
+    "after_reduction": {
+        "initial_symbol": "A",
+        "nonterminal_alphabet": [
+            "A",
+            "B",
+            "C"
+        ],
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "B",
+                    "C"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "A",
+                    "c"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "b",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "b",
+                    "b"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "b",
+                    "b",
+                    "C"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c",
+                    "C"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    },
+    "after_unit_rules": {
+        "initial_symbol": "A",
+        "nonterminal_alphabet": [
+            "A",
+            "B",
+            "C"
+        ],
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "B",
+                    "C"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "A",
+                    "c"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "b",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "b",
+                    "b"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "b",
+                    "b",
+                    "C"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c",
+                    "C"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    },
+    "result": {
+        "initial_symbol": "A",
+        "nonterminal_alphabet": [
+            "A",
+            "B",
+            "B'",
+            "C"
+        ],
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "B",
+                    "C"
+                ]
+            },
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "a",
+                    "B",
+                    "c"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "a",
+                    "B",
+                    "c",
+                    "B'"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "b",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "b",
+                    "B",
+                    "B'"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "b",
+                    "b"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "b",
+                    "b",
+                    "B'"
+                ]
+            },
+            {
+                "from": "B'",
+                "to": [
+                    "C",
+                    "c"
+                ]
+            },
+            {
+                "from": "B'",
+                "to": [
+                    "C",
+                    "c",
+                    "B'"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "b",
+                    "b",
+                    "C"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c"
+                ]
+            },
+            {
+                "from": "C",
+                "to": [
+                    "c",
+                    "C"
+                ]
+            }
+        ],
+        "terminal_alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "type": "CFG"
+    }
+}

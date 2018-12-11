@@ -1,0 +1,73 @@
+{
+    "target": "fa",
+    "source": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "a",
+            "b",
+            "c"
+        ],
+        "value": {
+            "type": "iteration",
+            "value": {
+                "type": "alternation",
+                "value": [
+                    {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "alternation",
+                                    "value": [
+                                        {
+                                            "type": "concatenation",
+                                            "value": [
+                                                {
+                                                    "type": "term",
+                                                    "value": "a"
+                                                },
+                                                {
+                                                    "type": "term",
+                                                    "value": "b"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "term",
+                                            "value": "c"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "term",
+                                "value": "a"
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "concatenation",
+                                    "value": [
+                                        {
+                                            "type": "term",
+                                            "value": "b"
+                                        },
+                                        {
+                                            "type": "term",
+                                            "value": "c"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "term",
+                        "value": "b"
+                    }
+                ]
+            }
+        }
+    }
+}

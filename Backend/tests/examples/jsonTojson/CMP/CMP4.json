@@ -1,0 +1,69 @@
+{
+    "lhs": {
+        "type": "RightRG",
+        "nonterminal_alphabet": [
+            "A",
+            "B"
+        ],
+        "terminal_alphabet": [
+            "a"
+        ],
+        "initial_symbol": "A",
+        "rules": [
+            {
+                "from": "A",
+                "to": [
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a",
+                    "B"
+                ]
+            },
+            {
+                "from": "B",
+                "to": [
+                    "a"
+                ]
+            }
+        ]
+    },
+    "rhs": {
+        "type": "NFA",
+        "initial_states": [
+            "C"
+        ],
+        "final_states": [
+            "E"
+        ],
+        "input_alphabet": [
+            "a"
+        ],
+        "states": [
+            "C",
+            "D",
+            "E"
+        ],
+        "transitions": [
+            {
+                "from": "C",
+                "input": "a",
+                "to": "C"
+            },
+            {
+                "from": "C",
+                "input": "a",
+                "to": "D"
+            },
+            {
+                "from": "D",
+                "input": "a",
+                "to": "E"
+            }
+        ]
+    }
+}

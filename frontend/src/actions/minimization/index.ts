@@ -3,7 +3,7 @@ import { $Values, $Call } from 'utility-types';
 import { createAction } from 'typesafe-actions';
 import * as types from './constants';
 
-import { DFA } from 'lib/types';
+import { DFA, MinimizationResponse } from 'lib/types';
 //#endregion
 
 export const minimize = {
@@ -11,7 +11,7 @@ export const minimize = {
     ({ type: types.MINIMIZATION_REQUEST, payload: data })
   ),
 
-  success: createAction(types.MINIMIZATION_SUCCESS, (data: DFA) =>
+  success: createAction(types.MINIMIZATION_SUCCESS, (data: MinimizationResponse) =>
     ({ type: types.MINIMIZATION_SUCCESS, payload: data })
   ),
 

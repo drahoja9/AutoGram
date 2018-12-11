@@ -1,0 +1,60 @@
+{
+    "steps": [
+        {
+            "alphabet": [
+                "0",
+                "1"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "alternation",
+                "value": [
+                    {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "epsilon"
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "term",
+                                    "value": "0"
+                                }
+                            },
+                            {
+                                "type": "term",
+                                "value": "1"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "trimmed_steps": [
+        {
+            "alphabet": [
+                "0",
+                "1"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "concatenation",
+                "value": [
+                    {
+                        "type": "iteration",
+                        "value": {
+                            "type": "term",
+                            "value": "0"
+                        }
+                    },
+                    {
+                        "type": "term",
+                        "value": "1"
+                    }
+                ]
+            }
+        }
+    ]
+}

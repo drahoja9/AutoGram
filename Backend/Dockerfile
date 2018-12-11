@@ -1,16 +1,14 @@
 # Build stage
-FROM gitlab.fit.cvut.cz:5000/algorithms-library-toolkit/automata-library:v0.0.1 AS build
+FROM gitlab.fit.cvut.cz:5000/algorithms-library-toolkit/automata-library/cli:v0.0.0 AS build
+
+# Install tools required to build a C++ interface for ALT library
+# Run `docker build --no-cache .` to update dependencies
+RUN apk add --no-cache build-base libexecinfo-dev libxml2-dev
 
 WORKDIR /srv/Backend
 
 COPY ./backend/cpp_interface.cpp /srv/Backend/backend/cpp_interface.cpp
 COPY ./Makefile /srv/Backend/Makefile
-
-# Install tools required to build a C++ interface for ALT library
-# Run `docker build --no-cache .` to update dependencies
-RUN apk add --no-cache build-base \
-                        libexecinfo-dev \
-                        libxml2-dev
                         
 # Compiling C++ interface as separate command as this can change more frequently
 # than dependency libraries

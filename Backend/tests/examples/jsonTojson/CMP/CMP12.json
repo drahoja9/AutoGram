@@ -1,0 +1,112 @@
+{
+    "lhs": {
+        "type": "UnboundedRegExp",
+        "alphabet": [
+            "a",
+            "b"
+        ],
+        "value": {
+            "type": "concatenation",
+            "value": [
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "concatenation",
+                                "value": [
+                                    {
+                                        "type": "term",
+                                        "value": "a"
+                                    },
+                                    {
+                                        "type": "iteration",
+                                        "value": {
+                                            "type": "term",
+                                            "value": "b"
+                                        }
+                                    },
+                                    {
+                                        "type": "iteration",
+                                        "value": {
+                                            "type": "empty_symbol"
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "term",
+                                    "value": "a"
+                                }
+                            },
+                            {
+                                "type": "empty_symbol"
+                            },
+                            {
+                                "type": "epsilon"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "iteration",
+                    "value": {
+                        "type": "alternation",
+                        "value": [
+                            {
+                                "type": "term",
+                                "value": "a"
+                            },
+                            {
+                                "type": "concatenation",
+                                "value": [
+                                    {
+                                        "type": "term",
+                                        "value": "b"
+                                    },
+                                    {
+                                        "type": "iteration",
+                                        "value": {
+                                            "type": "epsilon"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "rhs": {
+        "type": "NFA",
+        "initial_states": [
+            "C"
+        ],
+        "final_states": [
+            "C"
+        ],
+        "input_alphabet": [
+            "b",
+            "a"
+        ],
+        "states": [
+            "C"
+        ],
+        "transitions": [
+            {
+                "from": "C",
+                "input": "b",
+                "to": "C"
+            },
+            {
+                "from": "C",
+                "input": "a",
+                "to": "C"
+            }
+        ]
+    }
+}

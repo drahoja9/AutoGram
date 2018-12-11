@@ -1,0 +1,79 @@
+{
+    "steps": [
+        {
+            "alphabet": [
+                "0",
+                "1"
+            ],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "alternation",
+                "value": [
+                    {
+                        "type": "concatenation",
+                        "value": [
+                            {
+                                "type": "empty_symbol"
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "term",
+                                    "value": "0"
+                                }
+                            },
+                            {
+                                "type": "iteration",
+                                "value": {
+                                    "type": "term",
+                                    "value": "1"
+                                }
+                            },
+                            {
+                                "type": "term",
+                                "value": "0"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "alphabet": [],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "empty_symbol"
+            }
+        },
+        {
+            "alphabet": [],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "empty_symbol"
+            }
+        }
+    ],
+    "trimmed_steps": [
+        {
+            "alphabet": [],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "empty_symbol"
+            }
+        },
+        {
+            "alphabet": [],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "empty_symbol"
+            }
+        },
+        {
+            "alphabet": [],
+            "type": "UnboundedRegExp",
+            "value": {
+                "type": "empty_symbol"
+            }
+        }
+    ]
+}

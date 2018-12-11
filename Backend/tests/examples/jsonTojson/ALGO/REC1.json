@@ -1,0 +1,60 @@
+{
+    "type": "CFG",
+    "nonterminal_alphabet": [
+        "E",
+        "T",
+        "F"
+    ],
+    "terminal_alphabet": [
+        "p",
+        "k",
+        "a",
+        "z",
+        "o"
+    ],
+    "initial_symbol": "E",
+    "rules": [
+        {
+            "from": "E",
+            "to": [
+                "E",
+                "p",
+                "T"
+            ]
+        },
+        {
+            "from": "E",
+            "to": [
+                "T"
+            ]
+        },
+        {
+            "from": "T",
+            "to": [
+                "T",
+                "k",
+                "F"
+            ]
+        },
+        {
+            "from": "T",
+            "to": [
+                "F"
+            ]
+        },
+        {
+            "from": "F",
+            "to": [
+                "o",
+                "E",
+                "z"
+            ]
+        },
+        {
+            "from": "F",
+            "to": [
+                "a"
+            ]
+        }
+    ]
+}

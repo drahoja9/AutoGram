@@ -1,0 +1,88 @@
+{
+    "final_states": [
+        "ACG",
+        "AEH",
+        "CDG",
+        "BDGHI",
+        "BCDGHI",
+        "ABCDEHI"
+    ],
+    "initial_states": [
+        "ACG"
+    ],
+    "input_alphabet": [
+        "0",
+        "1"
+    ],
+    "states": [
+        "ACG",
+        "AEH",
+        "CDG",
+        "BDGHI",
+        "BCDGHI",
+        "ABCDEHI"
+    ],
+    "transitions": [
+        {
+            "from": "ACG",
+            "input": "0",
+            "to": "CDG"
+        },
+        {
+            "from": "ACG",
+            "input": "1",
+            "to": "AEH"
+        },
+        {
+            "from": "AEH",
+            "input": "0",
+            "to": "BDGHI"
+        },
+        {
+            "from": "AEH",
+            "input": "1",
+            "to": "ABCDEHI"
+        },
+        {
+            "from": "CDG",
+            "input": "0",
+            "to": "BCDGHI"
+        },
+        {
+            "from": "CDG",
+            "input": "1",
+            "to": "ABCDEHI"
+        },
+        {
+            "from": "BDGHI",
+            "input": "0",
+            "to": "BCDGHI"
+        },
+        {
+            "from": "BDGHI",
+            "input": "1",
+            "to": "ABCDEHI"
+        },
+        {
+            "from": "BCDGHI",
+            "input": "0",
+            "to": "BCDGHI"
+        },
+        {
+            "from": "BCDGHI",
+            "input": "1",
+            "to": "ABCDEHI"
+        },
+        {
+            "from": "ABCDEHI",
+            "input": "0",
+            "to": "BDGHI"
+        },
+        {
+            "from": "ABCDEHI",
+            "input": "1",
+            "to": "ABCDEHI"
+        }
+    ],
+    "type": "DFA"
+}
