@@ -22,7 +22,9 @@ ENV FLASK_APP=backend/api.py
 
 # Install libraries necessary for application to run
 # These will probably never change, so we leverage the cache
-RUN apk add --no-cache libstdc++ libxml2-dev
+RUN apk add --no-cache \
+                        libstdc++ \
+                        libxml2-dev
 
 # Copying from previous stage (build) the built interface and the whole ALT library
 # This won't probably change either, so same as above
