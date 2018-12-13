@@ -41,4 +41,3 @@ services:
     - ./Backend/tests:/srv/Backend/tests:ro
     entrypoint:
     - pytest
-    command: ["-xs"]
