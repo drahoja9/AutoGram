@@ -40,6 +40,9 @@ def read_input(input_file: str) -> str:
     return xml_input
 
 
+# ----------------------------------------- Basic run tests -----------------------------------------------------------
+
+
 @pytest.mark.parametrize('input_file, algorithm, result_type, optional_param', [
     (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, 'DFA', None),
     (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, 'DFA', None),
@@ -57,19 +60,9 @@ def read_input(input_file: str) -> str:
     (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_REDUCTION, 'CFG', None),
     (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, 'CFG', None),
     (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, 'CFG', None),
-    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, 'CNF', None),
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_REDUCTION, 'CFG', None),
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, 'CFG', None),
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, 'CFG', None),
-    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, 'CNF', None),
-    (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, 'CFG', None),
-    (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, 'CFG', None),
-    (GRAMMARS + '/CFG1.CYK.xml', AlgorithmTypes.GRAMMAR_CYK, 'Vector', 'aa'),
-    (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, 'UnboundedRegExp', '1'),
-    (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, 'UnboundedRegExp', '0'),
-    (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, 'UnboundedRegExp', '011'),
-    (REGEXPS + '/RE4.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, 'UnboundedRegExp', '0'),
-    (REGEXPS + '/RE5.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, 'UnboundedRegExp', '100'),
 ])
 def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str, optional_param: str):
     """
@@ -83,41 +76,71 @@ def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str,
 
     """
     json_input = XMLConverter.xml_to_json(read_input(input_file))
-    if 'derivation' in algorithm:
-        json_input = {
-            'regexp': json_input,
-            'derivation_string': optional_param
-        }
-    elif algorithm == AlgorithmTypes.GRAMMAR_CYK:
-        json_input = {
-            'grammar': json_input,
-            'cyk_string': optional_param
-        }
-
     res = logic_layer.simple_algorithm(json_input, algorithm)
 
-    if 'recursion' in algorithm or 'cnf' in algorithm:
-        assert 'after_reduction' in res.keys()
-        assert 'after_epsilon' in res.keys()
-        assert 'after_unit_rules' in res.keys()
-        assert result_type == res['result']['type']
-    elif 'derivation' in algorithm:
-        assert 'steps' in res.keys()
-        assert 'trimmed_steps' in res.keys()
-        assert result_type == res['steps'][-1]['type']
-    elif algorithm == AlgorithmTypes.AUTOMATON_MINIMIZATION:
+    if algorithm == AlgorithmTypes.AUTOMATON_MINIMIZATION:
         assert 'steps' in res.keys()
         assert result_type == res['result']['type']
-    elif algorithm == AlgorithmTypes.GRAMMAR_CYK:
-        assert 'step_table' in res.keys()
-        assert 'result' in res.keys()
     else:
         assert result_type == res['type']
 
 
+@pytest.mark.parametrize('input_file, algorithm, result_type', [
+    (GRAMMARS + '/contextFree.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, 'CNF'),
+    (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, 'CNF'),
+    (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, 'CFG'),
+    (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL, 'CFG'),
+])
+def test_recursion_cnf_run(input_file: str, algorithm: str, result_type: str):
+    json_input = XMLConverter.xml_to_json(read_input(input_file))
+    res = logic_layer.simple_algorithm(json_input, algorithm)
+    assert 'after_reduction' in res.keys()
+    assert 'after_epsilon' in res.keys()
+    assert 'after_unit_rules' in res.keys()
+    assert result_type == res['result']['type']
+
+
+@pytest.mark.parametrize('input_file, result_type, optional_param', [
+    (GRAMMARS + '/CFG1.CYK.xml', 'Vector', 'aa'),
+    (GRAMMARS + '/CFG2.CYK.xml', 'Vector', '213asda;s,/zx[l'),
+])
+def test_cyk_run(input_file: str, result_type: str, optional_param: str):
+    json_input = XMLConverter.xml_to_json(read_input(input_file))
+    json_input = {
+        'grammar': json_input,
+        'cyk_string': optional_param
+    }
+
+    res = logic_layer.simple_algorithm(json_input, AlgorithmTypes.GRAMMAR_CYK)
+    assert 'step_table' in res.keys()
+    assert 'result' in res.keys()
+    assert res['result'] is True or res['result'] is False
+
+
+@pytest.mark.parametrize('input_file, result_type, optional_param', [
+    (REGEXPS + '/RE1.DERIVATION.xml', 'UnboundedRegExp', '1'),
+    (REGEXPS + '/RE2.DERIVATION.xml', 'UnboundedRegExp', '0'),
+    (REGEXPS + '/RE3.DERIVATION.xml', 'UnboundedRegExp', '011'),
+    (REGEXPS + '/RE4.DERIVATION.xml', 'UnboundedRegExp', '0'),
+    (REGEXPS + '/RE5.DERIVATION.xml', 'UnboundedRegExp', '100')
+])
+def test_derivation_run(input_file: str, result_type: str, optional_param: str):
+    json_input = XMLConverter.xml_to_json(read_input(input_file))
+    json_input = {
+        'regexp': json_input,
+        'derivation_string': optional_param
+    }
+
+    res = logic_layer.simple_algorithm(json_input, AlgorithmTypes.REGEXP_DERIVATION)
+    assert 'steps' in res.keys()
+    assert 'trimmed_steps' in res.keys()
+    assert result_type == res['steps'][-1]['type']
+
+
+# ----------------------------------------- Checking also results  ----------------------------------------------------
+
+
 @pytest.mark.parametrize('input_file, algorithm, expected_file, optional_param', [
-    (AUTOMATA + '/DFA1.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA1.MIN_RES.xml', None),
-    (AUTOMATA + '/DFA2.MIN.xml', AlgorithmTypes.AUTOMATON_MINIMIZATION, AUTOMATA + '/DFA2.MIN_RES.xml', None),
     (AUTOMATA + '/NFSM1.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM1.DET.xml', None),
     (AUTOMATA + '/NFSM2.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM2.DET.xml', None),
     (AUTOMATA + '/NFSM3.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM3.DET.xml', None),
@@ -125,24 +148,14 @@ def test_simple_algorithm_run(input_file: str, algorithm: str, result_type: str,
     (AUTOMATA + '/NFSM5.xml', AlgorithmTypes.AUTOMATON_DETERMINIZATION, AUTOMATA + '/NFSM5.DET.xml', None),
     (AUTOMATA + '/DFA1.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA1.TRIM_RES.xml', None),
     (AUTOMATA + '/DFA2.TRIM.xml', AlgorithmTypes.AUTOMATON_TRIM, AUTOMATA + '/DFA2.TRIM_RES.xml', None),
-    (AUTOMATA + '/ENFA1.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA1.EPSILON_RES.xml',None),
-    (AUTOMATA + '/ENFA2.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA2.EPSILON_RES.xml',None),
+    (AUTOMATA + '/ENFA1.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA1.EPSILON_RES.xml', None),
+    (AUTOMATA + '/ENFA2.EPSILON.xml', AlgorithmTypes.AUTOMATON_EPSILON_REMOVAL, AUTOMATA + '/ENFA2.EPSILON_RES.xml', None),
     (GRAMMARS + '/CFG1.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG1.REDUCTION_RES.xml', None),
     (GRAMMARS + '/CFG2.REDUCTION.xml', AlgorithmTypes.GRAMMAR_REDUCTION, GRAMMARS + '/CFG2.REDUCTION_RES.xml', None),
     (GRAMMARS + '/CFG1.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG1.EPSILON_RES.xml', None),
     (GRAMMARS + '/CFG2.EPSILON.xml', AlgorithmTypes.GRAMMAR_EPSILON_REMOVAL, GRAMMARS + '/CFG2.EPSILON_RES.xml', None),
     (GRAMMARS + '/CFG1.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG1.UNIT_RES.xml', None),
     (GRAMMARS + '/CFG2.UNIT.xml', AlgorithmTypes.GRAMMAR_UNIT_RULES_REMOVAL, GRAMMARS + '/CFG2.UNIT_RES.xml', None),
-    # (GRAMMARS + '/CFG1.CNF.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, GRAMMARS + '/CFG1.CNF.xml', None),
-    # (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL,GRAMMARS + '/CFG1.RECURSION_RES.xml', None),
-    # (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL,GRAMMARS + '/CFG2.RECURSION_RES.xml', None),
-    # (GRAMMARS + '/CFG1.CYK.xml', AlgorithmTypes.GRAMMAR_CYK, GRAMMARS + '/CFG1.CYK_RES.xml', 'bbabaa'),
-    # (GRAMMARS + '/CFG2.CYK.xml', AlgorithmTypes.GRAMMAR_CYK, GRAMMARS + '/CFG2.CYK_RES.xml', 'aacbbdcc'),
-    (REGEXPS + '/RE1.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE1.DERIVATION_RES.xml', '1'),
-    (REGEXPS + '/RE2.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE2.DERIVATION_RES.xml', '0'),
-    (REGEXPS + '/RE3.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE3.DERIVATION_RES.xml', '011'),
-    (REGEXPS + '/RE4.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE4.DERIVATION_RES.xml', '0'),
-    (REGEXPS + '/RE5.DERIVATION.xml', AlgorithmTypes.REGEXP_DERIVATION, REGEXPS + '/RE5.DERIVATION_RES.xml', '100'),
 ])
 def test_simple_algorithm_result(input_file: str, algorithm: str, expected_file: str, optional_param: str):
     """
@@ -166,25 +179,106 @@ def test_simple_algorithm_result(input_file: str, algorithm: str, expected_file:
     json_input = XMLConverter.xml_to_json(xml_input)
     json_output = XMLConverter.xml_to_json(expected_output)
 
-    if 'derivation' in algorithm:
-        json_input = {
-            'regexp': json_input,
-            'derivation_string': optional_param
-        }
-        result = logic_layer.simple_algorithm(json_input, algorithm)
-        result = result['steps'][-1]
-    elif algorithm == AlgorithmTypes.GRAMMAR_CYK:
-        json_input = {
-            'grammar': json_input,
-            'cyk_string': optional_param
-        }
-        result = logic_layer.simple_algorithm(json_input, algorithm)
-        result = result['step_table']
-    else:
-        result = logic_layer.simple_algorithm(json_input, algorithm)
+    result = logic_layer.simple_algorithm(json_input, algorithm)
 
-    if algorithm == AlgorithmTypes.AUTOMATON_MINIMIZATION:
-        result = result['result']
+    to_compare = {
+        'lhs': result,
+        'rhs': json_output
+    }
+    res = logic_layer.comparison(to_compare)
+    assert res['result'] is True
+
+
+@pytest.mark.parametrize('input_file, expected_file, expected_file_table', [
+    (AUTOMATA + '/DFA1.MIN.xml', AUTOMATA + '/DFA1.MIN_RES.xml', AUTOMATA + '/DFA1.MIN_VERBOSE_RES.xml'),
+    (AUTOMATA + '/DFA2.MIN.xml', AUTOMATA + '/DFA2.MIN_RES.xml', AUTOMATA + '/DFA2.MIN_VERBOSE_RES.xml')
+])
+def test_minimization_result(input_file: str, expected_file: str, expected_file_table: str):
+    xml_input = read_input(input_file)
+    expected_output = read_input(expected_file)
+    expected_output_table = read_input(expected_file_table)
+
+    json_input = XMLConverter.xml_to_json(xml_input)
+    expected_json = XMLConverter.xml_to_json(expected_output, AlgorithmTypes.AUTOMATON_MINIMIZATION,
+                                             steps=expected_output_table)
+
+    result = logic_layer.simple_algorithm(json_input, AlgorithmTypes.AUTOMATON_MINIMIZATION)
+
+    to_compare = {
+        'lhs': result['result'],
+        'rhs': expected_json['result']
+    }
+    res = logic_layer.comparison(to_compare)
+    assert res['result'] is True
+    assert result['steps'] == expected_json['steps']
+
+
+@pytest.mark.parametrize('input_file, algorithm, expected_file', [
+    # (GRAMMARS + '/CFG1.CNF.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, GRAMMARS + '/CFG1.CNF.xml'),
+    # (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL,GRAMMARS + '/CFG1.RECURSION_RES.xml'),
+    # (GRAMMARS + '/CFG2.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL,GRAMMARS + '/CFG2.RECURSION_RES.xml'),
+])
+def test_recursion_cnf_result(input_file: str, algorithm: str, expected_file: str):
+    xml_input = read_input(input_file)
+    expected_output = read_input(expected_file)
+
+    json_input = XMLConverter.xml_to_json(xml_input)
+    expected_json = XMLConverter.xml_to_json(expected_output)
+
+    result = logic_layer.simple_algorithm(json_input, algorithm)
+
+    to_compare = {
+        'lhs': result['result'],
+        'rhs': expected_json
+    }
+    print(to_compare)
+    assert result['result'] == expected_json
+    res = logic_layer.comparison(to_compare)
+    assert res['result'] is True
+
+
+@pytest.mark.parametrize('input_file, expected_file, expected_file_table, optional_param', [
+    (GRAMMARS + '/CFG1.CYK.xml', GRAMMARS + '/CFG1.CYK_RES.xml', GRAMMARS + '/CFG1.CYK_VERBOSE_RES.xml', 'bbabaa'),
+    (GRAMMARS + '/CFG2.CYK.xml', GRAMMARS + '/CFG2.CYK_RES.xml', GRAMMARS + '/CFG2.CYK_VERBOSE_RES.xml', 'aacbbdcc'),
+])
+def test_cyk_result(input_file: str, expected_file: str, expected_file_table: str, optional_param: str):
+    xml_input = read_input(input_file)
+    expected_output = read_input(expected_file)
+    expected_output_table = read_input(expected_file_table)
+
+    json_input = XMLConverter.xml_to_json(xml_input)
+    expected_json = XMLConverter.xml_to_json(expected_output, AlgorithmTypes.GRAMMAR_CYK, steps=expected_output_table)
+
+    json_input = {
+        'grammar': json_input,
+        'cyk_string': optional_param
+    }
+    result = logic_layer.simple_algorithm(json_input, AlgorithmTypes.GRAMMAR_CYK)
+
+    assert result['result'] == expected_json['result']
+    assert result['step_table'] == expected_json['step_table']
+
+
+@pytest.mark.parametrize('input_file, expected_file, optional_param', [
+    (REGEXPS + '/RE1.DERIVATION.xml', REGEXPS + '/RE1.DERIVATION_RES.xml', '1'),
+    (REGEXPS + '/RE2.DERIVATION.xml', REGEXPS + '/RE2.DERIVATION_RES.xml', '0'),
+    (REGEXPS + '/RE3.DERIVATION.xml', REGEXPS + '/RE3.DERIVATION_RES.xml', '011'),
+    (REGEXPS + '/RE4.DERIVATION.xml', REGEXPS + '/RE4.DERIVATION_RES.xml', '0'),
+    (REGEXPS + '/RE5.DERIVATION.xml', REGEXPS + '/RE5.DERIVATION_RES.xml', '100'),
+])
+def test_derivation_result(input_file: str, expected_file: str, optional_param: str):
+    xml_input = read_input(input_file)
+    expected_output = read_input(expected_file)
+
+    json_input = XMLConverter.xml_to_json(xml_input)
+    json_output = XMLConverter.xml_to_json(expected_output)
+
+    json_input = {
+        'regexp': json_input,
+        'derivation_string': optional_param
+    }
+    result = logic_layer.simple_algorithm(json_input, AlgorithmTypes.REGEXP_DERIVATION)
+    result = result['steps'][-1]
 
     to_compare = {
         'lhs': result,
