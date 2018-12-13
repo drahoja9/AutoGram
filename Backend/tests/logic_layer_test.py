@@ -213,6 +213,7 @@ def test_minimization_result(input_file: str, expected_file: str, expected_file_
     assert result['steps'] == expected_json['steps']
 
 
+# TODO: Does not work, don't know why :|
 @pytest.mark.parametrize('input_file, algorithm, expected_file', [
     # (GRAMMARS + '/CFG1.CNF.xml', AlgorithmTypes.GRAMMAR_CNF_CONVERSION, GRAMMARS + '/CFG1.CNF.xml'),
     # (GRAMMARS + '/CFG1.RECURSION.xml', AlgorithmTypes.GRAMMAR_LEFT_RECURSION_REMOVAL,GRAMMARS + '/CFG1.RECURSION_RES.xml'),
@@ -231,7 +232,6 @@ def test_recursion_cnf_result(input_file: str, algorithm: str, expected_file: st
         'lhs': result['result'],
         'rhs': expected_json
     }
-    print(to_compare)
     assert result['result'] == expected_json
     res = logic_layer.comparison(to_compare)
     assert res['result'] is True
