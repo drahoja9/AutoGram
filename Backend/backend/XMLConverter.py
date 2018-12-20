@@ -618,9 +618,12 @@ class XtJConverter:
         elif child.tag == "epsilon":
             text = None
         elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector" or child.tag == "UniqueObject":
-            if len(child) == 1 and child[0].tag == "String":
-                force_stop_name_change = True
-            text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
+            if len(child) == 0:
+                text = "q_0"
+            else:
+                if len(child) == 1 and child[0].tag == "String":
+                    force_stop_name_change = True
+                text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
         elif child.tag == "InitialStateLabel":
@@ -1310,6 +1313,8 @@ def xml_to_json(result, param: str = None, **extra) -> dict:
         elif param == AlgorithmTypes.GRAMMAR_CYK:
             ret = XtJConverter.cyk_xml_to_json(result, extra['steps'])
         else:
+            print(result)
+            print("-")
             ret = XtJConverter.simple_xml_to_json(result)
         return ret
     except ET.ParseError:
