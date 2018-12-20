@@ -10,6 +10,7 @@ import {
 import { AutomatonInputValue } from 'components/Forms/Automaton';
 import { GrammarInputValue } from 'components/Forms/Grammar';
 import { RegexpInputValue } from 'components/Forms/Regexp';
+import { ParseError } from 'lib/parse';
 //#endregion
 
 interface Data {
@@ -83,13 +84,21 @@ function validateGrammar(values: GrammarInputValue): RRG {
     const terms = p.parseIdentList();
     p.setBuffer(values.rules);
     const rules = p.parseRules();
+    let startSymbol = "";
+    if (values.startSymbol.length <= 1){
+      startSymbol = values.startSymbol;
+    } else if (values.startSymbol[0] === '<' && values.startSymbol[values.startSymbol.length - 1] === '>') {
+      startSymbol = values.startSymbol.substring(1, values.startSymbol.length - 1)
+    } else {
+      throw new ParseError().addFixit("Every multi-character non-teminal should be wrapped in <>.")
+    }
 
     // Assemeble grammar object
     const grammar = {
       type: GRType.RRG,
       nonterminal_alphabet: nonTerm,
       terminal_alphabet: terms,
-      initial_symbol: values.startSymbol,
+      initial_symbol: startSymbol,
       rules
     } as RRG;
 
