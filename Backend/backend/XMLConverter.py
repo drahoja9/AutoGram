@@ -1063,29 +1063,8 @@ class XtJConverter:
                 map_result.append(state_object)
             result.append(map_result)
 
-        return result
-
-    @staticmethod
-    def _flatten_child_text_with_commas(child: ET.Element, referenced_values: dict) -> str:
-        """
-        Takes child element, that has some sub elements and returns aggregated text value of the whole group,
-        subelements of the child separated by commas
-
-        :param child: element to be flattened to a `string` value
-        :param referenced_values: `list` of already found references
-        :param allow_name_change: `bool` parameter that states if the name value from XML file can be changed
-
-        :return: text representation of the element
-
-        """
-        result = ""
-        first = True
-        for subelement in child:
-            if first:
-                first = False
-            else:
-                result += ","
-            result += XtJConverter._get_child_text(subelement, referenced_values, False, integer_in_string=True)
+        if len(result) == 2 and result[0] == result[1]:
+            result = [result[0]]
 
         return result
 
@@ -1313,8 +1292,6 @@ def xml_to_json(result, param: str = None, **extra) -> dict:
         elif param == AlgorithmTypes.GRAMMAR_CYK:
             ret = XtJConverter.cyk_xml_to_json(result, extra['steps'])
         else:
-            print(result)
-            print("-")
             ret = XtJConverter.simple_xml_to_json(result)
         return ret
     except ET.ParseError:
