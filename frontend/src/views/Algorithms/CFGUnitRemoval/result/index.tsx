@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import GrammarView from 'components/Results/grammar';
-import { CFGUnitRemovalResponse } from 'lib/types';
+import { CFGUnitRemovalRequest, CFGUnitRemovalResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,7 +13,7 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class CFGUnitRemovalController extends Controller<CFGUnitRemovalResponse> {
+class CFGUnitRemovalController extends Controller<CFGUnitRemovalRequest, CFGUnitRemovalResponse> {
   protected get headline() {
     return 'Context-free grammar unit rules removal result';
   }

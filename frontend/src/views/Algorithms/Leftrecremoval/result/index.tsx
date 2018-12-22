@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import RecStepsView from './components/recSteps';
-import { LeftRecRemovalResponse } from 'lib/types';
+import { LeftRecRemovalRequest, LeftRecRemovalResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,7 +13,7 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class LeftrecremovalController extends Controller<LeftRecRemovalResponse> {
+class LeftrecremovalController extends Controller<LeftRecRemovalRequest,LeftRecRemovalResponse> {
   protected get headline(){
     return 'Left Recursion Removal result';
   }

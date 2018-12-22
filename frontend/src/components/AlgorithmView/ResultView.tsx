@@ -9,14 +9,15 @@ import {
 //#endregion
 
 //#region Component interfaces
-export interface ResultProps<ResultType> {
+export interface ResultProps<InputType, ResultType> {
   defaultValue: any;
+  inputValue: InputType;
   onBack: () => any;
   result: ResultType;
 }
 //#endregion
 
-export default abstract class Controller<ResultType> extends React.Component<ResultProps<ResultType>>{
+export default abstract class Controller<InputType, ResultType> extends React.Component<ResultProps<InputType, ResultType>>{
   protected abstract get headline(): string;
   protected abstract get content(): JSX.Element;
 

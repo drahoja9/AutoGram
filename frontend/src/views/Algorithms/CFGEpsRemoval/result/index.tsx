@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import GrammarView from 'components/Results/grammar';
-import { CFGEpsRemovalResponse } from 'lib/types';
+import { CFGEpsRemovalRequest, CFGEpsRemovalResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,7 +13,7 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class CFGEpsRemovalController extends Controller<CFGEpsRemovalResponse> {
+class CFGEpsRemovalController extends Controller<CFGEpsRemovalRequest, CFGEpsRemovalResponse> {
   protected get headline() {
     return 'Context-free grammar epsilon removal result';
   }

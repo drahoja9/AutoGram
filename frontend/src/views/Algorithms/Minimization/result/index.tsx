@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import AutomatonView from 'components/Results/automaton';
-import { MinimizationResponse } from 'lib/types';
+import { MinimizationResponse, DFA } from 'lib/types';
 import StepTable from 'components/Results/StepTable';
 import { Centered } from 'components/Layout';
 import { Row, Col } from 'antd';
@@ -37,7 +37,7 @@ const ResultContainer = styled.div`
   padding-top: 10px;
 `
 
-class MinimizationController extends Controller<MinimizationResponse> {
+class MinimizationController extends Controller<DFA, MinimizationResponse> {
   protected get headline(){
     return 'Minimization result';
   }

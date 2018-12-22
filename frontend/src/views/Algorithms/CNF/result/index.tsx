@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import CnfStepsView from './components/cnfSteps';
-import { CNFResponse } from 'lib/types';
+import { CNFRequest, CNFResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,7 +13,7 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class CnfController extends Controller<CNFResponse> {
+class CnfController extends Controller<CNFRequest, CNFResponse> {
   protected get headline(){
     return 'CNF Transformation result';
   }

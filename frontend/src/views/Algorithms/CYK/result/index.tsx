@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Centered } from 'components/Layout';
-import { CYKResponse } from 'lib/types';
+import { CYKRequest, CYKResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -49,7 +49,7 @@ const Result: React.SFC<{ result?: boolean }> = (props) => (
       <Cross type="close-circle" /> : null
 );
 
-class CykController extends Controller<CYKResponse> {
+class CykController extends Controller<CYKRequest, CYKResponse> {
   protected get headline() {
     return 'CYK result';
   }
