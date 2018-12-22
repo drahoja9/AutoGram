@@ -15,20 +15,15 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-interface CFGEpsRemovalState {
-  values: GrammarInputValue;
-}
-//#endregion
-
-class CFGEpsRemovalController extends Controller<CFGEpsRemovalRequest, CFGEpsRemovalState>{
+class CFGEpsRemovalController extends Controller<CFGEpsRemovalRequest, GrammarInputValue>{
   public state = {
     values: {
       nonTerms: '',
       terms: '',
       rules: '',
       startSymbol: ''
-    }
+    },
+    inputValue: null
   };
 
   public get url() {
@@ -42,7 +37,7 @@ class CFGEpsRemovalController extends Controller<CFGEpsRemovalRequest, CFGEpsRem
     const values = this.state.values;
     try {
       const value = validate({ values });
-      this.props.onSubmit(value);
+      this.setState({inputValue: value}, () => this.props.onSubmit(value));
     } catch (err) {
       this.handleSubmitError(err);
     }

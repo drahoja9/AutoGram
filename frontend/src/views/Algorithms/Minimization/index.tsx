@@ -15,18 +15,14 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-interface MinimizationState {
-  values: AutomatonInputValue;
-}
-//#endregion
 
-class MinimizationController extends Controller<DFA, MinimizationState>{
+class MinimizationController extends Controller<DFA, AutomatonInputValue>{
   public state = {
     values: {
       header: [], 
       body: []
-    }
+    },
+    inputValue: null
   };
 
   public get url(){
@@ -40,7 +36,7 @@ class MinimizationController extends Controller<DFA, MinimizationState>{
     const values = this.state.values;
     try {
       const value = validate({values});
-      this.props.onSubmit(value);
+      this.setState({inputValue: value}, () => this.props.onSubmit(value));
     } catch (err) {
       this.handleSubmitError(err);
     }

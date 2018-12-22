@@ -15,16 +15,11 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-
-interface DerivationState {
-  values: RegexpInputValue;
-  derivationString: string;
-}
-//#endregion
-
-class DerivationController extends Controller<DerivationRequest, DerivationState>{
-  public state = { values: '', derivationString: '' };
+class DerivationController extends Controller<DerivationRequest, RegexpInputValue>{
+  public state = { 
+      values: '', 
+      derivationString: '',
+      inputValue: null };
 
   public get url(){
     return '/algo/der'
@@ -37,7 +32,7 @@ class DerivationController extends Controller<DerivationRequest, DerivationState
     const derivationString = this.state.derivationString;
     try {
       const derivationRequest = validate({ values, derivationString });
-      this.props.onSubmit(derivationRequest);
+      this.setState({inputValue: derivationRequest}, () => this.props.onSubmit(derivationRequest));
     } catch (err) {
       this.handleSubmitError(err);
     }

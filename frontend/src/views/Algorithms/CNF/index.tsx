@@ -15,20 +15,16 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-interface CnfState {
-  values: GrammarInputValue;
-}
-//#endregion
 
-class CnfController extends Controller<CNFRequest, CnfState>{
+class CnfController extends Controller<CNFRequest, GrammarInputValue>{
   public state = {
     values: {
       nonTerms: '',
       terms: '',
       rules: '',
       startSymbol: '',
-    }
+    },
+    inputValue: null
   };
 
   public get url(){
@@ -42,7 +38,7 @@ class CnfController extends Controller<CNFRequest, CnfState>{
     const values = this.state.values;
     try {
       const value = validate({values});
-      this.props.onSubmit(value);
+      this.setState({inputValue: value}, () => this.props.onSubmit(value));
     } catch (err) {
       this.handleSubmitError(err);
     }
