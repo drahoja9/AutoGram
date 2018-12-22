@@ -27,6 +27,13 @@ class LeftrecremovalController extends Controller<LeftRecRemovalRequest,LeftRecR
   }
   protected get resultContent(){
     return (
+      <GrammarView
+        value = {this.props.result.result}
+      />
+    )
+  }
+  protected get stepsContent(){
+    return (
       <RecStepsView
         value = {this.props.result}
       />

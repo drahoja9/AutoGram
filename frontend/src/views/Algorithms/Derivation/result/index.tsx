@@ -28,6 +28,13 @@ class DerivationController extends Controller<DerivationRequest, DerivationRespo
   }
   protected get resultContent() {
     return (
+        <RegexpView
+          value={this.props.result.trimmed_steps[this.props.result.trimmed_steps.length - 1]}
+        />
+    )
+  }
+  protected get stepsContent() {
+    return (
       <DerivationStepsView
         steps={this.props.result.steps}
         trimmed_steps={this.props.result.trimmed_steps}

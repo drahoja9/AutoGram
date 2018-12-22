@@ -22,7 +22,7 @@ const StateWrapper = styled.div`
   padding-right: 2px;
 `;
 
-const MinStepTable = styled(StepTable)`
+const MinStepTable = styled(StepTable) `
   margin-top: 10px;
   td, th {
     width: 70px;
@@ -33,24 +33,26 @@ const MinStepTable = styled(StepTable)`
   }
 `
 
-const ResultContainer = styled.div`
-  padding-top: 10px;
-`
-
 class MinimizationController extends Controller<DFA, MinimizationResponse> {
-  protected get headline(){
+  protected get headline() {
     return 'Minimization';
   }
-  protected get inputContent(){
+  protected get inputContent() {
     return (
-      <AutomatonView 
+      <AutomatonView
         value={this.props.inputValue}
       />
     )
   }
-  protected get resultContent(){
+  protected get resultContent() {
     return (
-      <div>
+      <AutomatonView
+        value={this.props.result.result}
+      />
+    )
+  }
+  protected get stepsContent() {
+    return (
       <Centered>
         <MinStepTable>
           <thead>
@@ -58,7 +60,7 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
               <th>δ</th>
               {
                 //generate header for table for original automaton
-                this.props.defaultValue.values.header.map((value: string, valueIdx: number) => 
+                this.props.defaultValue.values.header.map((value: string, valueIdx: number) =>
                   <th key={`min_table_header=${-1}.${valueIdx}`}>
                     {this.props.defaultValue.values.header[valueIdx]}
                   </th>
@@ -70,11 +72,11 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
                   [
                     <th className={"double"} key={`min_table_header=-1.-1`}>{`δ${stepIdx}`}</th>
                   ].concat(
-                    this.props.defaultValue.values.header.map((value: string, valueIdx: number) => 
-                    <th key={`min_table_header=${stepIdx}.${valueIdx}`}>
-                      {this.props.defaultValue.values.header[valueIdx]}
-                    </th>
-                  ))
+                    this.props.defaultValue.values.header.map((value: string, valueIdx: number) =>
+                      <th key={`min_table_header=${stepIdx}.${valueIdx}`}>
+                        {this.props.defaultValue.values.header[valueIdx]}
+                      </th>
+                    ))
                 )
               }
               <th className={"double"} key={`min_table_header=added`}>
@@ -106,26 +108,26 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
                         </Row>
                       </th>
                     ].concat(
-                      automatonState.values.map((value:string, valIdx: number) =>
+                      automatonState.values.map((value: string, valIdx: number) =>
                         <td key={`${stateIdx}.-1.${valIdx}`}>{value}</td>
                       )
                     )
                   }
                   {
                     //go through steps
-                    this.props.result.steps.map((step:any, stepIdx:number) =>
+                    this.props.result.steps.map((step: any, stepIdx: number) =>
                       [
                         <th className={"double"} key={`${stateIdx}.${stepIdx}.${-1}`}>
-                          { 
-                            step.filter( (s:any) => s.state === automatonState.value).map((state: any) => state.group)
+                          {
+                            step.filter((s: any) => s.state === automatonState.value).map((state: any) => state.group)
                           }
                         </th>
                       ].concat(
-                        this.props.defaultValue.values.header.map((value: any, valueIdx: number) => 
+                        this.props.defaultValue.values.header.map((value: any, valueIdx: number) =>
                           <td key={`${stateIdx}.${stepIdx}.${valueIdx}`}>
                             {
-                              step.filter( (s:any) => s.state === automatonState.value).map((s: any) => 
-                                s.transitions.filter( (t:any) => t.input === value ).map((t:any) =>
+                              step.filter((s: any) => s.state === automatonState.value).map((s: any) =>
+                                s.transitions.filter((t: any) => t.input === value).map((t: any) =>
                                   t.to
                                 )
                               )
@@ -136,11 +138,11 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
                     )
                   }
                   <th className={"double"} key={`added.${stateIdx}`}>
-                  {
-                    //print the last iteration
-                    this.props.result.steps[this.props.result.steps.length - 1].filter((s:any) => s.state === automatonState.value)
-                      .map((s:any) => s.group)
-                  }
+                    {
+                      //print the last iteration
+                      this.props.result.steps[this.props.result.steps.length - 1].filter((s: any) => s.state === automatonState.value)
+                        .map((s: any) => s.group)
+                    }
                   </th>
                 </tr>
               )
@@ -148,12 +150,7 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
           </tbody>
         </MinStepTable>
       </Centered>
-      <ResultContainer>
-        <AutomatonView 
-          value={this.props.result.result}
-        />
-      </ResultContainer>
-      </div>
+
     )
   }
 }

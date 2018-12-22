@@ -27,6 +27,13 @@ class CnfController extends Controller<CNFRequest, CNFResponse> {
   }
   protected get resultContent(){
     return (
+      <GrammarView
+        value = {this.props.result.result}
+      />
+    )
+  }
+  protected get stepsContent(){
+    return (
       <CnfStepsView
         value = {this.props.result}
       />

@@ -21,7 +21,9 @@ export default abstract class Controller<InputType, ResultType> extends React.Co
   protected abstract get headline(): string;
   protected abstract get inputContent(): JSX.Element;
   protected abstract get resultContent(): JSX.Element;
-  //protected abstract get stepsContent(): JSX.Element | null;
+  protected get stepsContent(): JSX.Element | null {
+    return null;
+  }
   //protected abstract get content(): JSX.Element;
 
   public render() {
@@ -40,6 +42,15 @@ export default abstract class Controller<InputType, ResultType> extends React.Co
               {this.resultContent}
             </Col>
           </Row>
+          {
+            this.stepsContent !== null ?
+            <Row>
+              {this.stepsContent}
+            </Row>
+            :
+            null
+          }
+            
         </Layout>
       </Layout>
     )
