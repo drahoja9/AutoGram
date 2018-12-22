@@ -10,12 +10,23 @@ import {
 import DerivationStepsView from './components/derivationSteps';
 
 import Controller from 'components/AlgorithmView//ResultView';
+import RegexpView from 'components/Results/regexp';
 
 class DerivationController extends Controller<DerivationRequest, DerivationResponse> {
-  protected get headline(){
-    return 'Regexp derivation result';
+  protected get headline() {
+    return 'Regexp derivation';
   }
-  protected get content(){
+  protected get inputContent() {
+    return (
+      <div>
+        <RegexpView
+          value={this.props.inputValue.regexp}
+        />
+        <p>{this.props.inputValue.derivation_string}</p>
+      </div>
+    )
+  }
+  protected get resultContent() {
     return (
       <DerivationStepsView
         steps={this.props.result.steps}

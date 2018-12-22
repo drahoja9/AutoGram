@@ -15,9 +15,16 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 class CFGUnitRemovalController extends Controller<CFGUnitRemovalRequest, CFGUnitRemovalResponse> {
   protected get headline() {
-    return 'Context-free grammar unit rules removal result';
+    return 'Context-free grammar unit rules removal';
   }
-  protected get content() {
+  protected get inputContent() {
+    return (
+      <GrammarView
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent() {
     return (
       <GrammarView
         value={this.props.result}

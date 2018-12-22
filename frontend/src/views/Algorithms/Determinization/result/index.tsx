@@ -13,9 +13,16 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 class DeterminizationController extends Controller<NFA,DFA> {
   protected get headline(){
-    return 'Determinization result';
+    return 'Determinization';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      <AutomatonView 
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent(){
     return (
       <AutomatonView 
         value={this.props.result}

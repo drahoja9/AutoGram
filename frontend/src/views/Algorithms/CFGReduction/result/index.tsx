@@ -15,9 +15,16 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 class CFGReductionController extends Controller<CFGReductionRequest, CFGReductionResponse> {
   protected get headline() {
-    return 'Context-free grammar reduction result';
+    return 'Context-free grammar reduction';
   }
-  protected get content() {
+  protected get inputContent() {
+    return (
+      <GrammarView
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent() {
     return (
       <GrammarView
         value={this.props.result}

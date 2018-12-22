@@ -39,9 +39,16 @@ const ResultContainer = styled.div`
 
 class MinimizationController extends Controller<DFA, MinimizationResponse> {
   protected get headline(){
-    return 'Minimization result';
+    return 'Minimization';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      <AutomatonView 
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent(){
     return (
       <div>
       <Centered>

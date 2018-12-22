@@ -15,9 +15,16 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 class EpsremovalController extends Controller<ENFA,NFA> {
   protected get headline(){
-    return 'Elimination of ε-transitions Result';
+    return 'Elimination of ε-transitions';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      <AutomatonView 
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent(){
     return (
       <AutomatonView 
         value={this.props.result}

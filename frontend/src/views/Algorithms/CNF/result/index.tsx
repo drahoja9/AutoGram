@@ -3,6 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import CnfStepsView from './components/cnfSteps';
+import GrammarView from 'components/Results/grammar';
 import { CNFRequest, CNFResponse } from 'lib/types';
 
 import {
@@ -15,9 +16,16 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 class CnfController extends Controller<CNFRequest, CNFResponse> {
   protected get headline(){
-    return 'CNF Transformation result';
+    return 'CNF Transformation';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      <GrammarView
+        value = {this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent(){
     return (
       <CnfStepsView
         value = {this.props.result}

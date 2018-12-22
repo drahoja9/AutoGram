@@ -10,14 +10,22 @@ import {
   mapDispatchToProps
 } from './selectors';
 import Controller from 'components/AlgorithmView//ResultView';
+import GrammarView from 'components/Results/grammar';
 
 //#endregion
 
 class LeftrecremovalController extends Controller<LeftRecRemovalRequest,LeftRecRemovalResponse> {
   protected get headline(){
-    return 'Left Recursion Removal result';
+    return 'Left Recursion Removal';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      <GrammarView 
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent(){
     return (
       <RecStepsView
         value = {this.props.result}
