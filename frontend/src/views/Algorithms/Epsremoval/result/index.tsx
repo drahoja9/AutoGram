@@ -20,6 +20,7 @@ class EpsremovalController extends Controller<ENFA,NFA> {
   protected get inputContent(){
     return (
       <AutomatonView 
+        isEpsilon={true}
         value={this.props.inputValue}
       />
     )
