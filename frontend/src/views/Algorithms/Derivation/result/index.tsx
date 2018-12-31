@@ -17,12 +17,15 @@ import RegexpView from 'components/Results/regexp';
 //#region styled
 const DerivationString = styled(Centered)`
   font-size: 14px;
-  font-family: monospace;
 `;
 const StrongText = styled.span`
   font-weight: bold;
   white-space: pre
 `;
+const MonoText = styled.span`
+  font-family: monospace;
+  margin-top: -1px;
+`
 //#endregion
 
 class DerivationController extends Controller<DerivationRequest, DerivationResponse> {
@@ -37,7 +40,7 @@ class DerivationController extends Controller<DerivationRequest, DerivationRespo
         />
         <DerivationString>
           <StrongText>Derivation string: </StrongText>
-          {this.props.inputValue.derivation_string}
+          <MonoText>{this.props.inputValue.derivation_string}</MonoText>
         </DerivationString>
       </div>
     )
