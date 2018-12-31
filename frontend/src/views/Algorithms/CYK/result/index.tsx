@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Centered } from 'components/Layout';
+import { Centered, PullRight } from 'components/Layout';
 import { CYKRequest, CYKResponse } from 'lib/types';
 
 import {
@@ -11,11 +11,13 @@ import {
 } from './selectors';
 import Controller from 'components/AlgorithmView//ResultView';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { Icon, Row, Col } from 'antd';
 import StepTable from 'components/Results/StepTable';
 import GrammarView from 'components/Results/grammar';
 //#endregion
 
+
+//#region styled
 const Check = styled(Icon) `
   color: #468F83;
 `;
@@ -40,6 +42,22 @@ const HighlightDiv = styled.div`
   line-height: 36px;
 `
 
+const TextRow = styled(Row)`
+  margin-top: 30px;
+  font-size: 14px;
+`;
+const StrongRight = styled(PullRight)`
+  font-weight: bold;
+`;
+const MonoText = styled.p`
+  font-family: monospace;
+  margin-top: -1px;
+`
+const Label = styled(Col)`
+  padding-right: 1em;
+`
+//#endregion
+
 const Result: React.SFC<{ result?: boolean }> = (props) => (
   props.result === true ?
     <Check type="check-circle" /> : props.result === false ?
@@ -56,9 +74,14 @@ class CykController extends Controller<CYKRequest, CYKResponse> {
         <GrammarView
           value={this.props.inputValue.grammar}
         />
-        <p>
-          {this.props.inputValue.cyk_string}
-        </p>
+        <TextRow>
+          <Label span={12}>
+            <StrongRight>String to check</StrongRight>
+          </Label>
+          <Col span={12}>
+            <MonoText>{this.props.inputValue.cyk_string}</MonoText>
+          </Col>
+        </TextRow>
       </div>
     )
   }
