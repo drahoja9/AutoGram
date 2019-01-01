@@ -3,21 +3,32 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import ***resultView*** from ***;
-import { {%AlgorithmResponse%} } from 'lib/types';
+import { {%AlgorithmRequest%}, {%AlgorithmResponse%} } from 'lib/types';
 
 import {
   mapStateToProps,
   mapDispatchToProps
 } from './selectors';
 import Controller from 'components/AlgorithmView//ResultView';
-
 //#endregion
 
-class {%AlgorithmCamelcase%}Controller extends Controller<{%AlgorithmResponse%}> {
+class {%AlgorithmCamelcase%}Controller extends Controller<{%AlgorithmRequest%}, {%AlgorithmResponse%}> {
   protected get headline(){
     return '{%AlgorithmCamelcase%} result';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      ***
+    )
+  }
+  protected get resultContent(){
+    return (
+      ***
+    )
+  }
+
+  //optional - erase if there are no steps to display
+  protected get stepsContent(){
     return (
       ***
     )
