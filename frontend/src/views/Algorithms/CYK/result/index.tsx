@@ -48,13 +48,14 @@ const TextRow = styled(Row)`
 `;
 const StrongRight = styled(PullRight)`
   font-weight: bold;
+  white-space: pre;
 `;
 const MonoText = styled.p`
   font-family: monospace;
   margin-top: -1px;
 `
 const Label = styled(Col)`
-  padding-right: 1em;
+  padding-right: 0em;
 `
 //#endregion
 
@@ -76,7 +77,7 @@ class CykController extends Controller<CYKRequest, CYKResponse> {
         />
         <TextRow>
           <Label span={12}>
-            <StrongRight>String to check</StrongRight>
+            <StrongRight>String to check: </StrongRight>
           </Label>
           <Col span={12}>
             <MonoText>{this.props.inputValue.cyk_string}</MonoText>
