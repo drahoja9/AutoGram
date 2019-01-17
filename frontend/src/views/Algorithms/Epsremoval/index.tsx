@@ -15,18 +15,14 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-interface EpsremovalState {
-  values: AutomatonInputValue;
-}
-//#endregion
 
-class EpsremovalController extends Controller<ENFA, EpsremovalState>{
+class EpsremovalController extends Controller<ENFA, AutomatonInputValue>{
   public state = {
     values: {
       header: [], 
       body: [],
-    }
+    },
+    inputValue: null
   };
 
   public get url(){
@@ -41,7 +37,7 @@ class EpsremovalController extends Controller<ENFA, EpsremovalState>{
     const values = this.state.values;
     try {
       const value = validate({values});
-      this.props.onSubmit(value);
+      this.setState({inputValue: value}, () => this.props.onSubmit(value));
     } catch (err) {
       this.handleSubmitError(err);
     }

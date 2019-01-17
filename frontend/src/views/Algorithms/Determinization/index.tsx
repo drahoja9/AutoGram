@@ -15,18 +15,13 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-interface DeterminizationState {
-  values: AutomatonInputValue;
-}
-//#endregion
-
-class DeterminizationController extends Controller<NFA, DeterminizationState>{
+class DeterminizationController extends Controller<NFA, AutomatonInputValue>{
   public state = {
     values: {
       header: [], 
       body: []
-    }
+    },
+    inputValue: null,
   };
 
   public get url(){
@@ -40,7 +35,7 @@ class DeterminizationController extends Controller<NFA, DeterminizationState>{
     const values = this.state.values;
     try {
       const value = validate({values});
-      this.props.onSubmit(value);
+      this.setState({inputValue: value}, () => this.props.onSubmit(value));
     } catch (err) {
       this.handleSubmitError(err);
     }

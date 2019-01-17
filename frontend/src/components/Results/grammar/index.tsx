@@ -29,12 +29,12 @@ const ContentRow: React.SFC<ContentRowProps> = (props) => (
   <Row>
     {
       props.label ?
-        <Label span={8}>
+        <Label span={12}>
           <PullRight><b>{props.label}</b></PullRight>
         </Label> :
-        <Col offset={8} />
+        <Col offset={12} />
     }
-    <Col span={16}>
+    <Col span={12}>
       {props.children}
     </Col>
   </Row>

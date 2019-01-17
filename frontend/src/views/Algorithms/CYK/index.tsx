@@ -15,13 +15,7 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-interface CykState {
-  values: GrammarInputValue
-}
-//#endregion
-
-class CykController extends Controller<CYKRequest, CykState>{
+class CykController extends Controller<CYKRequest, GrammarInputValue>{
   public state = {
       values: {
         nonTerms: '',
@@ -29,7 +23,8 @@ class CykController extends Controller<CYKRequest, CykState>{
         rules: '',
         startSymbol: '',
       },
-      cykString: ''
+      cykString: '',
+      inputValue: null
   };
 
   public get url(){
@@ -44,7 +39,7 @@ class CykController extends Controller<CYKRequest, CykState>{
     const cykString = this.state.cykString;
     try {
       const value = validate({values, cykString});
-      this.props.onSubmit(value);
+      this.setState({inputValue: value}, () => this.props.onSubmit(value));
     } catch (err) {
       this.handleSubmitError(err);
     }

@@ -15,17 +15,12 @@ import {
 import Controller from 'components/AlgorithmView/Controller';
 //#endregion
 
-//#region Component interfaces
-interface {%AlgorithmCamelcase%}State {
-  values: ***;
-}
-//#endregion
-
-class {%AlgorithmCamelcase%}Controller extends Controller<{%AlgorithmRequest%}, {%AlgorithmCamelcase%}State>{
+class {%AlgorithmCamelcase%}Controller extends Controller<{%AlgorithmRequest%}, ***inputValue***>{
   public state = {
     values: {
       ***
-    }
+    },
+    inputValue: null
   };
 
   public get url(){
@@ -40,7 +35,7 @@ class {%AlgorithmCamelcase%}Controller extends Controller<{%AlgorithmRequest%}, 
     const values = this.state.values;
     try {
       const value = validate({values});
-      this.props.onSubmit(value);
+      this.setState({inputValue: value}, () => this.props.onSubmit(value));
     } catch (err) {
       this.handleSubmitError(err);
     }

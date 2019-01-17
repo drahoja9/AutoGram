@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import GrammarView from 'components/Results/grammar';
-import { CFGReductionResponse } from 'lib/types';
+import { CFGReductionRequest, CFGReductionResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,11 +13,18 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class CFGReductionController extends Controller<CFGReductionResponse> {
+class CFGReductionController extends Controller<CFGReductionRequest, CFGReductionResponse> {
   protected get headline() {
-    return 'Context-free grammar reduction result';
+    return 'Context-free grammar reduction';
   }
-  protected get content() {
+  protected get inputContent() {
+    return (
+      <GrammarView
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent() {
     return (
       <GrammarView
         value={this.props.result}

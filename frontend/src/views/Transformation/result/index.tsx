@@ -1,7 +1,8 @@
 //#region imports
 import * as React from 'react';
-import { Layout} from 'antd';
+import { Layout, Row, Col} from 'antd';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { InputType } from 'components/LangInput';
 import {
@@ -18,11 +19,32 @@ import {
 } from './selectors';
 //#endregion
 
+//#region styled
+const SectionCol = styled(Col)`
+  height: calc(100% - 60px);
+`
+
+const SectionHeadline = styled.h2`
+  font-size: 2em;
+  color: #7D6F7F;
+`
+const SectionContainer = styled.div`
+  margin: 30px 0px;
+  padding: 10px 20px;
+  height: 100%;
+  &.left-border{
+    border-left: 1px solid #ccc;
+  }
+`
+//#endregion
+
 //#region Component interfaces
 export interface TransformationResultProps {
   target: InputType;
   value: NFA | RRG | RE | null;
   onBack: () => any;
+  inputType: InputType;
+  inputValue: NFA | RRG | RE | null;
 }
 //#endregion
 
@@ -30,32 +52,46 @@ export interface TransformationResultProps {
 const TransformationResult: React.SFC<TransformationResultProps> = (props) => (
   <Layout>
     <Header 
-      header={'Transformation Result'} 
+      header={'Transformation'} 
       onBack = {props.onBack} />
+    
     <Layout>
-      { renderResult(props) }
+          <Row>
+            <SectionCol span={12}>
+              <SectionContainer>
+                <SectionHeadline>Input:</SectionHeadline>
+                { renderValue(props.inputType, props.inputValue) }
+              </SectionContainer>
+            </SectionCol>
+            <SectionCol span={12}>
+              <SectionContainer className={"left-border"}>
+                <SectionHeadline>Result:</SectionHeadline>
+                { renderValue(props.target, props.value) }
+              </SectionContainer>
+            </SectionCol>
+          </Row>
     </Layout>
   </Layout>
 );
 
-const renderResult = (props: TransformationResultProps) => {
-  switch(props.target){
+const renderValue = (type: InputType, value: NFA | RRG | RE | null) => {
+  switch(type){
     case InputType.Automaton:
       return (
         <AutomatonView
-          value={props.value as NFA}
+          value={value as NFA}
         />
       );
     case InputType.Grammar:
       return (
         <GrammarView
-          value={props.value as RRG}
+          value={value as RRG}
         />
       );
     case InputType.Regexp:
       return (
         <RegexpView
-          value={props.value as RE}
+          value={value as RE}
         />
       );
   }

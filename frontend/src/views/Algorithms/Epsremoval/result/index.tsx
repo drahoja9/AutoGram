@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import AutomatonView from 'components/Results/automaton';
-import { NFA } from 'lib/types';
+import { ENFA, NFA } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -13,11 +13,19 @@ import Controller from 'components/AlgorithmView//ResultView';
 
 //#endregion
 
-class EpsremovalController extends Controller<NFA> {
+class EpsremovalController extends Controller<ENFA,NFA> {
   protected get headline(){
-    return 'Elimination of ε-transitions Result';
+    return 'Elimination of ε-transitions';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      <AutomatonView 
+        isEpsilon={true}
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent(){
     return (
       <AutomatonView 
         value={this.props.result}

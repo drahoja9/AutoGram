@@ -1,30 +1,41 @@
 //#region imports
 import * as React from 'react';
+import styled from 'styled-components';
 
 import { CNFResponse } from 'lib/types';
-import { Header } from 'components/Layout';
 import GrammarView from 'components/Results/grammar';
 //#endregion
 
+
+//#region styled
+const StepsContainer = styled.div`
+  min-width: 50%;
+`
+const StepsHeader = styled.div`
+  font-size: 18px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+`
+//#endregion
 
 interface DerivationStepsProps {
   value: CNFResponse
 }
 
 const CnfStepsView: React.SFC<DerivationStepsProps> = (props) => (
-  <div>
-    <Header>State after reduction:</Header>
+  <StepsContainer>
+    <StepsHeader>State after reduction:</StepsHeader>
     <GrammarView value={props.value.after_reduction}/>
 
-    <Header>State after epsilon removal:</Header>
+    <StepsHeader>State after epsilon removal:</StepsHeader>
     <GrammarView value={props.value.after_epsilon}/>
 
-    <Header>State after unit rules removal:</Header>
+    <StepsHeader>State after unit rules removal:</StepsHeader>
     <GrammarView value={props.value.after_unit_rules}/>
 
-    <Header>Result:</Header>
+    <StepsHeader>State after CNF transformation:</StepsHeader>
     <GrammarView value={props.value.result}/>
-  </div>
+  </StepsContainer>
 );
 
 export default CnfStepsView;

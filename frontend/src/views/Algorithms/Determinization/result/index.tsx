@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import AutomatonView from 'components/Results/automaton';
-import { DFA } from 'lib/types';
+import { NFA, DFA } from 'lib/types';
 import {
   mapStateToProps,
   mapDispatchToProps
@@ -11,11 +11,18 @@ import {
 import Controller from 'components/AlgorithmView//ResultView';
 //#endregion
 
-class DeterminizationController extends Controller<DFA> {
+class DeterminizationController extends Controller<NFA,DFA> {
   protected get headline(){
-    return 'Determinization result';
+    return 'Determinization';
   }
-  protected get content(){
+  protected get inputContent(){
+    return (
+      <AutomatonView 
+        value={this.props.inputValue}
+      />
+    )
+  }
+  protected get resultContent(){
     return (
       <AutomatonView 
         value={this.props.result}

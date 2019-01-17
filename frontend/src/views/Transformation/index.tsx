@@ -42,6 +42,7 @@ interface InputState {
 
 interface ControllerState extends InputState {
   target: InputType;
+  inputValue: any;
 }
 //#endregion
 
@@ -53,7 +54,8 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
       au: { header: [], body: [] },
       gr: { nonTerms: '', terms: '', rules: '', startSymbol: '' },
       re: ''
-    }
+    },
+    inputValue: null
   };
 
   public componentDidMount() {
@@ -72,24 +74,26 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
 
   private getSource(): TransformationTarget {
     switch (this.state.target) {
-    case InputType.Automaton: return TransformationTarget.FA;
-    case InputType.Grammar: return TransformationTarget.RRG;
-    case InputType.Regexp: return TransformationTarget.Regexp;
-    default:
-      console.error(`Unexpected case '${this.state.target}'`)
-      throw new TypeError();
+      case InputType.Automaton: return TransformationTarget.FA;
+      case InputType.Grammar: return TransformationTarget.RRG;
+      case InputType.Regexp: return TransformationTarget.Regexp;
+      default:
+        console.error(`Unexpected case '${this.state.target}'`)
+        throw new TypeError();
     }
   }
 
-  private handleSubmit()  {
+  private handleSubmit() {
     try {
       const { selected, values } = this.state;
       const value = validate({ selected, values });
 
-      this.props.onTransform({
-        target: this.getSource(),
-        source: value
-      });
+
+      this.setState({ inputValue: value }, () => 
+        this.props.onTransform({
+          target: this.getSource(),
+          source: value
+        }));
     } catch (err) {
       this.handleSubmitError(err);
     }
@@ -110,12 +114,13 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
       this.presentError(err.name, err.getMessage());
 
     } else if (err instanceof ParseError) {
+      this.state.selected
       this.presentError(err.name, err.message);
 
     } else {
       const message = 'Unexpected error';
       const description = 'There was an unexpected error. '
-      + 'Try repeating the anction and/or reviewing the syntax.';
+        + 'Try repeating the anction and/or reviewing the syntax.';
       this.presentError(message, description);
     }
   }
@@ -156,6 +161,8 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         defaultValue={this.state}
         pending={this.props.meta.pending}
         target={this.state.target}
+        inputType={this.state.selected}
+        inputValue={this.state.inputValue}
       />
     );
   }

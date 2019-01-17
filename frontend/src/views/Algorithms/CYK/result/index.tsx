@@ -2,8 +2,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { Centered } from 'components/Layout';
-import { CYKResponse } from 'lib/types';
+import { Centered, PullRight } from 'components/Layout';
+import { CYKRequest, CYKResponse } from 'lib/types';
 
 import {
   mapStateToProps,
@@ -11,10 +11,13 @@ import {
 } from './selectors';
 import Controller from 'components/AlgorithmView//ResultView';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { Icon, Row, Col } from 'antd';
 import StepTable from 'components/Results/StepTable';
+import GrammarView from 'components/Results/grammar';
 //#endregion
 
+
+//#region styled
 const Check = styled(Icon) `
   color: #468F83;
 `;
@@ -39,9 +42,22 @@ const HighlightDiv = styled.div`
   line-height: 36px;
 `
 
-const Wrapper = styled.div`
-  padding-top: 10px;
+const TextRow = styled(Row)`
+  margin-top: 30px;
+  font-size: 14px;
+`;
+const StrongRight = styled(PullRight)`
+  font-weight: bold;
+  white-space: pre;
+`;
+const MonoText = styled.p`
+  font-family: monospace;
+  margin-top: -1px;
 `
+const Label = styled(Col)`
+  padding-right: 0em;
+`
+//#endregion
 
 const Result: React.SFC<{ result?: boolean }> = (props) => (
   props.result === true ?
@@ -69,11 +85,36 @@ class CykController extends Controller<CYKResponse> {
   }
 
   protected get headline() {
-    return 'CYK result';
+    return 'CYK';
   }
-  protected get content() {
+  protected get inputContent() {
     return (
-      <Wrapper>
+      <div>
+        <GrammarView
+          value={this.props.inputValue.grammar}
+        />
+        <TextRow>
+          <Label span={12}>
+            <StrongRight>String to check: </StrongRight>
+          </Label>
+          <Col span={12}>
+            <MonoText>{this.props.inputValue.cyk_string}</MonoText>
+          </Col>
+        </TextRow>
+      </div>
+    )
+  }
+  protected get resultContent() {
+    return (
+      <Centered>
+        <ResultContainer>
+          <Result result={this.props.result.result} />
+        </ResultContainer>
+      </Centered>
+    )
+  }
+  protected get stepsContent() {
+    return (
       <Centered>
         <StepTable>
           <thead>
@@ -109,12 +150,6 @@ class CykController extends Controller<CYKResponse> {
           </tbody>
         </StepTable>
       </Centered>
-      <Centered>
-        <ResultContainer>
-          <Result result={this.props.result.result} />
-        </ResultContainer>
-      </Centered>
-      </Wrapper>
     )
   }
 }

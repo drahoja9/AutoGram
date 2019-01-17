@@ -19,9 +19,14 @@ export interface ControllerProps<Request> extends RouteComponentProps<any> {
   onSubmit: (data: Request) => any;
   onCancel: () => any;
 }
+
+export interface ControllerState<State, InputType> {
+  values: State;
+  inputValue : InputType | null;
+}
 //#endregion
 
-export default abstract class Controller<Request, State> extends React.Component<ControllerProps<Request>,State> {
+export default abstract class Controller<Request, State> extends React.Component<ControllerProps<Request>, ControllerState<State, Request>> {
   public abstract get url(): string;
   public abstract get routes(): RouteProps[];
 
@@ -77,6 +82,7 @@ export default abstract class Controller<Request, State> extends React.Component
         onValueChange={this.handleValueChange.bind(this)}
         defaultValue={this.state}
         pending={this.props.meta.pending}
+        inputValue={this.state.inputValue}
       />
     )
   }

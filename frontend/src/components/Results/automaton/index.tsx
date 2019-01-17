@@ -66,6 +66,7 @@ const StateWrapper = styled.div`
 //#region Component
 export interface AutomatonViewProps {
   value: FA;
+  isEpsilon? : boolean;
 }
 //#endregion
 
@@ -78,6 +79,12 @@ const TableHead: React.SFC<AutomatonViewProps> = (props) => (
             <td key={idx}>{symbol}</td>
           ))
         )
+    }
+    {
+      props.isEpsilon ? 
+      <td key={'eps'}>ε</td>
+      :
+      null
     }
   </tr></thead>
 );
@@ -113,6 +120,12 @@ const TableBody: React.SFC<AutomatonViewProps & { transitions: TransitionMap }> 
                   <td key={`${idxi}.${idxj}`}>{props.transitions[state][symbol]}</td>
                 ))
               )
+            }
+            {
+              props.isEpsilon ? 
+              <td key={`${idxi}.eps`}>{props.transitions[state]['ε']}</td>
+              :
+              null
             }
           </tr>
         ))
