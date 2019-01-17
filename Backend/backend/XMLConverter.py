@@ -557,31 +557,6 @@ class XtJConverter:
     """
 
     @staticmethod
-    def _flatten_child_text_with_commas(child: ET.Element, referenced_values: dict) -> str:
-        """
-        Takes child element, that has some sub elements and returns aggregated text value of the whole group,
-        subelements of the child separated by commas
-
-        :param child: element to be flattened to a `string` value
-        :param referenced_values: `list` of already found references
-        :param allow_name_change: `bool` parameter that states if the name value from XML file can be changed
-
-        :return: text representation of the element
-
-        """
-        result = ""
-        first = True
-        for subelement in child:
-            if first:
-                first = False
-            else:
-                result += ","
-            result += XtJConverter._get_child_text(subelement, referenced_values, False, integer_in_string=True)
-
-        return result
-
-
-    @staticmethod
     def _flatten_child_text(child: ET.Element, referenced_values: dict, allow_name_change: bool) -> str:
         """
 
@@ -643,9 +618,12 @@ class XtJConverter:
         elif child.tag == "epsilon":
             text = None
         elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector" or child.tag == "UniqueObject":
-            if len(child) == 1 and child[0].tag == "String":
-                force_stop_name_change = True
-            text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
+            if len(child) == 0:
+                text = "q_null"
+            else:
+                if len(child) == 1 and child[0].tag == "String":
+                    force_stop_name_change = True
+                text = XtJConverter._flatten_child_text(child, referenced_values, allow_name_change)
         elif child.tag == "FinalStateLabel":
             text = "Final"
         elif child.tag == "InitialStateLabel":
@@ -1085,8 +1063,10 @@ class XtJConverter:
                 map_result.append(state_object)
             result.append(map_result)
 
-        return result
+        if len(result) == 2 and result[0] == result[1]:
+            result = [result[0]]
 
+        return result
 
     @staticmethod
     def _xml_to_json_cyk_steps(xml_file: str):
@@ -1109,7 +1089,10 @@ class XtJConverter:
         for result_vector in root.findall('Vector'):
             vector_result = []
             for result_set in result_vector.findall('Set'):
-                vector_result.append(XtJConverter._flatten_child_text_with_commas(result_set, referenced_values))
+                result_cell = []
+                for subelement in result_set:
+                    result_cell.append(XtJConverter._get_child_text(subelement, referenced_values, False, integer_in_string=True))
+                vector_result.append(result_cell)
             result.append(vector_result)
 
         return result

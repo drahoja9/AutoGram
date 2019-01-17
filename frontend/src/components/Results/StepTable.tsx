@@ -6,6 +6,7 @@ import styled from 'styled-components';
  * Style for basic step tables - with grey <th> cells and transparent <td> cells
  */
 const StepTable = styled.table`
+  font-family: monospace;
   display: block;
   border-collapse: separate;
   border-spacing: 0;
