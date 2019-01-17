@@ -18,11 +18,11 @@ import GrammarView from 'components/Results/grammar';
 
 
 //#region styled
-const Check = styled(Icon) `
+const Check = styled(Icon)`
   color: #468F83;
 `;
 
-const Cross = styled(Icon) `
+const Cross = styled(Icon)`
   color: #f5222d;
 `;
 
@@ -65,17 +65,17 @@ const Result: React.SFC<{ result?: boolean }> = (props) => (
       <Cross type="close-circle" /> : null
 );
 
-class CykController extends Controller<CYKResponse> {
-  private getCellContent(input: any[]) : string{
+class CykController extends Controller<CYKRequest, CYKResponse> {
+  private getCellContent(input: any[]): string {
     let result = "";
     let first = true;
-    for (let item of input){
-      if (first){
+    for (let item of input) {
+      if (first) {
         first = false;
       } else {
         result += ",";
       }
-      if (item.length <= 1 || (item.length === 2 && item[1] === "'")){
+      if (item.length <= 1 || (item.length === 2 && item[1] === "'")) {
         result += item;
       } else {
         result += `<${item}>`
@@ -137,9 +137,9 @@ class CykController extends Controller<CYKResponse> {
                       <td key={`cyk_table_cell=${ridx}.${cidx}`}>
                         {
                           (ridx === 0 && cidx === this.props.result.step_table.length - 1) ?
-                          <HighlightDiv> {this.getCellContent(this.props.result.step_table[cidx][ridx])} </HighlightDiv>
-                          :
-                          this.props.result.step_table[cidx].length < ridx + 1 ? "---" : this.getCellContent(this.props.result.step_table[cidx][ridx])
+                            <HighlightDiv> {this.getCellContent(this.props.result.step_table[cidx][ridx])} </HighlightDiv>
+                            :
+                            this.props.result.step_table[cidx].length < ridx + 1 ? "---" : this.getCellContent(this.props.result.step_table[cidx][ridx])
                         }
                       </td>
                     )
