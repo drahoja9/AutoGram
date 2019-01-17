@@ -1,8 +1,8 @@
 //#region imports
 import { GrammarInputValue } from 'components/Forms/Grammar'
-import { CFGReductionRequest, GRType, CFG } from 'lib/types';
+import { CFGReductionRequest } from 'lib/types';
 import { validateCFG } from 'lib/validate';
-import { Parser as GRParser } from 'lib/parse/grammar/Parser';
+import { assembleCFG } from 'lib/assemble';
 //#endregion
 
 interface Data {
@@ -20,27 +20,8 @@ interface Data {
  * @return A parsed input, which corresponds to `CFGReductionRequest` object.
  */
 export function validate(data: Data): CFGReductionRequest {
-  const values = data.values;
-  const p = new GRParser(values.nonTerms);
-
-  // Parse input
-  const nonTerm = p.parseIdentList();
-  p.setBuffer(values.terms);
-  const terms = p.parseIdentList();
-  p.setBuffer(values.rules);
-  const rules = p.parseRules();
-
-  // Assemeble grammar object
-  const grammar = {
-    type: GRType.CFG,
-    nonterminal_alphabet: nonTerm,
-    terminal_alphabet: terms,
-    initial_symbol: values.startSymbol,
-    rules
-  } as CFG;
-
+  const grammar = assembleCFG(data)
   validateCFG(grammar);
-
   return grammar;
 }
 

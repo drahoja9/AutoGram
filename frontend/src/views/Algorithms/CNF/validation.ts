@@ -1,7 +1,7 @@
 //#region imports
-import { GRType, CFG } from 'lib/types';
-import { Parser as GRParser } from 'lib/parse/grammar/Parser';
+import { CFG } from 'lib/types';
 import { validateCFG } from 'lib/validate';
+import { assembleCFG } from 'lib/assemble';
 import { GrammarInputValue } from 'components/Forms/Grammar';
 //#endregion
 
@@ -20,23 +20,7 @@ interface Data {
  * @return A parsed input, which corresponds to `CFG` object.
  */
 export function validate(data: Data): CFG {
-  const p = new GRParser(data.values.nonTerms);
-    // Parse input
-    const nonTerm = p.parseIdentList();
-    p.setBuffer(data.values.terms);
-    const terms = p.parseIdentList();
-    p.setBuffer(data.values.rules);
-    const rules = p.parseRules();
-
-    // Assemeble grammar object
-    const grammar = {
-      type: GRType.CFG,
-      nonterminal_alphabet: nonTerm,
-      terminal_alphabet: terms,
-      initial_symbol: data.values.startSymbol,
-      rules
-    } as CFG;
-
+    const grammar = assembleCFG(data);
     validateCFG(grammar);
     return grammar;
 }
