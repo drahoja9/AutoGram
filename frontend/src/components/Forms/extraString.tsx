@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import SpecialChars from './Regexp/SpecialCharacters';
 import TextArea from 'antd/lib/input/TextArea';
+import { TextColor } from 'components/Layout';
 
 import { Monospaced } from './Regexp/index'
 //#endregion
@@ -13,6 +14,9 @@ import { Monospaced } from './Regexp/index'
 //#region Styled
 export const HeaderStyle = styled.div`
     font-size: 1.3em;
+`;
+export const ExtraMargin = styled.div`
+  margin-top: 75px;
 `;
 //#endregion
 
@@ -40,31 +44,33 @@ class ExtraStringInput extends React.Component<ExtraStringInputProps> {
   public render() {
     return (
       <Layout>
-        <HeaderStyle>{this.props.header}:</HeaderStyle>
-        <Layout>
-          <Layout.Content>
-            <SpecialChars
-              value={this.props.value || ''}
-              onChange={this.handleInputSpecialCharacher.bind(this)}
-            />
-          </Layout.Content>
-        </Layout>
-        <Layout>
-          <Layout.Content>
-            <Monospaced>
-              <TextArea
-                ref={(input) => this.input = input}
-                placeholder="abc"
-                autosize={{
-                  minRows: 1,
-                  maxRows: 3
-                }}
-                value={this.props.value}
-                onChange={(e) => this.props.onChange(e.currentTarget.value)}
+        <ExtraMargin>
+          <TextColor><HeaderStyle>{this.props.header}:</HeaderStyle></TextColor>
+          <Layout>
+            <Layout.Content>
+              <SpecialChars
+                value={this.props.value || ''}
+                onChange={this.handleInputSpecialCharacher.bind(this)}
               />
-            </Monospaced>
-          </Layout.Content>
-        </Layout>
+            </Layout.Content>
+          </Layout>
+          <Layout>
+            <Layout.Content>
+              <Monospaced>
+                <TextArea
+                  ref={(input) => this.input = input}
+                  placeholder="abc"
+                  autosize={{
+                    minRows: 1,
+                    maxRows: 3
+                  }}
+                  value={this.props.value}
+                  onChange={(e) => this.props.onChange(e.currentTarget.value)}
+                />
+              </Monospaced>
+            </Layout.Content>
+          </Layout>
+        </ExtraMargin>
       </Layout>
     );
   }

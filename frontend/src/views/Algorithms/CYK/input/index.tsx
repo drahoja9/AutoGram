@@ -1,7 +1,7 @@
 //#region imports
 import * as React from 'react';
 import GrammarInput, { GrammarInputValue } from 'components/Forms/Grammar';
-import ExtraStringInput, { HeaderStyle } from 'components/Forms/extraString';
+import ExtraStringInput from 'components/Forms/extraString';
 import Controller, { InputDefaultProps } from 'components/AlgorithmView/InputView';
 //#endregion
 
@@ -35,16 +35,15 @@ export default class CykController extends Controller<InputState> {
   protected get content() {
     return (
       <div>
-        <HeaderStyle>Input grammar:</HeaderStyle>
         <GrammarInput
-          value = {this.state.values}
-          onChange = {this.handleChange.bind(this)}
+          value={this.state.values}
+          onChange={this.handleChange.bind(this)}
         />
         <ExtraStringInput
-            header={'String to check'}
-            value={this.state.cykString}
-            onChange={this.handleChangeExtraString.bind(this)}
-          />
+          header={'String to check'}
+          value={this.state.cykString}
+          onChange={this.handleChangeExtraString.bind(this)}
+        />
       </div>
     )
   }

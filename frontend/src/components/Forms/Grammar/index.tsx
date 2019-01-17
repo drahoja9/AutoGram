@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Layout, Input, Row, Col } from 'antd';
 import styled from 'styled-components';
-import { PullRight } from 'components/Layout';
+import { PullRight, TextColor } from 'components/Layout';
 import EpsilonInput from './EpsilonInput';
 import TextArea from 'antd/lib/input/TextArea';
 //#endregion
@@ -18,7 +18,7 @@ const MonospacedInput = styled.div`
 `;
 const LargeText = styled.div`
   .large-text {
-    font-size: 1.em;
+    font-size: 1.3em;
   }
 `;
 const RowMargin = styled.div`
@@ -62,7 +62,7 @@ class GrammarInput extends React.Component<GrammarInputProps> {
           <LargeText>
             <Layout>
               <Row align={'middle'}>
-                <Col className={'large-text'} span={12}>Non-terminal characters:</Col>
+                <TextColor><Col className={'large-text'} span={12}>Non-terminal characters:</Col></TextColor>
                 <Col span={12}>
                   <Input
                     placeholder="A, B"
@@ -75,7 +75,7 @@ class GrammarInput extends React.Component<GrammarInputProps> {
                 </Col>
               </Row>
               <Row>
-                <Col className={'large-text'} span={12}>Terminal characters:</Col>
+                <TextColor><Col className={'large-text'} span={12}>Terminal characters:</Col></TextColor>
                 <Col span={12}>
                   <Input
                     placeholder="a, b"
@@ -98,7 +98,7 @@ class GrammarInput extends React.Component<GrammarInputProps> {
                 </Col>
               </Row>
               <Row>
-                <Col className={'large-text'} span={6}>Rules:</Col>
+                <TextColor><Col className={'large-text'} span={6}>Rules:</Col></TextColor>
                 <Col span={18}>
                   <Input.TextArea
                     ref={(input) => this.input = input}
@@ -116,7 +116,7 @@ class GrammarInput extends React.Component<GrammarInputProps> {
                 </Col>
               </Row>
               <Row>
-                <Col className={'large-text'} span={12}>Start symbol:</Col>
+                <TextColor><Col className={'large-text'} span={12}>Start symbol:</Col></TextColor>
                 <Col span={6} offset={6}>
                   <Input
                     placeholder="A"
