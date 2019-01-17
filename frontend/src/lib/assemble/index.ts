@@ -1,3 +1,3 @@
-export { assembleGrammarRRG, assembleGrammarCFG, assembleGrammarCNF } from './grammar'
-export { assembleAutomatonDFA, assembleAutomatonNFA, assembleAutomatonENFA } from './finiteAutomaton'
-export { assembleRegexp } from './regexp'
+export { assembleRRG, assembleCFG, assembleCNF } from './grammar'
+export { assembleDFA, assembleNFA, assembleENFA } from './finiteAutomaton'
+export { assembleRE } from './regexp'

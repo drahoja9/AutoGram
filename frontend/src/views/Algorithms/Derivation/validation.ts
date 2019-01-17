@@ -1,7 +1,7 @@
 //#region imports
 import { DerivationRequest } from 'lib/types';
-import { Parser } from 'lib/parse/regexp/Parser';
 import { validateRE, validateExtraString } from 'lib/validate';
+import { assembleRE } from 'lib/assemble';
 import { RegexpInputValue } from 'components/Forms/Regexp';
 //#endregion
 
@@ -22,14 +22,10 @@ interface Data {
  * @return A parsed input, which corresponds to `RE` object.
  */
 export function validate(data: Data): DerivationRequest {
-  const values = data.values;
   const secondParameter = data.derivationString;
 
-  //Parse
-  const parser = new Parser(values);
-
   // Assemble regexp object
-  const regexp = parser.parse();
+  const regexp = assembleRE({values: data.values})
 
   let derivationString = '';
   let whiteSpace = [' ', '\t', '\n'];

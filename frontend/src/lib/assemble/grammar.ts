@@ -45,7 +45,7 @@ function parseGrammar(data: GrammarData) : ParsedGrammarData{
   }
 }
 
-export function assembleGrammarRRG(data: GrammarData) : RRG{
+export function assembleRRG(data: GrammarData) : RRG{
   const parsed = parseGrammar(data)
 
   // Assemeble grammar object
@@ -60,7 +60,7 @@ export function assembleGrammarRRG(data: GrammarData) : RRG{
   return grammar;
 }
 
-export function assembleGrammarCNF(data: GrammarData) : CNF{
+export function assembleCNF(data: GrammarData) : CNF{
   const parsed = parseGrammar(data)
 
   // Assemeble grammar object
@@ -75,7 +75,7 @@ export function assembleGrammarCNF(data: GrammarData) : CNF{
   return grammar;
 }
 
-export function assembleGrammarCFG(data: GrammarData) : CFG{
+export function assembleCFG(data: GrammarData) : CFG{
   const parsed = parseGrammar(data)
 
   // Assemeble grammar object

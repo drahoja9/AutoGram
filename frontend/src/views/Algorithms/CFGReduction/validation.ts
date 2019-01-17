@@ -1,9 +1,8 @@
 //#region imports
 import { GrammarInputValue } from 'components/Forms/Grammar'
-import { CFGReductionRequest, GRType, CFG } from 'lib/types';
+import { CFGReductionRequest } from 'lib/types';
 import { validateCFG } from 'lib/validate';
-import { Parser as GRParser } from 'lib/parse/grammar/Parser';
-import { ParseError } from 'lib/parse';
+import { assembleCFG } from 'lib/assemble';
 //#endregion
 
 interface Data {
@@ -21,35 +20,8 @@ interface Data {
  * @return A parsed input, which corresponds to `CFGReductionRequest` object.
  */
 export function validate(data: Data): CFGReductionRequest {
-  const values = data.values;
-  const p = new GRParser(values.nonTerms);
-
-  // Parse input
-  const nonTerm = p.parseIdentList();
-  p.setBuffer(values.terms);
-  const terms = p.parseIdentList();
-  p.setBuffer(values.rules);
-  const rules = p.parseRules();
-  let startSymbol = "";
-  if (values.startSymbol.length <= 1){
-    startSymbol = values.startSymbol;
-  } else if (values.startSymbol[0] === '<' && values.startSymbol[values.startSymbol.length - 1] === '>') {
-    startSymbol = values.startSymbol.substring(1, values.startSymbol.length - 1)
-  } else {
-    throw new ParseError().addFixit("Every multi-character non-teminal should be wrapped in <>.")
-  }
-
-  // Assemeble grammar object
-  const grammar = {
-    type: GRType.CFG,
-    nonterminal_alphabet: nonTerm,
-    terminal_alphabet: terms,
-    initial_symbol: startSymbol,
-    rules
-  } as CFG;
-
+  const grammar = assembleCFG(data)
   validateCFG(grammar);
-
   return grammar;
 }
 

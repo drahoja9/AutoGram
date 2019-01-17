@@ -8,7 +8,7 @@ interface RegexpData {
   values: RegexpInputValue,
 }
 
-export function assembleRegexp(data: RegexpData) : RE {
+export function assembleRE(data: RegexpData) : RE {
   const values = data.values;
 
   //Parse

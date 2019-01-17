@@ -2,6 +2,7 @@
 import { FAType, DFA, NFA, ENFA } from 'lib/types';
 import { Parser as GRParser } from 'lib/parse/grammar/Parser';
 import { AutomatonInputValue } from 'components/Forms/Automaton';
+import { UnexpectedTokenError } from 'lib/parse/exceptions';
 //#endregion
 
 interface AutomatonData {
@@ -51,7 +52,7 @@ function parseAutomaton(data: AutomatonData) : ParsedAutomatonData {
     }
 }
 
-export function assembleAutomatonDFA(data: AutomatonData) : DFA {
+export function assembleDFA(data: AutomatonData) : DFA {
   
   const parsed = parseAutomaton(data);
 
@@ -68,7 +69,7 @@ export function assembleAutomatonDFA(data: AutomatonData) : DFA {
   return automaton
 }
 
-export function assembleAutomatonNFA(data: AutomatonData) : NFA {
+export function assembleNFA(data: AutomatonData) : NFA {
   
   const parsed = parseAutomaton(data);
 
@@ -85,9 +86,26 @@ export function assembleAutomatonNFA(data: AutomatonData) : NFA {
   return automaton
 }
 
-export function assembleAutomatonENFA(data: AutomatonData) : ENFA {
+export function assembleENFA(data: AutomatonData) : ENFA {
   
   const parsed = parseAutomaton(data);
+
+  // Check for epsilon transitions and correct their form
+  let epsIndex = parsed.input_alphabet.indexOf('ε');
+  if(parsed.input_alphabet != -1){
+    //only one epsilon column
+    if (parsed.input_alphabet.indexOf('ε', epsIndex+1) != -1){
+      throw new UnexpectedTokenError('ε');
+    }
+    //replace 'ε' in transitions with null
+    for (let transition of parsed.transitions){
+      if (transition.input == 'ε'){
+        transition.input = null;
+      }
+    }
+    //remove 'ε' from input
+    parsed.input_alphabet = parsed.input_alphabet.filter((item: any) => item !== 'ε');
+  }
 
   // Assemble automaton object
   const automaton = {
