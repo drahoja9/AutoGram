@@ -619,7 +619,7 @@ class XtJConverter:
             text = None
         elif child.tag == "Set" or child.tag == "Pair" or child.tag == "Vector" or child.tag == "UniqueObject":
             if len(child) == 0:
-                text = "q_0"
+                text = "q_null"
             else:
                 if len(child) == 1 and child[0].tag == "String":
                     force_stop_name_change = True

@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>backend &mdash; AutoGram  documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="AutoGram  documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for backend</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="AlgorithmTypes"><a class="viewcode-back" href="../backend.html#backend.AlgorithmTypes">[docs]</a><span class="k">class</span> <span class="nc">AlgorithmTypes</span><span class="p">:</span>
+    <span class="n">TRANSFORMATION</span> <span class="o">=</span> <span class="s1">&#39;transformation&#39;</span>
+    <span class="n">COMPARISON</span> <span class="o">=</span> <span class="s1">&#39;comparison&#39;</span>
+    <span class="n">AUTOMATON_EPSILON_REMOVAL</span> <span class="o">=</span> <span class="s1">&#39;automaton_epsilon&#39;</span>
+    <span class="n">AUTOMATON_DETERMINIZATION</span> <span class="o">=</span> <span class="s1">&#39;automaton_determinization&#39;</span>
+    <span class="n">AUTOMATON_MINIMIZATION</span> <span class="o">=</span> <span class="s1">&#39;automaton_minimization&#39;</span>
+    <span class="n">REGEXP_DERIVATION</span> <span class="o">=</span> <span class="s1">&#39;regexp_derivation&#39;</span>
+    <span class="n">GRAMMAR_REDUCTION</span> <span class="o">=</span> <span class="s1">&#39;grammar_reduction&#39;</span>
+    <span class="n">GRAMMAR_EPSILON_REMOVAL</span> <span class="o">=</span> <span class="s1">&#39;grammar_epsilon&#39;</span>
+    <span class="n">GRAMMAR_UNIT_RULES_REMOVAL</span> <span class="o">=</span> <span class="s1">&#39;grammar_unit&#39;</span>
+    <span class="n">GRAMMAR_CNF_CONVERSION</span> <span class="o">=</span> <span class="s1">&#39;grammar_cnf&#39;</span>
+    <span class="n">GRAMMAR_LEFT_RECURSION_REMOVAL</span> <span class="o">=</span> <span class="s2">&quot;grammar_left_recursion&quot;</span>
+    <span class="n">GRAMMAR_CYK</span> <span class="o">=</span> <span class="s1">&#39;grammar_cyk&#39;</span></div>
+
+
+<div class="viewcode-block" id="ObjectTypes"><a class="viewcode-back" href="../backend.html#backend.ObjectTypes">[docs]</a><span class="k">class</span> <span class="nc">ObjectTypes</span><span class="p">:</span>
+    <span class="n">DFA</span> <span class="o">=</span> <span class="s1">&#39;DFA&#39;</span>
+    <span class="n">NFA</span> <span class="o">=</span> <span class="s1">&#39;NFA&#39;</span>
+    <span class="n">EpsilonNFA</span> <span class="o">=</span> <span class="s1">&#39;EpsilonNFA&#39;</span>
+    <span class="n">MultiNFA</span> <span class="o">=</span> <span class="s1">&#39;MultiInitialStateNFA&#39;</span>
+    <span class="n">RG</span> <span class="o">=</span> <span class="s1">&#39;RightRG&#39;</span>
+    <span class="n">CFG</span> <span class="o">=</span> <span class="s1">&#39;CFG&#39;</span>
+    <span class="n">CNF</span> <span class="o">=</span> <span class="s1">&#39;CNF&#39;</span>
+    <span class="n">EpsilonFreeCFG</span> <span class="o">=</span> <span class="s1">&#39;EpsilonFreeCFG&#39;</span>
+    <span class="n">DPDA</span> <span class="o">=</span> <span class="s1">&#39;DPDA&#39;</span>
+    <span class="n">NPDA</span> <span class="o">=</span> <span class="s1">&#39;NPDA&#39;</span>
+    <span class="n">RegExp</span> <span class="o">=</span> <span class="s1">&#39;UnboundedRegExp&#39;</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
