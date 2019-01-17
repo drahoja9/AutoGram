@@ -8,12 +8,22 @@ import TextArea from 'antd/lib/input/TextArea';
 //#endregion
 
 //#region Styled
-const Monospaced = styled.div`
+const MonospacedInput = styled.div`
   textarea {
     font-family: monospace;
   }
   input {
     font-family: monospace;
+  }
+`;
+const LargeText = styled.div`
+  .large-text {
+    font-size: 1.em;
+  }
+`;
+const RowMargin = styled.div`
+  .ant-row {
+    margin: 3px;
   }
 `;
 //#endregion
@@ -47,77 +57,81 @@ class GrammarInput extends React.Component<GrammarInputProps> {
 
   public render() {
     return (
-      <Monospaced>
-        <Layout>
-          <Row>
-            <Col span={12}>Non-terminal characters:</Col>
-            <Col span={12}>
-              <Input
-                placeholder="A, B"
-                value={this.props.value.nonTerms}
-                onChange={(e) => this.props.onChange({
-                  ...this.props.value,
-                  ['nonTerms']: e.currentTarget.value,
-                })}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>Terminal characters:</Col>
-            <Col span={12}>
-              <Input
-                placeholder="a, b"
-                value={this.props.value.terms}
-                onChange={(e) => this.props.onChange({
-                  ...this.props.value,
-                  ['terms']: e.currentTarget.value,
-                })}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <PullRight>
-                <EpsilonInput
-                  {...this.props}
-                  onChange={this.handleEpsilonInput.bind(this)}
-                />
-              </PullRight>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={6}>Rules:</Col>
-            <Col span={18}>
-              <Input.TextArea
-                ref={(input) => this.input = input}
-                placeholder="A -> aB"
-                autosize={{
-                  minRows: 4,
-                  maxRows: 16
-                }}
-                value={this.props.value.rules}
-                onChange={(e) => this.props.onChange({
-                  ...this.props.value,
-                  ['rules']: e.currentTarget.value,
-                })}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col span={12}>Start symbol:</Col>
-            <Col span={6} offset={6}>
-              <Input
-                placeholder="A"
-                value={this.props.value.startSymbol}
-                onChange={(e) => this.props.onChange({
-                  ...this.props.value,
-                  ['startSymbol']: e.currentTarget.value,
-                })}
-              />
-            </Col>
-          </Row>
-        </Layout>
-      </Monospaced>
+      <RowMargin>
+        <MonospacedInput>
+          <LargeText>
+            <Layout>
+              <Row align={'middle'}>
+                <Col className={'large-text'} span={12}>Non-terminal characters:</Col>
+                <Col span={12}>
+                  <Input
+                    placeholder="A, B"
+                    value={this.props.value.nonTerms}
+                    onChange={(e) => this.props.onChange({
+                      ...this.props.value,
+                      ['nonTerms']: e.currentTarget.value,
+                    })}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col className={'large-text'} span={12}>Terminal characters:</Col>
+                <Col span={12}>
+                  <Input
+                    placeholder="a, b"
+                    value={this.props.value.terms}
+                    onChange={(e) => this.props.onChange({
+                      ...this.props.value,
+                      ['terms']: e.currentTarget.value,
+                    })}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <PullRight>
+                    <EpsilonInput
+                      {...this.props}
+                      onChange={this.handleEpsilonInput.bind(this)}
+                    />
+                  </PullRight>
+                </Col>
+              </Row>
+              <Row>
+                <Col className={'large-text'} span={6}>Rules:</Col>
+                <Col span={18}>
+                  <Input.TextArea
+                    ref={(input) => this.input = input}
+                    placeholder="A -> aB"
+                    autosize={{
+                      minRows: 4,
+                      maxRows: 16
+                    }}
+                    value={this.props.value.rules}
+                    onChange={(e) => this.props.onChange({
+                      ...this.props.value,
+                      ['rules']: e.currentTarget.value,
+                    })}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col className={'large-text'} span={12}>Start symbol:</Col>
+                <Col span={6} offset={6}>
+                  <Input
+                    placeholder="A"
+                    value={this.props.value.startSymbol}
+                    onChange={(e) => this.props.onChange({
+                      ...this.props.value,
+                      ['startSymbol']: e.currentTarget.value,
+                    })}
+                  />
+                </Col>
+              </Row>
+            </Layout>
+          </LargeText>
+        </MonospacedInput>
+      </RowMargin>
     );
   }
 }
