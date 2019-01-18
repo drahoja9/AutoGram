@@ -29,7 +29,7 @@ const LogoSection = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 `
-const Sider = styled(Layout.Sider) `
+const Sider = styled(Layout.Sider)`
   width: 300px !important;
   min-width: 300px !important;
   max-width: 300px !important;
@@ -91,6 +91,13 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
     <Menu
       mode="inline" theme="dark"
       defaultSelectedKeys={['/vis']}
+      defaultOpenKeys={
+        getSelectedKeys(props.location.pathname).includes('/algo')
+          ?
+          ['/algo']
+          :
+          []
+      }
       selectedKeys={[getSelectedKeys(props.location.pathname)]}
     >
       <Menu.Item key="/vis">

@@ -131,7 +131,7 @@ class CykController extends Controller<CYKRequest, CYKResponse> {
             {
               this.props.result.step_table[0].map((first_cell: any, ridx: number) =>
                 <tr key={`cyk_table_row=${ridx}`}>
-                  <th>{this.props.defaultValue.cykString[ridx]}</th>
+                  <th>{this.props.inputValue.cyk_string[ridx]}</th>
                   {
                     this.props.result.step_table.map((col: any, cidx: number) =>
                       <td key={`cyk_table_cell=${ridx}.${cidx}`}>

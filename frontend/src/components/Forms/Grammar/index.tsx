@@ -98,7 +98,7 @@ class GrammarInput extends React.Component<GrammarInputProps> {
                 value={this.props.value.rules}
                 onChange={(e) => this.props.onChange({
                   ...this.props.value,
-                  ['rules']: e.currentTarget.value,
+                  ['rules']: e.currentTarget.value
                 })}
               />
             </Col>

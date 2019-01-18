@@ -21,6 +21,7 @@ export interface ExtraStringInputProps {
   onChange: (value: any) => any;
   value: string;
   header: string;
+  specialChars: boolean;
 }
 //#endregion
 
@@ -43,10 +44,16 @@ class ExtraStringInput extends React.Component<ExtraStringInputProps> {
         <HeaderStyle>{this.props.header}:</HeaderStyle>
         <Layout>
           <Layout.Content>
-            <SpecialChars
-              value={this.props.value || ''}
-              onChange={this.handleInputSpecialCharacher.bind(this)}
-            />
+            {
+              this.props.specialChars
+                ?
+                <SpecialChars
+                  value={this.props.value || ''}
+                  onChange={this.handleInputSpecialCharacher.bind(this)}
+                />
+                :
+                null
+            }
           </Layout.Content>
         </Layout>
         <Layout>

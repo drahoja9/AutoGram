@@ -37,14 +37,15 @@ export default class CykController extends Controller<InputState> {
       <div>
         <HeaderStyle>Input grammar:</HeaderStyle>
         <GrammarInput
-          value = {this.state.values}
-          onChange = {this.handleChange.bind(this)}
+          value={this.state.values}
+          onChange={this.handleChange.bind(this)}
         />
         <ExtraStringInput
-            header={'String to check'}
-            value={this.state.cykString}
-            onChange={this.handleChangeExtraString.bind(this)}
-          />
+          header={'String to check'}
+          value={this.state.cykString}
+          onChange={this.handleChangeExtraString.bind(this)}
+          specialChars={false}
+        />
       </div>
     )
   }
