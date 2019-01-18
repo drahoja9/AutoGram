@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Layout, Input, Row, Col } from 'antd';
 import styled from 'styled-components';
-import { PullRight, TextColor } from 'components/Layout';
+import { PullRight, TextColor, LargeText } from 'components/Layout';
 import EpsilonInput from './EpsilonInput';
 import TextArea from 'antd/lib/input/TextArea';
 //#endregion
@@ -14,11 +14,6 @@ const MonospacedInput = styled.div`
   }
   input {
     font-family: monospace;
-  }
-`;
-const LargeText = styled.div`
-  .large-text {
-    font-size: 1.3em;
   }
 `;
 const RowMargin = styled.div`

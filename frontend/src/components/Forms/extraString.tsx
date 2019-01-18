@@ -45,7 +45,7 @@ class ExtraStringInput extends React.Component<ExtraStringInputProps> {
     return (
       <Layout>
         <ExtraMargin>
-          <TextColor><HeaderStyle>{this.props.header}:</HeaderStyle></TextColor>
+          <TextColor className={'large-text'}>{this.props.header}:</TextColor>
           <Layout>
             <Layout.Content>
               <SpecialChars
