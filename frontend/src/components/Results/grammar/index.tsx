@@ -42,19 +42,19 @@ const ContentRow: React.SFC<ContentRowProps> = (props) => (
 
 const GrammarView: React.SFC<GrammarViewProps> = (props) => (
   <div>
-    <ContentRow label="Non-terminal alphabet">
+    <ContentRow label="Non-terminal alphabet:">
       <MonoText>{grammarTermsToString(props.value.nonterminal_alphabet)}</MonoText>
     </ContentRow>
 
-    <ContentRow label="Terminal alphabet">
+    <ContentRow label="Terminal alphabet:">
       <MonoText>{grammarTermsToString(props.value.terminal_alphabet)}</MonoText>
     </ContentRow>
 
-    <ContentRow label="Initial symbol">
+    <ContentRow label="Initial symbol:">
       <MonoText>{symbolToString(props.value.initial_symbol)}</MonoText>
     </ContentRow>
 
-    <ContentRow label="Rules">
+    <ContentRow label="Rules:">
       {
         grammarRulesToString(props.value)
           .map((rules, idx) => <MonoText key={idx}>{rules}</MonoText>)

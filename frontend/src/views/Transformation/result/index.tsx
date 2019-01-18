@@ -1,6 +1,6 @@
 //#region imports
 import * as React from 'react';
-import { Layout, Row, Col} from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -26,7 +26,7 @@ const SectionCol = styled(Col)`
 
 const SectionHeadline = styled.h2`
   font-size: 2em;
-  color: #7D6F7F;
+  color: #707070;
 `
 const SectionContainer = styled.div`
   margin: 30px 0px;
@@ -51,31 +51,31 @@ export interface TransformationResultProps {
 
 const TransformationResult: React.SFC<TransformationResultProps> = (props) => (
   <Layout>
-    <Header 
-      header={'Transformation'} 
-      onBack = {props.onBack} />
-    
+    <Header
+      header={'Transformation'}
+      onBack={props.onBack} />
+
     <Layout>
-          <Row>
-            <SectionCol span={12}>
-              <SectionContainer>
-                <SectionHeadline>Input:</SectionHeadline>
-                { renderValue(props.inputType, props.inputValue) }
-              </SectionContainer>
-            </SectionCol>
-            <SectionCol span={12}>
-              <SectionContainer className={"left-border"}>
-                <SectionHeadline>Result:</SectionHeadline>
-                { renderValue(props.target, props.value) }
-              </SectionContainer>
-            </SectionCol>
-          </Row>
+      <Row>
+        <SectionCol span={12}>
+          <SectionContainer>
+            <SectionHeadline>Input</SectionHeadline>
+            {renderValue(props.inputType, props.inputValue)}
+          </SectionContainer>
+        </SectionCol>
+        <SectionCol span={12}>
+          <SectionContainer className={"left-border"}>
+            <SectionHeadline>Result</SectionHeadline>
+            {renderValue(props.target, props.value)}
+          </SectionContainer>
+        </SectionCol>
+      </Row>
     </Layout>
   </Layout>
 );
 
 const renderValue = (type: InputType, value: NFA | RRG | RE | null) => {
-  switch(type){
+  switch (type) {
     case InputType.Automaton:
       return (
         <AutomatonView

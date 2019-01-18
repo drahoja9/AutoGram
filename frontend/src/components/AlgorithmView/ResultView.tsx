@@ -17,7 +17,7 @@ const SectionCol = styled(Col)`
 
 const SectionHeadline = styled.h2`
   font-size: 2em;
-  color: #7D6F7F;
+  color: #707070;
 `
 const SectionContainer = styled.div`
   margin: 30px 0px;

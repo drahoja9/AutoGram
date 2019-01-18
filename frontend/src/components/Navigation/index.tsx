@@ -29,19 +29,24 @@ const LogoSection = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 `
-const Sider = styled(Layout.Sider) `
+const Sider = styled(Layout.Sider)`
   width: 300px !important;
   min-width: 300px !important;
   max-width: 300px !important;
   min-height: 100%;
   .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
-    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    font-size: 20px;
     text-align: center;
     padding-right: 34px;
     padding-left: 34px !important;
+    margin: 0;
   }
   .ant-menu-submenu .ant-menu-item{
-    font-size: 15px;
+    font-size: 18px;
     padding-left: 34px !important;
   }
   .ant-menu-submenu-arrow{
