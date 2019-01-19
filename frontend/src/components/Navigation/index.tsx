@@ -34,6 +34,11 @@ const Sider = styled(Layout.Sider)`
   min-width: 300px !important;
   max-width: 300px !important;
   min-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  ::-webkit-scrollbar { 
+    display: none; 
+  }
   .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
     font-size: 17px;
     text-align: center;
@@ -81,7 +86,7 @@ function getSelectedKeys(pathname: string) {
  * Each menu-submenu item has a link to a app view e.g. "Visualization".
  */
 const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentProps<{}>) => (
-  <Sider style={{ width: '300px !important' }}>
+  <Sider>
     <div>
       <LogoHeadline>Autogram</LogoHeadline>
       <LogoSection>
