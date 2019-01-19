@@ -102,7 +102,7 @@ function initialize(props: AutomatonInputProps, isEpsilon: boolean | undefined) 
   for (const row of value.body) {
     row.values.push('');
   }
-  if(isEpsilon){
+  if (isEpsilon) {
     value.header.push('ε');
     for (const row of value.body) {
       row.values.push('');
@@ -130,11 +130,10 @@ function addRow(props: AutomatonInputProps) {
 
 function addCol(props: AutomatonInputProps) {
   const value = cloneDeep(props.value);
-  // We want to insert new column before last element since that is the epsilon
-  // column, hence the -1
-  value.header.splice(-1, 0, '');
+  let lastIdx = props.isEpsilon ? -1 : value.header.length;
+  value.header.splice(lastIdx, 0, '');
   for (const row of value.body) {
-    row.values.splice(-1, 0, '');
+    row.values.splice(lastIdx, 0, '');
   }
   props.onChange(value);
 }
@@ -196,7 +195,7 @@ class AutomatonInput extends React.Component<AutomatonInputProps> {
    * Adding epsilon column at the beginning for every epsilon-available automata.
    */
   public componentWillMount() {
-    if (this.props.value.header.length === 0){
+    if (this.props.value.header.length === 0) {
       initialize(this.props, this.props.isEpsilon);
     }
   }
