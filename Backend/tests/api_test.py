@@ -155,7 +155,6 @@ def test_comparison(test_client: FlaskClient, input_file: str, result_file: str)
     (TRAN + '/TRAN8.json', TRAN + '/TRAN8_RES.json'),
     (TRAN + '/TRAN9.json', TRAN + '/TRAN9_RES.json'),
     (TRAN + '/TRAN10.json', TRAN + '/TRAN10_RES.json'),
-    (TRAN + '/TRAN11.json', TRAN + '/TRAN11_RES.json'),
     (TRAN + '/TRAN12.json', TRAN + '/TRAN12_RES.json'),
     (TRAN + '/TRAN13.json', TRAN + '/TRAN13_RES.json'),
     (TRAN + '/TRAN14.json', TRAN + '/TRAN14_RES.json'),
