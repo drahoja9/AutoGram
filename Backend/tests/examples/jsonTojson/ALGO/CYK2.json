@@ -1,0 +1,70 @@
+{
+  "grammar": {
+    "type": "CNF",
+    "nonterminal_alphabet": [
+      "A",
+      "B",
+      "C"
+    ],
+    "terminal_alphabet": [
+      "0",
+      "1"
+    ],
+    "initial_symbol": "A",
+    "rules": [
+      {
+        "from": "A",
+        "to": [
+          "B",
+          "C"
+        ]
+      },
+      {
+        "from": "A",
+        "to": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "from": "A",
+        "to": [
+          "1"
+        ]
+      },
+      {
+        "from": "B",
+        "to": [
+          "A",
+          "A"
+        ]
+      },
+      {
+        "from": "B",
+        "to": [
+          "0"
+        ]
+      },
+      {
+        "from": "C",
+        "to": [
+          "C",
+          "B"
+        ]
+      },
+      {
+        "from": "C",
+        "to": [
+          "1"
+        ]
+      },
+      {
+        "from": "C",
+        "to": [
+          "0"
+        ]
+      }
+    ]
+  },
+  "cyk_string": "0"
+}

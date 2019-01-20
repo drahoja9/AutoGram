@@ -1,0 +1,50 @@
+{
+  "result": {
+    "final_states": [
+      "a"
+    ],
+    "initial_states": [
+      "a"
+    ],
+    "input_alphabet": [
+      "0"
+    ],
+    "states": [
+      "a"
+    ],
+    "transitions": [
+      {
+        "from": "a",
+        "input": "0",
+        "to": "a"
+      }
+    ],
+    "type": "DFA"
+  },
+  "steps": [
+    [
+      {
+        "group": "a",
+        "state": "a",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "a"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "group": "a",
+        "state": "a",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "a"
+          }
+        ]
+      }
+    ]
+  ]
+}

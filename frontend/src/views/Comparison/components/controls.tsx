@@ -6,11 +6,11 @@ import styled from 'styled-components';
 //#endregion
 
 //#region Styled
-const Check = styled(Icon)`
+const Check = styled(Icon) `
   color: #468F83;
 `;
 
-const Cross = styled(Icon)`
+const Cross = styled(Icon) `
   color: #f5222d;
 `;
 
@@ -27,6 +27,7 @@ export interface ControlsProps {
   onSubmit?: () => any;
   pending?: boolean;
   result?: boolean;
+  showResult: boolean;
 }
 //#endregion
 
@@ -48,7 +49,11 @@ const Controls: React.SFC<ControlsProps> = (props) => (
     </Centered>
     <br />
     <Centered>
-      <Result result={props.result} />
+      {props.showResult ?
+        <Result result={props.result} />
+        :
+        null
+      }
     </Centered>
   </Wrapper>
 );

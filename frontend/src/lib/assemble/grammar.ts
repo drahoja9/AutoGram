@@ -3,22 +3,23 @@ import { GrammarInputValue } from 'components/Forms/Grammar'
 import { GRType, CFG, RRG, CNF } from 'lib/types';
 import { Parser as GRParser } from 'lib/parse/grammar/Parser';
 import { ParseError } from 'lib/parse';
+import { trimWhitespace } from './common';
 //#endregion
 
-interface GrammarData{
+interface GrammarData {
   values: GrammarInputValue;
 }
-interface ParsedGrammarData{
-    nonterminal_alphabet: string[],
-    terminal_alphabet: string[],
-    initial_symbol: string,
-    rules: {
-      from: string;
-      to: string[] | [null];
-    }[];
+interface ParsedGrammarData {
+  nonterminal_alphabet: string[],
+  terminal_alphabet: string[],
+  initial_symbol: string,
+  rules: {
+    from: string;
+    to: string[] | [null];
+  }[];
 }
 
-function parseGrammar(data: GrammarData) : ParsedGrammarData{
+function parseGrammar(data: GrammarData): ParsedGrammarData {
   const values = data.values;
   const p = new GRParser(values.nonTerms);
 
@@ -29,10 +30,11 @@ function parseGrammar(data: GrammarData) : ParsedGrammarData{
   p.setBuffer(values.rules);
   const rules = p.parseRules();
   let startSymbol = "";
-  if (values.startSymbol.length <= 1){
-    startSymbol = values.startSymbol;
-  } else if (values.startSymbol[0] === '<' && values.startSymbol[values.startSymbol.length - 1] === '>') {
-    startSymbol = values.startSymbol.substring(1, values.startSymbol.length - 1)
+  let trimmedOriginalStart = trimWhitespace(values.startSymbol);
+  if (trimmedOriginalStart.length <= 1) {
+    startSymbol = trimmedOriginalStart;
+  } else if (trimmedOriginalStart[0] === '<' && trimmedOriginalStart[trimmedOriginalStart.length - 1] === '>') {
+    startSymbol = trimmedOriginalStart.substring(1, trimmedOriginalStart.length - 1);
   } else {
     throw new ParseError().addFixit("Every multi-character non-teminal should be wrapped in <>.")
   }
@@ -45,7 +47,7 @@ function parseGrammar(data: GrammarData) : ParsedGrammarData{
   }
 }
 
-export function assembleRRG(data: GrammarData) : RRG{
+export function assembleRRG(data: GrammarData): RRG {
   const parsed = parseGrammar(data)
 
   // Assemeble grammar object
@@ -60,7 +62,7 @@ export function assembleRRG(data: GrammarData) : RRG{
   return grammar;
 }
 
-export function assembleCNF(data: GrammarData) : CNF{
+export function assembleCNF(data: GrammarData): CNF {
   const parsed = parseGrammar(data)
 
   // Assemeble grammar object
@@ -75,7 +77,7 @@ export function assembleCNF(data: GrammarData) : CNF{
   return grammar;
 }
 
-export function assembleCFG(data: GrammarData) : CFG{
+export function assembleCFG(data: GrammarData): CFG {
   const parsed = parseGrammar(data)
 
   // Assemeble grammar object

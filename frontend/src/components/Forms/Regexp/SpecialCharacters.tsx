@@ -8,6 +8,7 @@ import { Row, Button } from 'antd';
 interface RegexpInputProps {
   onChange: (value: any) => any;
   value: any;
+  cursor: () => number;
 }
 
 interface CharInputProps extends RegexpInputProps {
@@ -19,8 +20,8 @@ interface CharInputProps extends RegexpInputProps {
  * Button for input of special characters.
  */
 const CharBtn: React.SFC<CharInputProps> = (props) => (
-  <Button onClick={() => props.onChange(props.value + props.char)}>
-    { props.char }
+  <Button onClick={() => props.onChange(props.value.slice(0, props.cursor()) + props.char + props.value.slice(props.cursor()))}>
+    {props.char}
   </Button>
 );
 

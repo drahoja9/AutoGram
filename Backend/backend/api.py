@@ -19,6 +19,7 @@ from flask_cors import CORS
 from werkzeug.http import HTTP_STATUS_CODES
 
 from backend import logic_layer, AlgorithmTypes
+from backend.python_interface import AltInterfaceException
 
 
 def create_app(test_config=None) -> Flask:
@@ -132,6 +133,16 @@ def _internal_error(message: str, exc_type: str) -> Response:
     """
     return _error_response(500, message, exc_type)
 
+
+def _handle_errors(response):
+    if 'exception' in response:
+        if response['exception'] is AltInterfaceException:
+            return _internal_error(response['exception'], response['type'])
+        else:
+            return _bad_request(response['exception'], response['type'])
+    else:
+        return jsonify(response)
+
 # --------------------------------------------------- Views -----------------------------------------------------------
 
 
@@ -166,11 +177,9 @@ def algorithms(algorithm_name: str) -> Response:
         return _bad_request('Invalid algorithm_name parameter', 'API')
 
     response = logic_layer.simple_algorithm(request.get_json(), algorithm_name)
+    response = _handle_errors(response)
 
-    if 'exception' in response:
-        return _bad_request(response['exception'], response['type'])
-
-    return jsonify(response)
+    return response
 
 
 @bp.route('/transformation', methods=['POST'])
@@ -185,11 +194,9 @@ def transformation() -> Response:
 
     """
     response = logic_layer.transformation(request.get_json())
+    response = _handle_errors(response)
 
-    if 'exception' in response:
-        return _bad_request(response['exception'], response['type'])
-
-    return jsonify(response)
+    return response
 
 
 @bp.route('/comparison', methods=['POST'])
@@ -211,8 +218,6 @@ def comparison() -> Response:
 
     """
     response = logic_layer.comparison(request.get_json())
+    response = _handle_errors(response)
 
-    if 'exception' in response:
-        return _bad_request(response['exception'], response['type'])
-
-    return jsonify(response)
+    return response

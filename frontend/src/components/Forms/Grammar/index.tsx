@@ -37,17 +37,28 @@ export interface GrammarInputProps {
 }
 //#endregion
 
+
 /**
  * Grammar input component.
  */
 class GrammarInput extends React.Component<GrammarInputProps> {
   private input: TextArea | null = null;
+  private cursor: number = 0;
 
   private handleEpsilonInput(value: GrammarInputValue) {
     if (this.input) {
       this.input.focus();
     }
     this.props.onChange(value);
+  }
+
+  private handleRulesChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    this.cursor = e.currentTarget.selectionStart;
+    this.props.onChange({ ...this.props.value, ['rules']: e.currentTarget.value });
+  }
+
+  public getCursor(): number {
+    return this.cursor;
   }
 
   public render() {
@@ -88,6 +99,7 @@ class GrammarInput extends React.Component<GrammarInputProps> {
                     <EpsilonInput
                       {...this.props}
                       onChange={this.handleEpsilonInput.bind(this)}
+                      cursor={this.getCursor.bind(this)}
                     />
                   </PullRight>
                 </Col>
@@ -103,10 +115,9 @@ class GrammarInput extends React.Component<GrammarInputProps> {
                       maxRows: 16
                     }}
                     value={this.props.value.rules}
-                    onChange={(e) => this.props.onChange({
-                      ...this.props.value,
-                      ['rules']: e.currentTarget.value,
-                    })}
+                    onChange={(e) => this.handleRulesChange(e)}
+                    onClick={(e) => this.cursor = e.currentTarget.selectionStart}
+                    onKeyUp={(e) => this.cursor = e.currentTarget.selectionStart}
                   />
                 </Col>
               </Row>

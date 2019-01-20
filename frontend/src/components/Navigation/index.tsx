@@ -34,6 +34,11 @@ const Sider = styled(Layout.Sider)`
   min-width: 300px !important;
   max-width: 300px !important;
   min-height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+  ::-webkit-scrollbar { 
+    display: none; 
+  }
   .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
     display: flex;
     align-items: center;
@@ -86,7 +91,7 @@ function getSelectedKeys(pathname: string) {
  * Each menu-submenu item has a link to a app view e.g. "Visualization".
  */
 const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentProps<{}>) => (
-  <Sider style={{ width: '300px !important' }}>
+  <Sider>
     <div>
       <LogoHeadline>Autogram</LogoHeadline>
       <LogoSection>
@@ -96,6 +101,13 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
     <Menu
       mode="inline" theme="dark"
       defaultSelectedKeys={['/cmp']}
+      defaultOpenKeys={
+        getSelectedKeys(props.location.pathname).includes('/algo')
+          ?
+          ['/algo']
+          :
+          []
+      }
       selectedKeys={[getSelectedKeys(props.location.pathname)]}
     >
       <Menu.Item key="/cmp">

@@ -1,0 +1,117 @@
+{
+  "type": "DFA",
+  "initial_states": [
+    "A"
+  ],
+  "final_states": [
+    "C",
+    "I"
+  ],
+  "input_alphabet": [
+    "0",
+    "1"
+  ],
+  "states": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I"
+  ],
+  "transitions": [
+    {
+      "from": "A",
+      "input": "0",
+      "to": "B"
+    },
+    {
+      "from": "A",
+      "input": "1",
+      "to": "F"
+    },
+    {
+      "from": "B",
+      "input": "0",
+      "to": "G"
+    },
+    {
+      "from": "B",
+      "input": "1",
+      "to": "C"
+    },
+    {
+      "from": "C",
+      "input": "0",
+      "to": "A"
+    },
+    {
+      "from": "C",
+      "input": "1",
+      "to": "I"
+    },
+    {
+      "from": "D",
+      "input": "0",
+      "to": "C"
+    },
+    {
+      "from": "D",
+      "input": "1",
+      "to": "G"
+    },
+    {
+      "from": "E",
+      "input": "0",
+      "to": "H"
+    },
+    {
+      "from": "E",
+      "input": "1",
+      "to": "F"
+    },
+    {
+      "from": "F",
+      "input": "0",
+      "to": "I"
+    },
+    {
+      "from": "F",
+      "input": "1",
+      "to": "G"
+    },
+    {
+      "from": "G",
+      "input": "0",
+      "to": "G"
+    },
+    {
+      "from": "G",
+      "input": "1",
+      "to": "E"
+    },
+    {
+      "from": "H",
+      "input": "0",
+      "to": "G"
+    },
+    {
+      "from": "H",
+      "input": "1",
+      "to": "I"
+    },
+    {
+      "from": "I",
+      "input": "0",
+      "to": "E"
+    },
+    {
+      "from": "I",
+      "input": "1",
+      "to": "C"
+    }
+  ]
+}

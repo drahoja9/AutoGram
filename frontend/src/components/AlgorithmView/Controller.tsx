@@ -30,7 +30,7 @@ export default abstract class Controller<Request, State> extends React.Component
   public abstract get url(): string;
   public abstract get routes(): RouteProps[];
 
-  public componentdDidMount() {
+  public componentDidMount() {
     if (this.props.location.pathname !== `${this.url}/input`) {
       this.props.history.push(`${this.url}/input`);
     }

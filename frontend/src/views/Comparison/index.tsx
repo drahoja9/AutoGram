@@ -38,6 +38,7 @@ interface ControllerState {
   lhs: InputValue;
   rhs: InputValue;
   error: boolean;
+  showResult: boolean;
 }
 //#endregion
 
@@ -59,7 +60,8 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         re: ''
       }
     },
-    error: false
+    error: false,
+    showResult: false
   };
 
   /**
@@ -73,7 +75,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
     try {
       const lhs = validate(this.state.lhs);
       const rhs = validate(this.state.rhs);
-      this.props.onCompare({ lhs, rhs });
+      this.setState({showResult: true}, () => this.props.onCompare({ lhs, rhs }));
       this.setState({ error: false });
     } catch (err) {
       this.handleSubmitError(err);
@@ -135,12 +137,12 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         <Row type="flex" justify="space-around">
           <Col span={10}>
             <LangInput
-              onChange={(data: InputValue) => this.setState({ lhs: data })}
+              onChange={(data: InputValue) => this.setState({ lhs: data, showResult: false })}
             />
           </Col>
           <Col span={10}>
             <LangInput
-              onChange={(data: InputValue) => this.setState({ rhs: data })}
+              onChange={(data: InputValue) => this.setState({ rhs: data, showResult: false })}
             />
           </Col>
         </Row>
@@ -160,6 +162,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         onSubmit={this.handleSubmit.bind(this)}
         pending={this.props.meta.pending}
         result={retrieved && !pending && !error ? this.props.result.result : undefined}
+        showResult={this.state.showResult}
       />
     );
   }

@@ -46,9 +46,10 @@ export default class CykController extends Controller<InputState> {
             header={'String to check'}
             value={this.state.cykString}
             onChange={this.handleChangeExtraString.bind(this)}
+            specialChars={false}
           />
         </LargeText>
-      </div>
+      </div >
     )
   }
 

@@ -25,6 +25,7 @@ export interface ExtraStringInputProps {
   onChange: (value: any) => any;
   value: string;
   header: string;
+  specialChars: boolean;
 }
 //#endregion
 
@@ -33,12 +34,22 @@ export interface ExtraStringInputProps {
  */
 class ExtraStringInput extends React.Component<ExtraStringInputProps> {
   private input: TextArea | null = null;
+  private cursor: number = 0;
 
   private handleInputSpecialCharacher(value: string) {
     if (this.input) {
       this.input.focus();
     }
     this.props.onChange(value);
+  }
+
+  private handleOnChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    this.cursor = e.currentTarget.selectionStart;
+    this.props.onChange(e.currentTarget.value);
+  }
+
+  public getCursor(): number {
+    return this.cursor;
   }
 
   public render() {
@@ -48,10 +59,17 @@ class ExtraStringInput extends React.Component<ExtraStringInputProps> {
           <TextColor className={'large-text'}>{this.props.header}:</TextColor>
           <Layout>
             <Layout.Content>
-              <SpecialChars
-                value={this.props.value || ''}
-                onChange={this.handleInputSpecialCharacher.bind(this)}
-              />
+              {
+                this.props.specialChars
+                  ?
+                  <SpecialChars
+                    value={this.props.value || ''}
+                    onChange={this.handleInputSpecialCharacher.bind(this)}
+                    cursor={this.getCursor.bind(this)}
+                  />
+                  :
+                  null
+              }
             </Layout.Content>
           </Layout>
           <Layout>
@@ -65,7 +83,9 @@ class ExtraStringInput extends React.Component<ExtraStringInputProps> {
                     maxRows: 3
                   }}
                   value={this.props.value}
-                  onChange={(e) => this.props.onChange(e.currentTarget.value)}
+                  onChange={(e) => this.handleOnChange(e)}
+                  onClick={(e) => this.cursor = e.currentTarget.selectionStart}
+                  onKeyUp={(e) => this.cursor = e.currentTarget.selectionStart}
                 />
               </Monospaced>
             </Layout.Content>

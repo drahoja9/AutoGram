@@ -51,6 +51,7 @@ export default class DerivationController extends Controller<InputState> {
             header={'Derivation string'}
             value={this.state.derivationString}
             onChange={this.handleChangeDerivationString.bind(this)}
+            specialChars={true}
           />
         </LargeText>
       </div>

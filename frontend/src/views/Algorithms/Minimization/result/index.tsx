@@ -14,6 +14,8 @@ import {
   mapDispatchToProps
 } from './selectors';
 import Controller from 'components/AlgorithmView//ResultView';
+import { symbolToString, statesToString } from 'components/Results/automaton/stringify';
+import { trimWhitespace } from 'lib/assemble/common'
 //#endregion
 
 const StateWrapper = styled.div`
@@ -101,13 +103,13 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
                           </StateWrapper>
                         </Col>
                         <Col span={12}>
-                          {automatonState.value}
+                          {trimWhitespace(automatonState.value)}
                         </Col>
                       </Row>
                     </th>
                   ].concat(
                     automatonState.values.map((value: string, valIdx: number) =>
-                      <td key={`${stateIdx}.-1.${valIdx}`}>{value}</td>
+                      <td key={`${stateIdx}.-1.${valIdx}`}>{trimWhitespace(value)}</td>
                     )
                   )
                 }
@@ -117,18 +119,23 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
                     [
                       <th className={"double"} key={`${stateIdx}.${stepIdx}.${-1}`}>
                         {
-                          step.filter((s: any) => s.state === automatonState.value).map((state: any) => state.group)
+                          symbolToString(
+                            step.filter((s: any) => s.state === trimWhitespace(automatonState.value.replace(/<|>/gi, '')))
+                              .map((state: any) => state.group)[0]
+                          )
                         }
                       </th>
                     ].concat(
                       this.props.defaultValue.values.header.map((value: any, valueIdx: number) =>
                         <td key={`${stateIdx}.${stepIdx}.${valueIdx}`}>
                           {
-                            step.filter((s: any) => s.state === automatonState.value).map((s: any) =>
-                              s.transitions.filter((t: any) => t.input === value).map((t: any) =>
-                                t.to
-                              )
-                            )
+                            statesToString(
+                              step.filter((s: any) => s.state === trimWhitespace(automatonState.value.replace(/<|>/gi, '')))
+                                .map((s: any) =>
+                                  s.transitions.filter((t: any) => t.input === value).map((t: any) =>
+                                    t.to
+                                  )
+                                )[0])
                           }
                         </td>
                       )
@@ -138,8 +145,11 @@ class MinimizationController extends Controller<DFA, MinimizationResponse> {
                 <th className={"double"} key={`added.${stateIdx}`}>
                   {
                     //print the last iteration
-                    this.props.result.steps[this.props.result.steps.length - 1].filter((s: any) => s.state === automatonState.value)
-                      .map((s: any) => s.group)
+                    symbolToString(
+                      this.props.result.steps[this.props.result.steps.length - 1]
+                        .filter((s: any) => s.state === trimWhitespace(automatonState.value.replace(/<|>/gi, '')))
+                        .map((s: any) => s.group)[0]
+                    )
                   }
                 </th>
               </tr>
