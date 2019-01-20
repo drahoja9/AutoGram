@@ -18,18 +18,25 @@ interface ParsedAutomatonData {
 }
 
 function parseAutomaton(data: AutomatonData): ParsedAutomatonData {
-  const values = data.values
-
-  const valuesWhere = <T, U extends { value: string }>(
-    items: U[],
-    where: (item: U) => boolean = (_) => true
-  ): string[] => (items.filter(where).map(item => item.value.replace(/<|>/gi, '')));
+  const values = data.values;
 
   //Parse
   const input = values.header;
-  const states = valuesWhere(values.body);
-  const initStates = valuesWhere(values.body, (item) => item.isInitial);
-  const finStates = valuesWhere(values.body, (item) => item.isFinal);
+  let states = [];
+  let initStates = [];
+  let finStates = [];
+
+  for (const row of values.body) {
+    const p = new GRParser(row.value);
+    let state = p.parseIdentList()[0];
+    states.push(state);
+    if (row.isInitial) {
+      initStates.push(state);
+    }
+    if (row.isFinal) {
+      finStates.push(state);
+    }
+  }
 
   const transitions: { from: string, input: string, to: string }[] = [];
   for (const row of values.body) {

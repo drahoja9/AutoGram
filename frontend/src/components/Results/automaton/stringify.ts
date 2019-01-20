@@ -50,6 +50,5 @@ export function automatonTransitionsToString(automaton: FA) {
     }
   }
 
-  console.log(transitionMap);
   return transitionMap;
 }
