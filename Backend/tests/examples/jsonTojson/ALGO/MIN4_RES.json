@@ -1,0 +1,593 @@
+{
+    "result": {
+        "final_states": [
+            "1",
+            "2",
+            "3",
+            "5",
+            "6"
+        ],
+        "initial_states": [
+            "1"
+        ],
+        "input_alphabet": [
+            "a",
+            "b"
+        ],
+        "states": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+        ],
+        "transitions": [
+            {
+                "from": "1",
+                "input": "a",
+                "to": "2"
+            },
+            {
+                "from": "1",
+                "input": "b",
+                "to": "3"
+            },
+            {
+                "from": "2",
+                "input": "a",
+                "to": "2"
+            },
+            {
+                "from": "2",
+                "input": "b",
+                "to": "4"
+            },
+            {
+                "from": "3",
+                "input": "a",
+                "to": "5"
+            },
+            {
+                "from": "3",
+                "input": "b",
+                "to": "6"
+            },
+            {
+                "from": "4",
+                "input": "a",
+                "to": "7"
+            },
+            {
+                "from": "5",
+                "input": "a",
+                "to": "5"
+            },
+            {
+                "from": "5",
+                "input": "b",
+                "to": "3"
+            },
+            {
+                "from": "6",
+                "input": "a",
+                "to": "2"
+            },
+            {
+                "from": "6",
+                "input": "b",
+                "to": "6"
+            },
+            {
+                "from": "7",
+                "input": "a",
+                "to": "5"
+            },
+            {
+                "from": "7",
+                "input": "b",
+                "to": "6"
+            }
+        ],
+        "type": "DFA"
+    },
+    "steps": [
+        [
+            {
+                "group": "1",
+                "state": "1",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "2",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "3",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "4",
+                "state": "4",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "4"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "5",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "6",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "4",
+                "state": "7",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "8",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "9",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "group": "1",
+                "state": "1",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "2",
+                "state": "2",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "3",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "4",
+                "state": "4",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "7"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "5",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "6",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "7",
+                "state": "7",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "8",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "1"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "2",
+                "state": "9",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "group": "1",
+                "state": "1",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "3"
+                    }
+                ]
+            },
+            {
+                "group": "2",
+                "state": "2",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            },
+            {
+                "group": "3",
+                "state": "3",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "3"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "4",
+                "state": "4",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "7"
+                    }
+                ]
+            },
+            {
+                "group": "3",
+                "state": "5",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "3"
+                    },
+                    {
+                        "input": "b",
+                        "to": "3"
+                    }
+                ]
+            },
+            {
+                "group": "1",
+                "state": "6",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "7",
+                "state": "7",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "3"
+                    },
+                    {
+                        "input": "b",
+                        "to": "1"
+                    }
+                ]
+            },
+            {
+                "group": "3",
+                "state": "8",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "3"
+                    },
+                    {
+                        "input": "b",
+                        "to": "3"
+                    }
+                ]
+            },
+            {
+                "group": "2",
+                "state": "9",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            }
+        ],
+        [
+            {
+                "group": "1",
+                "state": "1",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "3"
+                    }
+                ]
+            },
+            {
+                "group": "2",
+                "state": "2",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            },
+            {
+                "group": "3",
+                "state": "3",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "5"
+                    },
+                    {
+                        "input": "b",
+                        "to": "6"
+                    }
+                ]
+            },
+            {
+                "group": "4",
+                "state": "4",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "7"
+                    }
+                ]
+            },
+            {
+                "group": "5",
+                "state": "5",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "5"
+                    },
+                    {
+                        "input": "b",
+                        "to": "3"
+                    }
+                ]
+            },
+            {
+                "group": "6",
+                "state": "6",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "6"
+                    }
+                ]
+            },
+            {
+                "group": "7",
+                "state": "7",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "5"
+                    },
+                    {
+                        "input": "b",
+                        "to": "6"
+                    }
+                ]
+            },
+            {
+                "group": "5",
+                "state": "8",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "5"
+                    },
+                    {
+                        "input": "b",
+                        "to": "3"
+                    }
+                ]
+            },
+            {
+                "group": "2",
+                "state": "9",
+                "transitions": [
+                    {
+                        "input": "a",
+                        "to": "2"
+                    },
+                    {
+                        "input": "b",
+                        "to": "4"
+                    }
+                ]
+            }
+        ]
+    ]
+}

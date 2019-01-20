@@ -1,0 +1,34 @@
+{
+  "type": "DFA",
+  "initial_states": [
+    "a"
+  ],
+  "final_states": [
+    "a"
+  ],
+  "input_alphabet": [
+    "0"
+  ],
+  "states": [
+    "a",
+    "b",
+    "c"
+  ],
+  "transitions": [
+    {
+      "from": "a",
+      "input": "0",
+      "to": "a"
+    },
+    {
+      "from": "b",
+      "input": "0",
+      "to": "c"
+    },
+    {
+      "from": "c",
+      "input": "0",
+      "to": "b"
+    }
+  ]
+}

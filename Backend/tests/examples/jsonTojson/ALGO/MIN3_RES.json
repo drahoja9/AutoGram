@@ -1,0 +1,596 @@
+{
+  "result": {
+    "final_states": [
+      "A",
+      "B",
+      "F"
+    ],
+    "initial_states": [
+      "A"
+    ],
+    "input_alphabet": [
+      "0",
+      "1",
+      "2"
+    ],
+    "states": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "F"
+    ],
+    "transitions": [
+      {
+        "from": "A",
+        "input": "0",
+        "to": "D"
+      },
+      {
+        "from": "A",
+        "input": "1",
+        "to": "D"
+      },
+      {
+        "from": "A",
+        "input": "2",
+        "to": "D"
+      },
+      {
+        "from": "B",
+        "input": "0",
+        "to": "A"
+      },
+      {
+        "from": "B",
+        "input": "1",
+        "to": "B"
+      },
+      {
+        "from": "B",
+        "input": "2",
+        "to": "B"
+      },
+      {
+        "from": "C",
+        "input": "0",
+        "to": "A"
+      },
+      {
+        "from": "C",
+        "input": "1",
+        "to": "B"
+      },
+      {
+        "from": "C",
+        "input": "2",
+        "to": "B"
+      },
+      {
+        "from": "D",
+        "input": "0",
+        "to": "B"
+      },
+      {
+        "from": "D",
+        "input": "1",
+        "to": "F"
+      },
+      {
+        "from": "D",
+        "input": "2",
+        "to": "C"
+      },
+      {
+        "from": "F",
+        "input": "0",
+        "to": "B"
+      },
+      {
+        "from": "F",
+        "input": "1",
+        "to": "A"
+      },
+      {
+        "from": "F",
+        "input": "2",
+        "to": "B"
+      }
+    ],
+    "type": "DFA"
+  },
+  "steps": [
+    [
+      {
+        "group": "A",
+        "state": "A",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "C"
+          },
+          {
+            "input": "1",
+            "to": "C"
+          },
+          {
+            "input": "2",
+            "to": "C"
+          }
+        ]
+      },
+      {
+        "group": "A",
+        "state": "B",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "A"
+          }
+        ]
+      },
+      {
+        "group": "C",
+        "state": "C",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "A"
+          }
+        ]
+      },
+      {
+        "group": "C",
+        "state": "D",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "C"
+          }
+        ]
+      },
+      {
+        "group": "A",
+        "state": "E",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "A"
+          }
+        ]
+      },
+      {
+        "group": "A",
+        "state": "F",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "A"
+          }
+        ]
+      },
+      {
+        "group": "A",
+        "state": "G",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "A"
+          }
+        ]
+      },
+      {
+        "group": "C",
+        "state": "H",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "C"
+          }
+        ]
+      },
+      {
+        "group": "A",
+        "state": "J",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "A"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "group": "A",
+        "state": "A",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "D"
+          },
+          {
+            "input": "1",
+            "to": "D"
+          },
+          {
+            "input": "2",
+            "to": "D"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "B",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "C",
+        "state": "C",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "D",
+        "state": "D",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "B"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "C"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "E",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "F",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "B"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "G",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "D",
+        "state": "H",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "B"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "C"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "J",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "group": "A",
+        "state": "A",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "D"
+          },
+          {
+            "input": "1",
+            "to": "D"
+          },
+          {
+            "input": "2",
+            "to": "D"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "B",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "C",
+        "state": "C",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "D",
+        "state": "D",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "B"
+          },
+          {
+            "input": "1",
+            "to": "F"
+          },
+          {
+            "input": "2",
+            "to": "C"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "E",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "F",
+        "state": "F",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "B"
+          },
+          {
+            "input": "1",
+            "to": "A"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "G",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      },
+      {
+        "group": "D",
+        "state": "H",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "B"
+          },
+          {
+            "input": "1",
+            "to": "F"
+          },
+          {
+            "input": "2",
+            "to": "C"
+          }
+        ]
+      },
+      {
+        "group": "B",
+        "state": "J",
+        "transitions": [
+          {
+            "input": "0",
+            "to": "A"
+          },
+          {
+            "input": "1",
+            "to": "B"
+          },
+          {
+            "input": "2",
+            "to": "B"
+          }
+        ]
+      }
+    ]
+  ]
+}
