@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import { Icon, Row, Col } from 'antd';
 import StepTable from 'components/Results/StepTable';
 import GrammarView from 'components/Results/grammar';
+import {grammarTermsToString} from 'components/Results/grammar/stringify'
 //#endregion
 
 
@@ -66,23 +67,6 @@ const Result: React.SFC<{ result?: boolean }> = (props) => (
 );
 
 class CykController extends Controller<CYKRequest, CYKResponse> {
-  private getCellContent(input: any[]): string {
-    let result = "";
-    let first = true;
-    for (let item of input) {
-      if (first) {
-        first = false;
-      } else {
-        result += ",";
-      }
-      if (item.length <= 1) {
-        result += item;
-      } else {
-        result += `<${item}>`
-      }
-    }
-    return result;
-  }
 
   protected get headline() {
     return 'CYK';
@@ -137,9 +121,9 @@ class CykController extends Controller<CYKRequest, CYKResponse> {
                       <td key={`cyk_table_cell=${ridx}.${cidx}`}>
                         {
                           (ridx === 0 && cidx === this.props.result.step_table.length - 1) ?
-                            <HighlightDiv> {this.getCellContent(this.props.result.step_table[cidx][ridx])} </HighlightDiv>
+                            <HighlightDiv> {grammarTermsToString(this.props.result.step_table[cidx][ridx])} </HighlightDiv>
                             :
-                            this.props.result.step_table[cidx].length < ridx + 1 ? "---" : this.getCellContent(this.props.result.step_table[cidx][ridx])
+                            this.props.result.step_table[cidx].length < ridx + 1 ? "---" : grammarTermsToString(this.props.result.step_table[cidx][ridx])
                         }
                       </td>
                     )
