@@ -29,12 +29,22 @@ export interface RegexpInputProps {
  */
 class RegexpInput extends React.Component<RegexpInputProps> {
   private input: TextArea | null = null;
+  private cursor: number = 0;
 
   private handleInputSpecialCharacher(value: string) {
     if (this.input) {
       this.input.focus();
     }
     this.props.onChange(value);
+  }
+
+  private handleOnChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    this.cursor = e.currentTarget.selectionStart;
+    this.props.onChange(e.currentTarget.value)
+  }
+
+  public getCursor(): number {
+    return this.cursor;
   }
 
   public render() {
@@ -45,6 +55,7 @@ class RegexpInput extends React.Component<RegexpInputProps> {
             <SpecialChars
               value={this.props.value || ''}
               onChange={this.handleInputSpecialCharacher.bind(this)}
+              cursor={this.getCursor.bind(this)}
             />
           </Layout.Content>
         </Layout>
@@ -59,7 +70,9 @@ class RegexpInput extends React.Component<RegexpInputProps> {
                   maxRows: 16
                 }}
                 value={this.props.value}
-                onChange={(e) => this.props.onChange(e.currentTarget.value)}
+                onChange={(e) => { this.handleOnChange(e) }}
+                onClick={(e) => this.cursor = e.currentTarget.selectionStart}
+                onKeyUp={(e) => this.cursor = e.currentTarget.selectionStart}
               />
             </Monospaced>
           </Layout.Content>
