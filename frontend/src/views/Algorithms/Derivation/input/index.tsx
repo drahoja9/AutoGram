@@ -2,7 +2,8 @@
 import * as React from 'react';
 
 import RegexpInput, { RegexpInputValue } from 'components/Forms/Regexp'
-import ExtraStringInput, { HeaderStyle } from 'components/Forms/extraString';
+import ExtraStringInput from 'components/Forms/extraString';
+import { TextColor, LargeText } from 'components/Layout';
 
 import Controller, { InputDefaultProps } from 'components/AlgorithmView/InputView';
 
@@ -35,21 +36,24 @@ export default class DerivationController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Regexp derivation'; }
+  protected get description() { return 'Takes a Regular Expression and derivation string as an input.'; }
   protected get action() { return 'Derivate' }
   protected get content() {
     return (
       <div>
-        <HeaderStyle>Regexp to be derived:</HeaderStyle>
-        <RegexpInput
-          value={this.state.values}
-          onChange={this.handleChangeValue.bind(this)}
-        />
-        <ExtraStringInput
-          header={'Derivation string'}
-          value={this.state.derivationString}
-          onChange={this.handleChangeDerivationString.bind(this)}
-          specialChars={true}
-        />
+        <LargeText>
+          <TextColor className={'large-text'}>Regexp to be derived:</TextColor>
+          <RegexpInput
+            value={this.state.values}
+            onChange={this.handleChangeValue.bind(this)}
+          />
+          <ExtraStringInput
+            header={'Derivation string'}
+            value={this.state.derivationString}
+            onChange={this.handleChangeDerivationString.bind(this)}
+            specialChars={true}
+          />
+        </LargeText>
       </div>
     )
   }

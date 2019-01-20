@@ -14,7 +14,7 @@ export const routes: RouteProps[] = [
   {
     path: '/',
     exact: true,
-    component: Redirect('/vis')
+    component: Redirect('/cmp')
   },
   {
     path: '/vis',

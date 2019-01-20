@@ -23,6 +23,7 @@ export default class CFGReductionController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Context-free grammar reduction'; }
+  protected get description() { return 'Takes a Context-Free Grammar as an input.'; }
   protected get action() { return 'Reduce' }
   protected get content() {
     return (

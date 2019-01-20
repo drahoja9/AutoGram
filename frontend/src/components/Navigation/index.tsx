@@ -40,13 +40,18 @@ const Sider = styled(Layout.Sider)`
     display: none; 
   }
   .ant-menu-inline .ant-menu-item, .ant-menu-inline .ant-menu-submenu-title {
-    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    font-size: 20px;
     text-align: center;
     padding-right: 34px;
     padding-left: 34px !important;
+    margin: 0;
   }
   .ant-menu-submenu .ant-menu-item{
-    font-size: 15px;
+    font-size: 18px;
     padding-left: 34px !important;
   }
   .ant-menu-submenu-arrow{
@@ -95,7 +100,7 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
     </div>
     <Menu
       mode="inline" theme="dark"
-      defaultSelectedKeys={['/vis']}
+      defaultSelectedKeys={['/cmp']}
       defaultOpenKeys={
         getSelectedKeys(props.location.pathname).includes('/algo')
           ?
@@ -105,12 +110,6 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
       }
       selectedKeys={[getSelectedKeys(props.location.pathname)]}
     >
-      <Menu.Item key="/vis">
-        <NavLink to="/vis">
-          Visualization
-        </NavLink>
-      </Menu.Item>
-
       <Menu.Item key="/cmp">
         <NavLink to="/cmp">
           Comparison

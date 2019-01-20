@@ -1,8 +1,9 @@
 //#region imports
 import * as React from 'react';
 import GrammarInput, { GrammarInputValue } from 'components/Forms/Grammar';
-import ExtraStringInput, { HeaderStyle } from 'components/Forms/extraString';
+import ExtraStringInput from 'components/Forms/extraString';
 import Controller, { InputDefaultProps } from 'components/AlgorithmView/InputView';
+import { LargeText } from 'components/Layout';
 //#endregion
 
 //#region Component interfaces
@@ -31,22 +32,24 @@ export default class CykController extends Controller<InputState> {
   }
 
   protected get headline() { return 'CYK'; }
+  protected get description() { return 'Takes a Context-Free Grammar in Chomsky Normal Form and string as an input.'; }
   protected get action() { return 'Run CYK' }
   protected get content() {
     return (
       <div>
-        <HeaderStyle>Input grammar:</HeaderStyle>
-        <GrammarInput
-          value={this.state.values}
-          onChange={this.handleChange.bind(this)}
-        />
-        <ExtraStringInput
-          header={'String to check'}
-          value={this.state.cykString}
-          onChange={this.handleChangeExtraString.bind(this)}
-          specialChars={false}
-        />
-      </div>
+        <LargeText>
+          <GrammarInput
+            value={this.state.values}
+            onChange={this.handleChange.bind(this)}
+          />
+          <ExtraStringInput
+            header={'String to check'}
+            value={this.state.cykString}
+            onChange={this.handleChangeExtraString.bind(this)}
+            specialChars={false}
+          />
+        </LargeText>
+      </div >
     )
   }
 

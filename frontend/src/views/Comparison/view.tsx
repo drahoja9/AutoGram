@@ -1,8 +1,9 @@
 //#region imports
 import * as React from 'react';
-import { Layout } from 'antd';
+import { Layout, Popover } from 'antd';
 import styled from 'styled-components';
 import { TopHeader as Header } from 'components/Layout';
+import QuestionMark from 'components/question_mark.svg';
 //#endregion
 
 const { Content, Footer } = Layout;
@@ -10,6 +11,14 @@ const { Content, Footer } = Layout;
 //#region Styled
 const InputContent = styled(Content)`
   padding: 2em;
+`;
+const QuestionMarkSection = styled.div`
+  padding-top: 0.6em;
+  fill: darkgray;
+`;
+const HeaderWithTooltip = styled(Header)`
+  display: flex;
+  justify-content: space-between;
 `;
 //#endregion
 
@@ -21,18 +30,25 @@ export interface LayoutProps {
 //#endregion
 
 /**
- * Transformation page layout component.
+ * Comparison page layout component.
  */
 const View: React.SFC<LayoutProps> = (props) => (
   <Layout>
-    <Header>{ props.Header }</Header>
+    <HeaderWithTooltip>
+      <QuestionMarkSection>
+        <Popover placement='rightTop' content={'Comparing only finite automata, regular grammars and regular expressions.'} trigger='hover'>
+          <QuestionMark />
+        </Popover>
+      </QuestionMarkSection>
+      {props.Header}
+    </HeaderWithTooltip>
     <Layout>
       <InputContent>
-        { props.children }
+        {props.children}
       </InputContent>
     </Layout>
     <Footer>
-      { props.Controls }
+      {props.Controls}
     </Footer>
   </Layout>
 );

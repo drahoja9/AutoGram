@@ -17,7 +17,7 @@ const SectionCol = styled(Col)`
 
 const SectionHeadline = styled.h2`
   font-size: 2em;
-  color: #7D6F7F;
+  color: #707070;
 `
 const SectionContainer = styled.div`
   margin: 30px 0px;
@@ -34,7 +34,7 @@ const StepsContainer = styled.div`
   border-top: 1px solid #ccc;
 `
 
-const StepsCollapse = styled(Collapse) `
+const StepsCollapse = styled(Collapse)`
   background-color: rgba(0, 0, 0, 0);
   & > .ant-collapse-item > .ant-collapse-header{
     font-size: 2em;
@@ -53,7 +53,7 @@ const StepsCollapse = styled(Collapse) `
   }
 `
 
-const StepsPanel = styled(Collapse.Panel) `
+const StepsPanel = styled(Collapse.Panel)`
   border-style: none;
 `
 //#endregion
@@ -87,13 +87,13 @@ export default abstract class Controller<InputType, ResultType> extends React.Co
           <Row>
             <SectionCol span={12}>
               <SectionContainer>
-                <SectionHeadline>Input:</SectionHeadline>
+                <SectionHeadline>Input</SectionHeadline>
                 {this.inputContent}
               </SectionContainer>
             </SectionCol>
             <SectionCol span={12}>
               <SectionContainer className={"left-border"}>
-                <SectionHeadline>Result:</SectionHeadline>
+                <SectionHeadline>Result</SectionHeadline>
                 {this.resultContent}
               </SectionContainer>
             </SectionCol>
@@ -103,7 +103,7 @@ export default abstract class Controller<InputType, ResultType> extends React.Co
               <Row>
                 <StepsContainer>
                   <StepsCollapse bordered={false}>
-                    <StepsPanel key={"1"} header={"Steps:"}>
+                    <StepsPanel key={"1"} header={"Steps"}>
                       <Centered>
                         {this.stepsContent}
                       </Centered>

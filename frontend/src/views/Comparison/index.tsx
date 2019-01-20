@@ -102,7 +102,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
     } else {
       const message = 'Unexpected error';
       const description = 'There was an unexpected error. '
-      + 'Try repeating the anction and/or reviewing the syntax.';
+        + 'Try repeating the anction and/or reviewing the syntax.';
       this.presentError(message, description);
     }
   }
@@ -134,13 +134,13 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
         Header={this.renderHeader()}
         Controls={this.renderControls()}
       >
-        <Row>
-          <Col span={12}>
+        <Row type="flex" justify="space-around">
+          <Col span={10}>
             <LangInput
               onChange={(data: InputValue) => this.setState({ lhs: data, showResult: false })}
             />
           </Col>
-          <Col span={12}>
+          <Col span={10}>
             <LangInput
               onChange={(data: InputValue) => this.setState({ rhs: data, showResult: false })}
             />

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import SpecialChars from './Regexp/SpecialCharacters';
 import TextArea from 'antd/lib/input/TextArea';
+import { TextColor } from 'components/Layout';
 
 import { Monospaced } from './Regexp/index'
 //#endregion
@@ -13,6 +14,9 @@ import { Monospaced } from './Regexp/index'
 //#region Styled
 export const HeaderStyle = styled.div`
     font-size: 1.3em;
+`;
+export const ExtraMargin = styled.div`
+  margin-top: 75px;
 `;
 //#endregion
 
@@ -51,40 +55,42 @@ class ExtraStringInput extends React.Component<ExtraStringInputProps> {
   public render() {
     return (
       <Layout>
-        <HeaderStyle>{this.props.header}:</HeaderStyle>
-        <Layout>
-          <Layout.Content>
-            {
-              this.props.specialChars
-                ?
-                <SpecialChars
-                  value={this.props.value || ''}
-                  onChange={this.handleInputSpecialCharacher.bind(this)}
-                  cursor={this.getCursor.bind(this)}
+        <ExtraMargin>
+          <TextColor className={'large-text'}>{this.props.header}:</TextColor>
+          <Layout>
+            <Layout.Content>
+              {
+                this.props.specialChars
+                  ?
+                  <SpecialChars
+                    value={this.props.value || ''}
+                    onChange={this.handleInputSpecialCharacher.bind(this)}
+                    cursor={this.getCursor.bind(this)}
+                  />
+                  :
+                  null
+              }
+            </Layout.Content>
+          </Layout>
+          <Layout>
+            <Layout.Content>
+              <Monospaced>
+                <TextArea
+                  ref={(input) => this.input = input}
+                  placeholder="abc"
+                  autosize={{
+                    minRows: 1,
+                    maxRows: 3
+                  }}
+                  value={this.props.value}
+                  onChange={(e) => this.handleOnChange(e)}
+                  onClick={(e) => this.cursor = e.currentTarget.selectionStart}
+                  onKeyUp={(e) => this.cursor = e.currentTarget.selectionStart}
                 />
-                :
-                null
-            }
-          </Layout.Content>
-        </Layout>
-        <Layout>
-          <Layout.Content>
-            <Monospaced>
-              <TextArea
-                ref={(input) => this.input = input}
-                placeholder="abc"
-                autosize={{
-                  minRows: 1,
-                  maxRows: 3
-                }}
-                value={this.props.value}
-                onChange={(e) => this.handleOnChange(e)}
-                onClick={(e) => this.cursor = e.currentTarget.selectionStart}
-                onKeyUp={(e) => this.cursor = e.currentTarget.selectionStart}
-              />
-            </Monospaced>
-          </Layout.Content>
-        </Layout>
+              </Monospaced>
+            </Layout.Content>
+          </Layout>
+        </ExtraMargin>
       </Layout>
     );
   }
