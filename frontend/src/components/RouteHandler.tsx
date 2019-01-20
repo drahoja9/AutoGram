@@ -23,27 +23,27 @@ export interface RouteHandlerProps extends React.ClassAttributes<any> {
 const RouteHandler: React.SFC<RouteHandlerProps> = (props: RouteHandlerProps) => (
   // Bug in typings => Cannot return an array from a stateless component.
   <>
-  {
-    props.routes.map((route, i) => {
-      const parentProps = Object.assign({}, props) as any;
-      // Remove routes to prevent infinite loop
-      delete parentProps.routes;
+    {
+      props.routes.map((route, i) => {
+        const parentProps = Object.assign({}, props) as any;
+        // Remove routes to prevent infinite loop
+        delete parentProps.routes;
 
-      return (
-        <Route
-          key={i}
-          exact={route.exact}
-          strict={route.strict}
-          path={route.path}
-          render={(componentProps) => (
-            route.component ?
-              <route.component {...componentProps} {...parentProps} />
-              : undefined
-          )}
-        />
-      );
-    })
-  }
+        return (
+          <Route
+            key={i}
+            exact={route.exact}
+            strict={route.strict}
+            path={route.path}
+            render={(componentProps) => (
+              route.component ?
+                <route.component {...componentProps} {...parentProps} />
+                : undefined
+            )}
+          />
+        );
+      })
+    }
   </>
 );
 

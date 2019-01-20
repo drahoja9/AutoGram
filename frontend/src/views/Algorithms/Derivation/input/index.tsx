@@ -36,7 +36,7 @@ export default class DerivationController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Regexp derivation'; }
-  protected get description() { return ''; }
+  protected get description() { return 'Takes a Regular Expression and derivation string as an input.'; }
   protected get action() { return 'Derivate' }
   protected get content() {
     return (

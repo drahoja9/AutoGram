@@ -95,15 +95,9 @@ const Navigation: React.SFC<RouteComponentProps<{}>> = (props: RouteComponentPro
     </div>
     <Menu
       mode="inline" theme="dark"
-      defaultSelectedKeys={['/vis']}
+      defaultSelectedKeys={['/cmp']}
       selectedKeys={[getSelectedKeys(props.location.pathname)]}
     >
-      <Menu.Item key="/vis">
-        <NavLink to="/vis">
-          Visualization
-        </NavLink>
-      </Menu.Item>
-
       <Menu.Item key="/cmp">
         <NavLink to="/cmp">
           Comparison

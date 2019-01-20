@@ -23,7 +23,7 @@ export default class CnfController extends Controller<InputState> {
   }
 
   protected get headline() { return 'CNF Transformation'; }
-  protected get description() { return ''; }
+  protected get description() { return 'Takes a Context-Free Grammar as an input.'; }
   protected get action() { return 'Transform' }
   protected get content() {
     return (

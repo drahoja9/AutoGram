@@ -15,10 +15,12 @@ const InputContent = styled(Content)`
   padding: 2em;
 `;
 const QuestionMarkSection = styled.div`
-  text-align: right;
-  padding-top: 1.5em;
-  padding-right: 1.5em;
+  padding-top: 0.6em;
   fill: darkgray;
+`;
+const HeaderWithTooltip = styled(Header)`
+  display: flex;
+  justify-content: space-between;
 `;
 //#endregion
 
@@ -45,13 +47,15 @@ export default abstract class Controller<InputState> extends React.Component<Inp
   public render() {
     return (
       <Layout>
-        <Header><h1>{this.headline}</h1></Header>
-        <Layout>
+        <HeaderWithTooltip>
           <QuestionMarkSection>
-            <Popover placement='leftTop' content={this.description} trigger='hover'>
+            <Popover placement='rightTop' content={this.description} trigger='hover'>
               <QuestionMark />
             </Popover>
           </QuestionMarkSection>
+          <h1>{this.headline}</h1>
+        </HeaderWithTooltip>
+        <Layout>
           <InputContent>
             {this.content}
           </InputContent>

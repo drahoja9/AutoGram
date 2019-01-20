@@ -23,7 +23,7 @@ export default class CFGEpsRemovalController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Context-free grammar epsilon removal'; }
-  protected get description() { return ''; }
+  protected get description() { return 'Takes a Context-Free Grammar as an input.'; }
   protected get action() { return 'Remove' }
   protected get content() {
     return (

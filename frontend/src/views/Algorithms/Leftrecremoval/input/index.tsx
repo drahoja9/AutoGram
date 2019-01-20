@@ -23,7 +23,7 @@ export default class LeftrecremovalController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Left Recursion Removal'; }
-  protected get description() { return 'Takes a Context-Free Grammar in Chomsky Normal Form as an input.'; }
+  protected get description() { return 'Takes a Context-Free Grammar as an input.'; }
   protected get action() { return 'Remove' }
   protected get content() {
     return (

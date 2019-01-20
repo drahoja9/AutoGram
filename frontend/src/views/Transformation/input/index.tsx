@@ -19,10 +19,12 @@ const InputContent = styled(Content)`
   padding: 2em;
 `;
 const QuestionMarkSection = styled.div`
-  text-align: right;
-  padding-top: 1.5em;
-  padding-right: 1.5em;
+  padding-top: 0.6em;
   fill: darkgray;
+`;
+const HeaderWithTooltip = styled(Header)`
+  display: flex;
+  justify-content: space-between;
 `;
 //#endregion
 
@@ -44,13 +46,15 @@ export interface TransformationInputProps extends InputState {
 
 const TransformationInput: React.SFC<TransformationInputProps> = (props) => (
   <Layout>
-    <Header><h1>Transformation</h1></Header>
-    <Layout>
+    <HeaderWithTooltip>
       <QuestionMarkSection>
-        <Popover placement='leftTop' content={'Transformating only from/to finite automata, regular grammars and regular expressions.'} trigger='hover'>
+        <Popover placement='rightTop' content={'Comparing only finite automata, regular grammars and regular expressions.'} trigger='hover'>
           <QuestionMark />
         </Popover>
       </QuestionMarkSection>
+      <h1>Transformation</h1>
+    </HeaderWithTooltip>
+    <Layout>
       <InputContent>
         <LangInput
           defaultValue={props.defaultValue}
