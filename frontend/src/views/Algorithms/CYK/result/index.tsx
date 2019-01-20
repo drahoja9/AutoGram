@@ -75,7 +75,7 @@ class CykController extends Controller<CYKRequest, CYKResponse> {
       } else {
         result += ",";
       }
-      if (item.length <= 1 || (item.length === 2 && item[1] === "'")) {
+      if (item.length <= 1) {
         result += item;
       } else {
         result += `<${item}>`
