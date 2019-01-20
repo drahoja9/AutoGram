@@ -3,6 +3,7 @@ import { validateCNF, validateExtraString } from 'lib/validate';
 import { assembleCNF } from 'lib/assemble';
 import { GrammarInputValue } from 'components/Forms/Grammar';
 import { CYKRequest } from 'lib/types';
+import { trimWhitespace } from 'lib/assemble/common';
 //#endregion
 
 interface Data {
@@ -21,17 +22,10 @@ interface Data {
  * @return A parsed input, which corresponds to `CFG` object.
  */
 export function validate(data: Data): CYKRequest {
-  const secondParameter = data.cykString;
   const grammar = assembleCNF({ values: data.values })
   validateCNF(grammar);
 
-  let cykString = '';
-  let whiteSpace = [' ', '\t', '\n'];
-  for (const char of secondParameter) {
-    if (whiteSpace.indexOf(char) === -1) {
-      cykString += char;
-    }
-  }
+  const cykString = trimWhitespace(data.cykString);
   validateExtraString(cykString, 'CYK string')
 
   return { grammar: grammar, cyk_string: cykString };
