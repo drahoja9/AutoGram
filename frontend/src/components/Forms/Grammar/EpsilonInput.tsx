@@ -1,17 +1,23 @@
 //#region imports
 import * as React from 'react';
 import { Row, Button } from 'antd';
-import { GrammarInputProps } from './index';
+import { GrammarInputValue } from '.';
 //#endregion
+
+interface EpsilonProps {
+  onChange: (value: GrammarInputValue) => any;
+  value: any;
+  cursor: () => number;
+}
 
 /**
  * Renders input for special characters.
  */
-const Characters: React.SFC<GrammarInputProps> = (props) => (
+const Characters: React.SFC<EpsilonProps> = (props) => (
   <Row>
     <Button onClick={() => props.onChange({
       ...props.value,
-      ['rules']: props.value.rules + 'ε',
+      ['rules']: props.value.rules.slice(0, props.cursor()) + 'ε' + props.value.rules.slice(props.cursor())
     })}>
       ε
     </Button>
