@@ -23,6 +23,7 @@ export default class MinimizationController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Minimization'; }
+  protected get description() { return 'Takes a Deterministic Finite Automaton as an input.'; }
   protected get action() { return 'Minimize' }
   protected get content() {
     return (

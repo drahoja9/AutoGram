@@ -1,6 +1,6 @@
 //#region imports
 import * as React from 'react';
-import { Layout } from 'antd';
+import { Layout, Popover } from 'antd';
 import styled from 'styled-components';
 
 import { TopHeader as Header } from 'components/Layout';
@@ -9,6 +9,7 @@ import LangInput, {
   ValueStore
 } from 'components/LangInput';
 import Controls from './components/controls';
+import QuestionMark from 'components/question_mark.svg';
 //#endregion
 
 const { Content, Footer } = Layout;
@@ -16,6 +17,12 @@ const { Content, Footer } = Layout;
 //#region Styled
 const InputContent = styled(Content)`
   padding: 2em;
+`;
+const QuestionMarkSection = styled.div`
+  text-align: right;
+  padding-top: 1.5em;
+  padding-right: 1.5em;
+  fill: darkgray;
 `;
 //#endregion
 
@@ -39,6 +46,11 @@ const TransformationInput: React.SFC<TransformationInputProps> = (props) => (
   <Layout>
     <Header><h1>Transformation</h1></Header>
     <Layout>
+      <QuestionMarkSection>
+        <Popover placement='leftTop' content={'Transformating only from/to finite automata, regular grammars and regular expressions.'} trigger='hover'>
+          <QuestionMark />
+        </Popover>
+      </QuestionMarkSection>
       <InputContent>
         <LangInput
           defaultValue={props.defaultValue}

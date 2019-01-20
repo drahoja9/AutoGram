@@ -31,6 +31,7 @@ export default class CykController extends Controller<InputState> {
   }
 
   protected get headline() { return 'CYK'; }
+  protected get description() { return 'Takes Context-Free Grammar in Chomsky Normal Form as an input.'; }
   protected get action() { return 'Run CYK' }
   protected get content() {
     return (

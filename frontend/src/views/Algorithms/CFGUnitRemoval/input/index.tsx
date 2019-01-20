@@ -23,6 +23,7 @@ export default class CFGUnitRemovalController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Context-free grammar unit rules removal'; }
+  protected get description() { return ''; }
   protected get action() { return 'Remove' }
   protected get content() {
     return (

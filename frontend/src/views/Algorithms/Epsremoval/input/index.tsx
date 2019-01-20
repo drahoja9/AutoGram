@@ -23,6 +23,7 @@ export default class EpsremovalController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Elimination of ε-transitions'; }
+  protected get description() { return 'Takes an Epsilon Non-deterministic Finite Automaton as an input.'; }
   protected get action() { return 'Eliminate' }
   protected get content() {
     return (

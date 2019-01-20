@@ -23,6 +23,7 @@ export default class DeterminizationController extends Controller<InputState> {
   }
 
   protected get headline() { return 'Determinization'; }
+  protected get description() { return 'Takes a Non-deterministic (epsilon-free) Finite Automaton as an input.'; }
   protected get action() { return 'Determinize' }
   protected get content() {
     return (

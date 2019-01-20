@@ -23,12 +23,13 @@ export default class CnfController extends Controller<InputState> {
   }
 
   protected get headline() { return 'CNF Transformation'; }
+  protected get description() { return ''; }
   protected get action() { return 'Transform' }
   protected get content() {
     return (
       <GrammarInput
-        value = {this.state.values}
-        onChange = {this.handleChange.bind(this)}
+        value={this.state.values}
+        onChange={this.handleChange.bind(this)}
       />
     )
   }
