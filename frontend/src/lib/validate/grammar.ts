@@ -1,7 +1,7 @@
 //#region imports
-import {CFG, GR, RRG, CNF} from 'lib/types';
-import {allowedSymbols} from 'lib/validate';
-import { GrammarExceptions as GR_Error} from 'lib/validate';
+import { CFG, GR, RRG, CNF } from 'lib/types';
+import { allowedSymbols } from 'lib/validate';
+import { GrammarExceptions as GR_Error } from 'lib/validate';
 //#endregion
 
 /**
@@ -14,22 +14,22 @@ import { GrammarExceptions as GR_Error} from 'lib/validate';
  * @param nonterminal_alphabet List of non-terminal alphabet symbols
  * @param terminal_alphabet List of terminal alphabet symbols
  */
-function contextFreeRulesCheck(rules: any[], nonterminal_alphabet: string[], terminal_alphabet: string[]){
+function contextFreeRulesCheck(rules: any[], nonterminal_alphabet: string[], terminal_alphabet: string[]) {
   //each rule's left side must be one non-terminal character
   //each rule's right side must not be empty and must consist of array of combinantion of terminal and nonterminal symbols or of only null
-  const symbol_array : string[] = nonterminal_alphabet.concat(terminal_alphabet);
+  const symbol_array: string[] = nonterminal_alphabet.concat(terminal_alphabet);
   for (let rule of rules) {
-    if (nonterminal_alphabet.indexOf(rule.from) === -1){
+    if (nonterminal_alphabet.indexOf(rule.from) === -1) {
       throw new GR_Error.RuleFromNotDefined(rule.from);
     }
-    if (rule.to.length === 0){
+    if (rule.to.length === 0) {
       throw new GR_Error.CFGRuleToZeroLength();
     }
-    if (rule.to.length === 1 && rule.to[0] === null){
+    if (rule.to.length === 1 && rule.to[0] === null) {
       continue;
     } else {
-      for (let element of rule.to){
-        if (symbol_array.indexOf(element) === -1){
+      for (let element of rule.to) {
+        if (symbol_array.indexOf(element) === -1) {
           throw new GR_Error.CFGRuleToNotDefined(rule.from, rule.to, element);
         }
       }
@@ -48,20 +48,20 @@ function contextFreeRulesCheck(rules: any[], nonterminal_alphabet: string[], ter
  * @param nonterminal_alphabet List of non-terminal alphabet symbols
  * @param terminal_alphabet List of terminal alphabet symbols
  */
-function regularRulesCheck(rules: any[], nonterminal_alphabet: string[], terminal_alphabet: string[]){
+function regularRulesCheck(rules: any[], nonterminal_alphabet: string[], terminal_alphabet: string[]) {
   //each rule's left side must be one non-terminal character
   //each rule's right side must be either one terminal character or one terminal and one nonterminal character
-  for (let rule of rules){
-    if (nonterminal_alphabet.indexOf(rule.from) === -1){
+  for (let rule of rules) {
+    if (nonterminal_alphabet.indexOf(rule.from) === -1) {
       throw new GR_Error.RuleFromNotDefined(rule.from);
     }
-    if (rule.to.length === 1 && rule.to[0] === null){
+    if (rule.to.length === 1 && rule.to[0] === null) {
       continue;
     }
-    const typeOne : boolean = (rule.to.length === 1 && terminal_alphabet.indexOf(rule.to[0]) !== -1);
-    const typeTwo : boolean = (rule.to.length === 2 && terminal_alphabet.indexOf(rule.to[0]) !== -1
-                              && nonterminal_alphabet.indexOf(rule.to[1]) !== -1);
-    if (!typeOne && !typeTwo){
+    const typeOne: boolean = (rule.to.length === 1 && terminal_alphabet.indexOf(rule.to[0]) !== -1);
+    const typeTwo: boolean = (rule.to.length === 2 && terminal_alphabet.indexOf(rule.to[0]) !== -1
+      && nonterminal_alphabet.indexOf(rule.to[1]) !== -1);
+    if (!typeOne && !typeTwo) {
       throw new GR_Error.RGRuleToInvalid(rule.from, rule.to);
     }
   }
@@ -78,20 +78,20 @@ function regularRulesCheck(rules: any[], nonterminal_alphabet: string[], termina
  * @param nonterminal_alphabet List of non-terminal alphabet symbols
  * @param terminal_alphabet List of terminal alphabet symbols
  */
-function chomskyRulesCheck(rules: any[], nonterminal_alphabet: string[], terminal_alphabet: string[]){
+function chomskyRulesCheck(rules: any[], nonterminal_alphabet: string[], terminal_alphabet: string[]) {
   //each rule's left side must be one non-terminal character
   //each rule's right side must be either one terminal character or two nonterminal characters
   for (let rule of rules) {
-    if (nonterminal_alphabet.indexOf(rule.from) === -1){
+    if (nonterminal_alphabet.indexOf(rule.from) === -1) {
       throw new GR_Error.RuleFromNotDefined(rule.from);
     }
-    if (rule.to.length === 1 && rule.to[0] === null){
+    if (rule.to.length === 1 && rule.to[0] === null) {
       continue;
     }
-    const typeOne : boolean = (rule.to.length === 1 && terminal_alphabet.indexOf(rule.to[0]) !== -1);
-    const typeTwo : boolean = (rule.to.length === 2 && nonterminal_alphabet.indexOf(rule.to[0]) !== -1
-                              && nonterminal_alphabet.indexOf(rule.to[1]) !== -1);
-    if (!typeOne && !typeTwo){
+    const typeOne: boolean = (rule.to.length === 1 && terminal_alphabet.indexOf(rule.to[0]) !== -1);
+    const typeTwo: boolean = (rule.to.length === 2 && nonterminal_alphabet.indexOf(rule.to[0]) !== -1
+      && nonterminal_alphabet.indexOf(rule.to[1]) !== -1);
+    if (!typeOne && !typeTwo) {
       throw new GR_Error.CNFRuleToInvalid(rule.from, rule.to);
     }
   }
@@ -106,22 +106,22 @@ function chomskyRulesCheck(rules: any[], nonterminal_alphabet: string[], termina
  * @param rules List of rules to be checked
  * @param initial_symbol Initial symbol of the grammar
  */
-function epsilonCheck(rules: any[], initial_symbol: string){
+function epsilonCheck(rules: any[], initial_symbol: string) {
   //if it is possible to rewrite initial symbol to epsilon, then initial symbol must not be on right side of any rule
   //a) can any nonterminal be rewritten to epsilon?
-  const allRewritableToNull : any[] = rules.filter(rule => rule.to.length === 1 && rule.to[0] === null);
-  if (allRewritableToNull.length === 0){
+  const allRewritableToNull: any[] = rules.filter(rule => rule.to.length === 1 && rule.to[0] === null);
+  if (allRewritableToNull.length === 0) {
     return;
   }
   //b) epsilon must not be anywhere else, but initial_symbol
-  for (let rule of allRewritableToNull){
-    if (rule.from !== initial_symbol){
+  for (let rule of allRewritableToNull) {
+    if (rule.from !== initial_symbol) {
       throw new GR_Error.NonInitialToEpsilon(rule.from);
     }
   }
   //c) is initial symbol on the right side of any rule?
-  for (let rule of rules){
-    if (rule.to.indexOf(initial_symbol) !== -1){
+  for (let rule of rules) {
+    if (rule.to.indexOf(initial_symbol) !== -1) {
       throw new GR_Error.EpsilonAndInitialOnRhs();
     }
   }
@@ -138,41 +138,41 @@ function epsilonCheck(rules: any[], initial_symbol: string){
  *  - initial symbol is defined in non-terminal symbols
  * @param grammar Grammar to be validated
  */
-function validateGrammar(grammar: GR){
+function validateGrammar(grammar: GR) {
   //non-terminal alphabet must not be empty
   if (grammar.nonterminal_alphabet.length === 0) {
     throw new GR_Error.NonTerminalsEmpty();
   }
   //non-terminal symbols must consist only of allowed symbols
-  for (let symbol of grammar.nonterminal_alphabet){
-    if (symbol.length < 1){
+  for (let symbol of grammar.nonterminal_alphabet) {
+    if (symbol.length < 1) {
       throw new GR_Error.NonTerminalZeroLength();
     }
-    for (let i = 0; i < symbol.length ; i++){
-      if (!allowedSymbols.has(symbol.charAt(i))){
+    for (let i = 0; i < symbol.length; i++) {
+      if (!allowedSymbols.has(symbol.charAt(i))) {
         throw new GR_Error.NotAllowedChar("non-terminal alphabet", symbol);
       }
     }
   }
   //terminal symbols must consist only of one allowed character
-  for (let symbol of grammar.terminal_alphabet){
-    if (symbol.length !== 1){
+  for (let symbol of grammar.terminal_alphabet) {
+    if (symbol.length !== 1) {
       throw new GR_Error.TerminalNotChar(symbol);
     }
-    if (!allowedSymbols.has(symbol)){
+    if (!allowedSymbols.has(symbol)) {
       throw new GR_Error.NotAllowedChar("terminal alphabet", symbol);
     }
   }
   //each terminal and non-terminal symbol name must be unique
-  const symbolArray : string[] = grammar.nonterminal_alphabet.concat(grammar.terminal_alphabet);
-  for (let symbol of symbolArray){
-    const res : number = symbolArray.filter(element => element === symbol).length;
-    if (res !== 1){
+  const symbolArray: string[] = grammar.nonterminal_alphabet.concat(grammar.terminal_alphabet);
+  for (let symbol of symbolArray) {
+    const res: number = symbolArray.filter(element => element === symbol).length;
+    if (res !== 1) {
       throw new GR_Error.NotUniqueNames(symbol);
     }
   }
   //initial symbol must be defined in non-terminal symbols
-  if (grammar.nonterminal_alphabet.indexOf(grammar.initial_symbol) === -1){
+  if (grammar.nonterminal_alphabet.indexOf(grammar.initial_symbol) === -1) {
     throw new GR_Error.InitialSymbolNotDefined(grammar.initial_symbol);
   }
 }
@@ -181,7 +181,7 @@ function validateGrammar(grammar: GR){
  * Function to validate context-free grammar. Validates it's core strucure and it's rules structure.
  * @param grammar Context-free grammar (CFG) to be validated
  */
-export function validateCFG(grammar: CFG) : boolean{
+export function validateCFG(grammar: CFG): boolean {
   //check basic structure of grammar
   validateGrammar(grammar);
   //check rules
@@ -193,7 +193,7 @@ export function validateCFG(grammar: CFG) : boolean{
  * Function to validate (right) regular grammar. Validates it's core strucure and it's rules structure and correct usage of epsilon.
  * @param grammar Right regular grammar (RRG) to be validated
  */
-export function validateRRG(grammar: RRG) : boolean{
+export function validateRRG(grammar: RRG): boolean {
   //check basic structure of grammar
   validateGrammar(grammar);
   //check rules
@@ -207,7 +207,7 @@ export function validateRRG(grammar: RRG) : boolean{
  * Function to validate grammar in CNF. Validates it's core strucure and it's rules structure and correct usage of epsilon.
  * @param grammar Grammar in CNF (CNF) to be validated
  */
-export function validateCNF(grammar: CNF) : boolean {
+export function validateCNF(grammar: CNF): boolean {
   //check basic structure of grammar
   validateGrammar(grammar);
   //check rules

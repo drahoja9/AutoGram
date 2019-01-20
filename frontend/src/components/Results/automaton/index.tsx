@@ -7,6 +7,7 @@ import { Centered } from 'components/Layout';
 import StateIndicator from './StateIndicator'
 
 import {
+  statesToString,
   automatonTransitionsToString,
   TransitionMap
 } from './stringify';
@@ -66,7 +67,7 @@ const StateWrapper = styled.div`
 //#region Component
 export interface AutomatonViewProps {
   value: FA;
-  isEpsilon? : boolean;
+  isEpsilon?: boolean;
 }
 //#endregion
 
@@ -81,22 +82,23 @@ const TableHead: React.SFC<AutomatonViewProps> = (props) => (
         )
     }
     {
-      props.isEpsilon ? 
-      <td key={'eps'}>ε</td>
-      :
-      null
+      props.isEpsilon ?
+        <td key={'eps'}>ε</td>
+        :
+        null
     }
   </tr></thead>
 );
 
 const TableBody: React.SFC<AutomatonViewProps & { transitions: TransitionMap }> = (props) => {
-  const initial = new Set(props.value.initial_states);
-  const final = new Set(props.value.final_states);
+  const initial = new Set(statesToString(props.value.initial_states));
+  const final = new Set(statesToString(props.value.final_states));
+  const states = statesToString(props.value.states);
 
   return (
     <tbody>
       {
-        props.value.states.map((state, idxi) => (
+        states.map((state, idxi) => (
           <tr key={`${idxi}`}>
             {
               ...[
@@ -122,10 +124,10 @@ const TableBody: React.SFC<AutomatonViewProps & { transitions: TransitionMap }> 
               )
             }
             {
-              props.isEpsilon ? 
-              <td key={`${idxi}.eps`}>{props.transitions[state]['ε']}</td>
-              :
-              null
+              props.isEpsilon ?
+                <td key={`${idxi}.eps`}>{props.transitions[state]['ε']}</td>
+                :
+                null
             }
           </tr>
         ))

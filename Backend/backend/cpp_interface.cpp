@@ -207,6 +207,9 @@ void ALT_Interface::convert(std::string input, std::string from, std::string to)
 			    return;
             }
         } else if (from == "re") {
+             this->algorithms(input, REGEXP_TRIM, nullptr);
+            input = this->m_ResultStruct->t_Result;
+            
             if (to == "fa") {
                 algorithm = "regexp::convert::ToAutomatonGlushkov";
             } else if (to == "rg") {

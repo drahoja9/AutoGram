@@ -1,5 +1,5 @@
 //#region imports
-import { validateCNF } from 'lib/validate';
+import { validateCNF, validateExtraString } from 'lib/validate';
 import { assembleCNF } from 'lib/assemble';
 import { GrammarInputValue } from 'components/Forms/Grammar';
 import { CYKRequest } from 'lib/types';
@@ -21,11 +21,19 @@ interface Data {
  * @return A parsed input, which corresponds to `CFG` object.
  */
 export function validate(data: Data): CYKRequest {
-    const grammar = assembleCNF({values: data.values})
-    validateCNF(grammar);
+  const secondParameter = data.cykString;
+  const grammar = assembleCNF({ values: data.values })
+  validateCNF(grammar);
 
-    //validate string!!
-    
-    return {grammar: grammar, cyk_string: data.cykString};
+  let cykString = '';
+  let whiteSpace = [' ', '\t', '\n'];
+  for (const char of secondParameter) {
+    if (whiteSpace.indexOf(char) === -1) {
+      cykString += char;
+    }
+  }
+  validateExtraString(cykString, 'CYK string')
+
+  return { grammar: grammar, cyk_string: cykString };
 }
 

@@ -72,7 +72,7 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
     }
   }
 
-  private getSource(): TransformationTarget {
+  private getTarget(): TransformationTarget {
     switch (this.state.target) {
       case InputType.Automaton: return TransformationTarget.FA;
       case InputType.Grammar: return TransformationTarget.RRG;
@@ -88,10 +88,9 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
       const { selected, values } = this.state;
       const value = validate({ selected, values });
 
-
-      this.setState({ inputValue: value }, () => 
+      this.setState({ inputValue: value }, () =>
         this.props.onTransform({
-          target: this.getSource(),
+          target: this.getTarget(),
           source: value
         }));
     } catch (err) {
@@ -143,11 +142,11 @@ class Controller extends React.Component<ControllerProps, ControllerState> {
     if (this.props.meta.pending) {
       this.props.onCancelTransform();
     }
-    this.setState({ target });
+    this.setState({ target: target });
   }
 
   private handleValueChange(change: InputState) {
-    this.setState(change);
+    this.setState({ values: change.values, selected: change.selected });
   }
 
   public render() {

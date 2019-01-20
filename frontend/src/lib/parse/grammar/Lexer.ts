@@ -105,62 +105,62 @@ export class Lexer extends LexerBase<TokType, Token> {
 
       // Perform lexing
       switch (tok) {
-      case '\0':
-        // Check if we're at the end of the buffer.
-        if (this.buff.length !== 0) {
-          // If we're not, consider nul-character as a whitespace.
+        case '\0':
+          // Check if we're at the end of the buffer.
+          if (this.buff.length !== 0) {
+            // If we're not, consider nul-character as a whitespace.
+            break;
+          }
+          return this.formToken(TokType.Eof);
+
+        case ' ':
+        case '\t':
+        case '\r':
+          // Ignore whitespace
           break;
-        }
-        return this.formToken(TokType.Eof);
 
-      case ' ':
-      case '\t':
-      case '\r':
-        // Ignore whitespace
-        break;
+        case '\n':
+          return this.formToken(TokType.Newline);
 
-      case '\n':
-        return this.formToken(TokType.Newline);
+        case '<':
+          return this.lexMulticharIdent();
 
-      case '<':
-        return this.lexMulticharIdent();
+        case '-':
+          if (this.curr === '>') {
+            this.advance();
+            return this.formToken(TokType.Arrow);
+          }
+          return this.formToken(TokType.Ident, tok);
 
-      case '-':
-        if (this.curr === '>') {
-          this.advance();
-          return this.formToken(TokType.Arrow);
-        }
-        return this.formToken(TokType.Ident, tok);
+        case '|':
+          return this.formToken(TokType.Pipe);
 
-      case '|':
-        return this.formToken(TokType.Pipe);
+        case ',':
+          return this.formToken(TokType.Comma);
 
-      case ',':
-        return this.formToken(TokType.Comma);
+        case 'ε':
+          return this.formToken(TokType.Epsilon);
 
-      case 'ε':
-        return this.formToken(TokType.Epsilon);
+        // Ident
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+        case 'a': case 'b': case 'c': case 'd': case 'e':
+        case 'f': case 'g': case 'h': case 'i': case 'j':
+        case 'k': case 'l': case 'm': case 'n': case 'o':
+        case 'p': case 'q': case 'r': case 's': case 't':
+        case 'u': case 'v': case 'w': case 'x': case 'y':
+        case 'z':
+        case 'A': case 'B': case 'C': case 'D': case 'E':
+        case 'F': case 'G': case 'H': case 'I': case 'J':
+        case 'K': case 'L': case 'M': case 'N': case 'O':
+        case 'P': case 'Q': case 'R': case 'S': case 'T':
+        case 'U': case 'V': case 'W': case 'X': case 'Y':
+        case 'Z': case '_': case '\'':
+          return this.formToken(TokType.Ident, tok);
 
-      // Ident
-      case '0': case '1': case '2': case '3': case '4':
-      case '5': case '6': case '7': case '8': case '9':
-      case 'a': case 'b': case 'c': case 'd': case 'e':
-      case 'f': case 'g': case 'h': case 'i': case 'j':
-      case 'k': case 'l': case 'm': case 'n': case 'o':
-      case 'p': case 'q': case 'r': case 's': case 't':
-      case 'u': case 'v': case 'w': case 'x': case 'y':
-      case 'z':
-      case 'A': case 'B': case 'C': case 'D': case 'E':
-      case 'F': case 'G': case 'H': case 'I': case 'J':
-      case 'K': case 'L': case 'M': case 'N': case 'O':
-      case 'P': case 'Q': case 'R': case 'S': case 'T':
-      case 'U': case 'V': case 'W': case 'X': case 'Y':
-      case 'Z': case '_': case '\'':
-        return this.formToken(TokType.Ident, tok);
-
-      // Error
-      default:
-        return this.formToken(TokType.Unknown, tok);
+        // Error
+        default:
+          return this.formToken(TokType.Unknown, tok);
       }
     }
   }
@@ -178,51 +178,51 @@ export class Lexer extends LexerBase<TokType, Token> {
 
     while (true) {
       switch (this.curr) {
-      case '\0':
-        // Check if we're at the end of the buffer.
-        if (this.buff.length !== 0) {
-          // If we're not, consider nul-character as a whitespace.
+        case '\0':
+          // Check if we're at the end of the buffer.
+          if (this.buff.length !== 0) {
+            // If we're not, consider nul-character as a whitespace.
+            break;
+          }
+          return this.formToken(TokType.Unknown, tok);
+
+        case ' ':
+        case '\t':
+        case '\r':
+        case '\n':
+          // Ignore whitespace
           break;
-        }
-        return this.formToken(TokType.Unknown, tok);
 
-      case ' ':
-      case '\t':
-      case '\r':
-      case '\n':
-        // Ignore whitespace
-        break;
+        case '>':
+          this.advance();
+          return this.formToken(TokType.Ident, tok);
 
-      case '>':
-        this.advance();
-        return this.formToken(TokType.Ident, tok);
-
-      case '0': case '1': case '2': case '3': case '4':
-      case '5': case '6': case '7': case '8': case '9':
-      case 'a': case 'b': case 'c': case 'd': case 'e':
-      case 'f': case 'g': case 'h': case 'i': case 'j':
-      case 'k': case 'l': case 'm': case 'n': case 'o':
-      case 'p': case 'q': case 'r': case 's': case 't':
-      case 'u': case 'v': case 'w': case 'x': case 'y':
-      case 'z':
-      case 'A': case 'B': case 'C': case 'D': case 'E':
-      case 'F': case 'G': case 'H': case 'I': case 'J':
-      case 'K': case 'L': case 'M': case 'N': case 'O':
-      case 'P': case 'Q': case 'R': case 'S': case 'T':
-      case 'U': case 'V': case 'W': case 'X': case 'Y':
-      case 'Z': case '_': case '-': case '\'':
-        tok += this.curr;
-        break;
-
-      default:
-        while (this.curr !== '>' && this.buff.length !== 0) {
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':
+        case 'a': case 'b': case 'c': case 'd': case 'e':
+        case 'f': case 'g': case 'h': case 'i': case 'j':
+        case 'k': case 'l': case 'm': case 'n': case 'o':
+        case 'p': case 'q': case 'r': case 's': case 't':
+        case 'u': case 'v': case 'w': case 'x': case 'y':
+        case 'z':
+        case 'A': case 'B': case 'C': case 'D': case 'E':
+        case 'F': case 'G': case 'H': case 'I': case 'J':
+        case 'K': case 'L': case 'M': case 'N': case 'O':
+        case 'P': case 'Q': case 'R': case 'S': case 'T':
+        case 'U': case 'V': case 'W': case 'X': case 'Y':
+        case 'Z': case '_': case '-': case '\'':
           tok += this.curr;
-          this.advance();
-        }
-        if (this.curr === '>') {
-          this.advance();
-        }
-        return this.formToken(TokType.Unknown, tok);
+          break;
+
+        default:
+          while (this.curr !== '>' && this.buff.length !== 0) {
+            tok += this.curr;
+            this.advance();
+          }
+          if (this.curr === '>') {
+            this.advance();
+          }
+          return this.formToken(TokType.Unknown, tok);
       }
 
       // Advance the internal buffer.
