@@ -783,7 +783,7 @@ class XtJConverter:
         return result
 
     @staticmethod
-    def _create_generates_epsilon(generates_epsilon: bool, grammar_dict):
+    def _create_generates_epsilon(generates_epsilon: bool, grammar_dict, allow_unit: bool):
         """
 
         Converts XML structure of generatesEpsilon to internal structure without it. Checks generatesEpsilon parameter
@@ -794,6 +794,7 @@ class XtJConverter:
         :param generates_epsilon: `bool` parameter that states, if the grammar given is able to rewrite initial \
         symbol to epsilon
         :param grammar_dict: `dict` representation of grammar
+        :param allow_unit `bool` true if unit rules should be generated from rewriting initial symbol to epsilon
 
         """
         if not generates_epsilon:
@@ -821,7 +822,8 @@ class XtJConverter:
         modified_rules = []
         for rule in rules_with_initial_symbol:
             new_to = [symbol for symbol in rule['to'] if symbol != initial_symbol]
-            modified_rules.append({'from': rule['from'], 'to': new_to})
+            if allow_unit or len(new_to) > 1:
+                modified_rules.append({'from': rule['from'], 'to': new_to})
         # add them only if they are not present yet and are not empty
         rules_to_add = [rule for rule in modified_rules if rule not in rules and rule['to'] != []]
         rules.extend(rules_to_add)
@@ -982,13 +984,14 @@ class XtJConverter:
         return result_dict
 
     @staticmethod
-    def _xml_to_json_grammar(root: ET.Element) -> dict:
+    def _xml_to_json_grammar(root: ET.Element, allow_unit: bool = True) -> dict:
         """
 
         Converts given ElementTree structure to a `dictionary`, that can be turned into JSON file.
         ElementTree and `dictionary` both represent the same grammar.
 
         :param root: root element of ElementTree to be converted
+        :param allow_unit `bool` true if unit rules should be generated from rewriting initial symbol to epsilon
 
         :return: `dictionary` representation of grammar
 
@@ -1020,7 +1023,7 @@ class XtJConverter:
         # solve generates epsilon
         if g_type == ObjectTypes.RG or g_type == ObjectTypes.CNF or g_type == ObjectTypes.EpsilonFreeCFG:
             generates_epsilon = root.findall('generatesEpsilon')[0][0].tag == 'true'
-            XtJConverter._create_generates_epsilon(generates_epsilon, result_dict)
+            XtJConverter._create_generates_epsilon(generates_epsilon, result_dict, allow_unit)
 
         return result_dict
 
@@ -1098,7 +1101,7 @@ class XtJConverter:
         return result
 
     @staticmethod
-    def simple_xml_to_json(xml_file: str) -> dict:
+    def simple_xml_to_json(xml_file: str, allow_unit: bool = True) -> dict:
         """
 
         Converts given XML file to a `dictionary`, that can be turned into JSON file.
@@ -1106,6 +1109,7 @@ class XtJConverter:
         chooses correct conversion method.
 
         :param xml_file: `string` representation of an xml file
+        :param allow_unit `bool` true if unit rules should be generated from rewriting initial symbol to epsilon
 
         :return: `dictionary` that represents converted object
 
@@ -1117,7 +1121,7 @@ class XtJConverter:
         if obj_type == ObjectTypes.DFA or obj_type == ObjectTypes.NFA or obj_type == ObjectTypes.EpsilonNFA or obj_type == ObjectTypes.MultiNFA:
             result = XtJConverter._xml_to_json_fa(root)
         elif obj_type == ObjectTypes.RG or obj_type == ObjectTypes.CFG or obj_type == ObjectTypes.CNF or obj_type == ObjectTypes.EpsilonFreeCFG:
-            result = XtJConverter._xml_to_json_grammar(root)
+            result = XtJConverter._xml_to_json_grammar(root, allow_unit)
         elif obj_type == ObjectTypes.RegExp:
             result = XtJConverter._xml_to_json_regexp(root)
         elif obj_type == ObjectTypes.DPDA or obj_type == ObjectTypes.NPDA:
@@ -1182,8 +1186,8 @@ class XtJConverter:
         ret = {}
         ret['after_reduction'] = XtJConverter.simple_xml_to_json(steps['after_reduction'])
         ret['after_epsilon'] = XtJConverter.simple_xml_to_json(steps['after_epsilon'])
-        ret['after_unit_rules'] = XtJConverter.simple_xml_to_json(steps['after_unit'])
-        ret['result'] = XtJConverter.simple_xml_to_json(result)
+        ret['after_unit_rules'] = XtJConverter.simple_xml_to_json(steps['after_unit'], allow_unit=False)
+        ret['result'] = XtJConverter.simple_xml_to_json(result, allow_unit=False)
         return ret
 
     @staticmethod

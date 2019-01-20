@@ -3,6 +3,7 @@ import { DerivationRequest } from 'lib/types';
 import { validateRE, validateExtraString } from 'lib/validate';
 import { assembleRE } from 'lib/assemble';
 import { RegexpInputValue } from 'components/Forms/Regexp';
+import { trimWhitespace } from 'lib/assemble/common';
 //#endregion
 
 interface Data {
@@ -22,18 +23,11 @@ interface Data {
  * @return A parsed input, which corresponds to `RE` object.
  */
 export function validate(data: Data): DerivationRequest {
-  const secondParameter = data.derivationString;
 
   // Assemble regexp object
   const regexp = assembleRE({values: data.values})
 
-  let derivationString = '';
-  let whiteSpace = [' ', '\t', '\n'];
-  for (const char of secondParameter) {
-    if (whiteSpace.indexOf(char) === -1) {
-      derivationString += char;
-    }
-  }
+  const derivationString = trimWhitespace(data.derivationString);
 
   validateRE(regexp);
   validateExtraString(derivationString, 'derivation string');

@@ -3,6 +3,7 @@ import { GrammarInputValue } from 'components/Forms/Grammar'
 import { GRType, CFG, RRG, CNF } from 'lib/types';
 import { Parser as GRParser } from 'lib/parse/grammar/Parser';
 import { ParseError } from 'lib/parse';
+import { trimWhitespace } from './common';
 //#endregion
 
 interface GrammarData {
@@ -29,10 +30,11 @@ function parseGrammar(data: GrammarData): ParsedGrammarData {
   p.setBuffer(values.rules);
   const rules = p.parseRules();
   let startSymbol = "";
-  if (values.startSymbol.length <= 1) {
-    startSymbol = values.startSymbol;
-  } else if (values.startSymbol[0] === '<' && values.startSymbol[values.startSymbol.length - 1] === '>') {
-    startSymbol = values.startSymbol.substring(1, values.startSymbol.length - 1);
+  let trimmedOriginalStart = trimWhitespace(values.startSymbol);
+  if (trimmedOriginalStart.length <= 1) {
+    startSymbol = trimmedOriginalStart;
+  } else if (trimmedOriginalStart[0] === '<' && trimmedOriginalStart[trimmedOriginalStart.length - 1] === '>') {
+    startSymbol = trimmedOriginalStart.substring(1, trimmedOriginalStart.length - 1);
   } else {
     throw new ParseError().addFixit("Every multi-character non-teminal should be wrapped in <>.")
   }

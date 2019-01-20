@@ -3,6 +3,7 @@ import { FAType, DFA, NFA, ENFA } from 'lib/types';
 import { Parser as GRParser } from 'lib/parse/grammar/Parser';
 import { AutomatonInputValue } from 'components/Forms/Automaton';
 import { UnexpectedTokenError } from 'lib/parse/exceptions';
+import { trimWhitespace } from './common';
 //#endregion
 
 interface AutomatonData {
@@ -21,7 +22,7 @@ function parseAutomaton(data: AutomatonData): ParsedAutomatonData {
   const values = data.values;
 
   //Parse
-  const input = values.header;
+  const input = values.header.map(trimWhitespace);
   let states = [];
   let initStates = [];
   let finStates = [];
@@ -40,12 +41,13 @@ function parseAutomaton(data: AutomatonData): ParsedAutomatonData {
 
   const transitions: { from: string, input: string, to: string }[] = [];
   for (const row of values.body) {
-    const from = row.value.replace(/<|>/gi, '');
+    const from = trimWhitespace(row.value.replace(/<|>/gi, ''));
 
     row.values.forEach((value, idx) => {
       const p = new GRParser(value);
+      const input = trimWhitespace(values.header[idx])
       for (let to of p.parseIdentList()) {
-        transitions.push({ from, input: values.header[idx], to });
+        transitions.push({ from, input, to });
       }
     });
   }
